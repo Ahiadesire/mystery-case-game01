@@ -1,0 +1,15 @@
+{
+  "guiltyExplanations": {
+    "sarah": "Sarah a tué Antoine. Il menaçait de révéler un secret qui aurait détruit sa réputation. Elle connaissait le code d'accès du bureau et a pu y entrer discrètement pendant la fenêtre du meurtre (21h15-21h25).",
+    "nicolas": "Nicolas a tué Antoine. Antoine connaissait ses fraudes financières et menaçait de les révéler. Nicolas connaît l'entrée secondaire et l'angle mort de la caméra du couloir, ce qui lui a permis d'atteindre le bureau sans être vu."
+  },
+  "falseLeadsSummary": [
+    "Thomas avait un très gros motif financier, mais il est innocent.",
+    "Lucas possédait des empreintes dans le bureau à cause d'une tasse utilisée plus tôt : fausse piste.",
+    "Emma avait volé une clé USB, mais n'a rien à voir avec le meurtre.",
+    "Yanis avait désactivé une caméra pour une réparation, sans rapport avec le crime.",
+    "Paul cachait un document compromettant mais n'est pas le meurtrier.",
+    "Marc cachait une faute professionnelle ancienne, sans lien avec le meurtre."
+  ],
+  "closingLine": "Tout le monde cachait quelque chose, mais tout le monde n'était pas coupable."
+}

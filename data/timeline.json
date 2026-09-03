@@ -1,0 +1,16 @@
+[
+  { "time": "20h30", "event": "Les invités arrivent." },
+  { "time": "20h45", "event": "Le dîner commence." },
+  { "time": "20h55", "event": "Thomas et Antoine ont une discussion tendue concernant l'entreprise." },
+  { "time": "21h05", "event": "Sarah et Antoine parlent en privé." },
+  { "time": "21h10", "event": "Les invités commencent à se disperser." },
+  { "time": "21h12", "event": "Emma est aperçue près du couloir." },
+  { "time": "21h14", "event": "Paul commence un appel téléphonique." },
+  { "time": "21h16", "event": "La porte électronique du bureau s'ouvre." },
+  { "time": "21h17", "event": "Une silhouette portant une veste sombre est aperçue dans le couloir." },
+  { "time": "21h18", "event": "Julie enregistre une dispute près du salon." },
+  { "time": "21h20", "event": "Moment probable du meurtre." },
+  { "time": "21h22", "event": "Paul termine son appel." },
+  { "time": "21h23", "event": "La porte du bureau s'ouvre de nouveau." },
+  { "time": "21h27", "event": "Le corps d'Antoine est découvert." }
+]

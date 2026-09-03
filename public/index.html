@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Le Dernier Dîner — Jeu de mystère</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div id="app">
+
+  <!-- ÉCRAN : ACCUEIL -->
+  <section id="screen-home" class="screen active">
+    <h1 class="title">LE DERNIER DÎNER</h1>
+    <p class="subtitle">Un jeu de mystère, d'enquête et de bluff — 6 à 12 joueurs</p>
+
+    <div class="card">
+      <h2>Créer une partie</h2>
+      <input id="create-name" placeholder="Ton nom" maxlength="20" />
+      <label class="checkbox-row">
+        <input type="checkbox" id="create-gm" style="width:auto" />
+        Je suis Game Master (je ne joue pas, je contrôle la partie)
+      </label>
+      <button id="btn-create">Créer une partie</button>
+    </div>
+
+    <div class="card">
+      <h2>Rejoindre une partie</h2>
+      <input id="join-name" placeholder="Ton nom" maxlength="20" />
+      <input id="join-code" placeholder="Code de salle (ex : A7K4P)" maxlength="5" style="text-transform:uppercase" />
+      <button id="btn-join">Rejoindre</button>
+    </div>
+
+    <p id="home-error" class="error"></p>
+  </section>
+
+  <!-- ÉCRAN : LOBBY -->
+  <section id="screen-lobby" class="screen">
+    <h2>Salle : <span id="lobby-code" class="code-badge"></span></h2>
+    <p id="lobby-count"></p>
+    <ul id="lobby-players" class="player-list"></ul>
+    <button id="btn-start" style="display:none">Lancer la partie</button>
+    <p id="lobby-hint" class="hint"></p>
+  </section>
+
+  <!-- ÉCRAN : INTRODUCTION / DOSSIER PRIVÉ -->
+  <section id="screen-dossier" class="screen">
+    <div class="intro-box">
+      <h2>Le Dernier Dîner</h2>
+      <p id="story-text"></p>
+    </div>
+    <div class="dossier-box confidential">
+      <h3>DOSSIER CONFIDENTIEL</h3>
+      <div id="dossier-content"></div>
+    </div>
+  </section>
+
+  <!-- ÉCRAN : ENQUÊTE -->
+  <section id="screen-investigation" class="screen">
+    <header class="game-header">
+      <div>Phase : <span id="phase-label"></span> — Manche <span id="round-label"></span></div>
+      <div>⏱ <span id="timer-label"></span></div>
+    </header>
+
+    <div class="grid">
+      <div class="col">
+        <h3>Chronologie</h3>
+        <ul id="timeline-list" class="list-box"></ul>
+
+        <h3>Lieux</h3>
+        <ul id="locations-list" class="list-box"></ul>
+
+        <h3>Questions suggérées</h3>
+        <ul id="questions-list" class="list-box"></ul>
+      </div>
+
+      <div class="col">
+        <h3>Indices révélés</h3>
+        <ul id="clues-list" class="list-box"></ul>
+
+        <h3>Suspects</h3>
+        <ul id="suspects-list" class="player-list"></ul>
+      </div>
+
+      <div class="col">
+        <h3>Discussion</h3>
+        <div id="chat-log" class="chat-log"></div>
+        <div class="chat-input-row">
+          <input id="chat-input" placeholder="Écrire un message..." maxlength="500" />
+          <button id="btn-send-chat">Envoyer</button>
+        </div>
+
+        <details class="accusation-box">
+          <summary>Faire une accusation formelle</summary>
+          <input id="acc-suspect" placeholder="Nom du suspect" />
+          <input id="acc-motif" placeholder="Quel est son motif ?" />
+          <input id="acc-opportunite" placeholder="Comment accédait-il au lieu du crime ?" />
+          <input id="acc-indice" placeholder="Quel indice soutient l'accusation ?" />
+          <button id="btn-accuse">Publier l'accusation</button>
+        </details>
+
+        <div id="guilty-chat-box" class="guilty-chat-box" style="display:none">
+          <h4>Canal privé — coupables uniquement</h4>
+          <div id="guilty-chat-log" class="chat-log"></div>
+          <div class="chat-input-row">
+            <input id="guilty-chat-input" placeholder="Message aux complices..." maxlength="500" />
+            <button id="btn-send-guilty-chat">Envoyer</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button id="btn-advance-phase" style="display:none">Passer à la phase suivante (hôte)</button>
+
+    <div id="gm-panel" class="gm-panel" style="display:none">
+      <h3>Panneau Game Master</h3>
+      <div class="gm-buttons">
+        <button id="gm-btn-clue">Révéler un indice maintenant</button>
+        <button id="gm-btn-pause">Mettre en pause</button>
+        <button id="gm-btn-resume">Reprendre</button>
+        <button id="gm-btn-solution">Voir la solution</button>
+        <button id="gm-btn-restart" class="danger">Redémarrer la partie</button>
+      </div>
+      <pre id="gm-solution-view"></pre>
+    </div>
+  </section>
+
+  <!-- ÉCRAN : VOTE -->
+  <section id="screen-vote" class="screen">
+    <h2>Vote</h2>
+    <p id="vote-progress"></p>
+    <ul id="vote-list" class="player-list"></ul>
+    <p id="vote-result"></p>
+  </section>
+
+  <!-- ÉCRAN : RÉVÉLATION -->
+  <section id="screen-reveal" class="screen">
+    <h2>Révélation finale</h2>
+    <div id="reveal-content"></div>
+  </section>
+
+  <div id="toast"></div>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

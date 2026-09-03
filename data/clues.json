@@ -1,0 +1,74 @@
+[
+  {
+    "order": 1,
+    "title": "Message menaçant",
+    "linkedCharacterId": "sarah",
+    "description": "Un message menaçant lié à Sarah. Il montre qu'elle avait un conflit avec Antoine, mais ne prouve pas qu'elle l'a tué."
+  },
+  {
+    "order": 2,
+    "title": "Contrat financier",
+    "linkedCharacterId": "thomas",
+    "description": "Un contrat financier lié à Thomas. Il montre que Thomas avait un motif important."
+  },
+  {
+    "order": 3,
+    "title": "Appel téléphonique",
+    "linkedCharacterId": "paul",
+    "description": "L'appel téléphonique de Paul permet de vérifier une partie de son alibi."
+  },
+  {
+    "order": 4,
+    "title": "Historique électronique de la porte du bureau",
+    "linkedCharacterId": null,
+    "description": "Cet historique fournit des informations sur les entrées dans le bureau."
+  },
+  {
+    "order": 5,
+    "title": "Caméra du couloir",
+    "linkedCharacterId": null,
+    "description": "Une silhouette portant une veste sombre est visible sur la caméra du couloir."
+  },
+  {
+    "order": 6,
+    "title": "Enregistrement de Julie",
+    "linkedCharacterId": "julie",
+    "description": "Antoine dit qu'il va révéler quelque chose concernant Sarah."
+  },
+  {
+    "order": 7,
+    "title": "Empreinte près de l'entrée secondaire",
+    "linkedCharacterId": "nicolas",
+    "description": "Cette empreinte augmente les soupçons concernant Nicolas."
+  },
+  {
+    "order": 8,
+    "title": "Empreintes sur une tasse",
+    "linkedCharacterId": "lucas",
+    "description": "Des empreintes de Lucas sont trouvées sur une tasse dans le bureau. Mais Lucas avait utilisé cette tasse auparavant : fausse piste."
+  },
+  {
+    "order": 9,
+    "title": "Caméra extérieure",
+    "linkedCharacterId": "karim",
+    "description": "Elle confirme que Karim était dehors pendant une partie du créneau."
+  },
+  {
+    "order": 10,
+    "title": "Interruption de la caméra",
+    "linkedCharacterId": "yanis",
+    "description": "Cette interruption est liée à la réparation effectuée par Yanis."
+  },
+  {
+    "order": 11,
+    "title": "Clé USB",
+    "linkedCharacterId": "emma",
+    "description": "Cette clé USB est liée au secret d'Emma."
+  },
+  {
+    "order": 12,
+    "title": "Analyse médicale",
+    "linkedCharacterId": "marc",
+    "description": "Elle confirme que l'heure du décès correspond à la période 21h15-21h25."
+  }
+]

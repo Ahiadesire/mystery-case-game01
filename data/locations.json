@@ -1,0 +1,10 @@
+[
+  { "id": "salon", "name": "Salon", "description": "Permet à plusieurs joueurs de confirmer ou contredire certains témoignages." },
+  { "id": "cuisine", "name": "Cuisine", "description": "Peut fournir un alibi à Sarah." },
+  { "id": "bureau", "name": "Bureau", "description": "Lieu du meurtre. Porte à accès électronique." },
+  { "id": "couloir", "name": "Couloir", "description": "Surveillé par une caméra, avec un angle mort connu de Nicolas." },
+  { "id": "chambres", "name": "Chambres", "description": "Zone privée des invités." },
+  { "id": "jardin", "name": "Jardin", "description": "Surveillé par une caméra extérieure." },
+  { "id": "entree_secondaire", "name": "Entrée secondaire", "description": "Permet d'approcher le bureau sans passer par le salon." },
+  { "id": "local_technique", "name": "Local technique", "description": "Explique l'interruption de la caméra du couloir." }
+]
