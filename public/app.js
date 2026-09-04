@@ -99,6 +99,8 @@ function renderRoomState(room) {
   state.phase = room.phase;
   state.isHost = room.players.find((p) => p.id === state.playerId)?.isHost || false;
   state.alivePlayers = room.players.filter((p) => p.alive);
+  const readiness = document.getElementById('lobby-readiness');
+  if (readiness) readiness.innerHTML = room.phase === 'dossier' ? `<strong>📋 Dossiers lus :</strong> ${room.connectedReadyCount || 0} / ${room.connectedPlayerCount || 0}` : ''; 
 
   // Lobby
   document.getElementById('lobby-code').textContent = room.code;
@@ -138,9 +140,9 @@ function renderRoomState(room) {
   const btnStart = document.getElementById('btn-start');
   if (isController && room.phase === 'lobby') {
     btnStart.style.display = 'block';
-    btnStart.disabled = room.players.length < room.minPlayers;
+    btnStart.disabled = room.players.filter(p => p.connected).length < room.minPlayers;
     document.getElementById('lobby-hint').textContent =
-      room.players.length < room.minPlayers
+      room.players.filter(p => p.connected).length < room.minPlayers
         ? `Il faut au moins ${room.minPlayers} joueurs pour lancer la partie.`
         : 'Prêt à lancer la partie.';
   } else {
@@ -248,6 +250,19 @@ socket.on('dossier:yours', (dossier) => {
   show('screen-dossier');
 });
 
+document.getElementById('btn-dossier-ready').onclick = () => {
+  socket.emit('dossier:ready', {}, (res) => {
+    if (!res.ok) return toast(res.error);
+    document.getElementById('btn-dossier-ready').textContent = '✓ Dossier lu';
+    document.getElementById('btn-dossier-ready').disabled = true;
+    toast('Dossier validé. L’hôte peut lancer l’enquête.');
+  });
+};
+socket.on('dossier:ready:progress', ({ ready, total }) => {
+  const bar = document.getElementById('lobby-readiness');
+  if (bar) bar.innerHTML = `<strong>📋 Dossiers lus :</strong> ${ready} / ${total}`;
+});
+
 // Le dossier reste consultable à tout moment pendant l'enquête / le vote
 document.getElementById('btn-toggle-dossier').onclick = () => {
   const panel = document.getElementById('my-dossier-panel');
@@ -255,17 +270,69 @@ document.getElementById('btn-toggle-dossier').onclick = () => {
 };
 
 // ---------- CHANGEMENT DE PHASE ----------
-socket.on('phase:changed', ({ phase, phaseEndsAt, round }) => {
+socket.on('phase:changed', ({ phase, phaseEndsAt, round, revealedClueCount = 0, activeClueCount = 0 }) => {
   state.phase = phase;
   routeToPhaseScreen(phase);
   document.getElementById('phase-label').textContent = phaseLabel(phase);
   document.getElementById('round-label').textContent = round;
   startCountdown(phaseEndsAt);
+  startPhaseProgress(phaseEndsAt);
+  updateLiveStrip();
 
   const btnAdv = document.getElementById('btn-advance-phase');
-  btnAdv.style.display = (state.isHost || state.isGameMaster) ? 'block' : 'none';
+  const controller = state.isHost || state.isGameMaster;
+  btnAdv.style.display = controller && !['reveal'].includes(phase) ? 'block' : 'none';
+  if (phase === 'dossier') btnAdv.textContent = '⚡ Tout le monde est prêt → Lancer l’enquête';
+  else if (phase === 'enquete') btnAdv.textContent = '⚡ Terminer l’enquête → Ouvrir le vote';
+  else if (phase === 'vote') btnAdv.textContent = '⚡ Terminer le vote';
+  else btnAdv.textContent = '⚡ Passer à la phase suivante';
   document.getElementById('gm-panel').style.display = state.isGameMaster ? 'block' : 'none';
+  if (phase === 'dossier') {
+    startDossierCountdown(phaseEndsAt);
+    const ready = document.getElementById('btn-dossier-ready');
+    ready.disabled = false;
+    ready.textContent = '✓ J’ai fini de lire';
+  }
+  else clearInterval(dossierCountdownTimer);
+  if (phase === 'vote') startVoteCountdown(phaseEndsAt);
+  else { const v = document.getElementById('vote-timer-label'); if (v) v.textContent = '—'; }
 });
+
+function updateLiveStrip() {
+  const map = { enquete:'Enquête sous pression', vote:'Vote décisif', elimination:'Résolution du vote', dossier:'Lecture des dossiers', distribution:'Distribution secrète', reveal:'Révélation finale' };
+  const status = document.getElementById('live-phase-status');
+  if (status) status.textContent = map[state.phase] || 'En direct';
+  const pc = document.getElementById('player-counter');
+  if (pc) pc.textContent = state.players.filter(p => p.connected).length;
+}
+
+function startDossierCountdown(endsAt) {
+  clearInterval(dossierCountdownTimer);
+  const label = document.getElementById('dossier-timer-label');
+  const tick = () => { label.textContent = formatRemaining(endsAt); };
+  tick(); dossierCountdownTimer = setInterval(tick, 500);
+}
+
+function startPhaseProgress(endsAt) {
+  const fill = document.getElementById('phase-progress-fill');
+  if (!fill) return;
+  clearInterval(startPhaseProgress._t);
+  const startedAt = Date.now();
+  const tick = () => {
+    if (!endsAt) { fill.style.width = '0%'; return; }
+    const total = Math.max(1, endsAt - startedAt);
+    const pct = Math.max(0, Math.min(100, ((Date.now() - startedAt) / total) * 100));
+    fill.style.width = `${pct}%`;
+  };
+  tick(); startPhaseProgress._t = setInterval(tick, 500);
+}
+function startVoteCountdown(endsAt) {
+  const label = document.getElementById('vote-timer-label');
+  if (!label) return;
+  clearInterval(startVoteCountdown._t);
+  const tick = () => { label.textContent = formatRemaining(endsAt); };
+  tick(); startVoteCountdown._t = setInterval(tick, 500);
+}
 
 function phaseLabel(phase) {
   const map = {
@@ -285,6 +352,12 @@ function routeToPhaseScreen(phase) {
 }
 
 let countdownTimer = null;
+let dossierCountdownTimer = null;
+function formatRemaining(endsAt) {
+  if (!endsAt) return '—';
+  const remaining = Math.max(0, Math.round((endsAt - Date.now()) / 1000));
+  return `${String(Math.floor(remaining / 60)).padStart(2,'0')}:${String(remaining % 60).padStart(2,'0')}`;
+}
 function startCountdown(endsAt) {
   clearInterval(countdownTimer);
   const label = document.getElementById('timer-label');
@@ -305,11 +378,15 @@ document.getElementById('btn-advance-phase').onclick = () => {
 // ---------- INDICES ----------
 socket.on('clue:revealed', (clue) => {
   state.clues.push(clue);
+  const counter = document.getElementById('clue-counter');
+  if (counter) counter.textContent = `${state.clues.length} / ${Math.max(state.clues.length, Number(counter.dataset.total || state.clues.length))}`;
   const el = document.getElementById('clues-list');
   const li = document.createElement('li');
-  li.innerHTML = `<strong>${clue.title}</strong><br>${clue.description}`;
+  li.className = 'clue-card clue-new';
+  li.innerHTML = `<span class="clue-number">INDICE ${state.clues.length}</span><strong>${clue.title}</strong><br><span>${clue.description}</span>`;
   el.appendChild(li);
-  toast(`Nouvel indice : ${clue.title}`);
+  const badge = document.getElementById('clue-new-badge'); if (badge) { badge.style.display='inline-block'; setTimeout(()=>badge.style.display='none',4000); }
+  toast(`🔎 Nouvel indice : ${clue.title}`);
 });
 
 // ---------- CHRONOLOGIE (adaptée au scénario et aux personnages présents) ----------
@@ -369,6 +446,7 @@ socket.on('vote:result', (result) => {
 
 // ---------- CHAT ----------
 document.getElementById('btn-send-chat').onclick = sendChat;
+document.querySelectorAll('#quick-chat button').forEach(btn => btn.onclick = () => { document.getElementById('chat-input').value = btn.dataset.msg; document.getElementById('chat-input').focus(); });
 document.getElementById('chat-input').addEventListener('keydown', (e) => {
   if (e.key === 'Enter') sendChat();
 });
@@ -490,7 +568,10 @@ document.getElementById('gm-btn-solution').onclick = () => {
   });
 };
 
-socket.on('phase:paused', () => toast('⏸ Partie mise en pause par le Game Master.'));
+socket.on('accusation:accepted', ({ correct, message }) => toast((correct ? '🎯 ' : '🕵️ ') + message));
+
+socket.on('phase:forced', ({ phase }) => toast(`⚡ Phase passée par le contrôleur : ${phaseLabel(phase)}`));
+socket.on('phase:paused', () => toast('⏸ Partie mise en pause par le contrôleur.'));
 socket.on('phase:resumed', ({ phaseEndsAt }) => {
   toast('▶ Partie reprise.');
   startCountdown(phaseEndsAt);

@@ -168,7 +168,12 @@ function roomSummary(room) {
     availableScenarios: SCENARIO_LIST,
     connectedPlayerCount: [...room.players.values()].filter((p) => p.connected && p.socketId).length,
     activeCharacterCount: room.characterAssignments.size,
-    guiltyCount: room.guiltyCharacterIds.length || null
+    guiltyCount: room.guiltyCharacterIds.length || null,
+    revealedClueCount: room.revealedClueCount || 0,
+    activeClueCount: (room.activeClues || []).length,
+    paused: !!room.paused,
+    readyPlayerCount: room.readyPlayers ? room.readyPlayers.size : 0,
+    connectedReadyCount: room.readyPlayers ? [...room.readyPlayers].filter((id) => room.players.get(id)?.connected && room.players.get(id)?.socketId).length : 0
   };
 }
 
@@ -273,6 +278,10 @@ function clearTimers(room) {
   room.clueTimer = null;
 }
 
+function phaseLabelServer(phase) {
+  return ({ distribution: 'Distribution des rôles', dossier: 'Dossier secret', enquete: 'Enquête', vote: 'Vote', elimination: 'Résolution', reveal: 'Révélation' }[phase] || phase);
+}
+
 function setPhase(room, phase, durationSeconds) {
   clearTimers(room);
   room.phase = phase;
@@ -298,14 +307,20 @@ function setPhase(room, phase, durationSeconds) {
     startClueTimer(room, durationSeconds);
   }
 
+  if (phase === 'dossier') {
+    room.readyPlayers = new Set();
+  }
+
   if (phase === 'vote') {
     room.votes = new Map();
   }
 
   broadcastRoomState(room);
-  io.to(room.code).emit('phase:changed', { phase, phaseEndsAt: room.phaseEndsAt, round: room.round });
+  io.to(room.code).emit('phase:changed', { phase, phaseEndsAt: room.phaseEndsAt, round: room.round, revealedClueCount: room.revealedClueCount || 0, activeClueCount: (room.activeClues || []).length });
+  if (phase !== 'lobby') pushChat(room, { system: true, text: `⏱ Phase : ${phaseLabelServer(phase)}${room.round > 1 ? ` — manche ${room.round}` : ''}.`, ts: Date.now() });
 
   if (phase === 'dossier') {
+    io.to(room.code).emit('dossier:opened', { phaseEndsAt: room.phaseEndsAt });
     // envoyer à CHAQUE joueur (privé) son propre dossier
     for (const p of room.players.values()) {
       if (!p.socketId) continue;
@@ -725,7 +740,6 @@ io.on('connection', (socket) => {
       });
 
       cb({ ok: true });
-      setTimeout(() => setPhase(room, 'dossier', RULES.phaseDurations.dossier), RULES.phaseDurations.distribution * 1000);
     } catch (err) {
       cb({ ok: false, error: err.message });
     }
@@ -836,6 +850,8 @@ io.on('connection', (socket) => {
       room.round = 1;
       room.paused = false;
       room.pauseRemainingMs = null;
+      room.readyPlayers = new Set();
+      room.accusationByRound = new Set();
       room.chatLog = [];
       room.guiltyChatLog = [];
       room.phase = 'lobby';
@@ -909,9 +925,16 @@ io.on('connection', (socket) => {
     const suspect = [...room.players.values()].find((p) => p.name.toLowerCase() === String(suspectName || '').trim().toLowerCase());
     if (!suspect || !suspect.alive || suspect.id === player.id) return;
     if (![motif, opportunite, indice].every((v) => String(v || '').trim())) return;
+    const accusationKey = `${room.round}:${player.id}`;
+    if (room.accusationByRound?.has(accusationKey)) return;
+    room.accusationByRound = room.accusationByRound || new Set();
+    room.accusationByRound.add(accusationKey);
+    const targetCharId = room.characterAssignments.get(suspect.id);
+    const correct = room.guiltyCharacterIds.includes(targetCharId);
     const text = `J'accuse ${suspect.name}. Motif : ${String(motif).trim().slice(0,250)}. Opportunité : ${String(opportunite).trim().slice(0,250)}. Indice : ${String(indice).trim().slice(0,250)}.`;
-    addScore(room, player.id, 10, 'Accusation formelle');
+    addScore(room, player.id, correct ? 20 : 3, correct ? 'Accusation formelle sur un coupable' : 'Accusation formelle');
     pushChat(room, { playerId: player.id, name: player.name, text, ts: Date.now(), accusation: true });
+    io.to(player.socketId).emit('accusation:accepted', { correct, message: correct ? 'Ton accusation cible un coupable. Continue à construire la preuve.' : 'Ton accusation est enregistrée. Attention à ne pas t\'enfermer sur une mauvaise piste.' });
   });
 
   // Présence fiable : le client signale explicitement quand l'onglet passe
@@ -923,6 +946,7 @@ io.on('connection', (socket) => {
     const player = room.players.get(socket.data.playerId);
     if (!player) return;
     player.connected = false;
+    if (room.readyPlayers) room.readyPlayers.delete(player.id);
     broadcastRoomState(room);
   });
 

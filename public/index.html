@@ -38,7 +38,7 @@
   <!-- ÉCRAN : LOBBY -->
   <section id="screen-lobby" class="screen">
     <h2>Salle : <span id="lobby-code" class="code-badge"></span></h2>
-    <p id="lobby-count"></p><p id="adaptive-info" class="hint"></p>
+    <p id="lobby-count"></p><p id="adaptive-info" class="hint"></p><div id="lobby-readiness" class="readiness-bar"></div>
 
     <div id="scenario-picker" class="card" style="display:none">
       <h2>Scénario</h2>
@@ -53,11 +53,16 @@
 
   <!-- ÉCRAN : INTRODUCTION / DOSSIER PRIVÉ -->
   <section id="screen-dossier" class="screen">
+    <div class="phase-hero dossier-hero">
+      <div><span class="eyebrow">PHASE SECRÈTE</span><h2>Votre identité est confidentielle</h2><p id="dossier-phase-tip">Lisez votre dossier, retenez vos informations et préparez votre stratégie.</p></div>
+      <div class="hero-timer"><span class="timer-label-small">TEMPS</span> ⏱ <span id="dossier-timer-label">01:30</span></div>
+    </div>
     <div class="intro-box">
       <h2>Le Dernier Dîner</h2>
       <p id="story-text"></p>
     </div>
     <div class="dossier-box confidential">
+      <div class="dossier-actions"><button id="btn-dossier-ready" class="secondary-btn">✓ J’ai fini de lire</button></div>
       <h3>DOSSIER CONFIDENTIEL</h3>
       <div id="dossier-content"></div>
     </div>
@@ -65,6 +70,10 @@
 
   <!-- ÉCRAN : ENQUÊTE -->
   <section id="screen-investigation" class="screen">
+    <div class="phase-progress"><div id="phase-progress-fill"></div></div>
+    <div class="live-strip">
+      <div><span class="live-dot"></span> EN DIRECT</div><div id="live-phase-status">Enquête en cours</div><div>🔎 <span id="clue-counter">0 / 0</span> indices</div><div>👥 <span id="player-counter">0</span></div>
+    </div>
     <header class="game-header">
       <div>Phase : <span id="phase-label"></span> — Manche <span id="round-label"></span></div>
       <div>⏱ <span id="timer-label"></span></div>
@@ -86,7 +95,7 @@
       </div>
 
       <div class="col">
-        <h3>Indices révélés</h3>
+        <h3>Indices révélés <span id="clue-new-badge" class="new-badge" style="display:none">NOUVEAU</span></h3>
         <ul id="clues-list" class="list-box"></ul>
 
         <h3>Suspects</h3><p class="hint">Seuls les joueurs de cette partie apparaissent ici.</p>
@@ -96,6 +105,7 @@
       <div class="col">
         <h3>Discussion</h3>
         <div id="chat-log" class="chat-log"></div>
+        <div id="quick-chat" class="quick-chat"><button data-msg="J’ai un doute sur cet alibi.">💭 Doute</button><button data-msg="Quelqu’un peut confirmer cette information ?">❓ Question</button><button data-msg="J’ai trouvé une contradiction.">⚠️ Contradiction</button></div>
         <div class="chat-input-row">
           <input id="chat-input" placeholder="Écrire un message..." maxlength="500" />
           <button id="btn-send-chat">Envoyer</button>
@@ -121,14 +131,14 @@
       </div>
     </div>
 
-    <button id="btn-advance-phase" style="display:none">Passer à la phase suivante (hôte)</button>
+    <button id="btn-advance-phase" class="advance-btn" style="display:none">⚡ Passer à la phase suivante</button>
 
     <div id="gm-panel" class="gm-panel" style="display:none">
       <h3>Panneau Game Master</h3>
       <div class="gm-buttons">
-        <button id="gm-btn-clue">Révéler un indice maintenant</button>
-        <button id="gm-btn-pause">Mettre en pause</button>
-        <button id="gm-btn-resume">Reprendre</button>
+        <button id="gm-btn-clue">🔎 Révéler un indice</button>
+        <button id="gm-btn-pause">⏸ Pause</button>
+        <button id="gm-btn-resume">▶ Reprendre</button>
         <button id="gm-btn-solution">Voir la solution</button>
         <button id="gm-btn-restart" class="danger">Redémarrer la partie</button>
       </div>
@@ -139,7 +149,7 @@
   <!-- ÉCRAN : VOTE -->
   <section id="screen-vote" class="screen">
     <h2>Vote</h2>
-    <p id="vote-progress"></p>
+    <div class="vote-hero"><div><span class="eyebrow">PHASE DÉCISIVE</span><h2>Qui ment ?</h2><p id="vote-progress"></p></div><div class="vote-timer">⏱ <span id="vote-timer-label">01:15</span></div></div>
     <ul id="vote-list" class="player-list"></ul>
     <p id="vote-result"></p>
   </section>

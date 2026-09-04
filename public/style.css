@@ -266,3 +266,108 @@ button:disabled { background: #3a3f4a; cursor: not-allowed; }
   display: none;
   z-index: 999;
 }
+
+/* ===== EXPERIENCE DYNAMIQUE / UI 2.0 ===== */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at 15% 20%, rgba(212,162,76,.08), transparent 28%), radial-gradient(circle at 85% 70%, rgba(179,39,30,.09), transparent 30%);
+  z-index: -1;
+}
+
+.phase-hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 18px;
+  padding: 20px;
+  margin-bottom: 16px;
+  border-radius: 14px;
+  border: 1px solid var(--accent-2);
+  background: linear-gradient(135deg, rgba(212,162,76,.12), rgba(179,39,30,.08));
+  box-shadow: 0 12px 35px rgba(0,0,0,.25);
+  animation: heroIn .45s ease-out;
+}
+.phase-hero h2 { margin: 4px 0 6px; color: var(--accent-2); }
+.phase-hero p { margin: 0; color: var(--text-dim); }
+.eyebrow { font-size: .7rem; letter-spacing: 2px; color: #ffcf72; font-weight: 700; }
+.hero-timer { font-size: 1.55rem; font-weight: 700; white-space: nowrap; color: #fff; }
+
+.live-strip {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: rgba(22,26,34,.9);
+  color: var(--text-dim);
+  font-size: .78rem;
+}
+.live-strip > div { padding-right: 10px; border-right: 1px solid var(--border); }
+.live-strip > div:last-child { border-right: 0; }
+.live-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #ef4444; box-shadow: 0 0 10px rgba(239,68,68,.8); animation: pulse 1.4s infinite; }
+
+.advance-btn { background: linear-gradient(135deg, #b3271e, #7e1c17); border: 1px solid rgba(255,255,255,.1); box-shadow: 0 8px 22px rgba(179,39,30,.25); font-weight: 700; }
+.advance-btn:hover { transform: translateY(-1px); }
+.secondary-btn { background: var(--bg-panel-2); border: 1px solid var(--accent-2); color: var(--accent-2); width: auto; padding: 8px 12px; }
+.dossier-actions { display:flex; justify-content:flex-end; margin-bottom: 8px; }
+
+.list-box li, .player-list li, .scenario-option, .card, .intro-box, .dossier-box, .gm-panel, .accusation-box {
+  transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+}
+.list-box li:hover, .player-list li:hover, .scenario-option:hover { transform: translateY(-2px); box-shadow: 0 7px 20px rgba(0,0,0,.2); }
+
+.clue-card { position: relative; overflow: hidden; padding-top: 25px !important; }
+.clue-number { position:absolute; top:5px; right:8px; font-size:.65rem; letter-spacing:1px; color:var(--accent-2); opacity:.85; }
+.clue-new { animation: clueIn .55s cubic-bezier(.2,.8,.2,1); }
+
+#screen-investigation .col:nth-child(2) .list-box { max-height: 280px; }
+#screen-investigation h3 { display:flex; align-items:center; gap:8px; }
+#screen-investigation h3::before { content:'◆'; color:var(--accent); font-size:.55rem; }
+
+#screen-vote.active { animation: screenIn .35s ease-out; }
+#screen-reveal.active { animation: screenIn .5s ease-out; }
+#screen-reveal #reveal-content { background: linear-gradient(145deg, var(--bg-panel), #10131a); border:1px solid var(--accent-2); border-radius:14px; padding:20px; box-shadow:0 18px 50px rgba(0,0,0,.35); }
+
+#btn-dossier-ready:disabled { opacity:.7; border-color:#6ee7b7; color:#6ee7b7; }
+
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.45;transform:scale(.78)} }
+@keyframes clueIn { from{opacity:0;transform:translateX(-18px) scale(.98)} to{opacity:1;transform:none} }
+@keyframes heroIn { from{opacity:0;transform:translateY(-12px)} to{opacity:1;transform:none} }
+@keyframes screenIn { from{opacity:0;transform:scale(.985)} to{opacity:1;transform:none} }
+
+@media (max-width: 650px) {
+  #app { padding: 14px 10px 40px; }
+  .title { font-size: 1.75rem; letter-spacing: 2px; }
+  .phase-hero { align-items: flex-start; padding: 15px; }
+  .hero-timer { font-size: 1.2rem; }
+  .live-strip { border-radius: 12px; }
+  .live-strip > div { border-right:0; padding-right:0; }
+  .game-header { position: sticky; top: 6px; z-index: 20; box-shadow:0 8px 24px rgba(0,0,0,.25); }
+  .chat-log { height: 250px; }
+  .dossier-actions { justify-content:stretch; }
+  .dossier-actions button { width:100%; }
+}
+
+/* --- Version dynamique : feedback visuel, rythme et mobile --- */
+.phase-progress { height: 4px; background: #242a35; border-radius: 999px; overflow: hidden; margin-bottom: 8px; }
+#phase-progress-fill { height: 100%; width: 0%; background: var(--accent-2); transition: width .4s linear; }
+.live-strip { position: sticky; top: 8px; z-index: 5; box-shadow: 0 8px 25px rgba(0,0,0,.22); }
+.live-strip > div { white-space: nowrap; }
+.live-dot { display:inline-block; width:8px; height:8px; border-radius:50%; background:#e5534b; box-shadow:0 0 10px #e5534b; margin-right:5px; }
+.new-badge { font-size:.68rem; background:var(--accent); color:#fff; padding:3px 6px; border-radius:999px; vertical-align:middle; animation:pulse .9s infinite alternate; }
+@keyframes pulse { from { opacity:.55; transform:scale(.96); } to { opacity:1; transform:scale(1); } }
+.readiness-bar { min-height:28px; margin:10px auto; max-width:420px; padding:7px 10px; border:1px solid var(--border); border-radius:6px; color:var(--text-dim); text-align:center; }
+.quick-chat { display:flex; flex-wrap:wrap; gap:5px; margin:6px 0; }
+.quick-chat button { width:auto; margin:0; padding:5px 8px; font-size:.72rem; background:var(--bg-panel-2); border:1px solid var(--border); color:var(--text-dim); }
+.quick-chat button:hover { border-color:var(--accent-2); color:var(--text); background:var(--bg-panel); }
+.timer-label-small { font-size:.65rem; letter-spacing:1px; color:var(--text-dim); display:block; }
+.vote-hero { display:flex; justify-content:space-between; align-items:center; gap:20px; padding:18px; margin-bottom:18px; background:linear-gradient(135deg,var(--bg-panel-2),var(--bg-panel)); border:1px solid var(--border); border-radius:10px; }
+.vote-hero h2 { margin:.2rem 0; color:var(--accent-2); }
+.vote-timer { font-size:1.8rem; font-weight:bold; white-space:nowrap; }
+@media (max-width:600px) { #app { padding:14px 10px 40px; } .title{font-size:1.7rem;letter-spacing:2px;} .live-strip{overflow-x:auto; display:flex; gap:12px; font-size:.75rem;} .vote-hero{align-items:flex-start;} .vote-timer{font-size:1.3rem;} .gm-buttons button{flex:1 1 45%;} .quick-chat{overflow-x:auto; flex-wrap:nowrap;} .quick-chat button{flex:0 0 auto;} }

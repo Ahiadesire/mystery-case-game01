@@ -3,12 +3,12 @@
   "maxPlayers": 12,
   "phaseDurations": {
     "lobby": null,
-    "distribution": 5,
-    "dossier": 240,
-    "enquete": 1080,
-    "vote": 120,
-    "elimination": 12,
+    "distribution": 3,
+    "dossier": 90,
+    "enquete": 720,
+    "vote": 75,
+    "elimination": 8,
     "reveal": null
   },
-  "clueRevealMinIntervalSeconds": 25
+  "clueRevealMinIntervalSeconds": 18
 }
