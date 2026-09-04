@@ -85,9 +85,8 @@ const genRoomCode = customAlphabet('ABCDEFGHJKLMNPQRSTUVWXYZ23456789', 5);
  *   guiltyCharacterIds: string[],
  *   revealedClueCount: number,
  *   clueTimer, phaseTimer,
- *   votes: Map<voterPlayerId, targetPlayerId>,
- *   eliminatedPlayerIds: Set<playerId>,
- *   round: number,
+ *   finalAccusations: Map<accuserPlayerId, accusedCharacterId[]>,
+ *   accusationResults: [{playerId, playerName, accusedCharacterNames, correctCount, wrongCount, missedCount, perfect, pointsEarned}],
  *   chatLog: [{playerId, name, text, ts}],
  *   guiltyChatLog: [{playerId, name, text, ts}],
  *   gameMaster: { id, socketId, name } | null,
@@ -109,7 +108,7 @@ function isController(room, socket) {
 
 const PHASES = [
   'lobby', 'distribution', 'dossier', 'enquete',
-  'vote', 'elimination', 'reveal'
+  'accusation', 'reveal'
 ];
 
 // ---------- Utilitaires ----------
@@ -161,7 +160,6 @@ function roomSummary(room) {
     players: publicPlayerList(room),
     minPlayers: RULES.minPlayers,
     maxPlayers: RULES.maxPlayers,
-    round: room.round,
     scenarioId: room.scenarioId,
     scenarioTitle: scenarioOf(room).title,
     scenarioDifficulty: scenarioOf(room).difficulty,
@@ -279,7 +277,7 @@ function clearTimers(room) {
 }
 
 function phaseLabelServer(phase) {
-  return ({ distribution: 'Distribution des rôles', dossier: 'Dossier secret', enquete: 'Enquête', vote: 'Vote', elimination: 'Résolution', reveal: 'Révélation' }[phase] || phase);
+  return ({ distribution: 'Distribution des rôles', dossier: 'Dossier secret', enquete: 'Enquête', accusation: 'Accusation finale', reveal: 'Révélation' }[phase] || phase);
 }
 
 function setPhase(room, phase, durationSeconds) {
@@ -311,13 +309,13 @@ function setPhase(room, phase, durationSeconds) {
     room.readyPlayers = new Set();
   }
 
-  if (phase === 'vote') {
-    room.votes = new Map();
+  if (phase === 'accusation') {
+    room.finalAccusations = new Map();
   }
 
   broadcastRoomState(room);
-  io.to(room.code).emit('phase:changed', { phase, phaseEndsAt: room.phaseEndsAt, round: room.round, revealedClueCount: room.revealedClueCount || 0, activeClueCount: (room.activeClues || []).length });
-  if (phase !== 'lobby') pushChat(room, { system: true, text: `⏱ Phase : ${phaseLabelServer(phase)}${room.round > 1 ? ` — manche ${room.round}` : ''}.`, ts: Date.now() });
+  io.to(room.code).emit('phase:changed', { phase, phaseEndsAt: room.phaseEndsAt, revealedClueCount: room.revealedClueCount || 0, activeClueCount: (room.activeClues || []).length });
+  if (phase !== 'lobby') pushChat(room, { system: true, text: `⏱ Phase : ${phaseLabelServer(phase)}.`, ts: Date.now() });
 
   if (phase === 'dossier') {
     io.to(room.code).emit('dossier:opened', { phaseEndsAt: room.phaseEndsAt });
@@ -359,18 +357,13 @@ function startClueTimer(room, phaseDurationSeconds) {
 
 function advancePhase(room) {
   const idx = PHASES.indexOf(room.phase);
-  let next = PHASES[idx + 1] || 'reveal';
+  const next = PHASES[idx + 1] || 'reveal';
 
-  // Boucle : après élimination, si la partie continue, on repart en enquête
-  if (room.phase === 'elimination') {
-    const outcome = checkWinCondition(room);
-    if (outcome) {
-      setPhase(room, 'reveal', null);
-      io.to(room.code).emit('game:over', outcome);
-      return;
-    }
-    room.round += 1;
-    setPhase(room, 'enquete', RULES.phaseDurations.enquete);
+  // Une seule manche : à la fin de l'accusation finale (temps écoulé ou tous
+  // les joueurs ont répondu), on calcule les résultats puis on révèle.
+  if (room.phase === 'accusation') {
+    resolveAccusations(room);
+    setPhase(room, 'reveal', null);
     return;
   }
 
@@ -435,88 +428,70 @@ function buildDossier(room, playerId) {
   };
 }
 
-// ---------- VOTE ----------
-function castVote(room, voterPlayerId, targetPlayerId) {
-  const voter = room.players.get(voterPlayerId);
-  const target = room.players.get(targetPlayerId);
-  if (!voter || !voter.alive) throw new Error('Joueur éliminé : vote impossible.');
-  if (!target || !target.alive) throw new Error('Cible invalide.');
-  if (voterPlayerId === targetPlayerId) throw new Error('Un joueur ne peut pas voter pour lui-même.');
-  room.votes.set(voterPlayerId, targetPlayerId);
+// ---------- ACCUSATION FINALE (libre, sans élimination) ----------
+// Chaque joueur désigne, une seule fois et sans retour en arrière possible,
+// le ou les personnages qu'il pense coupables (0, 1 ou plusieurs). Le score
+// dépend de la précision : pas d'élimination, pas de nouvelle manche.
+function submitFinalAccusation(room, accuserPlayerId, accusedPlayerIds) {
+  const accuser = room.players.get(accuserPlayerId);
+  if (!accuser) throw new Error('Joueur introuvable.');
+  if (room.finalAccusations.has(accuserPlayerId)) throw new Error('Ton accusation a déjà été envoyée.');
 
-  const alivePlayers = [...room.players.values()].filter((p) => p.alive);
-  io.to(room.code).emit('vote:progress', {
-    votesCast: room.votes.size,
-    totalAlive: alivePlayers.length
+  const uniqueTargetIds = [...new Set(Array.isArray(accusedPlayerIds) ? accusedPlayerIds : [])]
+    .filter((pid) => pid !== accuserPlayerId && room.characterAssignments.has(pid));
+  const accusedCharIds = uniqueTargetIds.map((pid) => room.characterAssignments.get(pid));
+
+  room.finalAccusations.set(accuserPlayerId, accusedCharIds);
+
+  io.to(room.code).emit('accusation:progress', {
+    submitted: room.finalAccusations.size,
+    total: room.players.size
   });
 
-  if (room.votes.size >= alivePlayers.length) {
-    resolveVote(room);
+  if (room.finalAccusations.size >= room.players.size) {
+    resolveAccusations(room);
+    setPhase(room, 'reveal', null);
   }
 }
 
-function resolveVote(room) {
+function resolveAccusations(room) {
   clearTimers(room);
   const scenario = scenarioOf(room);
-  const tally = new Map();
-  for (const targetId of room.votes.values()) {
-    tally.set(targetId, (tally.get(targetId) || 0) + 1);
-  }
-  let max = 0;
-  let winners = [];
-  for (const [targetId, count] of tally.entries()) {
-    if (count > max) { max = count; winners = [targetId]; }
-    else if (count === max) { winners.push(targetId); }
-  }
+  const guiltySet = new Set(room.guiltyCharacterIds);
+  const results = [];
 
-  let eliminatedId = null;
-  if (winners.length === 1 && max > 0) {
-    eliminatedId = winners[0];
-    const player = room.players.get(eliminatedId);
-    player.alive = false;
-    const charId = room.characterAssignments.get(eliminatedId);
-    const wasGuilty = room.guiltyCharacterIds.includes(charId);
-    for (const voterId of room.votes.keys()) addScore(room, voterId, 5, 'Vote effectué');
-    for (const voterId of room.votes.keys()) {
-      if (room.votes.get(voterId) === eliminatedId) addScore(room, voterId, wasGuilty ? 35 : -10, wasGuilty ? 'Bon vote : coupable identifié' : 'Mauvais vote : innocent éliminé');
-    }
-    if (wasGuilty) addScore(room, eliminatedId, -20, 'Éliminé comme coupable');
-    else addScore(room, eliminatedId, 10, 'Éliminé à tort : bluff réussi');
-    io.to(room.code).emit('vote:result', {
-      tie: false,
-      eliminatedPlayerId: eliminatedId,
-      eliminatedName: player.name,
-      eliminatedCharacterName: scenario.charById[charId].name,
-      wasGuilty,
-      tally: Object.fromEntries(tally)
-    });
-  } else {
-    io.to(room.code).emit('vote:result', {
-      tie: true,
-      tally: Object.fromEntries(tally)
+  for (const player of room.players.values()) {
+    const accusedIds = room.finalAccusations.get(player.id) || [];
+    const accusedSet = new Set(accusedIds);
+    const correctCount = accusedIds.filter((id) => guiltySet.has(id)).length;
+    const wrongCount = accusedIds.filter((id) => !guiltySet.has(id)).length;
+    const missedCount = [...guiltySet].filter((id) => !accusedSet.has(id)).length;
+    const perfect = wrongCount === 0 && missedCount === 0 && accusedIds.length === guiltySet.size;
+
+    let points = correctCount * 40 - wrongCount * 15;
+    if (perfect) points += 20;
+
+    const reason = accusedIds.length === 0
+      ? 'Aucune accusation envoyée'
+      : perfect
+        ? 'Accusation parfaite : tous les coupables identifiés'
+        : `${correctCount} coupable(s) trouvé(s), ${wrongCount} innocent(s) accusé(s) à tort`;
+
+    addScore(room, player.id, points, reason);
+
+    results.push({
+      playerId: player.id,
+      playerName: player.name,
+      accusedCharacterNames: accusedIds.map((id) => scenario.charById[id]?.name).filter(Boolean),
+      correctCount,
+      wrongCount,
+      missedCount,
+      perfect,
+      pointsEarned: points
     });
   }
 
-  setPhase(room, 'elimination', RULES.phaseDurations.elimination);
-}
-
-// ---------- CONDITIONS DE VICTOIRE ----------
-function checkWinCondition(room) {
-  const alive = [...room.players.values()].filter((p) => p.alive);
-  const aliveGuilty = alive.filter((p) =>
-    room.guiltyCharacterIds.includes(room.characterAssignments.get(p.id))
-  );
-  const aliveInnocent = alive.filter((p) =>
-    !room.guiltyCharacterIds.includes(room.characterAssignments.get(p.id))
-  );
-
-  if (aliveGuilty.length === 0) {
-    return { winner: 'innocents', reason: 'Tous les coupables ont été éliminés.' };
-  }
-  if (aliveGuilty.length >= aliveInnocent.length) {
-    return { winner: 'coupables', reason: 'Les coupables sont majoritaires ou à égalité parmi les survivants.' };
-  }
-  return null; // la partie continue
+  room.accusationResults = results;
 }
 
 // ---------- RÉVÉLATION FINALE ----------
@@ -533,7 +508,8 @@ function buildReveal(room) {
     victim: scenario.story.victim,
     guilty: guiltyDetails,
     falseLeadsSummary: filterFalseLeadsToPresentCharacters(scenario, scenario.solution.falseLeadsSummary, presentNames),
-    scores: [...room.players.values()].map((p) => ({ playerId: p.id, playerName: p.name, score: p.score || 0, alive: p.alive })).sort((a,b) => b.score-a.score),
+    scores: [...room.players.values()].map((p) => ({ playerId: p.id, playerName: p.name, score: p.score || 0 })).sort((a,b) => b.score-a.score),
+    accusationResults: room.accusationResults || [],
     timeline: filterTimelineToPresentCharacters(scenario, scenario.timeline, presentNames),
     closingLine: scenario.solution.closingLine,
     assignments: [...room.characterAssignments.entries()].map(([playerId, charId]) => ({
@@ -570,8 +546,8 @@ io.on('connection', (socket) => {
         activeClues: [],
         clueTimer: null,
         phaseTimer: null,
-        votes: new Map(),
-        round: 1,
+        finalAccusations: new Map(),
+        accusationResults: [],
         chatLog: [],
         guiltyChatLog: [],
         gameMaster: null,
@@ -846,12 +822,12 @@ io.on('connection', (socket) => {
       room.guiltyCharacterIds = [];
       room.revealedClueCount = 0;
       room.activeClues = [];
-      room.votes = new Map();
-      room.round = 1;
+      room.finalAccusations = new Map();
+      room.accusationResults = [];
       room.paused = false;
       room.pauseRemainingMs = null;
       room.readyPlayers = new Set();
-      room.accusationByRound = new Set();
+      room.formalAccusationsSent = new Set();
       room.chatLog = [];
       room.guiltyChatLog = [];
       room.phase = 'lobby';
@@ -873,7 +849,8 @@ io.on('connection', (socket) => {
       for (const p of room.players.values()) { p.alive = true; p.score = 0; p.scoreEvents = []; }
       room.characterAssignments = new Map();
       room.guiltyCharacterIds = []; room.activeClues = []; room.revealedClueCount = 0;
-      room.votes = new Map(); room.round = 1; room.chatLog = []; room.guiltyChatLog = [];
+      room.finalAccusations = new Map(); room.accusationResults = []; room.formalAccusationsSent = new Set();
+      room.chatLog = []; room.guiltyChatLog = [];
       room.phase = 'lobby'; room.phaseEndsAt = null; room.paused = false; room.pauseRemainingMs = null;
       io.to(room.code).emit('game:restarted');
       broadcastRoomState(room); cb({ ok: true });
@@ -906,29 +883,32 @@ io.on('connection', (socket) => {
     });
   });
 
-  socket.on('vote:cast', ({ targetPlayerId }, cb) => {
+  // Accusation finale (une seule manche) : chaque joueur choisit librement,
+  // une fois pour toutes, qui il pense être coupable — pas d'élimination.
+  socket.on('accusation:submit', ({ accusedPlayerIds }, cb) => {
     try {
       const room = getRoomOrThrow(socket.data.roomCode);
-      if (room.phase !== 'vote') throw new Error('Le vote n\'est pas ouvert.');
-      castVote(room, socket.data.playerId, targetPlayerId);
+      if (room.phase !== 'accusation') throw new Error('L\'accusation finale n\'est pas ouverte.');
+      submitFinalAccusation(room, socket.data.playerId, accusedPlayerIds);
       cb({ ok: true });
     } catch (err) {
       cb({ ok: false, error: err.message });
     }
   });
 
+  // Accusation formelle "de jeu de rôle" pendant l'enquête (indicative, bonus
+  // de points, sans conséquence directe sur la partie ni sur l'accusation finale).
   socket.on('accusation:final', ({ suspectName, motif, opportunite, indice }) => {
     const room = rooms.get(socket.data.roomCode);
-    if (!room || !['enquete','vote'].includes(room.phase)) return;
+    if (!room || room.phase !== 'enquete') return;
     const player = room.players.get(socket.data.playerId);
-    if (!player || !player.alive) return;
+    if (!player) return;
     const suspect = [...room.players.values()].find((p) => p.name.toLowerCase() === String(suspectName || '').trim().toLowerCase());
-    if (!suspect || !suspect.alive || suspect.id === player.id) return;
+    if (!suspect || suspect.id === player.id) return;
     if (![motif, opportunite, indice].every((v) => String(v || '').trim())) return;
-    const accusationKey = `${room.round}:${player.id}`;
-    if (room.accusationByRound?.has(accusationKey)) return;
-    room.accusationByRound = room.accusationByRound || new Set();
-    room.accusationByRound.add(accusationKey);
+    room.formalAccusationsSent = room.formalAccusationsSent || new Set();
+    if (room.formalAccusationsSent.has(player.id)) return;
+    room.formalAccusationsSent.add(player.id);
     const targetCharId = room.characterAssignments.get(suspect.id);
     const correct = room.guiltyCharacterIds.includes(targetCharId);
     const text = `J'accuse ${suspect.name}. Motif : ${String(motif).trim().slice(0,250)}. Opportunité : ${String(opportunite).trim().slice(0,250)}. Indice : ${String(indice).trim().slice(0,250)}.`;

@@ -169,6 +169,34 @@ mystery-case-game01/
   sont plus affichés — seuls les indices et informations pertinents
   pour les personnages réellement en jeu apparaissent.
 
+## 8bis. Manche unique + accusation finale libre (remplace le vote/élimination en boucle)
+
+- **Une seule manche d'enquête**, longue : 20 minutes par défaut, réglable
+  dans `data/rules.json` (`phaseDurations.enquete`). Il n'y a plus de
+  vote intermédiaire ni d'élimination qui relançait une nouvelle enquête.
+- À la fin de l'enquête s'ouvre la phase **Accusation finale** (2 minutes
+  par défaut, `phaseDurations.accusation`) : chaque joueur coche, une
+  seule fois et **sans retour en arrière possible**, le ou les suspects
+  qu'il pense coupables (0, 1 ou plusieurs — utile quand la partie compte
+  2 coupables). Personne n'est éliminé.
+- Score selon la précision : +40 par coupable correctement identifié,
+  -15 par innocent accusé à tort, +20 de bonus en cas d'accusation
+  parfaite (exactement les bons coupables, aucun innocent). La révélation
+  finale affiche le verdict de chaque joueur et son résultat.
+- L'accusation formelle "de jeu de rôle" pendant l'enquête (bouton
+  "Faire une accusation formelle" dans le chat) reste disponible pour le
+  bluff et les points bonus, mais n'a plus d'effet sur la partie — c'est
+  l'accusation finale scellée qui compte pour le résultat.
+
+## 8ter. Nouvelle identité visuelle
+
+Le graphisme a été entièrement refait dans un thème "dossier d'enquête
+chic" : palette encre nocturne / laiton vieilli / parchemin et rouge cire
+à cacheter, typographies Playfair Display + Cormorant Garamond (chargées
+via Google Fonts) et étiquettes façon machine à écrire (Special Elite),
+grain de papier subtil, tampons et ornements dessinés en CSS/SVG — sans
+dépendance à des images externes, donc rien à casser au déploiement.
+
 ## 9. Deuxième scénario : "RIDEAU FINAL" (difficile)
 
 Un second scénario est disponible, choisi dans le lobby par l'hôte

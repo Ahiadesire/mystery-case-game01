@@ -3,19 +3,34 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="theme-color" content="#0b0d12" />
 <title>Le Dernier Dîner — Jeu de mystère</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Special+Elite&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+
+<div class="grain-overlay" aria-hidden="true"></div>
 
 <div id="app">
 
   <!-- ÉCRAN : ACCUEIL -->
   <section id="screen-home" class="screen active">
-    <h1 class="title">LE DERNIER DÎNER</h1>
+    <div class="case-file-mark" aria-hidden="true">DOSSIER N° 01</div>
+    <div class="crest">
+      <svg viewBox="0 0 100 100" class="crest-icon" aria-hidden="true">
+        <circle cx="40" cy="40" r="24" fill="none" stroke="currentColor" stroke-width="4"/>
+        <line x1="58" y1="58" x2="82" y2="82" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <h1 class="title">Le Dernier Dîner</h1>
     <p class="subtitle">Un jeu de mystère, d'enquête et de bluff — 6 à 12 joueurs</p>
+    <div class="title-divider" aria-hidden="true"><span></span>◆<span></span></div>
 
-    <div class="card">
+    <div class="card wax-card">
+      <span class="card-tab">ENTRÉE EN SCÈNE</span>
       <h2>Créer une partie</h2>
       <input id="create-name" placeholder="Ton nom" maxlength="20" />
       <label class="checkbox-row">
@@ -25,7 +40,8 @@
       <button id="btn-create">Créer une partie</button>
     </div>
 
-    <div class="card">
+    <div class="card wax-card">
+      <span class="card-tab">REJOINDRE L'ENQUÊTE</span>
       <h2>Rejoindre une partie</h2>
       <input id="join-name" placeholder="Ton nom" maxlength="20" />
       <input id="join-code" placeholder="Code de salle (ex : A7K4P)" maxlength="5" style="text-transform:uppercase" />
@@ -37,6 +53,7 @@
 
   <!-- ÉCRAN : LOBBY -->
   <section id="screen-lobby" class="screen">
+    <div class="section-eyebrow">SALLE D'ATTENTE</div>
     <h2>Salle : <span id="lobby-code" class="code-badge"></span></h2>
     <p id="lobby-count"></p><p id="adaptive-info" class="hint"></p><div id="lobby-readiness" class="readiness-bar"></div>
 
@@ -58,11 +75,12 @@
       <div class="hero-timer"><span class="timer-label-small">TEMPS</span> ⏱ <span id="dossier-timer-label">01:30</span></div>
     </div>
     <div class="intro-box">
+      <span class="corner-ornament tl" aria-hidden="true"></span><span class="corner-ornament tr" aria-hidden="true"></span>
       <h2>Le Dernier Dîner</h2>
       <p id="story-text"></p>
     </div>
     <div class="dossier-box confidential">
-      <div class="dossier-actions"><button id="btn-dossier-ready" class="secondary-btn">✓ J’ai fini de lire</button></div>
+      <div class="dossier-actions"><button id="btn-dossier-ready" class="secondary-btn">✓ J'ai fini de lire</button></div>
       <h3>DOSSIER CONFIDENTIEL</h3>
       <div id="dossier-content"></div>
     </div>
@@ -75,7 +93,7 @@
       <div><span class="live-dot"></span> EN DIRECT</div><div id="live-phase-status">Enquête en cours</div><div>🔎 <span id="clue-counter">0 / 0</span> indices</div><div>👥 <span id="player-counter">0</span></div>
     </div>
     <header class="game-header">
-      <div>Phase : <span id="phase-label"></span> — Manche <span id="round-label"></span></div>
+      <div>Phase : <span id="phase-label"></span></div>
       <div>⏱ <span id="timer-label"></span></div>
       <button id="btn-toggle-dossier" class="header-btn">Mon dossier</button>
     </header>
@@ -105,14 +123,14 @@
       <div class="col">
         <h3>Discussion</h3>
         <div id="chat-log" class="chat-log"></div>
-        <div id="quick-chat" class="quick-chat"><button data-msg="J’ai un doute sur cet alibi.">💭 Doute</button><button data-msg="Quelqu’un peut confirmer cette information ?">❓ Question</button><button data-msg="J’ai trouvé une contradiction.">⚠️ Contradiction</button></div>
+        <div id="quick-chat" class="quick-chat"><button data-msg="J'ai un doute sur cet alibi.">💭 Doute</button><button data-msg="Quelqu'un peut confirmer cette information ?">❓ Question</button><button data-msg="J'ai trouvé une contradiction.">⚠️ Contradiction</button></div>
         <div class="chat-input-row">
           <input id="chat-input" placeholder="Écrire un message..." maxlength="500" />
           <button id="btn-send-chat">Envoyer</button>
         </div>
 
         <details class="accusation-box">
-          <summary>Faire une accusation formelle</summary>
+          <summary>Faire une accusation formelle (bonus, sans conséquence)</summary>
           <input id="acc-suspect" placeholder="Nom du suspect" />
           <input id="acc-motif" placeholder="Quel est son motif ?" />
           <input id="acc-opportunite" placeholder="Comment accédait-il au lieu du crime ?" />
@@ -146,16 +164,21 @@
     </div>
   </section>
 
-  <!-- ÉCRAN : VOTE -->
+  <!-- ÉCRAN : ACCUSATION FINALE (manche unique, sans élimination) -->
   <section id="screen-vote" class="screen">
-    <h2>Vote</h2>
-    <div class="vote-hero"><div><span class="eyebrow">PHASE DÉCISIVE</span><h2>Qui ment ?</h2><p id="vote-progress"></p></div><div class="vote-timer">⏱ <span id="vote-timer-label">01:15</span></div></div>
-    <ul id="vote-list" class="player-list"></ul>
+    <div class="vote-hero">
+      <div><span class="eyebrow">DERNIÈRE LIGNE DROITE</span><h2>Qui est coupable ?</h2><p id="vote-progress"></p></div>
+      <div class="vote-timer">⏱ <span id="vote-timer-label">02:00</span></div>
+    </div>
+    <p class="hint accusation-warning">⚖️ Coche un ou plusieurs suspects (ou aucun). Ton verdict est <strong>définitif</strong> : impossible de le modifier une fois envoyé.</p>
+    <ul id="vote-list" class="accusation-list"></ul>
+    <button id="btn-submit-accusation" class="advance-btn">🔏 Sceller mon accusation</button>
     <p id="vote-result"></p>
   </section>
 
   <!-- ÉCRAN : RÉVÉLATION -->
   <section id="screen-reveal" class="screen">
+    <div class="section-eyebrow">L'AFFAIRE EST CLASSÉE</div>
     <h2>Révélation finale</h2>
     <div id="reveal-content"></div>
     <button id="btn-replay" style="display:none">🔄 Rejouer avec les mêmes joueurs</button>

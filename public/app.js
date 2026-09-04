@@ -270,11 +270,10 @@ document.getElementById('btn-toggle-dossier').onclick = () => {
 };
 
 // ---------- CHANGEMENT DE PHASE ----------
-socket.on('phase:changed', ({ phase, phaseEndsAt, round, revealedClueCount = 0, activeClueCount = 0 }) => {
+socket.on('phase:changed', ({ phase, phaseEndsAt, revealedClueCount = 0, activeClueCount = 0 }) => {
   state.phase = phase;
   routeToPhaseScreen(phase);
   document.getElementById('phase-label').textContent = phaseLabel(phase);
-  document.getElementById('round-label').textContent = round;
   startCountdown(phaseEndsAt);
   startPhaseProgress(phaseEndsAt);
   updateLiveStrip();
@@ -283,8 +282,8 @@ socket.on('phase:changed', ({ phase, phaseEndsAt, round, revealedClueCount = 0, 
   const controller = state.isHost || state.isGameMaster;
   btnAdv.style.display = controller && !['reveal'].includes(phase) ? 'block' : 'none';
   if (phase === 'dossier') btnAdv.textContent = '⚡ Tout le monde est prêt → Lancer l’enquête';
-  else if (phase === 'enquete') btnAdv.textContent = '⚡ Terminer l’enquête → Ouvrir le vote';
-  else if (phase === 'vote') btnAdv.textContent = '⚡ Terminer le vote';
+  else if (phase === 'enquete') btnAdv.textContent = '⚡ Terminer l’enquête → Ouvrir l’accusation finale';
+  else if (phase === 'accusation') btnAdv.textContent = '⚡ Clore l’accusation finale';
   else btnAdv.textContent = '⚡ Passer à la phase suivante';
   document.getElementById('gm-panel').style.display = state.isGameMaster ? 'block' : 'none';
   if (phase === 'dossier') {
@@ -294,12 +293,17 @@ socket.on('phase:changed', ({ phase, phaseEndsAt, round, revealedClueCount = 0, 
     ready.textContent = '✓ J’ai fini de lire';
   }
   else clearInterval(dossierCountdownTimer);
-  if (phase === 'vote') startVoteCountdown(phaseEndsAt);
-  else { const v = document.getElementById('vote-timer-label'); if (v) v.textContent = '—'; }
+  if (phase === 'accusation') {
+    startVoteCountdown(phaseEndsAt);
+    renderAccusationChecklist(state.players);
+    document.getElementById('vote-result').textContent = '';
+    const submitBtn = document.getElementById('btn-submit-accusation');
+    if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = '🔏 Sceller mon accusation'; }
+  } else { const v = document.getElementById('vote-timer-label'); if (v) v.textContent = '—'; }
 });
 
 function updateLiveStrip() {
-  const map = { enquete:'Enquête sous pression', vote:'Vote décisif', elimination:'Résolution du vote', dossier:'Lecture des dossiers', distribution:'Distribution secrète', reveal:'Révélation finale' };
+  const map = { enquete:'Enquête sous pression', accusation:'Accusation finale', dossier:'Lecture des dossiers', distribution:'Distribution secrète', reveal:'Révélation finale' };
   const status = document.getElementById('live-phase-status');
   if (status) status.textContent = map[state.phase] || 'En direct';
   const pc = document.getElementById('player-counter');
@@ -337,8 +341,7 @@ function startVoteCountdown(endsAt) {
 function phaseLabel(phase) {
   const map = {
     lobby: 'Lobby', distribution: 'Distribution', dossier: 'Dossier secret',
-    enquete: 'Enquête', vote: 'Vote',
-    elimination: 'Élimination', reveal: 'Révélation'
+    enquete: 'Enquête', accusation: 'Accusation finale', reveal: 'Révélation'
   };
   return map[phase] || phase;
 }
@@ -347,7 +350,7 @@ function routeToPhaseScreen(phase) {
   if (phase === 'lobby') show('screen-lobby');
   else if (phase === 'distribution' || phase === 'dossier') show('screen-dossier');
   else if (phase === 'enquete') show('screen-investigation');
-  else if (phase === 'vote' || phase === 'elimination') show('screen-vote');
+  else if (phase === 'accusation') show('screen-vote');
   else if (phase === 'reveal') show('screen-reveal');
 }
 
@@ -404,44 +407,59 @@ socket.on('phase:changed', ({ phase }) => {
   if (phase === 'enquete' && storyData) renderTimeline(storyData.timeline);
 });
 
-// ---------- SUSPECTS / VOTE ----------
+// ---------- SUSPECTS ----------
 function renderSuspectsAndVoteList(players) {
   const suspectsEl = document.getElementById('suspects-list');
-  const voteEl = document.getElementById('vote-list');
   suspectsEl.innerHTML = '';
-  voteEl.innerHTML = '';
   players.forEach((p) => {
     const li = document.createElement('li');
     li.textContent = `${p.name}${p.characterName ? ' — ' + p.characterName : ''}`;
-    if (!p.alive) li.classList.add('eliminated');
-    suspectsEl.appendChild(li.cloneNode(true));
+    suspectsEl.appendChild(li);
+  });
+  if (state.phase === 'accusation') renderAccusationChecklist(players);
+}
 
-    if (p.alive && p.id !== state.playerId && state.phase === 'vote') {
-      const vli = document.createElement('li');
-      vli.textContent = `${p.name}${p.characterName ? ' — ' + p.characterName : ''}`;
-      vli.classList.add('selectable');
-      vli.onclick = () => {
-        socket.emit('vote:cast', { targetPlayerId: p.id }, (res) => {
-          if (!res.ok) toast(res.error);
-          else toast('Vote enregistré.');
-        });
-      };
-      voteEl.appendChild(vli);
-    }
+// ---------- ACCUSATION FINALE (manche unique, libre, sans élimination) ----------
+function renderAccusationChecklist(players) {
+  const el = document.getElementById('vote-list');
+  if (!el) return;
+  el.innerHTML = '';
+  players.filter((p) => p.id !== state.playerId).forEach((p) => {
+    const li = document.createElement('li');
+    li.className = 'accusation-option';
+    const label = document.createElement('label');
+    const cb = document.createElement('input');
+    cb.type = 'checkbox';
+    cb.className = 'accusation-checkbox';
+    cb.value = p.id;
+    label.appendChild(cb);
+    const span = document.createElement('span');
+    span.textContent = `${p.name}${p.characterName ? ' — ' + p.characterName : ''}`;
+    label.appendChild(span);
+    li.appendChild(label);
+    el.appendChild(li);
   });
 }
 
-socket.on('vote:progress', ({ votesCast, totalAlive }) => {
-  document.getElementById('vote-progress').textContent = `${votesCast} / ${totalAlive} votes enregistrés.`;
-});
+document.getElementById('btn-submit-accusation').onclick = () => {
+  const checked = [...document.querySelectorAll('.accusation-checkbox:checked')].map((cb) => cb.value);
+  const confirmMsg = checked.length
+    ? `Sceller ton accusation contre ${checked.length} suspect(s) ? C'est définitif.`
+    : 'Envoyer une accusation vide (aucun suspect désigné) ? C\'est définitif.';
+  if (!confirm(confirmMsg)) return;
+  socket.emit('accusation:submit', { accusedPlayerIds: checked }, (res) => {
+    if (!res.ok) return toast(res.error);
+    toast('🔏 Accusation scellée.');
+    document.getElementById('vote-result').textContent = 'Ton accusation est enregistrée. En attente des autres joueurs...';
+    document.querySelectorAll('.accusation-checkbox').forEach((cb) => (cb.disabled = true));
+    const btn = document.getElementById('btn-submit-accusation');
+    btn.disabled = true;
+    btn.textContent = '✓ Accusation envoyée';
+  });
+};
 
-socket.on('vote:result', (result) => {
-  const el = document.getElementById('vote-result');
-  if (result.tie) {
-    el.textContent = 'Égalité : personne n\'est éliminé. La discussion reprend.';
-  } else {
-    el.textContent = `${result.eliminatedName} (${result.eliminatedCharacterName}) a été éliminé(e).`;
-  }
+socket.on('accusation:progress', ({ submitted, total }) => {
+  document.getElementById('vote-progress').textContent = `${submitted} / ${total} joueurs ont scellé leur accusation.`;
 });
 
 // ---------- CHAT ----------
@@ -493,8 +511,14 @@ socket.on('game:reveal', (reveal) => {
     <ul>${reveal.falseLeadsSummary.map((f) => `<li>${f}</li>`).join('')}</ul>
     <h3>Qui était qui</h3>
     <ul>${reveal.assignments.map((a) => `<li>${a.playerName} incarnait <strong>${a.characterName}</strong>${a.wasGuilty ? ' — COUPABLE' : ''}</li>`).join('')}</ul>
+    <h3>⚖️ Verdicts</h3>
+    <ul>${(reveal.accusationResults || []).map((r) => `<li><strong>${r.playerName}</strong> — ${
+      r.perfect
+        ? '🎯 accusation parfaite'
+        : `${r.correctCount} coupable(s) trouvé(s), ${r.wrongCount} innocent(s) accusé(s) à tort`
+    } (${r.pointsEarned >= 0 ? '+' : ''}${r.pointsEarned} pts)${r.accusedCharacterNames.length ? ` — a accusé : ${r.accusedCharacterNames.join(', ')}` : ' — aucune accusation'}</li>`).join('')}</ul>
     <h3>🏆 Scores</h3>
-    <ol>${(reveal.scores || []).map((s) => `<li><strong>${s.playerName}</strong> — ${s.score} pts${s.alive ? ' — survivant' : ''}</li>`).join('')}</ol>
+    <ol>${(reveal.scores || []).map((s) => `<li><strong>${s.playerName}</strong> — ${s.score} pts</li>`).join('')}</ol>
     <p><em>${reveal.closingLine}</em></p>
   `;
   show('screen-reveal');
@@ -502,10 +526,6 @@ socket.on('game:reveal', (reveal) => {
 });
 
 document.getElementById('btn-replay').onclick = () => { socket.emit('game:replay', {}, (res) => { if (!res.ok) toast(res.error); }); };
-
-socket.on('game:over', ({ winner, reason }) => {
-  toast(winner === 'innocents' ? 'Les enquêteurs gagnent !' : 'Les coupables gagnent !');
-});
 
 // ---------- CHAT PRIVÉ DES COUPABLES ----------
 socket.on('chat:guilty:enabled', (history) => {
