@@ -590,14 +590,46 @@ io.on('connection', (socket) => {
     try {
       if (socket.data.roomCode) throw new Error('Tu es déjà connecté à une salle depuis cet onglet. Ferme-le ou quitte la salle en cours avant d\'en rejoindre une nouvelle.');
       const room = getRoomOrThrow((code || '').toUpperCase());
-      if (room.phase !== 'lobby') throw new Error('La partie a déjà commencé.');
-      if (room.players.size >= RULES.maxPlayers) throw new Error('Salle complète (12 joueurs maximum).');
       if (!name || !name.trim()) throw new Error('Nom requis.');
-
       const normalizedName = name.trim().toLowerCase();
-      const nameTaken = [...room.players.values()].some((p) => p.name.toLowerCase() === normalizedName)
-        || (room.gameMaster && room.gameMaster.name.toLowerCase() === normalizedName);
-      if (nameTaken) throw new Error('Ce nom est déjà utilisé dans cette salle. Choisis-en un autre.');
+
+      // ---- Reprise de place par le nom ----
+      // Si un joueur déconnecté portait déjà ce nom (session/appli perdue,
+      // sans le token de reconnexion), on le fait rejoindre à sa place —
+      // personnage, dossier, score et progression conservés — au lieu de
+      // refuser le nom. Fonctionne en lobby comme en pleine partie.
+      const existing = [...room.players.values()].find((p) => p.name.toLowerCase() === normalizedName);
+      if (existing) {
+        if (existing.connected && existing.socketId) {
+          throw new Error('Ce nom est déjà utilisé et actif dans cette salle. Choisis-en un autre.');
+        }
+        const token = makeToken();
+        existing.token = token;
+        existing.socketId = socket.id;
+        existing.connected = true;
+        socket.join(room.code);
+        socket.data.roomCode = room.code;
+        socket.data.playerId = existing.id;
+
+        cb({ ok: true, code: room.code, playerId: existing.id, token, room: roomSummary(room), rejoined: true });
+        broadcastRoomState(room);
+        pushChat(room, { system: true, text: `${existing.name} a repris sa place.`, ts: Date.now() });
+
+        if (room.phase !== 'lobby' && room.phase !== 'distribution') {
+          socket.emit('dossier:yours', buildDossier(room, existing.id));
+          if (room.guiltyCharacterIds.includes(room.characterAssignments.get(existing.id))) {
+            socket.join(`${room.code}:guilty`);
+            socket.emit('chat:guilty:enabled', room.guiltyChatLog);
+          }
+        }
+        return;
+      }
+
+      if (room.phase !== 'lobby') throw new Error('La partie a déjà commencé. Si tu faisais partie de cette salle, retape exactement ton nom pour reprendre ta place.');
+      if (room.players.size >= RULES.maxPlayers) throw new Error('Salle complète (12 joueurs maximum).');
+      if (room.gameMaster && room.gameMaster.name.toLowerCase() === normalizedName) {
+        throw new Error('Ce nom est déjà utilisé dans cette salle. Choisis-en un autre.');
+      }
 
       const playerId = makePlayerId();
       const token = makeToken();

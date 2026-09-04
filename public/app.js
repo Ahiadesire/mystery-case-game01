@@ -33,15 +33,22 @@ function toast(msg) {
 }
 
 function saveSession() {
-  sessionStorage.setItem('mystery_session', JSON.stringify({
+  // localStorage (et non sessionStorage) : la session doit survivre même si
+  // le joueur ferme complètement l'application/l'onglet, pas seulement s'il
+  // change d'appli un instant.
+  localStorage.setItem('mystery_session', JSON.stringify({
     code: state.code, playerId: state.playerId, token: state.token
   }));
 }
 
 function loadSession() {
   try {
-    return JSON.parse(sessionStorage.getItem('mystery_session') || 'null');
+    return JSON.parse(localStorage.getItem('mystery_session') || 'null');
   } catch { return null; }
+}
+
+function clearSession() {
+  localStorage.removeItem('mystery_session');
 }
 
 // ---------- ACCUEIL : créer / rejoindre ----------
@@ -72,7 +79,14 @@ function applyJoinResult(res) {
   state.isGameMaster = !!res.isGameMaster;
   saveSession();
   renderRoomState(res.room);
-  show('screen-lobby');
+  if (res.rejoined && res.room.phase !== 'lobby') {
+    // Reprise de place en pleine partie : direction l'écran de la phase en
+    // cours, pas le lobby.
+    routeToPhaseScreen(res.room.phase);
+    toast('Tu as repris ta place dans la partie.');
+  } else {
+    show('screen-lobby');
+  }
 }
 
 // ---------- Reconnexion automatique (perte de connexion) ----------
@@ -80,7 +94,7 @@ window.addEventListener('load', () => {
   const saved = loadSession();
   if (!saved) return;
   socket.emit('room:reconnect', saved, (res) => {
-    if (!res.ok) { sessionStorage.removeItem('mystery_session'); return; }
+    if (!res.ok) { clearSession(); return; }
     state.code = saved.code;
     state.playerId = saved.playerId;
     state.token = saved.token;
@@ -193,7 +207,7 @@ function renderScenarioPicker(room, isController) {
 
 // ---------- EXCLUSION DE LA SALLE ----------
 socket.on('room:kicked', () => {
-  sessionStorage.removeItem('mystery_session');
+  clearSession();
   toast('Tu as été exclu(e) de la salle par l\'hôte.');
   setTimeout(() => window.location.reload(), 1500);
 });
