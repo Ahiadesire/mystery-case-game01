@@ -143,12 +143,18 @@ button:disabled { background: #3a3f4a; cursor: not-allowed; }
 .game-header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   background: var(--bg-panel-2);
   padding: 10px 16px;
   border-radius: 6px;
   margin-bottom: 16px;
   border: 1px solid var(--border);
+  gap: 10px;
+  flex-wrap: wrap;
 }
+.header-btn { width: auto; padding: 6px 12px; font-size: 0.85rem; margin: 0; }
+
+#my-dossier-panel { margin-bottom: 16px; max-height: 400px; overflow-y: auto; }
 
 .grid { display: grid; grid-template-columns: 1fr 1fr 1.2fr; gap: 16px; }
 @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
@@ -201,6 +207,19 @@ button:disabled { background: #3a3f4a; cursor: not-allowed; }
   font-size: 0.85rem;
   margin: 8px 0;
 }
+
+.scenario-option {
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 10px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: border-color .15s;
+}
+.scenario-option:hover { border-color: var(--accent-2); }
+.scenario-option.selected { border-color: var(--accent); background: #1b1214; }
+.scenario-option .scenario-title { color: var(--accent-2); font-weight: bold; }
+.scenario-option .scenario-diff { font-size: 0.8rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px; }
 
 .guilty-chat-box {
   margin-top: 14px;

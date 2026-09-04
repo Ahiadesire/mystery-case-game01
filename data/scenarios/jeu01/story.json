@@ -1,0 +1,16 @@
+{
+  "id": "jeu01",
+  "title": "LE DERNIER DÎNER",
+  "type": ["meurtre mystérieux", "enquête", "déduction", "bluff", "jeu social"],
+  "minPlayers": 6,
+  "maxPlayers": 12,
+  "durationMinutes": 30,
+  "victim": {
+    "name": "Antoine Morel",
+    "age": 42,
+    "profession": "Homme d'affaires / dirigeant d'entreprise",
+    "deathFoundTime": "21h27",
+    "murderWindow": "21h15 - 21h25"
+  },
+  "publicIntroTemplate": "Plusieurs invités ({{playerCount}} au total) sont réunis à la Villa Morel pour un dîner privé. À 21h27, Antoine Morel est retrouvé mort dans son bureau. Tous les invités avaient une raison de lui en vouloir, mais seuls les véritables coupables ont participé au meurtre."
+}

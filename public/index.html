@@ -39,6 +39,13 @@
   <section id="screen-lobby" class="screen">
     <h2>Salle : <span id="lobby-code" class="code-badge"></span></h2>
     <p id="lobby-count"></p>
+
+    <div id="scenario-picker" class="card" style="display:none">
+      <h2>Scénario</h2>
+      <div id="scenario-options"></div>
+    </div>
+    <p id="scenario-readonly" class="hint"></p>
+
     <ul id="lobby-players" class="player-list"></ul>
     <button id="btn-start" style="display:none">Lancer la partie</button>
     <p id="lobby-hint" class="hint"></p>
@@ -61,7 +68,10 @@
     <header class="game-header">
       <div>Phase : <span id="phase-label"></span> — Manche <span id="round-label"></span></div>
       <div>⏱ <span id="timer-label"></span></div>
+      <button id="btn-toggle-dossier" class="header-btn">Mon dossier</button>
     </header>
+
+    <div id="my-dossier-panel" class="dossier-box confidential" style="display:none"></div>
 
     <div class="grid">
       <div class="col">

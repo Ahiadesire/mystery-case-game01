@@ -15,20 +15,49 @@ const cors = require('cors');
 const { Server } = require('socket.io');
 const { customAlphabet } = require('nanoid');
 
-// ---------- Chargement des données du scénario (contenu séparé du moteur) ----------
+// ---------- Chargement des scénarios (contenu séparé du moteur) ----------
 const dataDir = path.join(__dirname, '..', 'data');
-const loadJSON = (file) => JSON.parse(fs.readFileSync(path.join(dataDir, file), 'utf-8'));
+const scenariosDir = path.join(dataDir, 'scenarios');
+const loadJSON = (filePath) => JSON.parse(fs.readFileSync(filePath, 'utf-8'));
 
-const RULES = loadJSON('rules.json');
-const STORY = loadJSON('story.json');
-const CHARACTERS = loadJSON('characters.json'); // contient motif/secret/alibi/etc (privé)
-const CLUES = loadJSON('clues.json').sort((a, b) => a.order - b.order);
-const TIMELINE = loadJSON('timeline.json');
-const LOCATIONS = loadJSON('locations.json');
-const QUESTIONS = loadJSON('questions.json');
-const SOLUTION = loadJSON('solution.json');
+const RULES = loadJSON(path.join(dataDir, 'rules.json')); // règles globales (durées de phase, min/max joueurs)
 
-const CHAR_BY_ID = Object.fromEntries(CHARACTERS.map((c) => [c.id, c]));
+// Charge chaque scénario présent dans data/scenarios/<id>/ et pré-calcule ses index.
+function loadScenario(scenarioId) {
+  const dir = path.join(scenariosDir, scenarioId);
+  const manifest = loadJSON(path.join(dir, 'manifest.json'));
+  const story = loadJSON(path.join(dir, 'story.json'));
+  const characters = loadJSON(path.join(dir, 'characters.json'));
+  const clues = loadJSON(path.join(dir, 'clues.json')).sort((a, b) => a.order - b.order);
+  const timeline = loadJSON(path.join(dir, 'timeline.json'));
+  const locations = loadJSON(path.join(dir, 'locations.json'));
+  const questions = loadJSON(path.join(dir, 'questions.json'));
+  const solution = loadJSON(path.join(dir, 'solution.json'));
+  return {
+    id: manifest.id,
+    title: manifest.title,
+    difficulty: manifest.difficulty,
+    guiltyPool: manifest.guiltyPool,
+    guiltyRules: manifest.guiltyRules,
+    story, characters, clues, timeline, locations, questions, solution,
+    charById: Object.fromEntries(characters.map((c) => [c.id, c])),
+    allCharNames: characters.map((c) => c.name)
+  };
+}
+
+const SCENARIOS = Object.fromEntries(
+  fs.readdirSync(scenariosDir)
+    .filter((name) => fs.statSync(path.join(scenariosDir, name)).isDirectory())
+    .map((id) => [id, loadScenario(id)])
+);
+const DEFAULT_SCENARIO_ID = Object.keys(SCENARIOS).sort()[0];
+const SCENARIO_LIST = Object.values(SCENARIOS).map((s) => ({
+  id: s.id, title: s.title, difficulty: s.difficulty
+}));
+
+function scenarioOf(room) {
+  return SCENARIOS[room.scenarioId] || SCENARIOS[DEFAULT_SCENARIO_ID];
+}
 
 // ---------- Config serveur ----------
 const PORT = process.env.PORT || 3000;
@@ -79,8 +108,8 @@ function isController(room, socket) {
 }
 
 const PHASES = [
-  'lobby', 'distribution', 'dossier', 'investigation',
-  'discussion', 'vote', 'elimination', 'reveal'
+  'lobby', 'distribution', 'dossier', 'enquete',
+  'vote', 'elimination', 'reveal'
 ];
 
 // ---------- Utilitaires ----------
@@ -108,6 +137,7 @@ function getRoomOrThrow(code) {
 }
 
 function publicPlayerList(room) {
+  const scenario = scenarioOf(room);
   return [...room.players.values()].map((p) => ({
     id: p.id,
     name: p.name,
@@ -117,7 +147,7 @@ function publicPlayerList(room) {
     characterName: room.phase === 'lobby' || room.phase === 'distribution'
       ? null
       : (room.characterAssignments.get(p.id)
-          ? CHAR_BY_ID[room.characterAssignments.get(p.id)].name
+          ? scenario.charById[room.characterAssignments.get(p.id)].name
           : null)
   }));
 }
@@ -130,7 +160,11 @@ function roomSummary(room) {
     players: publicPlayerList(room),
     minPlayers: RULES.minPlayers,
     maxPlayers: RULES.maxPlayers,
-    round: room.round
+    round: room.round,
+    scenarioId: room.scenarioId,
+    scenarioTitle: scenarioOf(room).title,
+    scenarioDifficulty: scenarioOf(room).difficulty,
+    availableScenarios: SCENARIO_LIST
   };
 }
 
@@ -143,9 +177,9 @@ function pushChat(room, entry) {
   io.to(room.code).emit('chat:message', entry);
 }
 
-// ---------- RÈGLE : détermination du nombre de coupables ----------
-function guiltyRuleFor(playerCount) {
-  const rule = RULES.guiltyRules.find(
+// ---------- RÈGLE : détermination du nombre de coupables (dépend du scénario) ----------
+function guiltyRuleFor(scenario, playerCount) {
+  const rule = scenario.guiltyRules.find(
     (r) => playerCount >= r.minPlayers && playerCount <= r.maxPlayers
   );
   if (!rule) throw new Error('Nombre de joueurs hors des règles autorisées.');
@@ -154,10 +188,11 @@ function guiltyRuleFor(playerCount) {
 
 // ---------- DISTRIBUTION DES PERSONNAGES (serveur uniquement) ----------
 function distributeCharacters(room) {
+  const scenario = scenarioOf(room);
   const players = [...room.players.values()];
   const n = players.length;
-  const rule = guiltyRuleFor(n);
-  const pool = RULES.guiltyPool; // ["sarah", "nicolas"]
+  const rule = guiltyRuleFor(scenario, n);
+  const pool = scenario.guiltyPool;
 
   let requiredGuiltyIds = [];
   if (rule.mode === 'random-one') {
@@ -169,7 +204,7 @@ function distributeCharacters(room) {
   }
 
   // Les coupables requis DOIVENT faire partie des personnages distribués
-  const remainingCharIds = CHARACTERS
+  const remainingCharIds = scenario.characters
     .map((c) => c.id)
     .filter((id) => !requiredGuiltyIds.includes(id));
 
@@ -227,9 +262,16 @@ function setPhase(room, phase, durationSeconds) {
     room.phaseTimer = setTimeout(() => advancePhase(room), durationSeconds * 1000);
   }
 
-  if (phase === 'investigation') {
+  if (phase === 'enquete') {
+    // Ne garder que les indices pertinents pour les personnages réellement
+    // distribués cette partie (+ les indices génériques sans personnage lié),
+    // pour que l'histoire s'adapte au nombre de joueurs connectés.
+    const distributedIds = new Set(room.characterAssignments.values());
+    room.activeClues = scenarioOf(room).clues.filter(
+      (c) => c.linkedCharacterId === null || distributedIds.has(c.linkedCharacterId)
+    );
     room.revealedClueCount = 0;
-    startClueTimer(room);
+    startClueTimer(room, durationSeconds);
   }
 
   if (phase === 'vote') {
@@ -257,15 +299,20 @@ function setPhase(room, phase, durationSeconds) {
   }
 }
 
-function startClueTimer(room) {
-  const interval = RULES.clueRevealIntervalSeconds * 1000;
+function startClueTimer(room, phaseDurationSeconds) {
+  const clues = room.activeClues || [];
+  if (clues.length === 0) return;
+  // Étale la révélation des indices sur toute la durée de la phase d'enquête,
+  // avec un minimum entre deux indices pour ne pas les envoyer trop vite.
+  const spread = Math.floor((phaseDurationSeconds * 1000) / (clues.length + 1));
+  const interval = Math.max(RULES.clueRevealMinIntervalSeconds * 1000, spread);
   room.clueTimer = setInterval(() => {
-    if (room.revealedClueCount >= CLUES.length) {
+    if (room.revealedClueCount >= clues.length) {
       clearInterval(room.clueTimer);
       room.clueTimer = null;
       return;
     }
-    const clue = CLUES[room.revealedClueCount];
+    const clue = clues[room.revealedClueCount];
     room.revealedClueCount += 1;
     io.to(room.code).emit('clue:revealed', clue);
   }, interval);
@@ -275,7 +322,7 @@ function advancePhase(room) {
   const idx = PHASES.indexOf(room.phase);
   let next = PHASES[idx + 1] || 'reveal';
 
-  // Boucle : après élimination, si la partie continue, on repart en investigation
+  // Boucle : après élimination, si la partie continue, on repart en enquête
   if (room.phase === 'elimination') {
     const outcome = checkWinCondition(room);
     if (outcome) {
@@ -284,7 +331,7 @@ function advancePhase(room) {
       return;
     }
     room.round += 1;
-    setPhase(room, 'investigation', RULES.phaseDurations.investigation);
+    setPhase(room, 'enquete', RULES.phaseDurations.enquete);
     return;
   }
 
@@ -293,10 +340,25 @@ function advancePhase(room) {
 }
 
 // ---------- DOSSIER PRIVÉ ----------
+// Retire les lignes d'information qui font référence à un personnage absent
+// de la partie en cours, pour que l'histoire s'adapte au nombre de joueurs.
+function filterInfoToPresentCharacters(scenario, informations, presentNames) {
+  return informations.filter((line) => {
+    const mentionsAbsentCharacter = scenario.allCharNames.some(
+      (n) => !presentNames.has(n) && line.includes(n)
+    );
+    return !mentionsAbsentCharacter;
+  });
+}
+
 function buildDossier(room, playerId) {
+  const scenario = scenarioOf(room);
   const charId = room.characterAssignments.get(playerId);
-  const char = CHAR_BY_ID[charId];
+  const char = scenario.charById[charId];
   const isGuilty = room.guiltyCharacterIds.includes(charId);
+  const presentNames = new Set(
+    [...room.characterAssignments.values()].map((id) => scenario.charById[id].name)
+  );
   return {
     identite: { nom: char.name, age: char.age, role: char.role },
     relation: char.public.relation,
@@ -304,13 +366,13 @@ function buildDossier(room, playerId) {
     secret: char.private.secret,
     alibi: char.private.alibi,
     opportunite: char.private.opportunite,
-    informations: char.private.informations,
+    informations: filterInfoToPresentCharacters(scenario, char.private.informations, presentNames),
     objectif: char.private.objectif,
     statut: isGuilty ? 'COUPABLE' : 'INNOCENT',
     partenaires: isGuilty && room.guiltyCharacterIds.length > 1
       ? room.guiltyCharacterIds
           .filter((id) => id !== charId)
-          .map((id) => CHAR_BY_ID[id].name)
+          .map((id) => scenario.charById[id].name)
       : []
   };
 }
@@ -337,6 +399,7 @@ function castVote(room, voterPlayerId, targetPlayerId) {
 
 function resolveVote(room) {
   clearTimers(room);
+  const scenario = scenarioOf(room);
   const tally = new Map();
   for (const targetId of room.votes.values()) {
     tally.set(targetId, (tally.get(targetId) || 0) + 1);
@@ -358,7 +421,7 @@ function resolveVote(room) {
       tie: false,
       eliminatedPlayerId: eliminatedId,
       eliminatedName: player.name,
-      eliminatedCharacterName: CHAR_BY_ID[charId].name,
+      eliminatedCharacterName: scenario.charById[charId].name,
       wasGuilty: room.guiltyCharacterIds.includes(charId),
       tally: Object.fromEntries(tally)
     });
@@ -393,19 +456,20 @@ function checkWinCondition(room) {
 
 // ---------- RÉVÉLATION FINALE ----------
 function buildReveal(room) {
+  const scenario = scenarioOf(room);
   const guiltyDetails = room.guiltyCharacterIds.map((id) => ({
-    character: CHAR_BY_ID[id].name,
-    explanation: SOLUTION.guiltyExplanations[id] || ''
+    character: scenario.charById[id].name,
+    explanation: scenario.solution.guiltyExplanations[id] || ''
   }));
   return {
-    victim: STORY.victim,
+    victim: scenario.story.victim,
     guilty: guiltyDetails,
-    falseLeadsSummary: SOLUTION.falseLeadsSummary,
-    timeline: TIMELINE,
-    closingLine: SOLUTION.closingLine,
+    falseLeadsSummary: scenario.solution.falseLeadsSummary,
+    timeline: scenario.timeline,
+    closingLine: scenario.solution.closingLine,
     assignments: [...room.characterAssignments.entries()].map(([playerId, charId]) => ({
       playerName: room.players.get(playerId)?.name,
-      characterName: CHAR_BY_ID[charId].name,
+      characterName: scenario.charById[charId].name,
       wasGuilty: room.guiltyCharacterIds.includes(charId)
     }))
   };
@@ -427,12 +491,14 @@ io.on('connection', (socket) => {
       const room = {
         code,
         hostPlayerId: playerId,
+        scenarioId: DEFAULT_SCENARIO_ID,
         phase: 'lobby',
         phaseEndsAt: null,
         players: new Map(),
         characterAssignments: new Map(),
         guiltyCharacterIds: [],
         revealedClueCount: 0,
+        activeClues: [],
         clueTimer: null,
         phaseTimer: null,
         votes: new Map(),
@@ -582,20 +648,37 @@ io.on('connection', (socket) => {
       if (n < RULES.minPlayers || n > RULES.maxPlayers) {
         throw new Error(`Il faut entre ${RULES.minPlayers} et ${RULES.maxPlayers} joueurs.`);
       }
+      const scenario = scenarioOf(room);
 
       setPhase(room, 'distribution', RULES.phaseDurations.distribution);
       const { guiltyCount } = distributeCharacters(room);
 
       io.to(room.code).emit('story:intro', {
-        text: STORY.publicIntroTemplate.replace('{{playerCount}}', String(n)),
-        victim: STORY.victim,
-        locations: LOCATIONS,
-        questions: QUESTIONS,
+        text: scenario.story.publicIntroTemplate.replace('{{playerCount}}', String(n)),
+        victim: scenario.story.victim,
+        locations: scenario.locations,
+        questions: scenario.questions,
+        timeline: scenario.timeline,
         guiltyCount
       });
 
       cb({ ok: true });
       setTimeout(() => setPhase(room, 'dossier', RULES.phaseDurations.dossier), RULES.phaseDurations.distribution * 1000);
+    } catch (err) {
+      cb({ ok: false, error: err.message });
+    }
+  });
+
+  // Choisir le scénario à jouer (hôte ou Game Master, en lobby uniquement)
+  socket.on('room:set_scenario', ({ scenarioId }, cb) => {
+    try {
+      const room = getRoomOrThrow(socket.data.roomCode);
+      if (!isController(room, socket)) throw new Error('Seul l\'hôte (ou le Game Master) peut choisir le scénario.');
+      if (room.phase !== 'lobby') throw new Error('Impossible de changer de scénario après le lancement.');
+      if (!SCENARIOS[scenarioId]) throw new Error('Scénario inconnu.');
+      room.scenarioId = scenarioId;
+      broadcastRoomState(room);
+      cb({ ok: true });
     } catch (err) {
       cb({ ok: false, error: err.message });
     }
@@ -617,8 +700,9 @@ io.on('connection', (socket) => {
     try {
       const room = getRoomOrThrow(socket.data.roomCode);
       if (!isController(room, socket)) throw new Error('Réservé au Game Master.');
-      if (room.revealedClueCount >= CLUES.length) throw new Error('Tous les indices ont déjà été révélés.');
-      const clue = CLUES[room.revealedClueCount];
+      const clues = room.activeClues || [];
+      if (room.revealedClueCount >= clues.length) throw new Error('Tous les indices ont déjà été révélés.');
+      const clue = clues[room.revealedClueCount];
       room.revealedClueCount += 1;
       io.to(room.code).emit('clue:revealed', clue);
       cb({ ok: true });
@@ -652,8 +736,8 @@ io.on('connection', (socket) => {
         room.phaseEndsAt = Date.now() + room.pauseRemainingMs;
         room.phaseTimer = setTimeout(() => advancePhase(room), room.pauseRemainingMs);
       }
-      if (room.phase === 'investigation' && room.revealedClueCount < CLUES.length) {
-        startClueTimer(room);
+      if (room.phase === 'enquete' && room.revealedClueCount < (room.activeClues || []).length) {
+        startClueTimer(room, Math.max(1, Math.round((room.phaseEndsAt - Date.now()) / 1000)));
       }
       io.to(room.code).emit('phase:resumed', { phaseEndsAt: room.phaseEndsAt });
       cb({ ok: true });
@@ -683,6 +767,7 @@ io.on('connection', (socket) => {
       room.characterAssignments = new Map();
       room.guiltyCharacterIds = [];
       room.revealedClueCount = 0;
+      room.activeClues = [];
       room.votes = new Map();
       room.round = 1;
       room.paused = false;
@@ -743,6 +828,27 @@ io.on('connection', (socket) => {
     if (!player) return;
     const text = `J'accuse ${suspectName}. Motif : ${motif}. Opportunité : ${opportunite}. Indice : ${indice}.`;
     pushChat(room, { playerId: player.id, name: player.name, text, ts: Date.now(), accusation: true });
+  });
+
+  // Présence fiable : le client signale explicitement quand l'onglet passe
+  // en arrière-plan (changement d'appli, verrouillage d'écran, etc.) plutôt
+  // que d'attendre une vraie coupure réseau.
+  socket.on('presence:away', () => {
+    const room = rooms.get(socket.data.roomCode);
+    if (!room || socket.data.isGameMaster) return;
+    const player = room.players.get(socket.data.playerId);
+    if (!player) return;
+    player.connected = false;
+    broadcastRoomState(room);
+  });
+
+  socket.on('presence:back', () => {
+    const room = rooms.get(socket.data.roomCode);
+    if (!room || socket.data.isGameMaster) return;
+    const player = room.players.get(socket.data.playerId);
+    if (!player) return;
+    player.connected = true;
+    broadcastRoomState(room);
   });
 
   socket.on('disconnect', () => {

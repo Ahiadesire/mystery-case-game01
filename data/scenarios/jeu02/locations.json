@@ -1,0 +1,10 @@
+[
+  { "id": "foyer", "name": "Foyer", "description": "Lieu du cocktail, bondé toute la soirée — bon alibi collectif." },
+  { "id": "loge_vincent", "name": "Loge de Vincent", "description": "Lieu du meurtre." },
+  { "id": "loge_voisine", "name": "Loge voisine", "description": "Où Camille et Hugo prétendent avoir passé la soirée." },
+  { "id": "coulisses", "name": "Coulisses", "description": "Zone de passage entre la scène et les loges." },
+  { "id": "regie", "name": "Régie technique", "description": "Console lumière et son, sous la responsabilité d'Hugo et de son équipe." },
+  { "id": "scene", "name": "Scène", "description": "Vide après la représentation." },
+  { "id": "couloir_loges", "name": "Couloir des loges", "description": "Accès principal aux loges, surveillé par badges." },
+  { "id": "porte_service", "name": "Porte de service", "description": "Accès direct à la loge de Vincent, réservé à un badge spécial." }
+]

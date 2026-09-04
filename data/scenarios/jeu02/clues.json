@@ -1,0 +1,86 @@
+[
+  {
+    "order": 1,
+    "title": "Altercation publique de David",
+    "linkedCharacterId": "david",
+    "description": "David a menacé Vincent devant plusieurs témoins juste avant le meurtre, après la réduction de son rôle. Un motif fort — mais public, donc peu discret pour un vrai coupable."
+  },
+  {
+    "order": 2,
+    "title": "Critique dévastatrice d'Aurélie",
+    "linkedCharacterId": "aurelie",
+    "description": "Une critique très négative de la pièce, rédigée à l'avance par Aurélie, glissée sous la porte de la loge vers 23h18."
+  },
+  {
+    "order": 3,
+    "title": "Litige financier de Mathieu",
+    "linkedCharacterId": "mathieu",
+    "description": "Un document confirme que Vincent s'apprêtait à remplacer Mathieu comme producteur."
+  },
+  {
+    "order": 4,
+    "title": "Mise en demeure de Romain",
+    "linkedCharacterId": "romain",
+    "description": "Une procédure était en cours entre l'agence de Romain et Vincent au sujet d'un contrat rompu."
+  },
+  {
+    "order": 5,
+    "title": "Empreintes de Chloé sur la porte",
+    "linkedCharacterId": "chloe",
+    "description": "Des empreintes de Chloé sont retrouvées sur la porte de la loge — mais elles datent d'un dépôt de fleurs avant le cocktail."
+  },
+  {
+    "order": 6,
+    "title": "Trace de maquillage",
+    "linkedCharacterId": "ines",
+    "description": "Une trace de maquillage sur le col de la chemise de Vincent correspond à celui utilisé par Inès — antérieure au spectacle."
+  },
+  {
+    "order": 7,
+    "title": "Carnet de Simon",
+    "linkedCharacterId": "simon",
+    "description": "Le carnet de notes de Simon mentionne une dispute avec Vincent la semaine précédente, sans lien apparent avec le soir du meurtre."
+  },
+  {
+    "order": 8,
+    "title": "Absence injustifiée de Bastien",
+    "linkedCharacterId": "bastien",
+    "description": "Bastien a quitté son poste quelques minutes sans autorisation pour un appel personnel — son alibi est partiellement faux, mais sans lien avec le meurtre."
+  },
+  {
+    "order": 9,
+    "title": "Témoignage de Nadia",
+    "linkedCharacterId": "nadia",
+    "description": "Nadia affirme avoir vu Camille et Hugo ensemble dans la loge voisine entre 23h00 et 23h25. Ce témoignage semble innocenter les deux à la fois."
+  },
+  {
+    "order": 10,
+    "title": "Badge de Camille",
+    "linkedCharacterId": "camille",
+    "description": "Le badge de Camille a été scanné près du couloir des loges à 23h08, en pleine fenêtre du meurtre — en contradiction partielle avec l'alibi donné par Nadia."
+  },
+  {
+    "order": 11,
+    "title": "Relevé de la porte de service",
+    "linkedCharacterId": null,
+    "description": "La porte de service, qui donne un accès direct à la loge de Vincent, a été ouverte à 23h07. Seules deux personnes encore présentes à cette heure possèdent ce badge."
+  },
+  {
+    "order": 12,
+    "title": "Montre à gousset brisée",
+    "linkedCharacterId": null,
+    "description": "Une montre à gousset retrouvée dans la loge de Vincent s'est arrêtée à 23h12, coïncidant avec l'heure présumée du coup fatal."
+  },
+  {
+    "order": 13,
+    "title": "Journal de la console lumière",
+    "linkedCharacterId": "hugo",
+    "description": "Le journal automatique de la console lumière ne montre aucune commande manuelle entre 23h05 et 23h20 — alors qu'Hugo affirme l'avoir manipulée pendant ce créneau."
+  },
+  {
+    "order": 14,
+    "title": "SMS envoyé après coup",
+    "linkedCharacterId": "camille",
+    "description": "Un SMS retrouvé sur le téléphone de Nadia, envoyé à 23h27 par Camille : « Dis que tu étais avec moi si on te demande. » L'alibi commun semble avoir été arrangé après la découverte du corps."
+  }
+]

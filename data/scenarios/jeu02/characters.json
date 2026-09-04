@@ -1,0 +1,230 @@
+[
+  {
+    "id": "camille",
+    "name": "Camille",
+    "role": "Actrice principale",
+    "age": 39,
+    "guiltyEligible": true,
+    "public": { "relation": "Actrice principale, dirigée par Vincent" },
+    "private": {
+      "motif": "Vincent avait découvert que Camille négociait en secret son départ vers un théâtre concurrent avant la fin du contrat, et menaçait de la poursuivre et de rendre l'affaire publique, ruinant son retour sur scène tant attendu.",
+      "secret": "Camille entretient une liaison secrète avec Hugo, le régisseur général, tous deux mariés par ailleurs.",
+      "alibi": "Elle affirme être restée dans la loge voisine avec Hugo entre 23h00 et 23h25, confirmée par Nadia.",
+      "opportunite": "Elle possède un badge donnant accès à la porte de service, qui permet de rejoindre la loge de Vincent sans passer par le couloir principal.",
+      "informations": [
+        "Elle sait que Vincent gardait le contrat de rupture dans le tiroir de sa loge.",
+        "Elle sait que Nadia est prête à confirmer n'importe quelle version pour la protéger."
+      ],
+      "objectif": "Faire perdurer l'alibi commun avec Hugo et empêcher que la liaison ou la négociation de départ soit découverte."
+    }
+  },
+  {
+    "id": "hugo",
+    "name": "Hugo",
+    "role": "Régisseur général",
+    "age": 45,
+    "guiltyEligible": true,
+    "public": { "relation": "Régisseur général du théâtre, collaborateur de longue date de Vincent" },
+    "private": {
+      "motif": "Vincent avait découvert qu'Hugo détournait une partie du budget technique depuis deux saisons et s'apprêtait à le signaler au conseil d'administration du théâtre, ce qui aurait mis fin à sa carrière.",
+      "secret": "Hugo entretient une liaison secrète avec Camille, l'actrice principale.",
+      "alibi": "Il affirme avoir manipulé la console lumière depuis la régie entre 23h05 et 23h20.",
+      "opportunite": "Il possède lui aussi un badge donnant accès à la porte de service, à quelques mètres de la régie.",
+      "informations": [
+        "Il sait que le journal automatique de la console lumière enregistre chaque commande manuelle.",
+        "Il sait que Nadia les a couverts, lui et Camille, sans poser de questions."
+      ],
+      "objectif": "Ne jamais être associé physiquement à la loge de Vincent pendant la fenêtre du meurtre, et protéger le secret du détournement de budget."
+    }
+  },
+  {
+    "id": "nadia",
+    "name": "Nadia",
+    "role": "Assistante de mise en scène",
+    "age": 27,
+    "guiltyEligible": false,
+    "public": { "relation": "Assistante de mise en scène de Vincent" },
+    "private": {
+      "motif": "Vincent la critiquait souvent durement en public, mais elle n'a jamais eu de conflit sérieux avec lui.",
+      "secret": "Elle a découvert la liaison entre Camille et Hugo plusieurs semaines avant le meurtre et a promis de garder le secret en échange d'un soutien pour sa prochaine mise en scène.",
+      "alibi": "Elle affirme avoir vu Camille et Hugo ensemble dans la loge voisine entre 23h00 et 23h25 — un mensonge organisé pour protéger leur liaison, pas le meurtre.",
+      "opportunite": "Elle circulait librement entre le foyer et les coulisses toute la soirée.",
+      "informations": [
+        "Elle sait que son témoignage est le seul élément qui semble innocenter Camille et Hugo en même temps.",
+        "Elle a reçu un message de Camille juste avant de témoigner, lui demandant de confirmer leur version."
+      ],
+      "objectif": "Maintenir son témoignage coûte que coûte pour protéger la liaison, sans se douter qu'il couvre peut-être un meurtre."
+    }
+  },
+  {
+    "id": "david",
+    "name": "David",
+    "role": "Acteur secondaire",
+    "age": 34,
+    "guiltyEligible": false,
+    "public": { "relation": "Acteur secondaire dans la pièce de Vincent" },
+    "private": {
+      "motif": "Vincent avait réduit son rôle de moitié trois jours avant la première sans explication, détruisant ses chances d'être remarqué par les critiques.",
+      "secret": "Il a menacé publiquement Vincent devant plusieurs témoins juste avant le meurtre.",
+      "alibi": "Il affirme être resté au bar du foyer avec plusieurs collègues entre 23h00 et 23h30.",
+      "opportunite": "Il pouvait difficilement quitter le foyer sans être remarqué, celui-ci étant bondé.",
+      "informations": [
+        "Il a vu Aurélie glisser un dossier sous la porte de la loge de Vincent.",
+        "Il sait que sa dispute publique avec Vincent le rend suspect aux yeux de tous."
+      ],
+      "objectif": "Faire oublier son altercation publique avec Vincent et éviter d'être désigné trop vite."
+    }
+  },
+  {
+    "id": "aurelie",
+    "name": "Aurélie",
+    "role": "Critique théâtre",
+    "age": 48,
+    "guiltyEligible": false,
+    "public": { "relation": "Critique théâtre, rivale de longue date de Vincent" },
+    "private": {
+      "motif": "Vincent avait publiquement ridiculisé une de ses critiques dix ans plus tôt ; leur rivalité est de notoriété publique dans le milieu.",
+      "secret": "Elle avait rédigé à l'avance une critique dévastatrice de la pièce et voulait la glisser sous la porte de Vincent avant qu'il ne la découvre autrement.",
+      "alibi": "Elle affirme être passée déposer un document sous la porte de la loge vers 23h18, puis être retournée directement au foyer.",
+      "opportunite": "Elle est passée près de la loge, mais brièvement et en présence indirecte de témoins dans le couloir.",
+      "informations": [
+        "Elle a entendu des voix étouffées venant de la loge voisine en passant.",
+        "Elle sait que son geste, découvert, la rendrait immédiatement suspecte."
+      ],
+      "objectif": "Ne pas être associée à sa présence près de la loge au mauvais moment."
+    }
+  },
+  {
+    "id": "mathieu",
+    "name": "Mathieu",
+    "role": "Producteur",
+    "age": 52,
+    "guiltyEligible": false,
+    "public": { "relation": "Producteur de la pièce, associé financier de Vincent" },
+    "private": {
+      "motif": "Vincent s'apprêtait à le remplacer par un autre producteur après plusieurs désaccords artistiques et financiers.",
+      "secret": "Il avait engagé des poursuites informelles contre Vincent pour rupture anticipée d'accord.",
+      "alibi": "Il affirme être resté au foyer à discuter avec des invités, avant de découvrir le corps à 23h32.",
+      "opportunite": "Sa présence continue au foyer est confirmée par plusieurs invités jusqu'à la découverte du corps.",
+      "informations": [
+        "C'est lui qui a découvert le corps de Vincent.",
+        "Il sait que son conflit financier avec Vincent est de notoriété publique dans la production."
+      ],
+      "objectif": "Éviter que son différend financier avec Vincent ne soit interprété comme un mobile de meurtre."
+    }
+  },
+  {
+    "id": "romain",
+    "name": "Romain",
+    "role": "Agent artistique",
+    "age": 41,
+    "guiltyEligible": false,
+    "public": { "relation": "Agent artistique, représente plusieurs acteurs de la troupe" },
+    "private": {
+      "motif": "Vincent avait rompu un contrat le liant à l'un de ses clients et une mise en demeure était en cours entre eux.",
+      "secret": "Il a rencontré Vincent brièvement dans le couloir juste avant le début de la fenêtre du meurtre, pour une discussion tendue mais brève.",
+      "alibi": "Il affirme être reparti au foyer immédiatement après cette brève discussion, vers 23h03.",
+      "opportunite": "Il a quitté le couloir des loges juste avant le début de la fenêtre du meurtre, selon son propre témoignage.",
+      "informations": [
+        "Il sait que son passage dans le couloir juste avant le meurtre pourrait sembler suspect.",
+        "Il a vu Camille se diriger vers la porte de service peu après leur échange."
+      ],
+      "objectif": "Ne pas laisser penser que son passage dans le couloir est lié au meurtre."
+    }
+  },
+  {
+    "id": "lea",
+    "name": "Léa",
+    "role": "Costumière",
+    "age": 30,
+    "guiltyEligible": false,
+    "public": { "relation": "Costumière de la production" },
+    "private": {
+      "motif": "Vincent avait critiqué son travail publiquement devant toute l'équipe la veille de la première.",
+      "secret": "Elle a emprunté sans autorisation une pièce de costume appartenant à Vincent, qu'elle devait lui rendre ce soir-là.",
+      "alibi": "Elle affirme être restée dans l'atelier costumes, à l'écart du foyer, une bonne partie de la soirée.",
+      "opportunite": "L'atelier costumes est éloigné de la loge de Vincent, opportunité faible.",
+      "informations": [
+        "Elle sait que Chloé est passée près de la loge de Vincent plus tôt dans la soirée.",
+        "Elle devait remettre la pièce de costume à Vincent, ce qu'elle n'a jamais fait."
+      ],
+      "objectif": "Rendre discrètement la pièce de costume empruntée sans que cela ne soulève de questions."
+    }
+  },
+  {
+    "id": "ines",
+    "name": "Inès",
+    "role": "Maquilleuse",
+    "age": 26,
+    "guiltyEligible": false,
+    "public": { "relation": "Maquilleuse de la production" },
+    "private": {
+      "motif": "Vincent avait retardé le paiement de sa dernière prestation de plusieurs semaines.",
+      "secret": "Une trace de son maquillage se trouve sur le col de la chemise de Vincent, à la suite d'une retouche de dernière minute avant le spectacle.",
+      "alibi": "Elle affirme être restée au foyer avec les autres membres de l'équipe technique.",
+      "opportunite": "Faible : elle était visible au foyer par plusieurs témoins pendant la majeure partie de la soirée.",
+      "informations": [
+        "Elle sait que la trace de maquillage sur la chemise de Vincent date d'avant le spectacle, pas du meurtre.",
+        "Elle a vu Simon consulter nerveusement son téléphone pendant le cocktail."
+      ],
+      "objectif": "Être payée rapidement sans devenir suspecte à cause de la trace de maquillage."
+    }
+  },
+  {
+    "id": "simon",
+    "name": "Simon",
+    "role": "Technicien lumière",
+    "age": 33,
+    "guiltyEligible": false,
+    "public": { "relation": "Technicien lumière, sous la responsabilité d'Hugo" },
+    "private": {
+      "motif": "Vincent avait eu une dispute avec lui la semaine précédente au sujet d'un réglage lumière raté pendant une répétition.",
+      "secret": "Il craint d'être tenu pour responsable si le journal de la console lumière révèle une anomalie ce soir-là.",
+      "alibi": "Il affirme être resté près de la régie technique, sans y entrer, entre 23h00 et 23h25.",
+      "opportunite": "Il n'avait pas le badge d'accès à la porte de service, donc un accès direct à la loge lui était difficile.",
+      "informations": [
+        "Il sait que le journal automatique de la console lumière n'a enregistré aucune commande manuelle entre 23h05 et 23h20.",
+        "Il a remarqué qu'Hugo n'était pas physiquement à la régie pendant une partie de ce créneau."
+      ],
+      "objectif": "Ne pas être blâmé pour un problème technique qui n'est pas de son fait."
+    }
+  },
+  {
+    "id": "bastien",
+    "name": "Bastien",
+    "role": "Technicien son",
+    "age": 29,
+    "guiltyEligible": false,
+    "public": { "relation": "Technicien son de la production" },
+    "private": {
+      "motif": "Vincent l'avait menacé de ne pas le reprendre pour la prochaine production après une erreur technique pendant la première.",
+      "secret": "Il a quitté son poste sans autorisation pendant quelques minutes pendant le cocktail pour passer un appel personnel.",
+      "alibi": "Il affirme être resté à son poste toute la soirée, ce qui est partiellement faux.",
+      "opportunite": "Son poste est éloigné de la loge, mais son absence de quelques minutes reste inexpliquée publiquement.",
+      "informations": [
+        "Il sait que son mensonge sur son poste pourrait sembler suspect si on vérifie les journaux techniques.",
+        "Il a entendu une porte claquer du côté du couloir des loges vers 23h10, sans pouvoir en identifier la source précise."
+      ],
+      "objectif": "Cacher son absence injustifiée de quelques minutes sans lien avec le meurtre."
+    }
+  },
+  {
+    "id": "chloe",
+    "name": "Chloé",
+    "role": "Comédienne",
+    "age": 24,
+    "guiltyEligible": false,
+    "public": { "relation": "Jeune comédienne de la troupe, proche de Vincent qui la mentorait" },
+    "private": {
+      "motif": "Aucun motif sérieux : sa relation avec Vincent était plutôt cordiale, ce qui la rend d'autant plus suspecte quand ses empreintes sont retrouvées.",
+      "secret": "Elle est passée déposer un bouquet de fleurs devant la porte de la loge de Vincent avant le début du cocktail, laissant ses empreintes sur la porte.",
+      "alibi": "Elle affirme être restée au foyer à discuter avec plusieurs collègues après avoir déposé les fleurs.",
+      "opportunite": "Elle est passée près de la loge, mais bien avant la fenêtre du meurtre.",
+      "informations": [
+        "Elle sait que ses empreintes sur la porte de la loge datent d'avant le cocktail, pas du meurtre.",
+        "Elle a vu Romain sortir du couloir des loges peu avant 23h05."
+      ],
+      "objectif": "Éviter que ses empreintes sur la porte ne soient mal interprétées."
+    }
+  }
+]

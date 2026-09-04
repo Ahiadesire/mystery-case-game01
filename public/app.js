@@ -108,6 +108,7 @@ function renderRoomState(room) {
   const list = document.getElementById('lobby-players');
   list.innerHTML = '';
   const isController = state.isHost || state.isGameMaster;
+  renderScenarioPicker(room, isController);
   room.players.forEach((p) => {
     const li = document.createElement('li');
     const nameSpan = document.createElement('span');
@@ -153,6 +154,38 @@ document.getElementById('btn-start').onclick = () => {
   });
 };
 
+// ---------- CHOIX DU SCÉNARIO (lobby uniquement) ----------
+function renderScenarioPicker(room, isController) {
+  const picker = document.getElementById('scenario-picker');
+  const readonly = document.getElementById('scenario-readonly');
+  const options = room.availableScenarios || [];
+
+  if (room.phase !== 'lobby' || !isController || options.length <= 1) {
+    picker.style.display = 'none';
+    readonly.style.display = room.phase === 'lobby' ? 'block' : 'none';
+    readonly.textContent = room.scenarioTitle
+      ? `Scénario : ${room.scenarioTitle} (${room.scenarioDifficulty})`
+      : '';
+    return;
+  }
+
+  readonly.style.display = 'none';
+  picker.style.display = 'block';
+  const container = document.getElementById('scenario-options');
+  container.innerHTML = '';
+  options.forEach((s) => {
+    const div = document.createElement('div');
+    div.className = 'scenario-option' + (s.id === room.scenarioId ? ' selected' : '');
+    div.innerHTML = `<div class="scenario-title">${s.title}</div><div class="scenario-diff">Difficulté : ${s.difficulty}</div>`;
+    div.onclick = () => {
+      socket.emit('room:set_scenario', { scenarioId: s.id }, (res) => {
+        if (!res.ok) toast(res.error);
+      });
+    };
+    container.appendChild(div);
+  });
+}
+
 // ---------- EXCLUSION DE LA SALLE ----------
 socket.on('room:kicked', () => {
   sessionStorage.removeItem('mystery_session');
@@ -187,10 +220,11 @@ socket.on('story:intro', (data) => {
 });
 
 // ---------- DOSSIER PRIVÉ ----------
-socket.on('dossier:yours', (dossier) => {
-  const el = document.getElementById('dossier-content');
+let myDossierHTML = '';
+function renderDossierHTML(dossier) {
   const statusClass = dossier.statut === 'COUPABLE' ? 'status-guilty' : 'status-innocent';
-  el.innerHTML = `
+  return `
+    <h3>DOSSIER CONFIDENTIEL</h3>
     <div class="dossier-field"><div class="label">Identité</div>${dossier.identite.nom}, ${dossier.identite.age} ans — ${dossier.identite.role}</div>
     <div class="dossier-field"><div class="label">Relation avec Antoine</div>${dossier.relation}</div>
     <div class="dossier-field"><div class="label">Motif</div>${dossier.motif}</div>
@@ -202,8 +236,20 @@ socket.on('dossier:yours', (dossier) => {
     <div class="dossier-field"><div class="label">Statut (strictement privé)</div><span class="${statusClass}">${dossier.statut}</span></div>
     ${dossier.partenaires.length ? `<div class="dossier-field"><div class="label">Complice(s)</div>${dossier.partenaires.join(', ')}</div>` : ''}
   `;
+}
+
+socket.on('dossier:yours', (dossier) => {
+  myDossierHTML = renderDossierHTML(dossier);
+  document.getElementById('dossier-content').innerHTML = myDossierHTML;
+  document.getElementById('my-dossier-panel').innerHTML = myDossierHTML;
   show('screen-dossier');
 });
+
+// Le dossier reste consultable à tout moment pendant l'enquête / le vote
+document.getElementById('btn-toggle-dossier').onclick = () => {
+  const panel = document.getElementById('my-dossier-panel');
+  panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+};
 
 // ---------- CHANGEMENT DE PHASE ----------
 socket.on('phase:changed', ({ phase, phaseEndsAt, round }) => {
@@ -221,7 +267,7 @@ socket.on('phase:changed', ({ phase, phaseEndsAt, round }) => {
 function phaseLabel(phase) {
   const map = {
     lobby: 'Lobby', distribution: 'Distribution', dossier: 'Dossier secret',
-    investigation: 'Investigation', discussion: 'Discussion', vote: 'Vote',
+    enquete: 'Enquête', vote: 'Vote',
     elimination: 'Élimination', reveal: 'Révélation'
   };
   return map[phase] || phase;
@@ -230,7 +276,7 @@ function phaseLabel(phase) {
 function routeToPhaseScreen(phase) {
   if (phase === 'lobby') show('screen-lobby');
   else if (phase === 'distribution' || phase === 'dossier') show('screen-dossier');
-  else if (phase === 'investigation' || phase === 'discussion') show('screen-investigation');
+  else if (phase === 'enquete') show('screen-investigation');
   else if (phase === 'vote' || phase === 'elimination') show('screen-vote');
   else if (phase === 'reveal') show('screen-reveal');
 }
@@ -285,7 +331,7 @@ function renderTimelineOnce() {
     el.appendChild(li);
   });
 }
-socket.on('phase:changed', ({ phase }) => { if (phase === 'investigation') renderTimelineOnce(); });
+socket.on('phase:changed', ({ phase }) => { if (phase === 'enquete') renderTimelineOnce(); });
 
 // ---------- SUSPECTS / VOTE ----------
 function renderSuspectsAndVoteList(players) {
@@ -301,7 +347,7 @@ function renderSuspectsAndVoteList(players) {
 
     if (p.alive && p.id !== state.playerId && state.phase === 'vote') {
       const vli = document.createElement('li');
-      vli.textContent = p.name;
+      vli.textContent = `${p.name}${p.characterName ? ' — ' + p.characterName : ''}`;
       vli.classList.add('selectable');
       vli.onclick = () => {
         socket.emit('vote:cast', { targetPlayerId: p.id }, (res) => {
@@ -455,4 +501,11 @@ socket.on('game:restarted', () => {
   document.getElementById('guilty-chat-box').style.display = 'none';
   document.getElementById('gm-solution-view').textContent = '';
   show('screen-lobby');
+});
+
+// ---------- PRÉSENCE FIABLE (changement d'appli, verrouillage d'écran...) ----------
+document.addEventListener('visibilitychange', () => {
+  if (!state.code) return;
+  if (document.hidden) socket.emit('presence:away');
+  else socket.emit('presence:back');
 });

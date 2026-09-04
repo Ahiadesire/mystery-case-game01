@@ -1,0 +1,16 @@
+{
+  "guiltyExplanations": {
+    "camille": "Camille a tué Vincent. Il menaçait de la poursuivre et de révéler publiquement sa négociation de départ vers un théâtre concurrent, ce qui aurait ruiné son retour sur scène. Elle possédait le badge de la porte de service, a été scannée à 23h08 en pleine fenêtre du meurtre, et le SMS envoyé après coup à Nadia révèle que son alibi commun avec Hugo a été arrangé a posteriori.",
+    "hugo": "Hugo a tué Vincent. Ce dernier avait découvert qu'il détournait une partie du budget technique depuis deux saisons et s'apprêtait à le signaler au conseil d'administration. Hugo prétend avoir manipulé la console lumière pendant la fenêtre du meurtre, mais le journal automatique ne montre aucune commande manuelle à ce moment-là — son alibi technique est faux."
+  },
+  "falseLeadsSummary": [
+    "David avait un motif très visible (rôle réduit, altercation publique) mais est innocent — un vrai coupable évite rarement une dispute publique juste avant d'agir.",
+    "Aurélie avait une rivalité connue avec Vincent et a été vue près de la loge, mais son geste concernait uniquement sa critique.",
+    "Mathieu avait un motif financier fort, mais son alibi collectif au foyer est solide.",
+    "Romain était en conflit juridique avec Vincent et est passé dans le couloir juste avant le meurtre, mais son passage précède la fenêtre du crime.",
+    "Chloé, Inès et Simon laissent des traces physiques ou circonstancielles (empreintes, maquillage, carnet) totalement sans lien avec le meurtre.",
+    "Bastien a menti sur son alibi, mais seulement pour cacher un appel personnel non autorisé.",
+    "Le témoignage de Nadia, qui semblait innocenter Camille et Hugo en même temps, était en réalité un mensonge organisé pour protéger leur liaison secrète — pas le meurtre. C'est ce faux alibi qui rend cette enquête particulièrement difficile."
+  ],
+  "closingLine": "Le meilleur alibi n'est pas toujours celui qui dit la vérité — parfois, c'est simplement celui qu'on a eu le temps d'organiser."
+}

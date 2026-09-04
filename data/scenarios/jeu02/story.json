@@ -1,0 +1,16 @@
+{
+  "id": "jeu02",
+  "title": "RIDEAU FINAL",
+  "type": ["meurtre mystérieux", "enquête", "déduction", "bluff", "jeu social", "difficile"],
+  "minPlayers": 6,
+  "maxPlayers": 12,
+  "durationMinutes": 35,
+  "victim": {
+    "name": "Vincent Delacroix",
+    "age": 54,
+    "profession": "Metteur en scène et directeur artistique du théâtre",
+    "deathFoundTime": "23h32",
+    "murderWindow": "23h05 - 23h20"
+  },
+  "publicIntroTemplate": "Après le triomphe de la première, {{playerCount}} membres de la troupe et de l'équipe se retrouvent pour le cocktail de fin de soirée. À 23h32, Vincent Delacroix, metteur en scène du théâtre, est retrouvé mort dans sa loge. Tout le monde avait une bonne raison de lui en vouloir — mais un ou deux d'entre vous, et un seul mensonge bien placé, ont suffi à maquiller la vérité. Cette enquête est particulièrement retorse : un alibi solide en apparence peut être un mensonge organisé après coup."
+}

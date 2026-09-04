@@ -140,6 +140,61 @@ mystery-case-game01/
   salle ; impossible aussi de créer ou rejoindre une deuxième salle
   depuis le même onglet de navigateur sans le quitter au préalable.
 
+## 8. Ajustements suite aux retours de test
+
+- **Présence fiable** : un joueur qui bascule sur une autre
+  application (changement d'appli, verrouillage d'écran) est
+  maintenant immédiatement marqué "déconnecté" pour les autres, puis
+  redevient "connecté" dès qu'il revient sur l'onglet du jeu — sans
+  perdre sa progression.
+- **Une seule phase d'enquête, plus longue** : les anciennes phases
+  "Investigation" et "Discussion" sont fusionnées en une seule phase
+  "Enquête" de 18 minutes par défaut (réglable entre 15 et 20 minutes
+  dans `data/rules.json`, clé `phaseDurations.enquete`). Le vote a
+  lieu juste après.
+- **Temps de lecture du dossier augmenté** : la phase "Dossier secret"
+  passe de 30 secondes à 4 minutes par défaut
+  (`phaseDurations.dossier`), et le dossier reste consultable à tout
+  moment pendant l'enquête et le vote via le bouton "Mon dossier" en
+  haut de l'écran.
+- **Personnage affiché à côté du pseudo** : dès qu'une partie a
+  démarré, le nom du personnage de chaque joueur apparaît à côté de
+  son pseudo — dans la liste des suspects ET dans la liste de vote —
+  pour faciliter les accusations. Le statut coupable/innocent réel,
+  lui, reste strictement privé (c'est le cœur du jeu : le révéler à
+  tous supprimerait l'enquête).
+- **Histoire adaptée au nombre de joueurs connectés** : les indices
+  et informations qui mentionnent un personnage absent de la partie
+  (parce qu'il n'a pas été distribué à un joueur cette fois-ci) ne
+  sont plus affichés — seuls les indices et informations pertinents
+  pour les personnages réellement en jeu apparaissent.
+
+## 9. Deuxième scénario : "RIDEAU FINAL" (difficile)
+
+Un second scénario est disponible, choisi dans le lobby par l'hôte
+(ou le Game Master) avant de lancer la partie :
+
+- **Histoire** : après la première d'une pièce de théâtre, le
+  metteur en scène Vincent Delacroix est retrouvé mort dans sa loge.
+- **Pourquoi c'est plus difficile** : les deux coupables (Camille et
+  Hugo) ont un alibi mutuel donné par un témoin — Nadia — qui ment,
+  mais pas pour couvrir un meurtre : elle protège leur liaison
+  secrète, sans se douter qu'elle innocente peut-être un meurtrier.
+  Les vrais indices qui les trahissent (badge de porte de service,
+  montre arrêtée, journal de la console lumière, SMS envoyé après
+  coup) n'arrivent que tard dans l'enquête, pendant que six autres
+  personnages affichent des motifs bien plus visibles mais sont
+  innocents.
+- Structure technique identique au Jeu 01 : `data/scenarios/jeu02/`
+  contient `manifest.json`, `story.json`, `characters.json`,
+  `clues.json`, `timeline.json`, `locations.json`, `questions.json`,
+  `solution.json`.
+
+Pour ajouter un futur Jeu 03, dupliquer un dossier de
+`data/scenarios/` avec un nouvel identifiant et remplir les mêmes
+fichiers — le serveur le détecte automatiquement au démarrage et le
+propose dans le sélecteur de scénario du lobby.
+
 ## 7. Pas encore implémenté (nécessite une décision d'infrastructure)
 
 - **Base de données persistante** (PostgreSQL/MySQL/MongoDB) : pour

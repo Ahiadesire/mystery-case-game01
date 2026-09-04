@@ -1,0 +1,253 @@
+[
+  {
+    "id": "thomas",
+    "name": "Thomas",
+    "role": "Associé",
+    "age": 39,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Associé professionnel d'Antoine"
+    },
+    "private": {
+      "motif": "Antoine avait découvert que Thomas détournait de l'argent de l'entreprise et voulait le dénoncer.",
+      "secret": "Thomas a falsifié des documents financiers.",
+      "alibi": "Il affirme être resté dans le salon entre 21h10 et 21h25.",
+      "opportunite": "Il connaît très bien la villa et peut atteindre le bureau en moins d'une minute.",
+      "informations": [
+        "Il sait qu'Antoine voulait vérifier les comptes.",
+        "Il sait également que Sarah s'était disputée avec Antoine."
+      ],
+      "objectif": "Protéger son secret financier."
+    }
+  },
+  {
+    "id": "sarah",
+    "name": "Sarah",
+    "role": "Ex-compagne",
+    "age": 35,
+    "guiltyEligible": true,
+    "public": {
+      "relation": "Ancienne compagne d'Antoine"
+    },
+    "private": {
+      "motif": "Antoine menaçait de révéler un secret qui aurait pu détruire sa réputation.",
+      "secret": "Sarah avait fouillé les affaires d'Antoine avant le dîner.",
+      "alibi": "Elle affirme être restée dans la cuisine vers 21h20.",
+      "opportunite": "Elle connaît le code d'accès du bureau. Elle peut donc entrer discrètement.",
+      "informations": [
+        "Elle sait qu'Antoine avait prévu de révéler quelque chose pendant la soirée.",
+        "Elle sait également que Nicolas connaît l'entrée secondaire."
+      ],
+      "objectif": "Empêcher les autres de découvrir ce qu'elle faisait avant le meurtre."
+    }
+  },
+  {
+    "id": "lucas",
+    "name": "Lucas",
+    "role": "Ami",
+    "age": 31,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Ami d'Antoine"
+    },
+    "private": {
+      "motif": "Antoine lui devait une importante somme d'argent.",
+      "secret": "Lucas a pris une enveloppe dans le bureau avant le meurtre.",
+      "alibi": "Il affirme être resté dans le salon avec les autres invités.",
+      "opportunite": "Il pouvait accéder au bureau.",
+      "informations": [
+        "Il a vu Thomas quitter brièvement le salon.",
+        "Il a également remarqué que la porte du bureau n'était pas complètement fermée auparavant."
+      ],
+      "objectif": "Récupérer l'enveloppe sans se faire découvrir."
+    }
+  },
+  {
+    "id": "paul",
+    "name": "Paul",
+    "role": "Avocat",
+    "age": 44,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Avocat"
+    },
+    "private": {
+      "motif": "Antoine possédait un document capable de détruire sa carrière.",
+      "secret": "Paul avait caché le document dans sa voiture.",
+      "alibi": "Il était au téléphone entre 21h14 et 21h22.",
+      "opportunite": "Son opportunité est faible pendant une partie du créneau à cause de son appel.",
+      "informations": [
+        "Son téléphone permet de vérifier une partie de son alibi.",
+        "Il a également entendu une dispute."
+      ],
+      "objectif": "Empêcher les autres de découvrir le document."
+    }
+  },
+  {
+    "id": "emma",
+    "name": "Emma",
+    "role": "Employée",
+    "age": 28,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Employée d'Antoine"
+    },
+    "private": {
+      "motif": "Antoine avait prévu de la licencier après avoir découvert une grave erreur professionnelle.",
+      "secret": "Elle avait volé une clé USB contenant des fichiers internes.",
+      "alibi": "Elle affirme être retournée dans sa chambre avant 21h15.",
+      "opportunite": "Elle pouvait rapidement atteindre le bureau.",
+      "informations": [
+        "Elle a été vue près du couloir à 21h12.",
+        "Elle sait où certains documents sont conservés."
+      ],
+      "objectif": "Protéger son emploi et récupérer la clé USB."
+    }
+  },
+  {
+    "id": "karim",
+    "name": "Karim",
+    "role": "Cousin",
+    "age": 37,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Cousin d'Antoine"
+    },
+    "private": {
+      "motif": "Antoine voulait vendre la maison familiale.",
+      "secret": "Karim préparait secrètement une action pour empêcher la vente.",
+      "alibi": "Il était dehors pendant une partie de la soirée.",
+      "opportunite": "Faible pendant le moment précis du meurtre.",
+      "informations": [
+        "La caméra extérieure peut confirmer une partie de ses déplacements."
+      ],
+      "objectif": "Empêcher la vente sans révéler son plan."
+    }
+  },
+  {
+    "id": "julie",
+    "name": "Julie",
+    "role": "Journaliste",
+    "age": 33,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Journaliste enquêtant sur Antoine"
+    },
+    "private": {
+      "motif": "Antoine menaçait de révéler l'identité de sa source.",
+      "secret": "Julie enregistrait secrètement certaines conversations.",
+      "alibi": "Elle était près du salon vers 21h18.",
+      "opportunite": "Elle pouvait observer le couloir mais aurait eu du mal à entrer dans le bureau sans être remarquée.",
+      "informations": [
+        "Son enregistrement contient une partie d'une dispute.",
+        "Elle a également vu quelqu'un se diriger rapidement vers le bureau."
+      ],
+      "objectif": "Protéger sa source et décider quelles informations révéler."
+    }
+  },
+  {
+    "id": "nicolas",
+    "name": "Nicolas",
+    "role": "Ami de la famille",
+    "age": 41,
+    "guiltyEligible": true,
+    "public": {
+      "relation": "Ami de la famille"
+    },
+    "private": {
+      "motif": "Antoine connaissait les fraudes financières de Nicolas et menaçait de les révéler.",
+      "secret": "Nicolas avait fouillé le bureau avant le dîner.",
+      "alibi": "Il affirme être dans le jardin vers 21h20.",
+      "opportunite": "Il connaît l'entrée secondaire et peut atteindre le bureau sans passer par le salon.",
+      "informations": [
+        "Il sait que Sarah connaît le code du bureau.",
+        "Il connaît également l'angle mort de la caméra du couloir."
+      ],
+      "objectif": "Ne pas être associé au bureau et faire porter les soupçons sur quelqu'un d'autre."
+    }
+  },
+  {
+    "id": "marc",
+    "name": "Marc",
+    "role": "Médecin",
+    "age": 46,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Médecin et connaissance d'Antoine"
+    },
+    "private": {
+      "motif": "Antoine connaissait une ancienne erreur professionnelle de Marc.",
+      "secret": "Marc avait falsifié un ancien rapport médical.",
+      "alibi": "Il était dans la salle de bain puis dans le couloir avant 21h20.",
+      "opportunite": "Il pouvait se déplacer dans la villa.",
+      "informations": [
+        "Il peut estimer l'heure du décès.",
+        "Il a également remarqué que la porte du bureau était entrouverte."
+      ],
+      "objectif": "Cacher son erreur professionnelle."
+    }
+  },
+  {
+    "id": "claire",
+    "name": "Claire",
+    "role": "Voisine",
+    "age": 30,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Voisine"
+    },
+    "private": {
+      "motif": "Antoine voulait agrandir la villa, ce qui aurait réduit sa vue.",
+      "secret": "Elle s'était disputée avec Antoine la veille.",
+      "alibi": "Elle était d'abord dans le jardin puis dans le salon.",
+      "opportunite": "Elle pouvait entrer dans la maison, mais plusieurs personnes auraient pu la voir.",
+      "informations": [
+        "Elle a entendu une porte vers 21h16.",
+        "Elle a vu Karim sortir."
+      ],
+      "objectif": "Éviter que sa dispute soit considérée comme une preuve suffisante."
+    }
+  },
+  {
+    "id": "yanis",
+    "name": "Yanis",
+    "role": "Technicien",
+    "age": 26,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Technicien intervenant pour Antoine"
+    },
+    "private": {
+      "motif": "Antoine refusait de lui payer une ancienne prestation.",
+      "secret": "Yanis avait temporairement désactivé une caméra pendant une réparation.",
+      "alibi": "Il se trouvait près du local technique.",
+      "opportunite": "Il pouvait accéder au système de sécurité.",
+      "informations": [
+        "Il sait que la caméra du couloir a subi une courte interruption."
+      ],
+      "objectif": "Être payé sans devenir le principal suspect à cause du problème de caméra."
+    }
+  },
+  {
+    "id": "elodie",
+    "name": "Élodie",
+    "role": "Notaire",
+    "age": 36,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Conseillère juridique de la famille Morel"
+    },
+    "private": {
+      "motif": "Antoine possédait un dossier pouvant révéler une irrégularité dans une ancienne succession qu'elle avait traitée.",
+      "secret": "Elle avait modifié une copie d'un document successoral avant le dîner.",
+      "alibi": "Elle affirme être restée dans le salon entre 21h15 et 21h25.",
+      "opportunite": "Elle connaît les habitudes de déplacement dans la villa mais ne connaît pas le code du bureau.",
+      "informations": [
+        "Elle sait qu'Antoine conservait des documents importants dans son bureau.",
+        "Elle a vu Thomas quitter brièvement le salon.",
+        "Elle sait que la porte électronique du bureau enregistre les entrées."
+      ],
+      "objectif": "Empêcher que son ancienne erreur soit découverte."
+    }
+  }
+]

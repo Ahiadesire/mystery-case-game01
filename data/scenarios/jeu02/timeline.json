@@ -1,0 +1,18 @@
+[
+  { "time": "22h30", "event": "Fin de la représentation, applaudissements prolongés." },
+  { "time": "22h40", "event": "Début du cocktail de première dans le foyer." },
+  { "time": "22h50", "event": "Vincent quitte le foyer pour rejoindre sa loge chercher des documents." },
+  { "time": "22h55", "event": "David a une altercation verbale avec Vincent près des coulisses." },
+  { "time": "23h00", "event": "Nadia affirme avoir vu Camille et Hugo ensemble dans la loge voisine." },
+  { "time": "23h03", "event": "Romain quitte le couloir des loges après une brève discussion tendue avec Vincent." },
+  { "time": "23h05", "event": "Début de la fenêtre probable du meurtre." },
+  { "time": "23h07", "event": "La porte de service (accès direct à la loge) est ouverte selon le relevé de badges." },
+  { "time": "23h08", "event": "Le badge de Camille est scanné près du couloir des loges." },
+  { "time": "23h10", "event": "Bastien entend une porte claquer du côté du couloir des loges." },
+  { "time": "23h12", "event": "Une montre à gousset dans la loge de Vincent s'arrête, brisée." },
+  { "time": "23h14", "event": "Aucune commande manuelle n'est enregistrée sur la console lumière, alors qu'Hugo prétend l'avoir manipulée." },
+  { "time": "23h18", "event": "Aurélie glisse un document sous la porte de la loge de Vincent." },
+  { "time": "23h20", "event": "Fin de la fenêtre probable du meurtre." },
+  { "time": "23h27", "event": "Nadia reçoit un message de Camille lui demandant de confirmer leur version commune." },
+  { "time": "23h32", "event": "Le corps de Vincent est découvert par Mathieu." }
+]

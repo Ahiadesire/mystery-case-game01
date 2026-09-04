@@ -1,30 +1,14 @@
 {
   "minPlayers": 6,
   "maxPlayers": 12,
-  "guiltyPool": ["sarah", "nicolas"],
-  "guiltyRules": [
-    {
-      "minPlayers": 6,
-      "maxPlayers": 8,
-      "guiltyCount": 1,
-      "mode": "random-one"
-    },
-    {
-      "minPlayers": 9,
-      "maxPlayers": 12,
-      "guiltyCount": 2,
-      "mode": "both"
-    }
-  ],
   "phaseDurations": {
     "lobby": null,
     "distribution": 5,
-    "dossier": 30,
-    "investigation": 420,
-    "discussion": 300,
-    "vote": 90,
-    "elimination": 10,
+    "dossier": 240,
+    "enquete": 1080,
+    "vote": 120,
+    "elimination": 12,
     "reveal": null
   },
-  "clueRevealIntervalSeconds": 30
+  "clueRevealMinIntervalSeconds": 25
 }
