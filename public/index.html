@@ -38,7 +38,7 @@
   <!-- ÉCRAN : LOBBY -->
   <section id="screen-lobby" class="screen">
     <h2>Salle : <span id="lobby-code" class="code-badge"></span></h2>
-    <p id="lobby-count"></p>
+    <p id="lobby-count"></p><p id="adaptive-info" class="hint"></p>
 
     <div id="scenario-picker" class="card" style="display:none">
       <h2>Scénario</h2>
@@ -89,7 +89,7 @@
         <h3>Indices révélés</h3>
         <ul id="clues-list" class="list-box"></ul>
 
-        <h3>Suspects</h3>
+        <h3>Suspects</h3><p class="hint">Seuls les joueurs de cette partie apparaissent ici.</p>
         <ul id="suspects-list" class="player-list"></ul>
       </div>
 
@@ -148,6 +148,7 @@
   <section id="screen-reveal" class="screen">
     <h2>Révélation finale</h2>
     <div id="reveal-content"></div>
+    <button id="btn-replay" style="display:none">🔄 Rejouer avec les mêmes joueurs</button>
   </section>
 
   <div id="toast"></div>

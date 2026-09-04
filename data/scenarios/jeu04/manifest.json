@@ -1,0 +1,23 @@
+{
+  "id": "jeu04",
+  "title": "LE MARIAGE EMPOISONNÉ",
+  "difficulty": "normale",
+  "guiltyPool": [
+    "amelie",
+    "samir"
+  ],
+  "guiltyRules": [
+    {
+      "minPlayers": 6,
+      "maxPlayers": 8,
+      "guiltyCount": 1,
+      "mode": "random-one"
+    },
+    {
+      "minPlayers": 9,
+      "maxPlayers": 12,
+      "guiltyCount": 2,
+      "mode": "both"
+    }
+  ]
+}

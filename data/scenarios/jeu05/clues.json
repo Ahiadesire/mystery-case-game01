@@ -1,0 +1,74 @@
+[
+  {
+    "order": 1,
+    "title": "Copie d'une œuvre",
+    "linkedCharacterId": "ines",
+    "description": "Une copie récente d'une œuvre prestigieuse est retrouvée dans la réserve."
+  },
+  {
+    "order": 2,
+    "title": "Certificat douteux",
+    "linkedCharacterId": "gabriel",
+    "description": "Un certificat porte une signature d'expert contestable."
+  },
+  {
+    "order": 3,
+    "title": "Registre des rondes",
+    "linkedCharacterId": "romain",
+    "description": "Romain a abandonné son poste pendant 12 minutes."
+  },
+  {
+    "order": 4,
+    "title": "Journal de maintenance",
+    "linkedCharacterId": "thomas",
+    "description": "Un capteur a été désactivé avant le crime pour maintenance."
+  },
+  {
+    "order": 5,
+    "title": "Alarme de vitrine",
+    "linkedCharacterId": "noah",
+    "description": "Noah a déclenché une alarme plus tôt dans la soirée."
+  },
+  {
+    "order": 6,
+    "title": "Photo de Maya",
+    "linkedCharacterId": "maya",
+    "description": "Une photo montre la porte de réserve ouverte, sans identifier l'auteur."
+  },
+  {
+    "order": 7,
+    "title": "Session de Zoé",
+    "linkedCharacterId": "zoe",
+    "description": "Zoé travaillait sur son ordinateur administratif pendant le créneau."
+  },
+  {
+    "order": 8,
+    "title": "Écriture comptable",
+    "linkedCharacterId": "paul",
+    "description": "Paul a modifié des comptes, mais cela ne prouve pas le meurtre."
+  },
+  {
+    "order": 9,
+    "title": "Journal électrique",
+    "linkedCharacterId": "adam",
+    "description": "Une coupure de circuit correspond à une intervention technique légitime."
+  },
+  {
+    "order": 10,
+    "title": "Journal des badges",
+    "linkedCharacterId": null,
+    "description": "Un badge ouvre la réserve à 00h14 puis la salle de contrôle à 00h17."
+  },
+  {
+    "order": 11,
+    "title": "Caméra aveugle",
+    "linkedCharacterId": "ines",
+    "description": "Une caméra est aveugle pendant quatre minutes, exactement pendant la fenêtre critique."
+  },
+  {
+    "order": 12,
+    "title": "Poussière de cadre",
+    "linkedCharacterId": "gabriel",
+    "description": "Une poussière de cadre rare est retrouvée sur la manche de Gabriel."
+  }
+]

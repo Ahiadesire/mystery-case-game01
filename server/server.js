@@ -144,6 +144,7 @@ function publicPlayerList(room) {
     isHost: p.isHost,
     connected: p.connected,
     alive: p.alive,
+    score: p.score || 0,
     characterName: room.phase === 'lobby' || room.phase === 'distribution'
       ? null
       : (room.characterAssignments.get(p.id)
@@ -164,7 +165,10 @@ function roomSummary(room) {
     scenarioId: room.scenarioId,
     scenarioTitle: scenarioOf(room).title,
     scenarioDifficulty: scenarioOf(room).difficulty,
-    availableScenarios: SCENARIO_LIST
+    availableScenarios: SCENARIO_LIST,
+    connectedPlayerCount: [...room.players.values()].filter((p) => p.connected && p.socketId).length,
+    activeCharacterCount: room.characterAssignments.size,
+    guiltyCount: room.guiltyCharacterIds.length || null
   };
 }
 
@@ -175,6 +179,20 @@ function broadcastRoomState(room) {
 function pushChat(room, entry) {
   room.chatLog.push(entry);
   io.to(room.code).emit('chat:message', entry);
+}
+
+function addScore(room, playerId, points, reason) {
+  const p = room.players.get(playerId);
+  if (!p) return;
+  p.score = (p.score || 0) + points;
+  p.scoreEvents = p.scoreEvents || [];
+  p.scoreEvents.push({ points, reason, ts: Date.now() });
+}
+
+function publicCharacter(scenario, id) {
+  const c = scenario.charById[id];
+  if (!c) return null;
+  return { id: c.id, name: c.name, age: c.age, role: c.role, public: c.public };
 }
 
 // ---------- RÈGLE : détermination du nombre de coupables (dépend du scénario) ----------
@@ -189,8 +207,10 @@ function guiltyRuleFor(scenario, playerCount) {
 // ---------- DISTRIBUTION DES PERSONNAGES (serveur uniquement) ----------
 function distributeCharacters(room) {
   const scenario = scenarioOf(room);
-  const players = [...room.players.values()];
+  const players = [...room.players.values()].filter((p) => p.connected && p.socketId);
   const n = players.length;
+  // Seuls les joueurs réellement connectés au lancement participent.
+  room.activePlayerIds = new Set(players.map((p) => p.id));
   const rule = guiltyRuleFor(scenario, n);
   const pool = scenario.guiltyPool;
 
@@ -267,9 +287,13 @@ function setPhase(room, phase, durationSeconds) {
     // distribués cette partie (+ les indices génériques sans personnage lié),
     // pour que l'histoire s'adapte au nombre de joueurs connectés.
     const distributedIds = new Set(room.characterAssignments.values());
-    room.activeClues = scenarioOf(room).clues.filter(
-      (c) => c.linkedCharacterId === null || distributedIds.has(c.linkedCharacterId)
+    const presentNames = new Set(
+      [...distributedIds].map((id) => scenarioOf(room).charById[id]?.name).filter(Boolean)
     );
+    room.activeClues = scenarioOf(room).clues.filter((c) => {
+      if (c.linkedCharacterId !== null && !distributedIds.has(c.linkedCharacterId)) return false;
+      return !textMentionsAbsentCharacter(c.description || '', scenarioOf(room), presentNames);
+    });
     room.revealedClueCount = 0;
     startClueTimer(room, durationSeconds);
   }
@@ -342,13 +366,32 @@ function advancePhase(room) {
 // ---------- DOSSIER PRIVÉ ----------
 // Retire les lignes d'information qui font référence à un personnage absent
 // de la partie en cours, pour que l'histoire s'adapte au nombre de joueurs.
+function textMentionsAbsentCharacter(text, scenario, presentNames) {
+  return scenario.allCharNames.some(
+    (name) => !presentNames.has(name) && String(text).includes(name)
+  );
+}
+
 function filterInfoToPresentCharacters(scenario, informations, presentNames) {
-  return informations.filter((line) => {
-    const mentionsAbsentCharacter = scenario.allCharNames.some(
-      (n) => !presentNames.has(n) && line.includes(n)
-    );
-    return !mentionsAbsentCharacter;
-  });
+  const lines = Array.isArray(informations) ? informations : [informations].filter(Boolean);
+  return lines.filter((line) => !textMentionsAbsentCharacter(line, scenario, presentNames));
+}
+
+function filterTimelineToPresentCharacters(scenario, timeline, presentNames) {
+  return timeline.filter((event) =>
+    !textMentionsAbsentCharacter(`${event.time || ''} ${event.event || ''}`, scenario, presentNames)
+  );
+}
+
+function filterQuestionsToPresentCharacters(scenario, questions, presentNames) {
+  return questions.filter((question) =>
+    !textMentionsAbsentCharacter(question, scenario, presentNames)
+  );
+}
+
+function filterFalseLeadsToPresentCharacters(scenario, falseLeads, presentNames) {
+  return (Array.isArray(falseLeads) ? falseLeads : [])
+    .filter((line) => !textMentionsAbsentCharacter(line, scenario, presentNames));
 }
 
 function buildDossier(room, playerId) {
@@ -417,12 +460,19 @@ function resolveVote(room) {
     const player = room.players.get(eliminatedId);
     player.alive = false;
     const charId = room.characterAssignments.get(eliminatedId);
+    const wasGuilty = room.guiltyCharacterIds.includes(charId);
+    for (const voterId of room.votes.keys()) addScore(room, voterId, 5, 'Vote effectué');
+    for (const voterId of room.votes.keys()) {
+      if (room.votes.get(voterId) === eliminatedId) addScore(room, voterId, wasGuilty ? 35 : -10, wasGuilty ? 'Bon vote : coupable identifié' : 'Mauvais vote : innocent éliminé');
+    }
+    if (wasGuilty) addScore(room, eliminatedId, -20, 'Éliminé comme coupable');
+    else addScore(room, eliminatedId, 10, 'Éliminé à tort : bluff réussi');
     io.to(room.code).emit('vote:result', {
       tie: false,
       eliminatedPlayerId: eliminatedId,
       eliminatedName: player.name,
       eliminatedCharacterName: scenario.charById[charId].name,
-      wasGuilty: room.guiltyCharacterIds.includes(charId),
+      wasGuilty,
       tally: Object.fromEntries(tally)
     });
   } else {
@@ -461,11 +511,15 @@ function buildReveal(room) {
     character: scenario.charById[id].name,
     explanation: scenario.solution.guiltyExplanations[id] || ''
   }));
+  const presentNames = new Set(
+    [...room.characterAssignments.values()].map((id) => scenario.charById[id]?.name).filter(Boolean)
+  );
   return {
     victim: scenario.story.victim,
     guilty: guiltyDetails,
-    falseLeadsSummary: scenario.solution.falseLeadsSummary,
-    timeline: scenario.timeline,
+    falseLeadsSummary: filterFalseLeadsToPresentCharacters(scenario, scenario.solution.falseLeadsSummary, presentNames),
+    scores: [...room.players.values()].map((p) => ({ playerId: p.id, playerName: p.name, score: p.score || 0, alive: p.alive })).sort((a,b) => b.score-a.score),
+    timeline: filterTimelineToPresentCharacters(scenario, scenario.timeline, presentNames),
     closingLine: scenario.solution.closingLine,
     assignments: [...room.characterAssignments.entries()].map(([playerId, charId]) => ({
       playerName: room.players.get(playerId)?.name,
@@ -526,7 +580,7 @@ io.on('connection', (socket) => {
 
       room.players.set(playerId, {
         id: playerId, token, name: name.trim(), socketId: socket.id,
-        connected: true, isHost: true, alive: true
+        connected: true, isHost: true, alive: true, score: 0, scoreEvents: []
       });
       rooms.set(code, room);
 
@@ -558,7 +612,7 @@ io.on('connection', (socket) => {
       const token = makeToken();
       room.players.set(playerId, {
         id: playerId, token, name: name.trim(), socketId: socket.id,
-        connected: true, isHost: false, alive: true
+        connected: true, isHost: false, alive: true, score: 0, scoreEvents: []
       });
 
       socket.join(room.code);
@@ -644,7 +698,7 @@ io.on('connection', (socket) => {
     try {
       const room = getRoomOrThrow(socket.data.roomCode);
       if (!isController(room, socket)) throw new Error('Seul l\'hôte (ou le Game Master) peut lancer la partie.');
-      const n = room.players.size;
+      const n = [...room.players.values()].filter((p) => p.connected && p.socketId).length;
       if (n < RULES.minPlayers || n > RULES.maxPlayers) {
         throw new Error(`Il faut entre ${RULES.minPlayers} et ${RULES.maxPlayers} joueurs.`);
       }
@@ -653,12 +707,20 @@ io.on('connection', (socket) => {
       setPhase(room, 'distribution', RULES.phaseDurations.distribution);
       const { guiltyCount } = distributeCharacters(room);
 
+      const activeCharacterIds = [...room.characterAssignments.values()];
+      const activeNames = new Set(
+        activeCharacterIds.map((id) => scenario.charById[id]?.name).filter(Boolean)
+      );
+
       io.to(room.code).emit('story:intro', {
         text: scenario.story.publicIntroTemplate.replace('{{playerCount}}', String(n)),
         victim: scenario.story.victim,
         locations: scenario.locations,
-        questions: scenario.questions,
-        timeline: scenario.timeline,
+        questions: filterQuestionsToPresentCharacters(scenario, scenario.questions, activeNames),
+        timeline: filterTimelineToPresentCharacters(scenario, scenario.timeline, activeNames),
+        activeCharacters: activeCharacterIds.map((id) => publicCharacter(scenario, id)).filter(Boolean),
+        playerCount: n,
+        connectedPlayers: [...room.players.values()].filter((p) => p.connected && p.socketId).map((p) => ({ id: p.id, name: p.name })),
         guiltyCount
       });
 
@@ -763,6 +825,8 @@ io.on('connection', (socket) => {
       clearTimers(room);
       for (const p of room.players.values()) {
         p.alive = true;
+        p.score = 0;
+        p.scoreEvents = [];
       }
       room.characterAssignments = new Map();
       room.guiltyCharacterIds = [];
@@ -782,6 +846,22 @@ io.on('connection', (socket) => {
     } catch (err) {
       cb({ ok: false, error: err.message });
     }
+  });
+
+  socket.on('game:replay', (_payload, cb) => {
+    try {
+      const room = getRoomOrThrow(socket.data.roomCode);
+      if (!isController(room, socket)) throw new Error("Seul l'hôte ou le Game Master peut relancer la partie.");
+      if (room.phase !== 'reveal') throw new Error('La partie doit être terminée pour être rejouée.');
+      clearTimers(room);
+      for (const p of room.players.values()) { p.alive = true; p.score = 0; p.scoreEvents = []; }
+      room.characterAssignments = new Map();
+      room.guiltyCharacterIds = []; room.activeClues = []; room.revealedClueCount = 0;
+      room.votes = new Map(); room.round = 1; room.chatLog = []; room.guiltyChatLog = [];
+      room.phase = 'lobby'; room.phaseEndsAt = null; room.paused = false; room.pauseRemainingMs = null;
+      io.to(room.code).emit('game:restarted');
+      broadcastRoomState(room); cb({ ok: true });
+    } catch (err) { cb({ ok: false, error: err.message }); }
   });
 
   // ---------- CHAT PRIVÉ DES COUPABLES ----------
@@ -823,10 +903,14 @@ io.on('connection', (socket) => {
 
   socket.on('accusation:final', ({ suspectName, motif, opportunite, indice }) => {
     const room = rooms.get(socket.data.roomCode);
-    if (!room) return;
+    if (!room || !['enquete','vote'].includes(room.phase)) return;
     const player = room.players.get(socket.data.playerId);
-    if (!player) return;
-    const text = `J'accuse ${suspectName}. Motif : ${motif}. Opportunité : ${opportunite}. Indice : ${indice}.`;
+    if (!player || !player.alive) return;
+    const suspect = [...room.players.values()].find((p) => p.name.toLowerCase() === String(suspectName || '').trim().toLowerCase());
+    if (!suspect || !suspect.alive || suspect.id === player.id) return;
+    if (![motif, opportunite, indice].every((v) => String(v || '').trim())) return;
+    const text = `J'accuse ${suspect.name}. Motif : ${String(motif).trim().slice(0,250)}. Opportunité : ${String(opportunite).trim().slice(0,250)}. Indice : ${String(indice).trim().slice(0,250)}.`;
+    addScore(room, player.id, 10, 'Accusation formelle');
     pushChat(room, { playerId: player.id, name: player.name, text, ts: Date.now(), accusation: true });
   });
 

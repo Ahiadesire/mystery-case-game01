@@ -1,0 +1,74 @@
+[
+  {
+    "order": 1,
+    "title": "Factures truquées",
+    "linkedCharacterId": "amelie",
+    "description": "Plusieurs factures portent des anomalies liées à Amélie."
+  },
+  {
+    "order": 2,
+    "title": "Bon de livraison modifié",
+    "linkedCharacterId": "samir",
+    "description": "Le traiteur a modifié une quantité après livraison."
+  },
+  {
+    "order": 3,
+    "title": "Photo de groupe",
+    "linkedCharacterId": "julien",
+    "description": "Julien apparaît au jardin pendant une partie du créneau."
+  },
+  {
+    "order": 4,
+    "title": "Plateau couvert",
+    "linkedCharacterId": "samir",
+    "description": "Samir a transporté un plateau vers la salle privée, mais c'était une commande normale."
+  },
+  {
+    "order": 5,
+    "title": "Gants de cuisine",
+    "linkedCharacterId": "youssef",
+    "description": "Des gants similaires sont retrouvés près de la réserve : fausse piste."
+  },
+  {
+    "order": 6,
+    "title": "Historique de la console DJ",
+    "linkedCharacterId": "karim",
+    "description": "La musique confirme la présence de Karim à la console."
+  },
+  {
+    "order": 7,
+    "title": "Projet de testament",
+    "linkedCharacterId": "antoine",
+    "description": "Le document montre un motif possible mais aucun passage vers la cuisine."
+  },
+  {
+    "order": 8,
+    "title": "Verre de la victime",
+    "linkedCharacterId": "mohamed",
+    "description": "Les empreintes de Mohamed sont normales car il a servi le verre."
+  },
+  {
+    "order": 9,
+    "title": "Caméra du couloir de service",
+    "linkedCharacterId": null,
+    "description": "Elle montre une silhouette entrant dans la réserve à 21h46."
+  },
+  {
+    "order": 10,
+    "title": "Code de la salle privée",
+    "linkedCharacterId": "amelie",
+    "description": "Le code a été utilisé à 21h47."
+  },
+  {
+    "order": 11,
+    "title": "Analyse du dessert",
+    "linkedCharacterId": "samir",
+    "description": "Le dessert de la victime contient une substance étrangère ajoutée après préparation."
+  },
+  {
+    "order": 12,
+    "title": "Message effacé",
+    "linkedCharacterId": "amelie",
+    "description": "Un message récupéré demande de ne pas vérifier les factures avant le lendemain."
+  }
+]

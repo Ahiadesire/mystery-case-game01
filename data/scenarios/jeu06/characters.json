@@ -1,0 +1,218 @@
+[
+  {
+    "id": "julien",
+    "name": "Julien",
+    "role": "Directeur de l'hôtel",
+    "age": 45,
+    "guiltyEligible": true,
+    "public": {
+      "relation": "Directeur de l'hôtel"
+    },
+    "private": {
+      "motif": "La victime allait révéler qu'il détournait les recettes de l'hôtel.",
+      "secret": "Il modifiait les comptes de caisse.",
+      "alibi": "Il affirme être à la réception.",
+      "opportunite": "Il possède le passe général.",
+      "informations": "Il peut accéder au toit et au local électrique.",
+      "objectif": "Faire croire à une panne accidentelle."
+    }
+  },
+  {
+    "id": "celine",
+    "name": "Céline",
+    "role": "Responsable informatique",
+    "age": 36,
+    "guiltyEligible": true,
+    "public": {
+      "relation": "Responsable informatique"
+    },
+    "private": {
+      "motif": "La victime avait découvert qu'elle vendait des données clients.",
+      "secret": "Elle a copié une base de données.",
+      "alibi": "Elle affirme être dans la salle serveur.",
+      "opportunite": "Elle peut désactiver les caméras.",
+      "informations": "Elle connaît le système de contrôle des ascenseurs.",
+      "objectif": "Effacer les logs et son accès."
+    }
+  },
+  {
+    "id": "marco",
+    "name": "Marco",
+    "role": "Chef cuisinier",
+    "age": 43,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Chef cuisinier"
+    },
+    "private": {
+      "motif": "La victime refusait son augmentation.",
+      "secret": "Il a quitté la cuisine sans autorisation.",
+      "alibi": "Il était en cuisine puis au quai.",
+      "opportunite": "Les commandes cuisine le situent là.",
+      "informations": "Il a vu Julien avec un passe.",
+      "objectif": "Éviter un conflit social."
+    }
+  },
+  {
+    "id": "amina",
+    "name": "Amina",
+    "role": "Réceptionniste",
+    "age": 28,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Réceptionniste"
+    },
+    "private": {
+      "motif": "La victime lui reprochait une erreur de réservation.",
+      "secret": "Elle a modifié une réservation VIP.",
+      "alibi": "Elle était au comptoir.",
+      "opportunite": "Le logiciel de réception la confirme.",
+      "informations": "Elle a vu Céline passer vers la salle serveur.",
+      "objectif": "Protéger son emploi."
+    }
+  },
+  {
+    "id": "thibault",
+    "name": "Thibault",
+    "role": "Client régulier",
+    "age": 51,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Client régulier"
+    },
+    "private": {
+      "motif": "La victime connaissait ses problèmes financiers.",
+      "secret": "Il doit beaucoup d'argent à l'hôtel.",
+      "alibi": "Il était au bar.",
+      "opportunite": "Le barman peut le confirmer.",
+      "informations": "Il a entendu l'ascenseur s'arrêter.",
+      "objectif": "Éviter d'être expulsé."
+    }
+  },
+  {
+    "id": "sabrina",
+    "name": "Sabrina",
+    "role": "Responsable ménage",
+    "age": 39,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Responsable ménage"
+    },
+    "private": {
+      "motif": "La victime voulait la remplacer.",
+      "secret": "Elle a pris une clé oubliée.",
+      "alibi": "Elle travaillait au 4e étage.",
+      "opportunite": "Son badge la localise.",
+      "informations": "Elle a trouvé une veste dans un couloir.",
+      "objectif": "Garder son poste."
+    }
+  },
+  {
+    "id": "kevin",
+    "name": "Kevin",
+    "role": "Bagagiste",
+    "age": 24,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Bagagiste"
+    },
+    "private": {
+      "motif": "La victime l'avait accusé d'un vol.",
+      "secret": "Il a caché un objet trouvé.",
+      "alibi": "Il était au quai.",
+      "opportunite": "La caméra du quai le confirme.",
+      "informations": "Il a vu quelqu'un monter vers le toit.",
+      "objectif": "Éviter un licenciement."
+    }
+  },
+  {
+    "id": "nadia",
+    "name": "Nadia",
+    "role": "Avocate",
+    "age": 47,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Avocate"
+    },
+    "private": {
+      "motif": "La victime refusait un accord commercial.",
+      "secret": "Elle a apporté un contrat.",
+      "alibi": "Elle était au salon VIP.",
+      "opportunite": "Son appel confirme sa présence.",
+      "informations": "Elle sait que la victime craignait une fuite de données.",
+      "objectif": "Protéger son client."
+    }
+  },
+  {
+    "id": "luc",
+    "name": "Luc",
+    "role": "Technicien ascenseur",
+    "age": 33,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Technicien ascenseur"
+    },
+    "private": {
+      "motif": "La victime lui devait de l'argent.",
+      "secret": "Il a forcé un redémarrage.",
+      "alibi": "Il était dans le local technique.",
+      "opportunite": "Le journal de maintenance le confirme.",
+      "informations": "Il sait qu'un ascenseur peut être immobilisé.",
+      "objectif": "Récupérer son argent."
+    }
+  },
+  {
+    "id": "fatou",
+    "name": "Fatou",
+    "role": "Barmaid",
+    "age": 31,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Barmaid"
+    },
+    "private": {
+      "motif": "La victime avait refusé sa promotion.",
+      "secret": "Elle a gardé une bouteille ouverte.",
+      "alibi": "Elle était au bar.",
+      "opportunite": "Les commandes la placent derrière le comptoir.",
+      "informations": "Elle a entendu une alarme électrique.",
+      "objectif": "Obtenir sa promotion."
+    }
+  },
+  {
+    "id": "mehdi",
+    "name": "Mehdi",
+    "role": "Consultant sécurité",
+    "age": 40,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Consultant sécurité"
+    },
+    "private": {
+      "motif": "La victime avait rejeté son contrat.",
+      "secret": "Il a testé une serrure.",
+      "alibi": "Il était dans le hall.",
+      "opportunite": "Le registre de sécurité le confirme.",
+      "informations": "Il connaît les failles du passe général.",
+      "objectif": "Récupérer le contrat."
+    }
+  },
+  {
+    "id": "alice",
+    "name": "Alice",
+    "role": "Influenceuse invitée",
+    "age": 26,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Influenceuse invitée"
+    },
+    "private": {
+      "motif": "La victime voulait limiter ses vidéos dans l'hôtel.",
+      "secret": "Elle a filmé des zones interdites.",
+      "alibi": "Elle était près de la piscine.",
+      "opportunite": "Les vidéos ont des horodatages.",
+      "informations": "Une vidéo capture une coupure de lumière.",
+      "objectif": "Éviter des poursuites."
+    }
+  }
+]

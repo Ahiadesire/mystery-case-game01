@@ -1,0 +1,54 @@
+[
+  {
+    "time": "23h30",
+    "event": "Le musée ferme au public."
+  },
+  {
+    "time": "23h45",
+    "event": "Réception privée dans le hall."
+  },
+  {
+    "time": "00h00",
+    "event": "La victime annonce un nouvel inventaire."
+  },
+  {
+    "time": "00h05",
+    "event": "Gabriel discute vivement avec la victime."
+  },
+  {
+    "time": "00h10",
+    "event": "Les invités se dispersent."
+  },
+  {
+    "time": "00h12",
+    "event": "Thomas effectue une maintenance."
+  },
+  {
+    "time": "00h14",
+    "event": "Un badge ouvre la réserve."
+  },
+  {
+    "time": "00h16",
+    "event": "La caméra de la galerie devient aveugle."
+  },
+  {
+    "time": "00h17",
+    "event": "Le même badge ouvre la salle de contrôle."
+  },
+  {
+    "time": "00h18",
+    "event": "Début de la fenêtre probable du meurtre."
+  },
+  {
+    "time": "00h21",
+    "event": "Une alarme courte retentit."
+  },
+  {
+    "time": "00h23",
+    "event": "Fin de la fenêtre probable."
+  },
+  {
+    "time": "00h31",
+    "event": "Le corps est découvert dans la réserve."
+  }
+]

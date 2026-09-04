@@ -1,0 +1,218 @@
+[
+  {
+    "id": "lea",
+    "name": "Léa",
+    "role": "Capitaine du yacht",
+    "age": 38,
+    "guiltyEligible": true,
+    "public": {
+      "relation": "Capitaine du yacht"
+    },
+    "private": {
+      "motif": "La victime voulait lui retirer le commandement après une erreur coûteuse.",
+      "secret": "Elle a falsifié un rapport de navigation.",
+      "alibi": "Elle affirme être sur le pont à 22h20.",
+      "opportunite": "Elle possède la clé du local technique et connaît les accès.",
+      "informations": "Elle sait que le moteur peut être isolé depuis le local.",
+      "objectif": "Faire croire à un accident maritime."
+    }
+  },
+  {
+    "id": "maxime",
+    "name": "Maxime",
+    "role": "Chef mécanicien",
+    "age": 46,
+    "guiltyEligible": true,
+    "public": {
+      "relation": "Chef mécanicien"
+    },
+    "private": {
+      "motif": "La victime avait découvert des pièces facturées deux fois sur les comptes du yacht.",
+      "secret": "Il revendait discrètement du matériel remplacé.",
+      "alibi": "Il affirme être en salle des machines.",
+      "opportunite": "Il peut couper le système de sécurité et accéder à la cabine.",
+      "informations": "Il connaît le panneau de secours et les caméras hors service.",
+      "objectif": "Effacer les traces de fraude."
+    }
+  },
+  {
+    "id": "clara",
+    "name": "Clara",
+    "role": "Invitée / héritière",
+    "age": 29,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Invitée / héritière"
+    },
+    "private": {
+      "motif": "La victime refusait de lui avancer de l'argent.",
+      "secret": "Elle a fouillé la cabine avant le dîner.",
+      "alibi": "Elle était au bar avec deux invités.",
+      "opportunite": "Elle avait une occasion mais aucun accès technique.",
+      "informations": "Elle a vu Léa descendre vers le pont inférieur.",
+      "objectif": "Récupérer un document financier."
+    }
+  },
+  {
+    "id": "nathan",
+    "name": "Nathan",
+    "role": "Investisseur",
+    "age": 52,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Investisseur"
+    },
+    "private": {
+      "motif": "La victime menaçait d'annuler son investissement.",
+      "secret": "Il a envoyé un message agressif.",
+      "alibi": "Il téléphonait sur le pont.",
+      "opportunite": "Son téléphone confirme une partie de son alibi.",
+      "informations": "Il a entendu une alarme brève.",
+      "objectif": "Cacher ses difficultés financières."
+    }
+  },
+  {
+    "id": "sophie",
+    "name": "Sophie",
+    "role": "Médecin invitée",
+    "age": 41,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Médecin invitée"
+    },
+    "private": {
+      "motif": "La victime avait refusé de financer sa clinique.",
+      "secret": "Elle transporte toujours une trousse médicale.",
+      "alibi": "Elle dînait avec Clara.",
+      "opportunite": "Elle peut estimer l'heure du décès.",
+      "informations": "Elle a remarqué une marque sur la poignée.",
+      "objectif": "Protéger sa réputation."
+    }
+  },
+  {
+    "id": "yanis",
+    "name": "Yanis",
+    "role": "DJ de soirée",
+    "age": 26,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "DJ de soirée"
+    },
+    "private": {
+      "motif": "La victime avait refusé de le payer intégralement.",
+      "secret": "Il a gardé de l'argent liquide non déclaré.",
+      "alibi": "Il était près de la cabine DJ.",
+      "opportunite": "La musique permet de vérifier certains horaires.",
+      "informations": "Il a vu Maxime quitter la salle des machines.",
+      "objectif": "Cacher son paiement non déclaré."
+    }
+  },
+  {
+    "id": "ines",
+    "name": "Inès",
+    "role": "Journaliste",
+    "age": 34,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Journaliste"
+    },
+    "private": {
+      "motif": "La victime voulait empêcher la publication d'un article.",
+      "secret": "Elle enregistrait les conversations.",
+      "alibi": "Elle était près du salon.",
+      "opportunite": "Son enregistreur contient des sons datés.",
+      "informations": "Elle a entendu deux personnes discuter du moteur.",
+      "objectif": "Protéger sa source."
+    }
+  },
+  {
+    "id": "théo",
+    "name": "Théo",
+    "role": "Photographe",
+    "age": 31,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Photographe"
+    },
+    "private": {
+      "motif": "La victime lui devait de l'argent.",
+      "secret": "Il a pris des photos sans autorisation.",
+      "alibi": "Il circulait entre pont et salon.",
+      "opportunite": "Les métadonnées de ses photos donnent des heures.",
+      "informations": "Une photo montre une porte technique ouverte.",
+      "objectif": "Récupérer ses clichés."
+    }
+  },
+  {
+    "id": "emma",
+    "name": "Emma",
+    "role": "Responsable événementiel",
+    "age": 37,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Responsable événementiel"
+    },
+    "private": {
+      "motif": "La victime l'accusait d'avoir dépassé le budget.",
+      "secret": "Elle a déplacé une caisse de champagne.",
+      "alibi": "Elle était dans la salle à manger.",
+      "opportunite": "Plusieurs invités peuvent la confirmer.",
+      "informations": "Elle a remarqué une odeur de carburant.",
+      "objectif": "Éviter un scandale financier."
+    }
+  },
+  {
+    "id": "lucas",
+    "name": "Lucas",
+    "role": "Avocat",
+    "age": 44,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Avocat"
+    },
+    "private": {
+      "motif": "La victime refusait de signer un accord.",
+      "secret": "Il a préparé un document compromettant.",
+      "alibi": "Il était au salon jusqu'à 22h30.",
+      "opportunite": "Son appel professionnel laisse une trace.",
+      "informations": "Il sait que le yacht avait des problèmes d'assurance.",
+      "objectif": "Récupérer le document."
+    }
+  },
+  {
+    "id": "nora",
+    "name": "Nora",
+    "role": "Hôtesse",
+    "age": 24,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Hôtesse"
+    },
+    "private": {
+      "motif": "La victime l'avait réprimandée devant l'équipage.",
+      "secret": "Elle a cassé un verre et l'a caché.",
+      "alibi": "Elle préparait le dessert.",
+      "opportunite": "Elle a été vue par Emma.",
+      "informations": "Elle a vu quelqu'un avec des gants noirs.",
+      "objectif": "Éviter d'être renvoyée."
+    }
+  },
+  {
+    "id": "adam",
+    "name": "Adam",
+    "role": "Second officier",
+    "age": 35,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Second officier"
+    },
+    "private": {
+      "motif": "La victime envisageait de le remplacer.",
+      "secret": "Il a modifié un planning.",
+      "alibi": "Il était sur le pont arrière.",
+      "opportunite": "Le registre de quart confirme sa présence.",
+      "informations": "Il sait qui possède les clés techniques.",
+      "objectif": "Protéger sa place."
+    }
+  }
+]

@@ -1,0 +1,8 @@
+{
+  "guiltyExplanations": {
+    "julien": "Julien a utilisé son passe général pour rejoindre le local technique pendant la coupure. Ses détournements de caisse lui donnaient un mobile et la trace sur le toit relie son déplacement à la scène.",
+    "celine": "Céline a provoqué la coupure des caméras depuis la salle serveur afin d'effacer ses accès. Son vol de données et les logs informatiques la relient au crime."
+  },
+  "falseLeadsSummary": [],
+  "closingLine": "Quand les lumières s'éteignent, les secrets de l'hôtel deviennent visibles."
+}

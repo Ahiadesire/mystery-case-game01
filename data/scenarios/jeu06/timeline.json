@@ -1,0 +1,54 @@
+[
+  {
+    "time": "00h30",
+    "event": "La réception privée commence."
+  },
+  {
+    "time": "00h45",
+    "event": "La victime annonce un audit interne."
+  },
+  {
+    "time": "00h55",
+    "event": "Julien quitte brièvement la réception."
+  },
+  {
+    "time": "01h00",
+    "event": "Céline entre dans la salle serveur."
+  },
+  {
+    "time": "01h04",
+    "event": "Un ascenseur est redémarré."
+  },
+  {
+    "time": "01h06",
+    "event": "Le passe général ouvre une porte de service."
+  },
+  {
+    "time": "01h07",
+    "event": "Les caméras s'éteignent pendant trois minutes."
+  },
+  {
+    "time": "01h08",
+    "event": "Une surcharge électrique est enregistrée."
+  },
+  {
+    "time": "01h09",
+    "event": "Début de la fenêtre probable du meurtre."
+  },
+  {
+    "time": "01h11",
+    "event": "L'ascenseur s'arrête au 4e étage."
+  },
+  {
+    "time": "01h13",
+    "event": "Les caméras reviennent."
+  },
+  {
+    "time": "01h15",
+    "event": "Fin de la fenêtre probable."
+  },
+  {
+    "time": "01h22",
+    "event": "La victime est retrouvée dans le local technique."
+  }
+]

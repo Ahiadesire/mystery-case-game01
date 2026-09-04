@@ -1,0 +1,74 @@
+[
+  {
+    "order": 1,
+    "title": "Rapport de navigation falsifié",
+    "linkedCharacterId": "lea",
+    "description": "Le rapport de Léa contient une correction inhabituelle : fort motif de soupçon, mais pas une preuve de meurtre."
+  },
+  {
+    "order": 2,
+    "title": "Facture de pièces doublée",
+    "linkedCharacterId": "maxime",
+    "description": "Une facture révèle une possible fraude de Maxime."
+  },
+  {
+    "order": 3,
+    "title": "Appel de Nathan",
+    "linkedCharacterId": "nathan",
+    "description": "L'appel confirme qu'il était occupé pendant une partie du créneau."
+  },
+  {
+    "order": 4,
+    "title": "Registre du local technique",
+    "linkedCharacterId": null,
+    "description": "Le registre indique une ouverture du local technique à 22h18."
+  },
+  {
+    "order": 5,
+    "title": "Métadonnées des photos",
+    "linkedCharacterId": "théo",
+    "description": "Une photo prise à 22h19 montre une porte technique ouverte : fausse piste possible."
+  },
+  {
+    "order": 6,
+    "title": "Enregistrement d'Inès",
+    "linkedCharacterId": "ines",
+    "description": "On entend une dispute sur le moteur, sans identifier clairement les voix."
+  },
+  {
+    "order": 7,
+    "title": "Trousse médicale",
+    "linkedCharacterId": "sophie",
+    "description": "Elle contient un produit qui pourrait sembler suspect, mais il est médical et normal."
+  },
+  {
+    "order": 8,
+    "title": "Gants noirs",
+    "linkedCharacterId": "nora",
+    "description": "Des gants similaires sont retrouvés près du service, mais ils appartiennent au personnel de bord."
+  },
+  {
+    "order": 9,
+    "title": "Journal du moteur",
+    "linkedCharacterId": "maxime",
+    "description": "Une interruption du système correspond à une intervention manuelle."
+  },
+  {
+    "order": 10,
+    "title": "Clé du local",
+    "linkedCharacterId": "lea",
+    "description": "La clé principale a été utilisée pendant la fenêtre du meurtre."
+  },
+  {
+    "order": 11,
+    "title": "Alarme de cabine",
+    "linkedCharacterId": null,
+    "description": "Une alarme brève a été déclenchée à 22h21, puis réinitialisée."
+  },
+  {
+    "order": 12,
+    "title": "Analyse de l'heure du décès",
+    "linkedCharacterId": "sophie",
+    "description": "Elle resserre le décès entre 22h18 et 22h24."
+  }
+]

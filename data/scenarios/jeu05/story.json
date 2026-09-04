@@ -1,0 +1,22 @@
+{
+  "id": "jeu05",
+  "title": "LE MUSÉE DES OMBRES",
+  "type": [
+    "meurtre mystérieux",
+    "enquête",
+    "déduction",
+    "bluff",
+    "jeu social"
+  ],
+  "minPlayers": 6,
+  "maxPlayers": 12,
+  "durationMinutes": 35,
+  "victim": {
+    "name": "Henri Valmont",
+    "age": null,
+    "profession": "Directeur et propriétaire d'une collection privée",
+    "deathFoundTime": "00h31",
+    "murderWindow": "00h18 - 00h23"
+  },
+  "publicIntroTemplate": "Après la fermeture, {{playerCount}} personnes participent à une réception privée dans un musée. À 00h31, Henri Valmont est retrouvé mort dans la réserve. Une œuvre semble avoir été remplacée, les caméras ont un trou de quatre minutes et plusieurs invités ont des secrets."
+}

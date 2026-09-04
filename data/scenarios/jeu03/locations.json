@@ -1,0 +1,42 @@
+[
+  {
+    "id": "salon",
+    "name": "Salon",
+    "description": "Zone centrale du yacht."
+  },
+  {
+    "id": "cabine",
+    "name": "Cabine du propriétaire",
+    "description": "Lieu du meurtre."
+  },
+  {
+    "id": "pont",
+    "name": "Pont principal",
+    "description": "Zone ouverte et visible."
+  },
+  {
+    "id": "pont_arriere",
+    "name": "Pont arrière",
+    "description": "Zone de quart."
+  },
+  {
+    "id": "bar",
+    "name": "Bar",
+    "description": "Lieu du cocktail."
+  },
+  {
+    "id": "salle_machines",
+    "name": "Salle des machines",
+    "description": "Zone technique."
+  },
+  {
+    "id": "local_technique",
+    "name": "Local technique",
+    "description": "Accès aux systèmes de sécurité."
+  },
+  {
+    "id": "salle_manger",
+    "name": "Salle à manger",
+    "description": "Lieu du dîner."
+  }
+]

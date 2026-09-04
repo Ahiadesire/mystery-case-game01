@@ -1,0 +1,42 @@
+[
+  {
+    "id": "salle",
+    "name": "Salle de réception",
+    "description": "Zone principale du mariage."
+  },
+  {
+    "id": "cuisine",
+    "name": "Cuisine",
+    "description": "Zone de préparation des plats."
+  },
+  {
+    "id": "reserve",
+    "name": "Réserve",
+    "description": "Accès contrôlé aux produits."
+  },
+  {
+    "id": "salle_privee",
+    "name": "Salle privée",
+    "description": "Lieu où la victime s'est isolée."
+  },
+  {
+    "id": "jardin",
+    "name": "Jardin",
+    "description": "Zone extérieure."
+  },
+  {
+    "id": "bar",
+    "name": "Bar",
+    "description": "Point de rassemblement."
+  },
+  {
+    "id": "couloir_service",
+    "name": "Couloir de service",
+    "description": "Passage discret du personnel."
+  },
+  {
+    "id": "cabine_dj",
+    "name": "Cabine DJ",
+    "description": "Zone de musique."
+  }
+]

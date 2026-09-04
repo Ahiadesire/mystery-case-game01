@@ -1,0 +1,42 @@
+[
+  {
+    "id": "reception",
+    "name": "Réception",
+    "description": "Point central de l'hôtel."
+  },
+  {
+    "id": "bar",
+    "name": "Bar",
+    "description": "Zone publique."
+  },
+  {
+    "id": "salon_vip",
+    "name": "Salon VIP",
+    "description": "Espace privé."
+  },
+  {
+    "id": "salle_serveur",
+    "name": "Salle serveur",
+    "description": "Contrôle informatique."
+  },
+  {
+    "id": "local_technique",
+    "name": "Local technique",
+    "description": "Installations et ascenseurs."
+  },
+  {
+    "id": "4e_etage",
+    "name": "4e étage",
+    "description": "Couloirs des chambres."
+  },
+  {
+    "id": "toit",
+    "name": "Toit",
+    "description": "Zone de service, accès limité."
+  },
+  {
+    "id": "quai",
+    "name": "Quai de livraison",
+    "description": "Accès arrière de l'hôtel."
+  }
+]

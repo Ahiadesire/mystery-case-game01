@@ -1,0 +1,22 @@
+{
+  "id": "jeu06",
+  "title": "L'HÔTEL SANS LUMIÈRE",
+  "type": [
+    "meurtre mystérieux",
+    "enquête",
+    "déduction",
+    "bluff",
+    "jeu social"
+  ],
+  "minPlayers": 6,
+  "maxPlayers": 12,
+  "durationMinutes": 35,
+  "victim": {
+    "name": "Philippe Moreau",
+    "age": null,
+    "profession": "Propriétaire d'un grand hôtel",
+    "deathFoundTime": "01h22",
+    "murderWindow": "01h09 - 01h15"
+  },
+  "publicIntroTemplate": "Une réception nocturne rassemble {{playerCount}} personnes dans un grand hôtel. Une panne de lumière plonge l'établissement dans l'obscurité. À 01h22, Philippe Moreau est retrouvé mort dans le local technique. Quelqu'un a utilisé la panne comme couverture."
+}

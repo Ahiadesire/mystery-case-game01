@@ -1,0 +1,22 @@
+{
+  "id": "jeu03",
+  "title": "NUIT EN HAUTE MER",
+  "type": [
+    "meurtre mystérieux",
+    "enquête",
+    "déduction",
+    "bluff",
+    "jeu social"
+  ],
+  "minPlayers": 6,
+  "maxPlayers": 12,
+  "durationMinutes": 35,
+  "victim": {
+    "name": "Victor Delmas",
+    "age": null,
+    "profession": "Propriétaire et armateur",
+    "deathFoundTime": "22h37",
+    "murderWindow": "22h20 - 22h24"
+  },
+  "publicIntroTemplate": "À bord d'un yacht privé, {{playerCount}} invités et membres d'équipage profitent d'une nuit en mer. À 22h37, Victor Delmas est retrouvé mort dans sa cabine. Une coupure technique et une alarme brève compliquent l'enquête : quelqu'un a profité du mouvement du bateau pour faire disparaître son passage."
+}

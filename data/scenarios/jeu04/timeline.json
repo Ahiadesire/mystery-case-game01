@@ -1,0 +1,54 @@
+[
+  {
+    "time": "20h30",
+    "event": "Début de la réception."
+  },
+  {
+    "time": "21h20",
+    "event": "La victime annonce qu'elle doit vérifier les comptes du mariage."
+  },
+  {
+    "time": "21h30",
+    "event": "Julien se dispute avec la victime."
+  },
+  {
+    "time": "21h40",
+    "event": "Le personnel commence à débarrasser."
+  },
+  {
+    "time": "21h45",
+    "event": "La victime entre dans la salle privée."
+  },
+  {
+    "time": "21h46",
+    "event": "Une silhouette apparaît dans le couloir de service."
+  },
+  {
+    "time": "21h47",
+    "event": "Le code de la salle privée est utilisé."
+  },
+  {
+    "time": "21h49",
+    "event": "Un plateau est livré."
+  },
+  {
+    "time": "21h50",
+    "event": "Début de la fenêtre probable du crime."
+  },
+  {
+    "time": "21h52",
+    "event": "La musique couvre un bruit bref."
+  },
+  {
+    "time": "21h55",
+    "event": "Fin de la fenêtre probable."
+  },
+  {
+    "time": "22h05",
+    "event": "La mariée cherche la victime."
+  },
+  {
+    "time": "22h08",
+    "event": "Le corps est découvert."
+  }
+]

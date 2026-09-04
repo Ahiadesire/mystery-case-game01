@@ -1,0 +1,218 @@
+[
+  {
+    "id": "ines",
+    "name": "Inès",
+    "role": "Conservatrice du musée",
+    "age": 42,
+    "guiltyEligible": true,
+    "public": {
+      "relation": "Conservatrice du musée"
+    },
+    "private": {
+      "motif": "La victime avait découvert qu'elle revendait clandestinement des œuvres.",
+      "secret": "Elle a remplacé une pièce par une copie.",
+      "alibi": "Elle affirme être dans la salle de contrôle.",
+      "opportunite": "Elle possède les codes de sécurité.",
+      "informations": "Elle sait comment créer une fenêtre de caméra aveugle.",
+      "objectif": "Faire passer le vol pour une intrusion extérieure."
+    }
+  },
+  {
+    "id": "gabriel",
+    "name": "Gabriel",
+    "role": "Expert en art",
+    "age": 50,
+    "guiltyEligible": true,
+    "public": {
+      "relation": "Expert en art"
+    },
+    "private": {
+      "motif": "La victime allait révéler qu'il authentifiait de faux tableaux.",
+      "secret": "Il a vendu plusieurs faux certificats.",
+      "alibi": "Il affirme être dans la bibliothèque.",
+      "opportunite": "Il connaît les réserves et les alarmes.",
+      "informations": "Il sait quelle œuvre devait être déplacée cette nuit.",
+      "objectif": "Détruire les preuves de falsification."
+    }
+  },
+  {
+    "id": "romain",
+    "name": "Romain",
+    "role": "Agent de sécurité",
+    "age": 37,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Agent de sécurité"
+    },
+    "private": {
+      "motif": "La victime l'avait sanctionné.",
+      "secret": "Il a quitté son poste pour fumer.",
+      "alibi": "Il était dans le parking.",
+      "opportunite": "Le registre des rondes confirme son absence.",
+      "informations": "Il connaît les angles morts.",
+      "objectif": "Cacher sa faute professionnelle."
+    }
+  },
+  {
+    "id": "elisa",
+    "name": "Élisa",
+    "role": "Restauratrice",
+    "age": 35,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Restauratrice"
+    },
+    "private": {
+      "motif": "La victime critiquait son travail.",
+      "secret": "Elle a conservé un pigment rare.",
+      "alibi": "Elle était à l'atelier.",
+      "opportunite": "Les outils enregistrent l'heure d'utilisation.",
+      "informations": "Elle a trouvé une copie dans une caisse.",
+      "objectif": "Protéger son emploi."
+    }
+  },
+  {
+    "id": "marc",
+    "name": "Marc",
+    "role": "Mécène",
+    "age": 58,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Mécène"
+    },
+    "private": {
+      "motif": "La victime refusait de vendre une œuvre.",
+      "secret": "Il a proposé une somme énorme.",
+      "alibi": "Il était avec les invités.",
+      "opportunite": "Des témoins le confirment.",
+      "informations": "Il connaît la valeur de l'œuvre disparue.",
+      "objectif": "Éviter un scandale."
+    }
+  },
+  {
+    "id": "lina",
+    "name": "Lina",
+    "role": "Guide",
+    "age": 26,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Guide"
+    },
+    "private": {
+      "motif": "La victime avait réduit ses heures.",
+      "secret": "Elle a laissé entrer un ami sans billet.",
+      "alibi": "Elle était dans le hall.",
+      "opportunite": "La billetterie la situe là.",
+      "informations": "Elle a entendu une alarme courte.",
+      "objectif": "Éviter une sanction."
+    }
+  },
+  {
+    "id": "thomas",
+    "name": "Thomas",
+    "role": "Technicien",
+    "age": 31,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Technicien"
+    },
+    "private": {
+      "motif": "La victime lui reprochait une panne.",
+      "secret": "Il a désactivé un capteur pour maintenance.",
+      "alibi": "Il était en sous-sol.",
+      "opportunite": "Le journal technique confirme l'intervention.",
+      "informations": "Il sait comment les caméras sont alimentées.",
+      "objectif": "Protéger sa réputation."
+    }
+  },
+  {
+    "id": "maya",
+    "name": "Maya",
+    "role": "Journaliste",
+    "age": 39,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Journaliste"
+    },
+    "private": {
+      "motif": "La victime voulait empêcher un article.",
+      "secret": "Elle a enregistré une interview secrète.",
+      "alibi": "Elle était dans la cour.",
+      "opportunite": "Son enregistreur donne l'heure.",
+      "informations": "Elle a photographié une porte de réserve.",
+      "objectif": "Protéger sa source."
+    }
+  },
+  {
+    "id": "noah",
+    "name": "Noah",
+    "role": "Collectionneur",
+    "age": 45,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Collectionneur"
+    },
+    "private": {
+      "motif": "La victime refusait de lui prêter une œuvre.",
+      "secret": "Il a fouillé une vitrine.",
+      "alibi": "Il était dans le hall.",
+      "opportunite": "Une caméra le confirme.",
+      "informations": "Il connaît les systèmes de vitrines.",
+      "objectif": "Récupérer une information."
+    }
+  },
+  {
+    "id": "zoe",
+    "name": "Zoé",
+    "role": "Graphiste",
+    "age": 28,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Graphiste"
+    },
+    "private": {
+      "motif": "La victime lui devait un paiement.",
+      "secret": "Elle a pris une clé USB.",
+      "alibi": "Elle était au bureau administratif.",
+      "opportunite": "L'ordinateur confirme sa session.",
+      "informations": "Elle a vu Gabriel près de la réserve.",
+      "objectif": "Récupérer son paiement."
+    }
+  },
+  {
+    "id": "paul",
+    "name": "Paul",
+    "role": "Comptable",
+    "age": 47,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Comptable"
+    },
+    "private": {
+      "motif": "La victime avait découvert une erreur comptable.",
+      "secret": "Il a corrigé des écritures.",
+      "alibi": "Il était au bureau.",
+      "opportunite": "Les journaux informatiques le confirment.",
+      "informations": "Il sait qu'un inventaire est faux.",
+      "objectif": "Éviter un audit."
+    }
+  },
+  {
+    "id": "adam",
+    "name": "Adam",
+    "role": "Électricien",
+    "age": 34,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Électricien"
+    },
+    "private": {
+      "motif": "La victime avait refusé son devis.",
+      "secret": "Il a coupé un circuit pour tester.",
+      "alibi": "Il était au sous-sol.",
+      "opportunite": "Le tableau électrique garde une trace.",
+      "informations": "Il a vu Inès entrer dans la salle de contrôle.",
+      "objectif": "Terminer son intervention."
+    }
+  }
+]

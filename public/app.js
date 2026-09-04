@@ -103,7 +103,10 @@ function renderRoomState(room) {
   // Lobby
   document.getElementById('lobby-code').textContent = room.code;
   document.getElementById('lobby-count').textContent =
-    `${room.players.length} / ${room.maxPlayers} joueurs (minimum ${room.minPlayers})`;
+    `${room.players.filter(p => p.connected).length} / ${room.maxPlayers} joueurs connectés (minimum ${room.minPlayers})`;
+  const adaptive = document.getElementById('adaptive-info');
+  if (room.phase === 'lobby') adaptive.textContent = `🎭 La partie utilisera exactement ${room.players.filter(p => p.connected).length} personnage(s) connecté(s). À 6–8 joueurs : 1 coupable. À 9–12 : 2 coupables.`;
+  else adaptive.textContent = `🎭 Partie adaptative : ${room.activeCharacterCount} personnage(s), ${room.guiltyCount || '—'} coupable(s).`;
 
   const list = document.getElementById('lobby-players');
   list.innerHTML = '';
@@ -309,29 +312,20 @@ socket.on('clue:revealed', (clue) => {
   toast(`Nouvel indice : ${clue.title}`);
 });
 
-// ---------- CHRONOLOGIE (fixe côté scénario, affichée dès l'investigation) ----------
-const TIMELINE_STATIC = [
-  ['20h30','Les invités arrivent.'],['20h45','Le dîner commence.'],
-  ['20h55',"Thomas et Antoine ont une discussion tendue concernant l'entreprise."],
-  ['21h05','Sarah et Antoine parlent en privé.'],['21h10','Les invités commencent à se disperser.'],
-  ['21h12','Emma est aperçue près du couloir.'],['21h14','Paul commence un appel téléphonique.'],
-  ['21h16',"La porte électronique du bureau s'ouvre."],
-  ['21h17','Une silhouette portant une veste sombre est aperçue dans le couloir.'],
-  ['21h18','Julie enregistre une dispute près du salon.'],['21h20','Moment probable du meurtre.'],
-  ['21h22','Paul termine son appel.'],['21h23',"La porte du bureau s'ouvre de nouveau."],
-  ['21h27',"Le corps d'Antoine est découvert."]
-];
-function renderTimelineOnce() {
+// ---------- CHRONOLOGIE (adaptée au scénario et aux personnages présents) ----------
+function renderTimeline(timeline) {
   const el = document.getElementById('timeline-list');
-  if (el.dataset.filled) return;
-  el.dataset.filled = '1';
-  TIMELINE_STATIC.forEach(([t, e]) => {
+  el.innerHTML = '';
+  (timeline || []).forEach((item) => {
     const li = document.createElement('li');
-    li.innerHTML = `<strong>${t}</strong> — ${e}`;
+    li.innerHTML = `<strong>${item.time}</strong> — ${item.event}`;
     el.appendChild(li);
   });
 }
-socket.on('phase:changed', ({ phase }) => { if (phase === 'enquete') renderTimelineOnce(); });
+
+socket.on('phase:changed', ({ phase }) => {
+  if (phase === 'enquete' && storyData) renderTimeline(storyData.timeline);
+});
 
 // ---------- SUSPECTS / VOTE ----------
 function renderSuspectsAndVoteList(players) {
@@ -421,10 +415,15 @@ socket.on('game:reveal', (reveal) => {
     <ul>${reveal.falseLeadsSummary.map((f) => `<li>${f}</li>`).join('')}</ul>
     <h3>Qui était qui</h3>
     <ul>${reveal.assignments.map((a) => `<li>${a.playerName} incarnait <strong>${a.characterName}</strong>${a.wasGuilty ? ' — COUPABLE' : ''}</li>`).join('')}</ul>
+    <h3>🏆 Scores</h3>
+    <ol>${(reveal.scores || []).map((s) => `<li><strong>${s.playerName}</strong> — ${s.score} pts${s.alive ? ' — survivant' : ''}</li>`).join('')}</ol>
     <p><em>${reveal.closingLine}</em></p>
   `;
   show('screen-reveal');
+  document.getElementById('btn-replay').style.display = (state.isHost || state.isGameMaster) ? 'block' : 'none';
 });
+
+document.getElementById('btn-replay').onclick = () => { socket.emit('game:replay', {}, (res) => { if (!res.ok) toast(res.error); }); };
 
 socket.on('game:over', ({ winner, reason }) => {
   toast(winner === 'innocents' ? 'Les enquêteurs gagnent !' : 'Les coupables gagnent !');

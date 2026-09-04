@@ -1,0 +1,42 @@
+[
+  {
+    "id": "hall",
+    "name": "Hall du musée",
+    "description": "Zone d'accueil."
+  },
+  {
+    "id": "galerie",
+    "name": "Galerie principale",
+    "description": "Salle d'exposition."
+  },
+  {
+    "id": "reserve",
+    "name": "Réserve",
+    "description": "Lieu sécurisé des œuvres."
+  },
+  {
+    "id": "controle",
+    "name": "Salle de contrôle",
+    "description": "Caméras et alarmes."
+  },
+  {
+    "id": "atelier",
+    "name": "Atelier de restauration",
+    "description": "Zone technique."
+  },
+  {
+    "id": "bibliotheque",
+    "name": "Bibliothèque",
+    "description": "Salle calme."
+  },
+  {
+    "id": "sous_sol",
+    "name": "Sous-sol technique",
+    "description": "Tableaux et installations."
+  },
+  {
+    "id": "bureau",
+    "name": "Bureau administratif",
+    "description": "Postes informatiques."
+  }
+]

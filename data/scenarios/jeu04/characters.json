@@ -1,0 +1,218 @@
+[
+  {
+    "id": "amelie",
+    "name": "Amélie",
+    "role": "Organisatrice du mariage",
+    "age": 33,
+    "guiltyEligible": true,
+    "public": {
+      "relation": "Organisatrice du mariage"
+    },
+    "private": {
+      "motif": "La victime allait révéler qu'elle avait détourné une partie du budget du mariage.",
+      "secret": "Elle a falsifié plusieurs factures.",
+      "alibi": "Elle affirme être dans la cuisine.",
+      "opportunite": "Elle a accès aux réserves et à la salle privée.",
+      "informations": "Elle connaît le code de la salle de réception.",
+      "objectif": "Éviter que les comptes soient vérifiés."
+    }
+  },
+  {
+    "id": "samir",
+    "name": "Samir",
+    "role": "Chef traiteur",
+    "age": 40,
+    "guiltyEligible": true,
+    "public": {
+      "relation": "Chef traiteur"
+    },
+    "private": {
+      "motif": "La victime voulait rompre son contrat après avoir découvert des livraisons frauduleuses.",
+      "secret": "Il a remplacé certains produits par des produits moins chers.",
+      "alibi": "Il affirme être en cuisine avec son équipe.",
+      "opportunite": "Il peut accéder à tous les plats et au passe.",
+      "informations": "Il sait qu'un dessert spécial a été préparé pour la victime.",
+      "objectif": "Faire passer le crime pour une intoxication."
+    }
+  },
+  {
+    "id": "julien",
+    "name": "Julien",
+    "role": "Frère de la mariée",
+    "age": 30,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Frère de la mariée"
+    },
+    "private": {
+      "motif": "La victime refusait de financer son projet.",
+      "secret": "Il a pris une enveloppe dans le bureau.",
+      "alibi": "Il était au jardin.",
+      "opportunite": "Une photo de groupe le montre dehors.",
+      "informations": "Il a vu Amélie entrer dans la réserve.",
+      "objectif": "Récupérer l'argent."
+    }
+  },
+  {
+    "id": "sarah",
+    "name": "Sarah",
+    "role": "Mariée",
+    "age": 27,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Mariée"
+    },
+    "private": {
+      "motif": "La victime contrôlait fortement sa famille.",
+      "secret": "Elle a caché un contrat prénuptial.",
+      "alibi": "Elle était avec ses amis.",
+      "opportunite": "Plusieurs photos la placent au salon.",
+      "informations": "Elle a eu une dispute avec la victime.",
+      "objectif": "Protéger son couple."
+    }
+  },
+  {
+    "id": "paul",
+    "name": "Paul",
+    "role": "Père du marié",
+    "age": 61,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Père du marié"
+    },
+    "private": {
+      "motif": "Un héritage était en jeu.",
+      "secret": "Il a consulté un testament.",
+      "alibi": "Il était à table.",
+      "opportunite": "Les invités peuvent confirmer.",
+      "informations": "Il connaît l'existence d'un coffre.",
+      "objectif": "Éviter un conflit familial."
+    }
+  },
+  {
+    "id": "nina",
+    "name": "Nina",
+    "role": "Photographe",
+    "age": 29,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Photographe"
+    },
+    "private": {
+      "motif": "La victime menaçait de publier ses anciennes dettes.",
+      "secret": "Elle a supprimé une photo compromettante.",
+      "alibi": "Elle circulait dans la salle.",
+      "opportunite": "Les métadonnées de ses photos sont vérifiables.",
+      "informations": "Une photo montre une porte de service.",
+      "objectif": "Sauver son contrat."
+    }
+  },
+  {
+    "id": "karim",
+    "name": "Karim",
+    "role": "DJ",
+    "age": 32,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "DJ"
+    },
+    "private": {
+      "motif": "La victime refusait de payer une prestation.",
+      "secret": "Il a pris une avance en liquide.",
+      "alibi": "Il était à la console.",
+      "opportunite": "La console conserve l'historique des morceaux.",
+      "informations": "Il a entendu un bruit de verre cassé.",
+      "objectif": "Cacher son avance."
+    }
+  },
+  {
+    "id": "claire",
+    "name": "Claire",
+    "role": "Témoin / amie",
+    "age": 35,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Témoin / amie"
+    },
+    "private": {
+      "motif": "La victime avait insulté son travail.",
+      "secret": "Elle a écrit un message agressif.",
+      "alibi": "Elle était au bar.",
+      "opportunite": "Le barman la confirme.",
+      "informations": "Elle a vu Samir porter un plateau couvert.",
+      "objectif": "Ne pas être mêlée au conflit."
+    }
+  },
+  {
+    "id": "youssef",
+    "name": "Youssef",
+    "role": "Serveur",
+    "age": 25,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Serveur"
+    },
+    "private": {
+      "motif": "La victime l'avait menacé de licenciement.",
+      "secret": "Il a cassé une bouteille.",
+      "alibi": "Il était dans le couloir de service.",
+      "opportunite": "Son collègue peut confirmer.",
+      "informations": "Il a vu une paire de gants près de la cuisine.",
+      "objectif": "Éviter son licenciement."
+    }
+  },
+  {
+    "id": "lucie",
+    "name": "Lucie",
+    "role": "Décoratrice",
+    "age": 38,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Décoratrice"
+    },
+    "private": {
+      "motif": "La victime refusait de payer un supplément.",
+      "secret": "Elle a caché du matériel dans une réserve.",
+      "alibi": "Elle montait les décorations.",
+      "opportunite": "Les caméras de salle la montrent.",
+      "informations": "Elle a remarqué une odeur étrange dans la cuisine.",
+      "objectif": "Récupérer son matériel."
+    }
+  },
+  {
+    "id": "antoine",
+    "name": "Antoine",
+    "role": "Notaire",
+    "age": 48,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Notaire"
+    },
+    "private": {
+      "motif": "La victime voulait modifier une succession.",
+      "secret": "Il conserve un projet de testament.",
+      "alibi": "Il était dans le salon.",
+      "opportunite": "Son appel professionnel est enregistré.",
+      "informations": "Il sait que le coffre a été ouvert.",
+      "objectif": "Protéger un client."
+    }
+  },
+  {
+    "id": "mohamed",
+    "name": "Mohamed",
+    "role": "Barman",
+    "age": 36,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Barman"
+    },
+    "private": {
+      "motif": "La victime lui devait de l'argent.",
+      "secret": "Il a gardé une bouteille ouverte.",
+      "alibi": "Il était derrière le bar.",
+      "opportunite": "Des invités l'ont vu.",
+      "informations": "Il a servi un verre à la victime plus tôt.",
+      "objectif": "Récupérer son dû."
+    }
+  }
+]

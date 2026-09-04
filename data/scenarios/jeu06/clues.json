@@ -1,0 +1,74 @@
+[
+  {
+    "order": 1,
+    "title": "Anomalies de caisse",
+    "linkedCharacterId": "julien",
+    "description": "Les comptes montrent des écarts liés aux accès du directeur."
+  },
+  {
+    "order": 2,
+    "title": "Copie de données clients",
+    "linkedCharacterId": "celine",
+    "description": "Une copie chiffrée de données est retrouvée sur un poste technique."
+  },
+  {
+    "order": 3,
+    "title": "Badge ménage",
+    "linkedCharacterId": "sabrina",
+    "description": "Le badge de Sabrina a circulé au 4e étage, mais dans le cadre de son travail."
+  },
+  {
+    "order": 4,
+    "title": "Journal ascenseur",
+    "linkedCharacterId": "luc",
+    "description": "Un redémarrage technique a eu lieu pendant la soirée."
+  },
+  {
+    "order": 5,
+    "title": "Vidéo d'Alice",
+    "linkedCharacterId": "alice",
+    "description": "Une vidéo montre une coupure de lumière sans identifier la cause."
+  },
+  {
+    "order": 6,
+    "title": "Contrat de Nadia",
+    "linkedCharacterId": "nadia",
+    "description": "Un contrat crée un motif de conflit, mais son alibi est solide."
+  },
+  {
+    "order": 7,
+    "title": "Objet caché de Kevin",
+    "linkedCharacterId": "kevin",
+    "description": "Kevin a caché un objet trouvé, sans rapport avec le meurtre."
+  },
+  {
+    "order": 8,
+    "title": "Enregistrement du bar",
+    "linkedCharacterId": "fatou",
+    "description": "La caméra du bar confirme la présence de Fatou."
+  },
+  {
+    "order": 9,
+    "title": "Passe général",
+    "linkedCharacterId": "julien",
+    "description": "Le passe général a ouvert une porte de service à 01h06."
+  },
+  {
+    "order": 10,
+    "title": "Journal des caméras",
+    "linkedCharacterId": "celine",
+    "description": "Les caméras ont été désactivées pendant trois minutes depuis la salle serveur."
+  },
+  {
+    "order": 11,
+    "title": "Alarme électrique",
+    "linkedCharacterId": null,
+    "description": "Une surcharge est détectée à 01h08."
+  },
+  {
+    "order": 12,
+    "title": "Trace sur le toit",
+    "linkedCharacterId": "julien",
+    "description": "Une trace de chaussure compatible avec les chaussures du directeur est retrouvée près de l'accès au toit."
+  }
+]

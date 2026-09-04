@@ -1,0 +1,22 @@
+{
+  "id": "jeu04",
+  "title": "LE MARIAGE EMPOISONNÉ",
+  "type": [
+    "meurtre mystérieux",
+    "enquête",
+    "déduction",
+    "bluff",
+    "jeu social"
+  ],
+  "minPlayers": 6,
+  "maxPlayers": 12,
+  "durationMinutes": 35,
+  "victim": {
+    "name": "Édouard Martin",
+    "age": null,
+    "profession": "Père de la mariée et homme d'affaires",
+    "deathFoundTime": "22h08",
+    "murderWindow": "21h50 - 21h55"
+  },
+  "publicIntroTemplate": "Un mariage réunit {{playerCount}} personnes dans un domaine privé. Alors que la fête bat son plein, Édouard Martin est retrouvé mort dans une salle privée. Un dessert modifié, un code d'accès et les mouvements du personnel cachent la vérité."
+}

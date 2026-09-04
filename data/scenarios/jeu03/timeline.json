@@ -1,0 +1,54 @@
+[
+  {
+    "time": "21h30",
+    "event": "Le dîner commence."
+  },
+  {
+    "time": "21h55",
+    "event": "La victime annonce une réunion privée avec l'équipage."
+  },
+  {
+    "time": "22h05",
+    "event": "Nathan se dispute avec la victime."
+  },
+  {
+    "time": "22h10",
+    "event": "Les invités se dispersent."
+  },
+  {
+    "time": "22h15",
+    "event": "Maxime descend vers la salle des machines."
+  },
+  {
+    "time": "22h18",
+    "event": "Le local technique est ouvert."
+  },
+  {
+    "time": "22h19",
+    "event": "Une photo montre la porte technique ouverte."
+  },
+  {
+    "time": "22h20",
+    "event": "Début de la fenêtre probable du meurtre."
+  },
+  {
+    "time": "22h21",
+    "event": "Une alarme de cabine retentit brièvement."
+  },
+  {
+    "time": "22h22",
+    "event": "Le système moteur est réinitialisé manuellement."
+  },
+  {
+    "time": "22h24",
+    "event": "Fin de la fenêtre probable."
+  },
+  {
+    "time": "22h30",
+    "event": "Le dîner reprend normalement."
+  },
+  {
+    "time": "22h37",
+    "event": "Le corps est découvert."
+  }
+]
