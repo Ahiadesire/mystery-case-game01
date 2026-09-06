@@ -51,9 +51,10 @@ const SCENARIOS = Object.fromEntries(
     .map((id) => [id, loadScenario(id)])
 );
 const DEFAULT_SCENARIO_ID = Object.keys(SCENARIOS).sort()[0];
-const SCENARIO_LIST = Object.values(SCENARIOS).map((s) => ({
-  id: s.id, title: s.title, difficulty: s.difficulty
-}));
+const SCENARIO_LIST = Object.values(SCENARIOS).map((s) => {
+  const { min, max } = playerRangeFor(s);
+  return { id: s.id, title: s.title, difficulty: s.difficulty, minPlayers: min, maxPlayers: max };
+});
 
 function scenarioOf(room) {
   return SCENARIOS[room.scenarioId] || SCENARIOS[DEFAULT_SCENARIO_ID];

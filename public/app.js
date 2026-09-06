@@ -183,7 +183,7 @@ function renderScenarioPicker(room, isController) {
     picker.style.display = 'none';
     readonly.style.display = room.phase === 'lobby' ? 'block' : 'none';
     readonly.textContent = room.scenarioTitle
-      ? `Scénario : ${room.scenarioTitle} (${room.scenarioDifficulty})`
+      ? `Scénario : ${room.scenarioTitle} (${room.scenarioDifficulty}) — ${room.minPlayers} à ${room.maxPlayers} joueurs`
       : '';
     return;
   }
@@ -195,7 +195,7 @@ function renderScenarioPicker(room, isController) {
   options.forEach((s) => {
     const div = document.createElement('div');
     div.className = 'scenario-option' + (s.id === room.scenarioId ? ' selected' : '');
-    div.innerHTML = `<div class="scenario-title">${s.title}</div><div class="scenario-diff">Difficulté : ${s.difficulty}</div>`;
+    div.innerHTML = `<div class="scenario-title">${s.title}</div><div class="scenario-diff">Difficulté : ${s.difficulty} · ${s.minPlayers} à ${s.maxPlayers} joueurs</div>`;
     div.onclick = () => {
       socket.emit('room:set_scenario', { scenarioId: s.id }, (res) => {
         if (!res.ok) toast(res.error);

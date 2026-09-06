@@ -2,7 +2,7 @@
   "id": "jeu02",
   "title": "RIDEAU FINAL",
   "type": ["meurtre mystérieux", "enquête", "déduction", "bluff", "jeu social", "difficile"],
-  "minPlayers": 6,
+  "minPlayers": 4,
   "maxPlayers": 12,
   "durationMinutes": 35,
   "victim": {

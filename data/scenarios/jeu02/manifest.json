@@ -2,9 +2,28 @@
   "id": "jeu02",
   "title": "RIDEAU FINAL",
   "difficulty": "difficile",
-  "guiltyPool": ["camille", "hugo"],
+  "guiltyPool": [
+    "camille",
+    "hugo"
+  ],
   "guiltyRules": [
-    { "minPlayers": 6, "maxPlayers": 8, "guiltyCount": 1, "mode": "random-one" },
-    { "minPlayers": 9, "maxPlayers": 12, "guiltyCount": 2, "mode": "both" }
+    {
+      "minPlayers": 4,
+      "maxPlayers": 5,
+      "guiltyCount": 1,
+      "mode": "random-one"
+    },
+    {
+      "minPlayers": 6,
+      "maxPlayers": 8,
+      "guiltyCount": 1,
+      "mode": "random-one"
+    },
+    {
+      "minPlayers": 9,
+      "maxPlayers": 12,
+      "guiltyCount": 2,
+      "mode": "both"
+    }
   ]
 }

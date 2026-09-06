@@ -8,7 +8,7 @@
     "bluff",
     "jeu social"
   ],
-  "minPlayers": 6,
+  "minPlayers": 4,
   "maxPlayers": 12,
   "durationMinutes": 35,
   "victim": {

@@ -8,6 +8,12 @@
   ],
   "guiltyRules": [
     {
+      "minPlayers": 4,
+      "maxPlayers": 5,
+      "guiltyCount": 1,
+      "mode": "random-one"
+    },
+    {
       "minPlayers": 6,
       "maxPlayers": 8,
       "guiltyCount": 1,

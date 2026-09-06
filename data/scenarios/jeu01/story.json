@@ -2,7 +2,7 @@
   "id": "jeu01",
   "title": "LE DERNIER DÎNER",
   "type": ["meurtre mystérieux", "enquête", "déduction", "bluff", "jeu social"],
-  "minPlayers": 6,
+  "minPlayers": 4,
   "maxPlayers": 12,
   "durationMinutes": 30,
   "victim": {
