@@ -1,0 +1,128 @@
+[
+  {
+    "id": "camille",
+    "name": "Camille",
+    "role": "Ex-associée en affaires",
+    "age": 41,
+    "guiltyEligible": true,
+    "public": {
+      "relation": "Ancienne associée de Julien"
+    },
+    "private": {
+      "motif": "Julien s'apprêtait à révéler publiquement qu'elle avait manipulé les comptes de leur ancienne société pour l'évincer.",
+      "secret": "Camille a apporté elle-même la bouteille de digestif servie ce soir-là.",
+      "alibi": "Elle affirme être restée à la table de jeu de 22h35 à 22h50.",
+      "opportunite": "Elle a servi les verres personnellement juste avant le dernier tour, avant de se rasseoir.",
+      "informations": [
+        "Elle sait que Hugo est sorti fumer juste avant qu'elle ne serve le digestif.",
+        "Elle sait aussi que Nora gérait autrefois les mêmes comptes qu'elle a falsifiés."
+      ],
+      "objectif": "Faire croire qu'elle est restée à table sans interruption toute la soirée."
+    }
+  },
+  {
+    "id": "hugo",
+    "name": "Hugo",
+    "role": "Frère cadet",
+    "age": 38,
+    "guiltyEligible": true,
+    "public": {
+      "relation": "Frère cadet de Julien"
+    },
+    "private": {
+      "motif": "Julien contrôlait l'héritage familial et avait menacé, ce soir même, de le déshériter purement et simplement.",
+      "secret": "Hugo a emprunté de l'argent liquide dans le bureau de Julien plus tôt dans la soirée, sans lui demander.",
+      "alibi": "Il affirme être sorti fumer sur la terrasse entre 22h38 et 22h47, sans revenir avant.",
+      "opportunite": "La porte-fenêtre de la terrasse donne directement sur le salon de jeu et restait entrouverte.",
+      "informations": [
+        "Il sait que c'est Camille qui a apporté la bouteille de digestif.",
+        "Il a aperçu Karl rôder du côté du bureau plus tôt dans la soirée."
+      ],
+      "objectif": "Cacher qu'il a pris l'argent et ne pas admettre être repassé par le salon avant 22h47."
+    }
+  },
+  {
+    "id": "sophie",
+    "name": "Sophie",
+    "role": "Meilleure amie de la femme de Julien",
+    "age": 40,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Amie proche du couple Vasseur"
+    },
+    "private": {
+      "motif": "Julien avait découvert sa liaison avec un autre invité et menaçait de la révéler à son épouse, absente ce soir-là.",
+      "secret": "Sophie a effacé un message vocal compromettant sur le téléphone de Julien pendant qu'elle était seule avec lui.",
+      "alibi": "Elle affirme être restée dans la cuisine à préparer le café de 22h30 à 22h55.",
+      "opportunite": "Faible : la cuisine est éloignée du salon de jeu et donne sur un couloir différent.",
+      "informations": [
+        "Elle a entendu une dispute étouffée vers 22h44, sans pouvoir dire qui parlait.",
+        "Elle a vu Vincent consulter nerveusement son téléphone plus tôt dans la soirée."
+      ],
+      "objectif": "S'assurer qu'aucune trace de sa liaison ne refait surface."
+    }
+  },
+  {
+    "id": "karl",
+    "name": "Karl",
+    "role": "Voisin et rival en affaires",
+    "age": 47,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Voisin et concurrent professionnel de Julien"
+    },
+    "private": {
+      "motif": "Julien venait de lui souffler un contrat important la semaine précédente, devant plusieurs témoins communs.",
+      "secret": "Karl a fouillé le bureau de Julien pour retrouver des documents liés à ce contrat.",
+      "alibi": "Il affirme être resté près du bar du salon pendant presque toute la soirée.",
+      "opportunite": "Le bureau est accessible depuis le couloir et peu surveillé pendant la soirée.",
+      "informations": [
+        "Il a vu Hugo revenir de la terrasse plus tôt que ce que celui-ci prétend.",
+        "Il sait que le digestif provient d'une bouteille apportée de l'extérieur, pas de la cave de Julien."
+      ],
+      "objectif": "Récupérer discrètement les documents sans que personne ne le remarque."
+    }
+  },
+  {
+    "id": "nora",
+    "name": "Nora",
+    "role": "Comptable de Julien",
+    "age": 34,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Comptable personnelle de Julien"
+    },
+    "private": {
+      "motif": "Julien avait repéré une irrégularité dans les comptes qu'elle gérait et menaçait de la dénoncer à ses clients.",
+      "secret": "Nora a modifié un rapport financier peu avant la soirée pour dissimuler cette irrégularité.",
+      "alibi": "Elle affirme avoir été au téléphone avec un client de 22h36 à 22h50.",
+      "opportunite": "Son relevé téléphonique confirme une partie de son emploi du temps, mais laisse un blanc de plusieurs minutes.",
+      "informations": [
+        "Elle sait que Camille gérait autrefois les mêmes comptes qu'elle a modifiés.",
+        "Elle a vu la porte du bureau entrouverte vers 22h42."
+      ],
+      "objectif": "Empêcher que son rapport falsifié ne soit découvert."
+    }
+  },
+  {
+    "id": "vincent",
+    "name": "Vincent",
+    "role": "Ami d'enfance et créancier",
+    "age": 44,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Ami d'enfance de Julien"
+    },
+    "private": {
+      "motif": "Julien lui devait une somme importante qu'il refusait de rembourser, et l'avait humilié publiquement plus tôt dans la soirée.",
+      "secret": "Vincent avait apporté un contrat de reconnaissance de dette pour forcer Julien à le signer ce soir-là.",
+      "alibi": "Il affirme être resté à la table de jeu avec Camille durant tout le créneau du meurtre.",
+      "opportunite": "Il s'est brièvement levé pour se resservir un verre autour de 22h45.",
+      "informations": [
+        "Il a vu Sophie s'éclipser vers la cuisine plus tôt que prévu.",
+        "Il sait que Karl s'intéressait de très près au bureau de Julien."
+      ],
+      "objectif": "Obtenir la signature du contrat ou, à défaut, récupérer son argent d'une autre manière."
+    }
+  }
+]

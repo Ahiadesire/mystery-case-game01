@@ -1,0 +1,13 @@
+{
+  "guiltyExplanations": {
+    "camille": "Camille a empoisonné Julien. Furieuse qu'il s'apprête à révéler ses malversations comptables passées devant tout le monde, elle a profité du service du digestif — qu'elle avait elle-même apporté — pour verser le poison dans le verre de Julien juste avant le dernier tour de jeu.",
+    "hugo": "Hugo a empoisonné Julien. Excédé par le refus de son frère de lui verser sa part d'héritage, et menacé d'être déshérité le soir même, il est repassé discrètement par la porte-fenêtre de la terrasse pour verser du poison dans le verre de Julien pendant que l'attention générale était tournée vers le service du digestif."
+  },
+  "falseLeadsSummary": [
+    "Sophie cachait une liaison et avait effacé un message vocal compromettant, mais elle n'a rien à voir avec le meurtre.",
+    "Karl avait fouillé le bureau pour récupérer des documents liés à un contrat, sans lien avec le poison.",
+    "Nora avait modifié un rapport financier pour cacher une irrégularité, mais son geste ne concerne que la comptabilité.",
+    "Vincent voulait forcer Julien à signer une reconnaissance de dette, mais n'est pas le meurtrier."
+  ],
+  "closingLine": "Deux rancunes discrètes valaient mieux qu'une dispute ouverte — et ce soir-là, le silence a suffi à tuer."
+}

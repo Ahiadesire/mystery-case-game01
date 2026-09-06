@@ -1,0 +1,9 @@
+{
+  "id": "jeu07",
+  "title": "LA DERNIÈRE PARTIE",
+  "difficulty": "difficile",
+  "guiltyPool": ["camille", "hugo"],
+  "guiltyRules": [
+    { "minPlayers": 4, "maxPlayers": 6, "guiltyCount": 1, "mode": "random-one" }
+  ]
+}

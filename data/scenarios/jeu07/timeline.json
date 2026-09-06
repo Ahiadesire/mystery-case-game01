@@ -1,0 +1,16 @@
+[
+  { "time": "22h00", "event": "Les invités arrivent pour la soirée annuelle de retrouvailles." },
+  { "time": "22h20", "event": "Julien plaisante lourdement sur la dette de Vincent devant tout le monde." },
+  { "time": "22h30", "event": "Sophie se retire à la cuisine pour préparer le café." },
+  { "time": "22h35", "event": "Camille apporte et sert la bouteille de digestif qu'elle avait elle-même apportée." },
+  { "time": "22h36", "event": "Nora commence un appel téléphonique avec un client." },
+  { "time": "22h38", "event": "Hugo sort fumer sur la terrasse." },
+  { "time": "22h40", "event": "Karl s'éclipse discrètement vers le bureau." },
+  { "time": "22h42", "event": "La porte du bureau est aperçue entrouverte." },
+  { "time": "22h44", "event": "Sophie entend une dispute étouffée près du salon de jeu." },
+  { "time": "22h45", "event": "Vincent se lève brièvement pour se resservir un verre." },
+  { "time": "22h47", "event": "Hugo revient de la terrasse." },
+  { "time": "22h50", "event": "Camille est toujours à table ; Nora termine son appel téléphonique." },
+  { "time": "22h55", "event": "Sophie revient de la cuisine avec le café." },
+  { "time": "23h05", "event": "Julien est retrouvé sans vie, effondré près de la table de jeu." }
+]

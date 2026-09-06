@@ -1,0 +1,16 @@
+{
+  "id": "jeu07",
+  "title": "LA DERNIÈRE PARTIE",
+  "type": ["meurtre mystérieux", "enquête", "déduction", "bluff", "jeu social"],
+  "minPlayers": 4,
+  "maxPlayers": 6,
+  "durationMinutes": 20,
+  "victim": {
+    "name": "Julien Vasseur",
+    "age": 45,
+    "profession": "Entrepreneur, organisateur de la soirée",
+    "deathFoundTime": "23h05",
+    "murderWindow": "22h40 - 22h55"
+  },
+  "publicIntroTemplate": "Une soirée de retrouvailles réunit d'anciens proches de Julien Vasseur ({{playerCount}} au total) autour d'une partie de cartes, comme chaque année. À 23h05, Julien est retrouvé sans vie dans son salon de jeu, un verre renversé à ses pieds. Tout le monde avait une bonne raison de lui en vouloir ce soir-là — mais seuls certains sont vraiment passés à l'acte."
+}

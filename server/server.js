@@ -153,16 +153,18 @@ function publicPlayerList(room) {
 }
 
 function roomSummary(room) {
+  const scenario = scenarioOf(room);
+  const { min, max } = playerRangeFor(scenario);
   return {
     code: room.code,
     phase: room.phase,
     phaseEndsAt: room.phaseEndsAt,
     players: publicPlayerList(room),
-    minPlayers: RULES.minPlayers,
-    maxPlayers: RULES.maxPlayers,
+    minPlayers: min,
+    maxPlayers: max,
     scenarioId: room.scenarioId,
-    scenarioTitle: scenarioOf(room).title,
-    scenarioDifficulty: scenarioOf(room).difficulty,
+    scenarioTitle: scenario.title,
+    scenarioDifficulty: scenario.difficulty,
     availableScenarios: SCENARIO_LIST,
     connectedPlayerCount: [...room.players.values()].filter((p) => p.connected && p.socketId).length,
     activeCharacterCount: room.characterAssignments.size,
@@ -205,6 +207,17 @@ function guiltyRuleFor(scenario, playerCount) {
   );
   if (!rule) throw new Error('Nombre de joueurs hors des règles autorisées.');
   return rule;
+}
+
+// Bornes de joueurs propres au scénario choisi (déduites de guiltyRules),
+// avec repli sur les bornes globales si le scénario ne précise rien.
+function playerRangeFor(scenario) {
+  if (!scenario.guiltyRules || !scenario.guiltyRules.length) {
+    return { min: RULES.minPlayers, max: RULES.maxPlayers };
+  }
+  const mins = scenario.guiltyRules.map((r) => r.minPlayers);
+  const maxs = scenario.guiltyRules.map((r) => r.maxPlayers);
+  return { min: Math.min(...mins), max: Math.max(...maxs) };
 }
 
 // ---------- DISTRIBUTION DES PERSONNAGES (serveur uniquement) ----------
@@ -722,10 +735,11 @@ io.on('connection', (socket) => {
       const room = getRoomOrThrow(socket.data.roomCode);
       if (!isController(room, socket)) throw new Error('Seul l\'hôte (ou le Game Master) peut lancer la partie.');
       const n = [...room.players.values()].filter((p) => p.connected && p.socketId).length;
-      if (n < RULES.minPlayers || n > RULES.maxPlayers) {
-        throw new Error(`Il faut entre ${RULES.minPlayers} et ${RULES.maxPlayers} joueurs.`);
-      }
       const scenario = scenarioOf(room);
+      const { min, max } = playerRangeFor(scenario);
+      if (n < min || n > max) {
+        throw new Error(`Il faut entre ${min} et ${max} joueurs pour ce scénario.`);
+      }
 
       setPhase(room, 'distribution', RULES.phaseDurations.distribution);
       const { guiltyCount } = distributeCharacters(room);

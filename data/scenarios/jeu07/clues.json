@@ -1,0 +1,74 @@
+[
+  {
+    "order": 1,
+    "title": "Bouteille de digestif",
+    "linkedCharacterId": "camille",
+    "description": "La bouteille servie ce soir-là avait été apportée par Camille elle-même, et non sortie de la cave de Julien."
+  },
+  {
+    "order": 2,
+    "title": "Reçu retrouvé dans le bureau",
+    "linkedCharacterId": "hugo",
+    "description": "Un reçu prouve que Hugo a pris de l'argent liquide dans le bureau de Julien. Motif fort, mais pas une preuve de meurtre."
+  },
+  {
+    "order": 3,
+    "title": "Message vocal effacé",
+    "linkedCharacterId": "sophie",
+    "description": "Le téléphone de Julien montre une suppression récente d'un message vocal. Lié à la liaison de Sophie : piste sérieuse mais sans rapport avec le poison."
+  },
+  {
+    "order": 4,
+    "title": "Documents froissés dans le bureau",
+    "linkedCharacterId": "karl",
+    "description": "Des documents ont été manipulés récemment dans le bureau. Karl avait un motif financier, mais aucun lien direct avec le verre de Julien."
+  },
+  {
+    "order": 5,
+    "title": "Rapport financier modifié",
+    "linkedCharacterId": "nora",
+    "description": "Un rapport comptable a été discrètement corrigé avant la soirée. Cela prouve une falsification, pas une présence sur les lieux du meurtre."
+  },
+  {
+    "order": 6,
+    "title": "Reconnaissance de dette froissée",
+    "linkedCharacterId": "vincent",
+    "description": "Un contrat de reconnaissance de dette, froissé, est retrouvé dans la poche de Vincent. Motif réel, mais fausse piste pour le meurtre."
+  },
+  {
+    "order": 7,
+    "title": "Porte-fenêtre de la terrasse",
+    "linkedCharacterId": null,
+    "description": "La porte-fenêtre reliant la terrasse au salon de jeu est restée entrouverte pendant toute la fenêtre du meurtre."
+  },
+  {
+    "order": 8,
+    "title": "Résidu suspect sur le verre",
+    "linkedCharacterId": null,
+    "description": "Un résidu de poudre est retrouvé sur le verre de Julien, confirmant qu'il a bien été empoisonné plutôt que victime d'un malaise."
+  },
+  {
+    "order": 9,
+    "title": "Témoignage croisé sur le retour d'Hugo",
+    "linkedCharacterId": "hugo",
+    "description": "Karl affirme avoir vu Hugo revenir de la terrasse plus tôt que ce que celui-ci prétend dans son alibi."
+  },
+  {
+    "order": 10,
+    "title": "Relevé de l'appel téléphonique de Nora",
+    "linkedCharacterId": "nora",
+    "description": "Le relevé confirme une partie de l'alibi de Nora, mais laisse un blanc de plusieurs minutes pendant la fenêtre du meurtre."
+  },
+  {
+    "order": 11,
+    "title": "Odeur inhabituelle remarquée par Sophie",
+    "linkedCharacterId": "camille",
+    "description": "En revenant de la cuisine, Sophie se souvient d'une odeur amère provenant du digestif, juste avant que Julien ne le boive."
+  },
+  {
+    "order": 12,
+    "title": "Position du verre renversé",
+    "linkedCharacterId": null,
+    "description": "La position du verre suggère que Julien s'est effondré presque immédiatement après en avoir bu une gorgée."
+  }
+]

@@ -1,0 +1,8 @@
+[
+  { "id": "salon_jeu", "name": "Salon de jeu", "description": "Lieu du meurtre. La table de cartes où la soirée s'est jouée jusqu'à la fin." },
+  { "id": "cuisine", "name": "Cuisine", "description": "Peut confirmer ou contredire l'alibi de Sophie." },
+  { "id": "bureau", "name": "Bureau", "description": "Accessible depuis le couloir, peu surveillé. Lié aux fouilles de Karl et Hugo." },
+  { "id": "terrasse", "name": "Terrasse", "description": "Communique avec le salon de jeu par une porte-fenêtre restée entrouverte." },
+  { "id": "bar_salon", "name": "Bar du salon", "description": "Où Karl affirme être resté presque toute la soirée." },
+  { "id": "couloir", "name": "Couloir", "description": "Relie le bureau, la cuisine et le salon de jeu." }
+]
