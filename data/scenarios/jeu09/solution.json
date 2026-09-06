@@ -1,0 +1,14 @@
+{
+  "guiltyExplanations": {
+    "margaux": "Margaux a tué Frédéric. En instance de divorce conflictuelle et menacée de ruine financière, elle a profité de la porte de service laissée déverrouillée par Hélène pour s'introduire dans le compartiment de Frédéric pendant l'arrêt en gare et mettre fin à leur conflit une fois pour toutes.",
+    "thierry": "Thierry a tué Frédéric. Découvert en train de détourner des fonds de leur société commune, il a profité du rendez-vous nocturne qu'il avait lui-même organisé pour éliminer Frédéric avant que celui-ci ne le dénonce, en utilisant la même porte de service laissée ouverte."
+  },
+  "falseLeadsSummary": [
+    "Simon avait volé dans un compartiment et supplié Frédéric de se taire, mais n'est pas le meurtrier.",
+    "Valérie a détruit un document compromettant, un geste réel mais sans rapport avec le meurtre.",
+    "Oscar photographiait des documents financiers pour son enquête, sans lien avec le crime.",
+    "Delphine, Claudine, Philippe, Nora et Gérald avaient chacun un motif ou un secret réel, mais aucun n'a agi.",
+    "Hélène a caché sa négligence concernant la porte de service, sans être impliquée dans le meurtre lui-même."
+  ],
+  "closingLine": "Le train filait dans la nuit, scellé et silencieux — mais dans l'un de ses compartiments, un vieux compte n'attendait que la bonne occasion pour se solder."
+}

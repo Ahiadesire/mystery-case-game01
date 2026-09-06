@@ -1,0 +1,74 @@
+[
+  {
+    "order": 1,
+    "title": "Dispute publique avant la première",
+    "linkedCharacterId": "florence",
+    "description": "Plusieurs témoins confirment que Florence a menacé Bernard lors d'une dispute violente juste avant le meurtre."
+  },
+  {
+    "order": 2,
+    "title": "Comptes de production falsifiés",
+    "linkedCharacterId": "damien",
+    "description": "Les comptes de production du spectacle ont été falsifiés pour dissimuler un détournement de budget orchestré par Damien."
+  },
+  {
+    "order": 3,
+    "title": "Script recherché",
+    "linkedCharacterId": "marc_antoine",
+    "description": "La loge de Bernard montre des traces de fouille correspondant à la recherche du script de la prochaine pièce par Marc-Antoine."
+  },
+  {
+    "order": 4,
+    "title": "Rapport financier modifié",
+    "linkedCharacterId": "camille2",
+    "description": "Camille a modifié un rapport financier à la demande de Damien. Piste sérieuse, mais sans lien direct avec le meurtre."
+  },
+  {
+    "order": 5,
+    "title": "Costume abîmé",
+    "linkedCharacterId": "sabrina",
+    "description": "Un costume destiné à la remplaçante de Florence a été délibérément abîmé par Sabrina, sans rapport avec le meurtre."
+  },
+  {
+    "order": 6,
+    "title": "Incident lumineux provoqué",
+    "linkedCharacterId": "julien3",
+    "description": "L'incident lumineux survenu pendant la représentation a été provoqué volontairement par Julien, par rancune envers Bernard."
+  },
+  {
+    "order": 7,
+    "title": "Négociation privée après le rideau",
+    "linkedCharacterId": "isabelle2",
+    "description": "Isabelle a rencontré Bernard en privé juste après la représentation pour négocier son silence sur un scandale de pots-de-vin."
+  },
+  {
+    "order": 8,
+    "title": "Intrus non invité",
+    "linkedCharacterId": "gregoire",
+    "description": "Grégoire s'est introduit dans le théâtre sans invitation, aidé discrètement par l'ouvreuse."
+  },
+  {
+    "order": 9,
+    "title": "Idées de mise en scène non créditées",
+    "linkedCharacterId": "nadege",
+    "description": "Nadège avait un motif réel de rancune envers Bernard, mais son grief concerne la reconnaissance de son travail, pas un meurtre."
+  },
+  {
+    "order": 10,
+    "title": "Enregistrement audio du journaliste",
+    "linkedCharacterId": "olivier2",
+    "description": "Olivier a enregistré une conversation entre Bernard et Isabelle, utile à son enquête sur le scandale de pots-de-vin."
+  },
+  {
+    "order": 11,
+    "title": "Entrée non autorisée facilitée",
+    "linkedCharacterId": "victorine",
+    "description": "Victorine a laissé entrer Grégoire discrètement, en connaissant son histoire avec le théâtre."
+  },
+  {
+    "order": 12,
+    "title": "Porte de la loge non verrouillée",
+    "linkedCharacterId": null,
+    "description": "La porte de la loge de Bernard, habituellement verrouillée après les représentations, a été retrouvée entrouverte."
+  }
+]

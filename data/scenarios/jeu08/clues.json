@@ -1,0 +1,74 @@
+[
+  {
+    "order": 1,
+    "title": "Panneau de contrôle des caméras",
+    "linkedCharacterId": "laurent",
+    "description": "La caméra du couloir de la galerie a été désactivée pendant douze minutes, précisément durant la fenêtre du meurtre."
+  },
+  {
+    "order": 2,
+    "title": "Code de la galerie privée",
+    "linkedCharacterId": "nadia",
+    "description": "Nadia connaît le code d'accès à la galerie depuis son enfance, contrairement à la plupart des invités."
+  },
+  {
+    "order": 3,
+    "title": "Reçu falsifié",
+    "linkedCharacterId": "victor",
+    "description": "Un reçu financier falsifié est retrouvé dans les affaires de Victor. Motif réel, mais sans lien avec le vol."
+  },
+  {
+    "order": 4,
+    "title": "Documents sur la substitution",
+    "linkedCharacterId": "marc2",
+    "description": "Des documents prouvant qu'une œuvre restaurée était une copie sont cachés dans l'atelier de Marc."
+  },
+  {
+    "order": 5,
+    "title": "Photos volées de Yasmine",
+    "linkedCharacterId": "yasmine",
+    "description": "Des photos de documents financiers sont retrouvées sur l'appareil de Yasmine. Piste sérieuse, mais sans lien avec le meurtre."
+  },
+  {
+    "order": 6,
+    "title": "Négociation secrète de Bruno",
+    "linkedCharacterId": "bruno",
+    "description": "Bruno a proposé une offre d'achat privée à Édouard avant l'enchère, ce qui a été refusé."
+  },
+  {
+    "order": 7,
+    "title": "Toile tachée",
+    "linkedCharacterId": "tom",
+    "description": "Une toile d'Édouard a été volontairement tachée par Tom plus tôt dans la soirée : incident réel, mais sans rapport avec le meurtre."
+  },
+  {
+    "order": 8,
+    "title": "Clés dupliquées de Chiara",
+    "linkedCharacterId": "chiara",
+    "description": "Chiara possède des doubles de plusieurs clés du château, dont celle de l'atelier de Marc."
+  },
+  {
+    "order": 9,
+    "title": "Version antérieure du testament",
+    "linkedCharacterId": "isabelle",
+    "description": "Isabelle a consulté en cachette une version antérieure du testament d'Édouard dans son bureau."
+  },
+  {
+    "order": 10,
+    "title": "Offre secrète de Rafael",
+    "linkedCharacterId": "rafael",
+    "description": "Rafael a proposé une somme bien supérieure à Édouard en privé, refusée avant le meurtre."
+  },
+  {
+    "order": 11,
+    "title": "Bouteille manquante de la cave",
+    "linkedCharacterId": "gustave",
+    "description": "Une bouteille de vin rare manque à la cave ; Gustave l'a prise sans autorisation, sans lien avec le vol du tableau."
+  },
+  {
+    "order": 12,
+    "title": "Cadre vide de la galerie",
+    "linkedCharacterId": null,
+    "description": "Le cadre du tableau est retrouvé vide et légèrement déplacé, confirmant que le vol a eu lieu au moment du meurtre."
+  }
+]

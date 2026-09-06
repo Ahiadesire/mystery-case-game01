@@ -1,0 +1,254 @@
+[
+  {
+    "id": "julien2",
+    "name": "Julien",
+    "role": "Directeur financier",
+    "age": 49,
+    "guiltyEligible": true,
+    "public": {
+      "relation": "Directeur financier du groupe"
+    },
+    "private": {
+      "motif": "Nathalie avait découvert un détournement de fonds orchestré par Julien et s'apprêtait à le dénoncer au conseil d'administration dès le lendemain.",
+      "secret": "Julien a modifié discrètement un rapport financier présenté durant le séminaire.",
+      "alibi": "Il affirme être resté au salon principal à discuter avec des investisseurs jusqu'à minuit.",
+      "opportunite": "La bibliothèque est accessible depuis le salon par un couloir court et peu éclairé.",
+      "informations": [
+        "Il sait qu'Audrey risquait d'être licenciée par Nathalie.",
+        "Il a vu Nina consulter des documents confidentiels plus tôt dans la soirée."
+      ],
+      "objectif": "Empêcher que le détournement ne soit découvert avant le conseil d'administration."
+    }
+  },
+  {
+    "id": "audrey",
+    "name": "Audrey",
+    "role": "Directrice des ressources humaines",
+    "age": 44,
+    "guiltyEligible": true,
+    "public": {
+      "relation": "Directrice des ressources humaines du groupe"
+    },
+    "private": {
+      "motif": "Nathalie s'apprêtait à la licencier pour harcèlement signalé par plusieurs employés.",
+      "secret": "Audrey a fait disparaître un dossier de plaintes internes la concernant.",
+      "alibi": "Elle affirme être restée dans sa chambre à préparer un dossier jusqu'à minuit.",
+      "opportunite": "Sa chambre donne sur le même couloir que la bibliothèque.",
+      "informations": [
+        "Elle sait que Julien avait un motif financier fort contre Nathalie.",
+        "Elle a vu Mathieu rôder près du bureau de Nathalie plus tôt dans la soirée."
+      ],
+      "objectif": "Faire disparaître toute trace du dossier de plaintes internes."
+    }
+  },
+  {
+    "id": "mathieu",
+    "name": "Mathieu",
+    "role": "Bras droit ambitieux",
+    "age": 38,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Bras droit direct de Nathalie"
+    },
+    "private": {
+      "motif": "Nathalie bloquait sa promotion au poste de direction générale depuis deux ans.",
+      "secret": "Mathieu a consulté en cachette des documents de succession dans le bureau de Nathalie.",
+      "alibi": "Il affirme être resté au bar du chalet à discuter avec d'autres cadres.",
+      "opportunite": "Le bureau de Nathalie est proche du bar, accessible par un escalier discret.",
+      "informations": [
+        "Il a vu Sabine sortir précipitamment de la bibliothèque avant minuit.",
+        "Il sait qu'Omar menaçait de retirer ses fonds de l'entreprise."
+      ],
+      "objectif": "Obtenir la promotion sans que sa fouille du bureau ne soit découverte."
+    }
+  },
+  {
+    "id": "sabine",
+    "name": "Sabine",
+    "role": "Consultante externe",
+    "age": 41,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Consultante engagée pour l'audit annuel"
+    },
+    "private": {
+      "motif": "Nathalie menaçait de révéler qu'elle avait truqué un audit précédent.",
+      "secret": "Sabine a discrètement modifié un rapport d'audit distribué durant le séminaire.",
+      "alibi": "Elle affirme être restée dans la bibliothèque à préparer sa présentation jusqu'à 23h50.",
+      "opportunite": "Elle a été l'une des dernières personnes vues dans la bibliothèque avant le meurtre.",
+      "informations": [
+        "Elle a vu Fabien manipuler nerveusement un ordinateur portable.",
+        "Elle sait que Céline posait des questions suspectes sur les finances du groupe."
+      ],
+      "objectif": "Quitter la bibliothèque sans éveiller les soupçons sur l'audit truqué."
+    }
+  },
+  {
+    "id": "david2",
+    "name": "David",
+    "role": "Ancien associé évincé",
+    "age": 55,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Ancien associé fondateur, évincé par Nathalie"
+    },
+    "private": {
+      "motif": "Nathalie l'avait évincé de l'entreprise qu'ils avaient pourtant co-fondée ensemble.",
+      "secret": "David s'est introduit sans y être invité au séminaire, en se faisant passer pour un consultant.",
+      "alibi": "Il affirme être resté à l'écart, près de la cheminée du salon, toute la soirée.",
+      "opportunite": "Peu surveillé car personne ne s'attendait à sa présence.",
+      "informations": [
+        "Il a vu Paul consulter des contrats avec insistance plus tôt dans la soirée.",
+        "Il sait que Julien avait accès aux comptes du groupe."
+      ],
+      "objectif": "Ne pas être découvert comme intrus non invité."
+    }
+  },
+  {
+    "id": "lucie2",
+    "name": "Lucie",
+    "role": "Assistante de direction",
+    "age": 30,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Assistante personnelle de Nathalie"
+    },
+    "private": {
+      "motif": "Nathalie la maltraitait verbalement depuis des années et refusait toute augmentation.",
+      "secret": "Lucie a lu des messages privés sur le téléphone professionnel de Nathalie.",
+      "alibi": "Elle affirme être restée à la réception à organiser le programme du lendemain.",
+      "opportunite": "Faible : la réception est éloignée de la bibliothèque.",
+      "informations": [
+        "Elle a vu Agnès entrer dans la bibliothèque juste avant minuit.",
+        "Elle sait que Nina espionnait pour un concurrent."
+      ],
+      "objectif": "Cacher qu'elle a lu les messages privés de Nathalie."
+    }
+  },
+  {
+    "id": "fabien",
+    "name": "Fabien",
+    "role": "Responsable informatique",
+    "age": 36,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Responsable informatique du groupe"
+    },
+    "private": {
+      "motif": "Nathalie l'avait accusé à tort d'une fuite de données l'an dernier.",
+      "secret": "Fabien a copié des fichiers confidentiels sur une clé USB durant le séminaire.",
+      "alibi": "Il affirme être resté dans sa chambre à réparer un problème technique.",
+      "opportunite": "Faible : son travail technique laisse des traces horodatées vérifiables.",
+      "informations": [
+        "Il a vu Sabine modifier un document sur son ordinateur dans la bibliothèque.",
+        "Il sait que Lucie avait accès au téléphone de Nathalie."
+      ],
+      "objectif": "Cacher la copie non autorisée de fichiers confidentiels."
+    }
+  },
+  {
+    "id": "celine3",
+    "name": "Céline",
+    "role": "Journaliste infiltrée",
+    "age": 34,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Invitée présentée comme consultante externe"
+    },
+    "private": {
+      "motif": "Céline enquêtait sous couverture sur des pratiques financières douteuses du groupe.",
+      "secret": "Céline a enregistré discrètement une conversation entre Nathalie et Julien.",
+      "alibi": "Elle affirme être restée dans le salon principal toute la soirée.",
+      "opportunite": "Faible : plusieurs cadres peuvent confirmer sa présence au salon.",
+      "informations": [
+        "Elle a entendu Nathalie menacer quelqu'un au téléphone plus tôt dans la soirée.",
+        "Elle sait que David s'est introduit au séminaire sans invitation."
+      ],
+      "objectif": "Protéger son enregistrement et son identité de journaliste."
+    }
+  },
+  {
+    "id": "omar",
+    "name": "Omar",
+    "role": "Investisseur principal",
+    "age": 58,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Principal investisseur du groupe"
+    },
+    "private": {
+      "motif": "Nathalie refusait de lui céder des parts supplémentaires malgré ses menaces de retirer ses fonds.",
+      "secret": "Omar a proposé en secret à Mathieu de le soutenir pour prendre la direction générale.",
+      "alibi": "Il affirme être resté au bar avec Mathieu jusqu'à minuit passé.",
+      "opportunite": "Faible : sa présence au bar est confirmée par plusieurs témoins.",
+      "informations": [
+        "Il sait que Mathieu voulait la place de Nathalie.",
+        "Il a vu Agnès traverser le couloir de la bibliothèque avec une clé à la main."
+      ],
+      "objectif": "Faire avancer discrètement son plan de succession avec Mathieu."
+    }
+  },
+  {
+    "id": "agnes",
+    "name": "Agnès",
+    "role": "Gardienne du chalet",
+    "age": 60,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Gardienne permanente du chalet"
+    },
+    "private": {
+      "motif": "Nathalie avait menacé de ne pas renouveler son contrat de gardiennage l'an prochain.",
+      "secret": "Agnès a une clé passe-partout du chalet, y compris de la bibliothèque, qu'elle n'a jamais déclarée.",
+      "alibi": "Elle affirme être restée dans la chaufferie à surveiller le chauffage toute la nuit.",
+      "opportunite": "Elle connaît tous les passages secondaires du chalet.",
+      "informations": [
+        "Elle a vu Lucie sortir de la chambre de Nathalie plus tôt dans la soirée.",
+        "Elle sait que Fabien copiait des fichiers sur une clé USB."
+      ],
+      "objectif": "Cacher l'existence de sa clé passe-partout non déclarée."
+    }
+  },
+  {
+    "id": "paul2",
+    "name": "Paul",
+    "role": "Avocat d'entreprise",
+    "age": 52,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Avocat attitré du groupe"
+    },
+    "private": {
+      "motif": "Nathalie s'apprêtait à confier les dossiers juridiques du groupe à un cabinet concurrent.",
+      "secret": "Paul a tenté de négocier en secret un contrat avec un cabinet concurrent pour ses propres intérêts.",
+      "alibi": "Il affirme être resté dans sa chambre à réviser des contrats toute la soirée.",
+      "opportunite": "Faible : sa chambre est éloignée de la bibliothèque.",
+      "informations": [
+        "Il a vu David consulter des contrats avec un intérêt suspect.",
+        "Il sait qu'Omar cherchait à obtenir plus de parts dans le groupe."
+      ],
+      "objectif": "Finaliser discrètement son propre accord avant que Nathalie ne change de cabinet."
+    }
+  },
+  {
+    "id": "nina",
+    "name": "Nina",
+    "role": "Stagiaire ambitieuse",
+    "age": 24,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Stagiaire au sein de la direction"
+    },
+    "private": {
+      "motif": "Nathalie avait découvert que Nina transmettait des informations à un concurrent.",
+      "secret": "Nina a consulté des documents confidentiels sans autorisation durant le séminaire.",
+      "alibi": "Elle affirme être restée à l'écart, dans sa chambre, terrifiée par l'ambiance du séminaire.",
+      "opportunite": "Faible : sa chambre est loin de la bibliothèque et du bureau.",
+      "informations": [
+        "Elle a vu Julien consulter des rapports financiers tard dans la soirée.",
+        "Elle sait qu'Agnès possède les clés de toutes les pièces du chalet."
+      ],
+      "objectif": "Cacher qu'elle transmettait des informations à un concurrent."
+    }
+  }
+]

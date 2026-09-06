@@ -1,0 +1,15 @@
+{
+  "guiltyExplanations": {
+    "florence": "Florence a tué Bernard. Furieuse d'apprendre qu'il s'apprêtait à la remplacer pour la tournée après des années de carrière commune, elle est retournée dans sa loge sous prétexte de se démaquiller, puis l'a confronté une dernière fois — une dernière dispute qui a dégénéré.",
+    "damien": "Damien a tué Bernard. Sur le point d'être démasqué pour avoir détourné une partie du budget de production, il a profité d'un bref passage discret par les coulisses pour rejoindre la loge de Bernard et le faire taire avant que le scandale n'éclate publiquement."
+  },
+  "falseLeadsSummary": [
+    "Marc-Antoine avait fouillé la loge pour un script, sans lien avec le meurtre.",
+    "Sabrina et Julien avaient chacun saboté quelque chose par rancune, mais aucun des deux n'est le coupable.",
+    "Isabelle négociait son silence sur un scandale de pots-de-vin, une affaire réelle mais distincte du meurtre.",
+    "Grégoire s'était introduit sans invitation, un fait troublant mais sans rapport avec le crime.",
+    "Camille avait modifié des comptes sur ordre de Damien, sans en mesurer les conséquences, mais elle n'a tué personne.",
+    "Nadège, Olivier, Victorine et Hector avaient chacun un grief ou un intérêt réel, sans être impliqués dans le meurtre."
+  ],
+  "closingLine": "Le rideau était tombé sur un triomphe — mais en coulisses, une dernière scène, bien réelle celle-là, venait de se jouer dans le silence."
+}

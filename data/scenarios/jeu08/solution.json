@@ -1,0 +1,14 @@
+{
+  "guiltyExplanations": {
+    "nadia": "Nadia a tué Édouard et volé le tableau. Furieuse de découvrir qu'il s'apprêtait à la déshériter au profit d'une fondation, elle a profité du code de la galerie qu'elle connaît depuis l'enfance pour s'introduire pendant la coupure de caméra et s'emparer du tableau après l'avoir confronté.",
+    "laurent": "Laurent a tué Édouard et volé le tableau. Découvert en train de revendre des informations sur la collection à des receleurs, il a désactivé lui-même la caméra du couloir sous couvert de sa ronde de sécurité pour s'introduire dans la galerie et faire disparaître à la fois Édouard et la preuve de sa trahison."
+  },
+  "falseLeadsSummary": [
+    "Marc cachait la preuve d'une substitution d'œuvre, mais n'a rien à voir avec le meurtre.",
+    "Yasmine avait volé des photos de documents financiers pour son enquête, sans lien avec le crime.",
+    "Bruno et Rafael ont tous deux tenté des négociations privées pour le tableau, mais aucun n'est le coupable.",
+    "Tom avait taché une toile par vengeance mineure, un incident sans rapport avec le meurtre.",
+    "Isabelle et Victor cachaient chacun un motif financier réel, mais ni l'un ni l'autre n'a agi."
+  ],
+  "closingLine": "Deux personnes de confiance connaissaient les secrets du château — et l'une d'elles s'en est servie pour effacer Édouard de l'équation."
+}

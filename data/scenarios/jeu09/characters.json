@@ -1,0 +1,254 @@
+[
+  {
+    "id": "margaux",
+    "name": "Margaux",
+    "role": "Épouse séparée",
+    "age": 46,
+    "guiltyEligible": true,
+    "public": {
+      "relation": "Épouse séparée de Frédéric"
+    },
+    "private": {
+      "motif": "Frédéric refusait de signer les papiers de divorce et menaçait de la ruiner financièrement.",
+      "secret": "Margaux a emprunté ce train en sachant que Frédéric y voyageait, sans le lui dire.",
+      "alibi": "Elle affirme être restée dans son compartiment, deux wagons plus loin, toute la nuit.",
+      "opportunite": "Elle a été vue dans le couloir du wagon-lit peu après 01h50.",
+      "informations": [
+        "Elle sait que Thierry avait rendez-vous avec Frédéric cette nuit-là.",
+        "Elle a vu Simon, le steward, entrer dans le compartiment de Frédéric vers 01h55."
+      ],
+      "objectif": "Faire croire qu'elle n'a jamais quitté son propre compartiment."
+    }
+  },
+  {
+    "id": "thierry",
+    "name": "Thierry",
+    "role": "Associé en affaires",
+    "age": 53,
+    "guiltyEligible": true,
+    "public": {
+      "relation": "Associé de longue date de Frédéric"
+    },
+    "private": {
+      "motif": "Frédéric avait découvert que Thierry détournait des fonds de leur société commune.",
+      "secret": "Thierry avait organisé un rendez-vous nocturne avec Frédéric pour négocier son silence.",
+      "alibi": "Il affirme être resté au wagon-restaurant jusqu'à 02h00.",
+      "opportunite": "Le wagon-restaurant communique directement avec le wagon-lit de Frédéric.",
+      "informations": [
+        "Il sait que Margaux voyageait dans le même train que Frédéric.",
+        "Il a vu Oscar consulter des documents financiers suspects plus tôt dans la soirée."
+      ],
+      "objectif": "Cacher l'objet réel de son rendez-vous avec Frédéric."
+    }
+  },
+  {
+    "id": "helene",
+    "name": "Hélène",
+    "role": "Contrôleuse du train",
+    "age": 38,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Contrôleuse en charge du wagon-lit"
+    },
+    "private": {
+      "motif": "Frédéric l'avait menacée de la faire renvoyer après une plainte qu'elle jugeait injustifiée.",
+      "secret": "Hélène a laissé la porte de service du wagon-lit déverrouillée toute la nuit par négligence.",
+      "alibi": "Elle affirme avoir fait sa ronde de contrôle des billets entre 01h45 et 02h05.",
+      "opportunite": "Elle possède un passe permettant d'ouvrir tous les compartiments.",
+      "informations": [
+        "Elle a vu Claudine traîner près du compartiment de Frédéric.",
+        "Elle sait que la porte de service était déverrouillée toute la nuit."
+      ],
+      "objectif": "Cacher sa négligence concernant la porte de service."
+    }
+  },
+  {
+    "id": "oscar",
+    "name": "Oscar",
+    "role": "Journaliste économique",
+    "age": 40,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Journaliste enquêtant sur les affaires de Frédéric"
+    },
+    "private": {
+      "motif": "Oscar enquêtait sur des pratiques douteuses de Frédéric qui menaçaient sa réputation.",
+      "secret": "Oscar a photographié des documents financiers laissés sans surveillance par Thierry.",
+      "alibi": "Il affirme être resté dans son compartiment à rédiger un article toute la nuit.",
+      "opportunite": "Faible : personne ne peut confirmer directement sa présence.",
+      "informations": [
+        "Il a vu Thierry et Frédéric se donner rendez-vous plus tôt dans la soirée.",
+        "Il sait que Valérie craint la révélation d'une erreur professionnelle."
+      ],
+      "objectif": "Protéger ses sources et ses documents photographiés."
+    }
+  },
+  {
+    "id": "delphine",
+    "name": "Delphine",
+    "role": "Sœur cadette",
+    "age": 44,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Sœur cadette de Frédéric"
+    },
+    "private": {
+      "motif": "Frédéric contrôlait l'héritage familial et refusait de l'aider financièrement.",
+      "secret": "Delphine a fouillé la sacoche de Frédéric à la recherche de documents familiaux.",
+      "alibi": "Elle affirme être restée au wagon-restaurant avec Thierry jusqu'à 02h00.",
+      "opportunite": "Faible : elle était accompagnée pendant presque tout le créneau.",
+      "informations": [
+        "Elle a vu Gérald s'approcher du compartiment de Frédéric plus tôt dans la nuit.",
+        "Elle sait que Nora était exploitée par Frédéric depuis des années."
+      ],
+      "objectif": "Retrouver des documents familiaux sans que cela s'ébruite."
+    }
+  },
+  {
+    "id": "antoine2",
+    "name": "Antoine",
+    "role": "Ancien employé licencié",
+    "age": 35,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Ancien employé de Frédéric"
+    },
+    "private": {
+      "motif": "Frédéric l'avait licencié injustement et discrédité auprès d'autres employeurs.",
+      "secret": "Antoine a délibérément réservé une place dans ce train en apprenant que Frédéric y voyageait.",
+      "alibi": "Il affirme être resté dans son compartiment, à l'autre bout du wagon.",
+      "opportunite": "Il connaissait l'horaire exact de Frédéric grâce à un ancien collègue.",
+      "informations": [
+        "Il a vu Philippe rôder près du wagon-lit plus tôt dans la nuit.",
+        "Il sait qu'Hélène a laissé une porte de service déverrouillée."
+      ],
+      "objectif": "Cacher qu'il a délibérément suivi Frédéric dans ce train."
+    }
+  },
+  {
+    "id": "valerie",
+    "name": "Valérie",
+    "role": "Avocate d'affaires",
+    "age": 48,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Avocate personnelle de Frédéric"
+    },
+    "private": {
+      "motif": "Frédéric menaçait de révéler une erreur professionnelle grave qu'elle avait commise.",
+      "secret": "Valérie a détruit un document compromettant dans les toilettes du wagon peu après le meurtre.",
+      "alibi": "Elle affirme être restée dans son compartiment à préparer des dossiers.",
+      "opportunite": "Son compartiment est voisin de celui de Frédéric.",
+      "informations": [
+        "Elle a entendu une voix élevée dans le compartiment de Frédéric vers 01h55.",
+        "Elle sait qu'Oscar enquêtait activement sur Frédéric."
+      ],
+      "objectif": "S'assurer que le document détruit ne soit jamais retrouvé."
+    }
+  },
+  {
+    "id": "simon",
+    "name": "Simon",
+    "role": "Steward du wagon-lit",
+    "age": 29,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Steward en charge du service de nuit"
+    },
+    "private": {
+      "motif": "Frédéric l'avait surpris en train de voler dans un compartiment plus tôt dans la nuit.",
+      "secret": "Simon est entré dans le compartiment de Frédéric vers 01h55 pour le supplier de ne rien dire.",
+      "alibi": "Il affirme être resté dans le local de service tout le créneau.",
+      "opportunite": "Il possède les clés de tous les compartiments du wagon-lit.",
+      "informations": [
+        "Il sait qu'Antoine a délibérément réservé une place dans ce train.",
+        "Il a vu Margaux dans le couloir peu après 01h50."
+      ],
+      "objectif": "Cacher le vol pour lequel il a été surpris."
+    }
+  },
+  {
+    "id": "claudine",
+    "name": "Claudine",
+    "role": "Ancienne associée financière",
+    "age": 51,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Ancienne associée financière de Frédéric"
+    },
+    "private": {
+      "motif": "Frédéric l'avait lésée financièrement lors de la dissolution de leur ancienne société.",
+      "secret": "Claudine a confronté Frédéric brièvement dans le couloir plus tôt dans la soirée.",
+      "alibi": "Elle affirme être restée dans son compartiment voisin toute la nuit.",
+      "opportunite": "Son compartiment est très proche de celui de Frédéric.",
+      "informations": [
+        "Elle a vu Simon quitter le local de service vers 01h55.",
+        "Elle sait que Delphine cherchait des documents familiaux."
+      ],
+      "objectif": "Ne pas être associée à la confrontation du couloir."
+    }
+  },
+  {
+    "id": "philippe",
+    "name": "Philippe",
+    "role": "Détective privé",
+    "age": 50,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Détective engagé par Frédéric"
+    },
+    "private": {
+      "motif": "Frédéric refusait de le payer pour une enquête déjà terminée.",
+      "secret": "Philippe a fouillé discrètement le compartiment de Frédéric à la recherche de son paiement.",
+      "alibi": "Il affirme être resté dans le wagon-restaurant avec Thierry et Delphine.",
+      "opportunite": "Faible : plusieurs témoins confirment sa présence au wagon-restaurant.",
+      "informations": [
+        "Il a vu Valérie sortir précipitamment des toilettes du wagon.",
+        "Il sait qu'Antoine connaissait l'horaire exact de Frédéric."
+      ],
+      "objectif": "Récupérer son paiement d'une manière ou d'une autre."
+    }
+  },
+  {
+    "id": "nora2",
+    "name": "Nora",
+    "role": "Assistante personnelle",
+    "age": 33,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Assistante personnelle de Frédéric"
+    },
+    "private": {
+      "motif": "Frédéric l'exploitait et menaçait de la renvoyer sans indemnités si elle démissionnait.",
+      "secret": "Nora a lu des messages privés sur le téléphone de Frédéric plus tôt dans la soirée.",
+      "alibi": "Elle affirme être restée dans son compartiment à travailler sur son ordinateur.",
+      "opportunite": "Faible : son compartiment est loin de celui de Frédéric.",
+      "informations": [
+        "Elle sait que Margaux et Frédéric étaient en instance de divorce conflictuelle.",
+        "Elle a vu Gérald consulter nerveusement sa montre plus tôt dans la nuit."
+      ],
+      "objectif": "Cacher qu'elle a lu les messages privés de Frédéric."
+    }
+  },
+  {
+    "id": "gerald",
+    "name": "Gérald",
+    "role": "Créancier de jeu",
+    "age": 42,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Passager inconnu des autres, en réalité créancier de Frédéric"
+    },
+    "private": {
+      "motif": "Frédéric lui devait une importante dette de jeu et refusait de payer.",
+      "secret": "Gérald a délibérément acheté un billet sur ce train pour confronter Frédéric.",
+      "alibi": "Il affirme être resté dans son compartiment, loin de celui de Frédéric.",
+      "opportunite": "Il connaissait le trajet de Frédéric grâce à un contact commun.",
+      "informations": [
+        "Il a vu Antoine traîner près du wagon-lit plus tôt dans la nuit.",
+        "Il sait que Nora avait accès aux messages privés de Frédéric."
+      ],
+      "objectif": "Récupérer sa dette de jeu d'une manière ou d'une autre."
+    }
+  }
+]

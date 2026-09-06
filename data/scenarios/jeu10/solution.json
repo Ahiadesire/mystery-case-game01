@@ -1,0 +1,15 @@
+{
+  "guiltyExplanations": {
+    "julien2": "Julien a tué Nathalie. Sur le point d'être dénoncé au conseil d'administration pour détournement de fonds, il a profité d'un bref passage par le couloir voisin du salon pour rejoindre la bibliothèque et faire taire Nathalie avant qu'elle ne parle le lendemain.",
+    "audrey": "Audrey a tué Nathalie. Menacée d'un licenciement pour harcèlement qui aurait détruit sa carrière, elle a profité de la proximité de sa chambre avec la bibliothèque pour confronter Nathalie une dernière fois — une confrontation qui a mal tourné."
+  },
+  "falseLeadsSummary": [
+    "Sabine avait truqué un audit et Mathieu avait fouillé le bureau, mais aucun des deux n'est le meurtrier.",
+    "David s'était introduit sans invitation, un fait troublant mais sans rapport avec le meurtre.",
+    "Fabien et Céline cachaient chacun une collecte d'informations discrète, sans lien avec le crime.",
+    "Omar et Mathieu préparaient un plan de succession, une ambition réelle mais non criminelle.",
+    "Agnès cachait une clé passe-partout non déclarée, un manquement professionnel sans rapport avec le meurtre.",
+    "Paul négociait en secret avec un concurrent, une trahison professionnelle mais pas un meurtre."
+  ],
+  "closingLine": "La tempête avait coupé le chalet du monde — mais à l'intérieur, c'est une menace bien plus ancienne qui a fini par éclater."
+}

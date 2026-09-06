@@ -1,0 +1,22 @@
+{
+  "id": "jeu09",
+  "title": "LE TRAIN DE NUIT",
+  "type": [
+    "meurtre mystérieux",
+    "enquête",
+    "déduction",
+    "bluff",
+    "jeu social"
+  ],
+  "minPlayers": 4,
+  "maxPlayers": 12,
+  "durationMinutes": 30,
+  "victim": {
+    "name": "Frédéric Aumont",
+    "age": 50,
+    "profession": "Homme d'affaires",
+    "deathFoundTime": "02h15",
+    "murderWindow": "01h50 - 02h05"
+  },
+  "publicIntroTemplate": "Le train de nuit reliant deux grandes villes transporte cette nuit {{playerCount}} passagers, dont l'homme d'affaires Frédéric Aumont, installé seul dans son compartiment privé. Après un arrêt en gare intermédiaire, à 02h15, Frédéric est retrouvé sans vie. Le train ayant été scellé dès l'arrêt, le coupable est forcément encore à bord."
+}

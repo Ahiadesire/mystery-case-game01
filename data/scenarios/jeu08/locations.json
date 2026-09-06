@@ -1,0 +1,42 @@
+[
+  {
+    "id": "galerie",
+    "name": "Galerie privée",
+    "description": "Lieu du meurtre et du vol du tableau. Accès protégé par un code."
+  },
+  {
+    "id": "salle_bal",
+    "name": "Salle de bal",
+    "description": "Peut confirmer ou contredire l'alibi de Nadia et de plusieurs invités."
+  },
+  {
+    "id": "jardin_hiver",
+    "name": "Jardin d'hiver",
+    "description": "Lié à la ronde de sécurité de Laurent."
+  },
+  {
+    "id": "bureau",
+    "name": "Bureau d'Édouard",
+    "description": "Adjacent à la galerie, lié au testament et aux documents financiers."
+  },
+  {
+    "id": "atelier",
+    "name": "Atelier de restauration",
+    "description": "Communique directement avec la galerie privée. Lié à Marc."
+  },
+  {
+    "id": "vestiaire",
+    "name": "Vestiaire",
+    "description": "Où Bruno affirme être resté."
+  },
+  {
+    "id": "cave_vin",
+    "name": "Cave à vin",
+    "description": "Liée à Gustave et à la bouteille manquante."
+  },
+  {
+    "id": "escalier_service",
+    "name": "Escalier de service",
+    "description": "Relie discrètement plusieurs pièces du château à la galerie."
+  }
+]

@@ -1,0 +1,254 @@
+[
+  {
+    "id": "florence",
+    "name": "Florence",
+    "role": "Actrice principale",
+    "age": 39,
+    "guiltyEligible": true,
+    "public": {
+      "relation": "Actrice principale de la pièce"
+    },
+    "private": {
+      "motif": "Bernard s'apprêtait à la remplacer par une actrice plus jeune pour la tournée, après des années de collaboration.",
+      "secret": "Florence a menacé publiquement Bernard lors d'une dispute juste avant la représentation.",
+      "alibi": "Elle affirme être restée dans sa loge à se démaquiller de 22h10 à 22h35.",
+      "opportunite": "Sa loge est voisine de celle de Bernard, séparée par un couloir étroit.",
+      "informations": [
+        "Elle sait que Damien avait un contrat menacé par Bernard.",
+        "Elle a vu Marc-Antoine traîner près de la loge de Bernard plus tôt dans la soirée."
+      ],
+      "objectif": "Faire croire qu'elle est restée seule dans sa loge tout le créneau."
+    }
+  },
+  {
+    "id": "damien",
+    "name": "Damien",
+    "role": "Producteur du spectacle",
+    "age": 50,
+    "guiltyEligible": true,
+    "public": {
+      "relation": "Producteur exécutif de la pièce"
+    },
+    "private": {
+      "motif": "Bernard s'apprêtait à annuler leur contrat de production après avoir découvert des malversations financières de Damien.",
+      "secret": "Damien a falsifié les comptes de production pour dissimuler un détournement de budget.",
+      "alibi": "Il affirme être resté au bar du théâtre à célébrer avec des invités jusqu'à 22h35.",
+      "opportunite": "Le bar communique avec les coulisses par un couloir peu surveillé après la représentation.",
+      "informations": [
+        "Il sait que Florence avait menacé Bernard avant la représentation.",
+        "Il a vu Camille consulter des documents financiers dans le bureau de Bernard."
+      ],
+      "objectif": "Empêcher que la falsification des comptes ne soit découverte."
+    }
+  },
+  {
+    "id": "marc_antoine",
+    "name": "Marc-Antoine",
+    "role": "Acteur secondaire jaloux",
+    "age": 33,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Acteur dans un second rôle"
+    },
+    "private": {
+      "motif": "Bernard lui avait retiré un rôle principal au profit d'un acteur plus connu, quelques semaines avant la première.",
+      "secret": "Marc-Antoine a fouillé la loge de Bernard à la recherche du script de la prochaine pièce.",
+      "alibi": "Il affirme être resté sur scène à ranger des décors après la représentation.",
+      "opportunite": "La scène communique avec les coulisses et la loge de Bernard par un couloir direct.",
+      "informations": [
+        "Il a vu Florence quitter précipitamment la loge de Bernard avant la dispute.",
+        "Il sait que Camille avait accès aux comptes de production."
+      ],
+      "objectif": "Récupérer le script sans que sa fouille ne soit découverte."
+    }
+  },
+  {
+    "id": "camille2",
+    "name": "Camille",
+    "role": "Comptable du théâtre",
+    "age": 45,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Comptable en charge des finances du théâtre"
+    },
+    "private": {
+      "motif": "Bernard avait découvert une irrégularité dans les comptes qu'elle gérait pour Damien.",
+      "secret": "Camille a modifié un rapport financier à la demande de Damien, sans en mesurer les conséquences.",
+      "alibi": "Elle affirme être restée dans le bureau administratif jusqu'à 22h30.",
+      "opportunite": "Le bureau administratif est proche de la loge de Bernard par l'escalier arrière.",
+      "informations": [
+        "Elle sait que Damien lui avait demandé de modifier les comptes.",
+        "Elle a vu Sabrina sortir précipitamment de la loge de Bernard."
+      ],
+      "objectif": "Ne pas être tenue responsable de la falsification des comptes."
+    }
+  },
+  {
+    "id": "sabrina",
+    "name": "Sabrina",
+    "role": "Costumière",
+    "age": 41,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Costumière en chef du théâtre"
+    },
+    "private": {
+      "motif": "Bernard avait publiquement critiqué son travail devant toute la troupe la veille de la première.",
+      "secret": "Sabrina a délibérément abîmé un costume destiné à l'actrice que Bernard voulait engager pour la tournée.",
+      "alibi": "Elle affirme être restée dans l'atelier de couture à ranger les costumes.",
+      "opportunite": "L'atelier de couture est adjacent à la loge de Bernard.",
+      "informations": [
+        "Elle a vu Marc-Antoine fouiller dans les affaires de Bernard.",
+        "Elle sait que Florence était menacée par le projet de tournée."
+      ],
+      "objectif": "Ne pas être associée au costume abîmé."
+    }
+  },
+  {
+    "id": "julien3",
+    "name": "Julien",
+    "role": "Régisseur lumière",
+    "age": 37,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Régisseur lumière du spectacle"
+    },
+    "private": {
+      "motif": "Bernard l'avait blâmé publiquement pour un incident technique survenu pendant la première.",
+      "secret": "Julien a délibérément provoqué un bref incident lumineux par rancune envers Bernard.",
+      "alibi": "Il affirme être resté à la régie technique jusqu'à la fin du démontage.",
+      "opportunite": "La régie est éloignée de la loge, mais reliée par un escalier technique.",
+      "informations": [
+        "Il a vu Damien quitter le bar plus tôt que prévu.",
+        "Il sait que Sabrina avait un différend avec Bernard."
+      ],
+      "objectif": "Cacher qu'il a provoqué l'incident lumineux volontairement."
+    }
+  },
+  {
+    "id": "isabelle2",
+    "name": "Isabelle",
+    "role": "Critique de théâtre",
+    "age": 52,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Critique influente invitée à la première"
+    },
+    "private": {
+      "motif": "Bernard avait menacé de révéler qu'elle avait accepté des pots-de-vin pour de bonnes critiques.",
+      "secret": "Isabelle a rencontré Bernard en privé juste après la représentation pour négocier son silence.",
+      "alibi": "Elle affirme être restée dans le hall du théâtre à discuter avec des invités.",
+      "opportunite": "Le hall communique avec les coulisses par une porte habituellement fermée au public.",
+      "informations": [
+        "Elle sait que Damien avait un motif financier fort contre Bernard.",
+        "Elle a vu Julien quitter précipitamment la régie technique."
+      ],
+      "objectif": "Empêcher que le scandale des pots-de-vin n'éclate publiquement."
+    }
+  },
+  {
+    "id": "gregoire",
+    "name": "Grégoire",
+    "role": "Ancien metteur en scène évincé",
+    "age": 58,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Ancien associé de Bernard, évincé du théâtre"
+    },
+    "private": {
+      "motif": "Bernard l'avait évincé de la direction du théâtre qu'ils avaient pourtant fondé ensemble.",
+      "secret": "Grégoire s'est introduit dans les coulisses sans y être invité pour observer la première.",
+      "alibi": "Il affirme être resté discrètement au fond du hall, loin des coulisses.",
+      "opportunite": "Il connaît parfaitement tous les passages du théâtre depuis sa propre direction passée.",
+      "informations": [
+        "Il a vu Isabelle s'entretenir en privé avec Bernard après la représentation.",
+        "Il sait que Marc-Antoine avait perdu un rôle important."
+      ],
+      "objectif": "Ne pas être découvert comme intrus non invité."
+    }
+  },
+  {
+    "id": "nadege",
+    "name": "Nadège",
+    "role": "Assistante de mise en scène",
+    "age": 29,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Assistante personnelle de Bernard"
+    },
+    "private": {
+      "motif": "Bernard la surchargeait de travail sans jamais la créditer pour ses idées de mise en scène.",
+      "secret": "Nadège a proposé en secret plusieurs idées de mise en scène que Bernard s'est appropriées.",
+      "alibi": "Elle affirme être restée derrière la scène à ranger les accessoires.",
+      "opportunite": "Elle avait un accès libre et habituel à la loge de Bernard.",
+      "informations": [
+        "Elle a vu Camille et Damien discuter à voix basse près du bureau administratif.",
+        "Elle sait que Grégoire s'était introduit sans invitation."
+      ],
+      "objectif": "Faire reconnaître un jour la paternité de ses idées, sans plus attendre de Bernard."
+    }
+  },
+  {
+    "id": "olivier2",
+    "name": "Olivier",
+    "role": "Journaliste culturel",
+    "age": 40,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Journaliste couvrant la première pour un grand journal"
+    },
+    "private": {
+      "motif": "Olivier enquêtait sur des rumeurs de pots-de-vin entourant les critiques de théâtre proches de Bernard.",
+      "secret": "Olivier a discrètement enregistré une conversation entre Bernard et Isabelle.",
+      "alibi": "Il affirme être resté dans le hall à interviewer des spectateurs après la représentation.",
+      "opportunite": "Faible : plusieurs spectateurs peuvent confirmer ses allées et venues dans le hall.",
+      "informations": [
+        "Il a entendu Bernard menacer quelqu'un juste après le rideau final.",
+        "Il sait que Grégoire rôdait près des coulisses sans invitation."
+      ],
+      "objectif": "Obtenir la preuve du scandale de pots-de-vin avant tout le monde."
+    }
+  },
+  {
+    "id": "victorine",
+    "name": "Victorine",
+    "role": "Ouvreuse du théâtre",
+    "age": 26,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Ouvreuse en charge de la salle"
+    },
+    "private": {
+      "motif": "Bernard l'avait injustement accusée d'avoir perdu des recettes de billetterie.",
+      "secret": "Victorine a laissé entrer Grégoire discrètement, en connaissant son histoire avec le théâtre.",
+      "alibi": "Elle affirme être restée à l'entrée du théâtre jusqu'à la fermeture des portes.",
+      "opportunite": "Elle contrôle qui entre et sort du théâtre après la représentation.",
+      "informations": [
+        "Elle sait que Grégoire n'était pas sur la liste des invités.",
+        "Elle a vu Olivier interviewer des spectateurs près du hall."
+      ],
+      "objectif": "Ne pas être blâmée pour avoir laissé entrer un intrus."
+    }
+  },
+  {
+    "id": "hector",
+    "name": "Hector",
+    "role": "Créancier de Bernard",
+    "age": 48,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Ancien partenaire d'affaires, invité par erreur"
+    },
+    "private": {
+      "motif": "Bernard lui devait une importante somme d'argent liée à un projet de spectacle avorté.",
+      "secret": "Hector s'est présenté à la première spécifiquement pour réclamer sa dette à Bernard.",
+      "alibi": "Il affirme être resté au bar avec Damien jusqu'à la fin de la soirée.",
+      "opportunite": "Faible : plusieurs témoins confirment sa présence au bar une bonne partie du temps.",
+      "informations": [
+        "Il a vu Damien quitter brièvement le bar avant de revenir.",
+        "Il sait que Nadège en voulait à Bernard pour son manque de reconnaissance."
+      ],
+      "objectif": "Obtenir le remboursement de sa dette avant de repartir."
+    }
+  }
+]

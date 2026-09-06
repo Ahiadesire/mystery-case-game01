@@ -1,0 +1,22 @@
+{
+  "id": "jeu10",
+  "title": "LE CHALET ISOLÉ",
+  "type": [
+    "meurtre mystérieux",
+    "enquête",
+    "déduction",
+    "bluff",
+    "jeu social"
+  ],
+  "minPlayers": 4,
+  "maxPlayers": 12,
+  "durationMinutes": 30,
+  "victim": {
+    "name": "Nathalie Fontaine",
+    "age": 47,
+    "profession": "PDG d'un grand groupe",
+    "deathFoundTime": "00h20",
+    "murderWindow": "23h55 - 00h10"
+  },
+  "publicIntroTemplate": "Un séminaire de direction réunit {{playerCount}} cadres dans un chalet de montagne isolé par une tempête de neige. À 00h20, lors de la soirée de clôture, la PDG Nathalie Fontaine est retrouvée sans vie dans la bibliothèque du chalet. Avec la route coupée par la neige, le coupable est forcément parmi les personnes présentes cette nuit-là."
+}

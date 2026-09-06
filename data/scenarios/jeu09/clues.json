@@ -1,0 +1,74 @@
+[
+  {
+    "order": 1,
+    "title": "Rendez-vous nocturne organisé",
+    "linkedCharacterId": "thierry",
+    "description": "Thierry avait organisé un rendez-vous secret avec Frédéric cette nuit-là, juste avant sa mort."
+  },
+  {
+    "order": 2,
+    "title": "Présence non déclarée de Margaux",
+    "linkedCharacterId": "margaux",
+    "description": "Margaux voyageait dans le même train que Frédéric sans le lui avoir dit, et a été vue dans le couloir au moment critique."
+  },
+  {
+    "order": 3,
+    "title": "Document photographié d'Oscar",
+    "linkedCharacterId": "oscar",
+    "description": "Oscar a photographié des documents financiers appartenant à Thierry. Piste sérieuse, mais sans lien avec le meurtre."
+  },
+  {
+    "order": 4,
+    "title": "Porte de service déverrouillée",
+    "linkedCharacterId": "helene",
+    "description": "La porte de service du wagon-lit est restée déverrouillée toute la nuit par négligence d'Hélène."
+  },
+  {
+    "order": 5,
+    "title": "Vol surpris par Frédéric",
+    "linkedCharacterId": "simon",
+    "description": "Simon a été surpris par Frédéric en train de voler plus tôt dans la nuit, ce qui explique sa visite au compartiment."
+  },
+  {
+    "order": 6,
+    "title": "Document détruit dans les toilettes",
+    "linkedCharacterId": "valerie",
+    "description": "Un document compromettant a été détruit dans les toilettes du wagon peu après le meurtre. Fausse piste sérieuse."
+  },
+  {
+    "order": 7,
+    "title": "Billet acheté au dernier moment",
+    "linkedCharacterId": "gerald",
+    "description": "Gérald a délibérément acheté un billet sur ce train en apprenant le trajet de Frédéric."
+  },
+  {
+    "order": 8,
+    "title": "Fouille du compartiment",
+    "linkedCharacterId": "philippe",
+    "description": "Le compartiment de Frédéric montre des traces de fouille, correspondant à la recherche de paiement de Philippe."
+  },
+  {
+    "order": 9,
+    "title": "Sacoche fouillée",
+    "linkedCharacterId": "delphine",
+    "description": "La sacoche de Frédéric a été fouillée ; Delphine cherchait des documents familiaux, sans lien avec le meurtre."
+  },
+  {
+    "order": 10,
+    "title": "Messages privés consultés",
+    "linkedCharacterId": "nora2",
+    "description": "Le téléphone de Frédéric montre des messages consultés par Nora plus tôt dans la soirée."
+  },
+  {
+    "order": 11,
+    "title": "Confrontation du couloir",
+    "linkedCharacterId": "claudine",
+    "description": "Claudine a confronté Frédéric dans le couloir plus tôt dans la nuit à propos de leur ancienne société."
+  },
+  {
+    "order": 12,
+    "title": "Compartiment fermé de l'intérieur",
+    "linkedCharacterId": null,
+    "description": "Le compartiment de Frédéric était verrouillé de l'intérieur, ce qui indique que le meurtrier connaissait bien le mécanisme des portes du wagon-lit."
+  }
+]

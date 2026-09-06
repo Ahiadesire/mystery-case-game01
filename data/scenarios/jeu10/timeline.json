@@ -1,0 +1,54 @@
+[
+  {
+    "time": "23h30",
+    "event": "La soirée de clôture du séminaire bat son plein au salon principal."
+  },
+  {
+    "time": "23h38",
+    "event": "Mathieu consulte en cachette des documents de succession dans le bureau."
+  },
+  {
+    "time": "23h42",
+    "event": "Nina consulte des documents confidentiels sans autorisation."
+  },
+  {
+    "time": "23h45",
+    "event": "Nathalie se retire dans la bibliothèque pour finaliser un dossier."
+  },
+  {
+    "time": "23h50",
+    "event": "Sabine quitte précipitamment la bibliothèque."
+  },
+  {
+    "time": "23h52",
+    "event": "Lucie est vue sortant de la chambre de Nathalie."
+  },
+  {
+    "time": "23h55",
+    "event": "Audrey monte dans sa chambre, voisine de la bibliothèque."
+  },
+  {
+    "time": "23h58",
+    "event": "Agnès traverse le couloir de la bibliothèque avec une clé à la main."
+  },
+  {
+    "time": "00h02",
+    "event": "Julien quitte brièvement le salon principal."
+  },
+  {
+    "time": "00h05",
+    "event": "Une dispute étouffée est entendue près de la bibliothèque."
+  },
+  {
+    "time": "00h08",
+    "event": "Julien revient au salon principal."
+  },
+  {
+    "time": "00h10",
+    "event": "Le silence retombe autour de la bibliothèque."
+  },
+  {
+    "time": "00h20",
+    "event": "Nathalie est retrouvée sans vie dans la bibliothèque."
+  }
+]

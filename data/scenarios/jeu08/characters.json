@@ -1,0 +1,254 @@
+[
+  {
+    "id": "nadia",
+    "name": "Nadia",
+    "role": "Nièce et héritière",
+    "age": 34,
+    "guiltyEligible": true,
+    "public": {
+      "relation": "Nièce d'Édouard"
+    },
+    "private": {
+      "motif": "Édouard s'apprêtait à déshériter Nadia au profit d'une fondation caritative.",
+      "secret": "Nadia a fait faire une copie du tableau quelques semaines avant le gala.",
+      "alibi": "Elle affirme être restée dans la salle de bal de 23h25 à 23h45.",
+      "opportunite": "Elle connaît le code de la galerie privée depuis son enfance.",
+      "informations": [
+        "Elle sait que Laurent a désactivé une caméra plus tôt dans la soirée.",
+        "Elle sait que Bruno convoitait ouvertement le tableau."
+      ],
+      "objectif": "Faire croire qu'elle n'a jamais quitté la salle de bal."
+    }
+  },
+  {
+    "id": "laurent",
+    "name": "Laurent",
+    "role": "Chef de la sécurité privée",
+    "age": 45,
+    "guiltyEligible": true,
+    "public": {
+      "relation": "Responsable de la sécurité du château"
+    },
+    "private": {
+      "motif": "Édouard avait découvert que Laurent revendait des informations sur la collection à des receleurs.",
+      "secret": "Laurent a désactivé une caméra du couloir de la galerie pendant douze minutes.",
+      "alibi": "Il affirme avoir fait sa ronde habituelle dans le jardin d'hiver entre 23h25 et 23h45.",
+      "opportunite": "Il possède toutes les clés du château, y compris celle de la galerie privée.",
+      "informations": [
+        "Il sait que Nadia connaît le code de la galerie depuis longtemps.",
+        "Il a vu Gustave traîner près du bureau d'Édouard plus tôt dans la soirée."
+      ],
+      "objectif": "Ne pas être associé à la caméra désactivée."
+    }
+  },
+  {
+    "id": "sophia",
+    "name": "Sophia",
+    "role": "Commissaire-priseur",
+    "age": 41,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Commissaire-priseur en charge de la vente"
+    },
+    "private": {
+      "motif": "Édouard menaçait d'annuler leur contrat d'enchères exclusif, ce qui aurait ruiné sa commission.",
+      "secret": "Sophia a subtilement sous-évalué le tableau dans le catalogue pour favoriser un acheteur.",
+      "alibi": "Elle affirme être restée près de l'estrade à préparer la vente jusqu'à minuit.",
+      "opportunite": "Faible : elle était visible par de nombreux invités pendant tout le créneau.",
+      "informations": [
+        "Elle a vu Rafael s'entretenir discrètement avec Édouard avant le meurtre.",
+        "Elle sait que Victor devait de l'argent à Édouard."
+      ],
+      "objectif": "Empêcher que la sous-évaluation ne soit découverte."
+    }
+  },
+  {
+    "id": "marc2",
+    "name": "Marc",
+    "role": "Restaurateur d'art",
+    "age": 52,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Restaurateur attitré de la collection Castellane"
+    },
+    "private": {
+      "motif": "Édouard avait découvert qu'une œuvre restaurée par Marc était en réalité une copie.",
+      "secret": "Marc a caché des documents prouvant la substitution dans son atelier du château.",
+      "alibi": "Il affirme être resté dans son atelier attenant à la galerie toute la soirée.",
+      "opportunite": "Son atelier communique directement avec la galerie privée.",
+      "informations": [
+        "Il a entendu des pas rapides dans la galerie vers 23h35.",
+        "Il sait que Chiara avait accès aux clés de l'atelier."
+      ],
+      "objectif": "Récupérer et détruire les documents compromettants."
+    }
+  },
+  {
+    "id": "yasmine",
+    "name": "Yasmine",
+    "role": "Journaliste d'art",
+    "age": 36,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Journaliste spécialisée en art"
+    },
+    "private": {
+      "motif": "Yasmine enquêtait sur un scandale de faux tableaux impliquant Édouard.",
+      "secret": "Elle a pris des photos volées de documents dans le bureau d'Édouard.",
+      "alibi": "Elle affirme être restée près du buffet à observer les invités.",
+      "opportunite": "Elle pouvait circuler librement, mais son appareil photo l'aurait rendue visible dans la galerie.",
+      "informations": [
+        "Elle a vu Tom quitter précipitamment la salle de bal vers 23h30.",
+        "Elle a entendu Isabelle mentionner un changement de testament."
+      ],
+      "objectif": "Protéger ses sources et ses photos volées."
+    }
+  },
+  {
+    "id": "bruno",
+    "name": "Bruno",
+    "role": "Antiquaire rival",
+    "age": 49,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Antiquaire et concurrent de longue date"
+    },
+    "private": {
+      "motif": "Édouard lui avait soufflé un client important la semaine précédente.",
+      "secret": "Bruno a tenté de négocier discrètement l'achat du tableau avant l'enchère officielle.",
+      "alibi": "Il affirme être resté près du vestiaire toute la soirée.",
+      "opportunite": "Le vestiaire est éloigné de la galerie, mais relié par l'escalier de service.",
+      "informations": [
+        "Il a vu Laurent s'attarder près du tableau de contrôle des caméras.",
+        "Il sait que Sophia a sous-évalué le tableau dans le catalogue."
+      ],
+      "objectif": "Négocier discrètement sans que cela s'ébruite."
+    }
+  },
+  {
+    "id": "chiara",
+    "name": "Chiara",
+    "role": "Assistante personnelle",
+    "age": 29,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Assistante personnelle d'Édouard"
+    },
+    "private": {
+      "motif": "Édouard la payait mal et menaçait de la renvoyer après une erreur d'agenda.",
+      "secret": "Chiara a emprunté les clés de l'atelier de Marc sans autorisation.",
+      "alibi": "Elle affirme être restée à l'accueil des invités jusqu'à 23h40.",
+      "opportunite": "Elle possède un double des clés de plusieurs pièces du château.",
+      "informations": [
+        "Elle a vu Gustave sortir de la cave à vin avec une bouteille non prévue.",
+        "Elle sait que Nadia connaît le code de la galerie."
+      ],
+      "objectif": "Rendre discrètement les clés empruntées sans se faire remarquer."
+    }
+  },
+  {
+    "id": "victor",
+    "name": "Victor",
+    "role": "Financier et mécène",
+    "age": 55,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Investisseur et ami de longue date d'Édouard"
+    },
+    "private": {
+      "motif": "Édouard refusait de lui rembourser un prêt important consenti l'an dernier.",
+      "secret": "Victor a falsifié un reçu pour dissimuler une transaction financière douteuse.",
+      "alibi": "Il affirme être resté à table avec d'autres invités jusqu'à minuit.",
+      "opportunite": "Faible : plusieurs témoins peuvent confirmer sa présence à table.",
+      "informations": [
+        "Il a vu Isabelle sortir précipitamment du bureau d'Édouard.",
+        "Il sait que Sophia avait un motif financier concernant l'enchère."
+      ],
+      "objectif": "Récupérer discrètement le reçu falsifié."
+    }
+  },
+  {
+    "id": "tom",
+    "name": "Tom",
+    "role": "Peintre contemporain",
+    "age": 31,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Artiste invité, ancien protégé d'Édouard"
+    },
+    "private": {
+      "motif": "Édouard avait publiquement ridiculisé son travail lors d'un vernissage récent.",
+      "secret": "Tom a versé un verre sur une toile d'Édouard plus tôt dans la soirée, par vengeance mineure.",
+      "alibi": "Il affirme être sorti prendre l'air sur la terrasse entre 23h20 et 23h40.",
+      "opportunite": "La terrasse est éloignée de la galerie privée.",
+      "informations": [
+        "Il a vu Yasmine prendre des photos près du bureau d'Édouard.",
+        "Il sait que Bruno négociait discrètement avec Édouard."
+      ],
+      "objectif": "Éviter que l'incident de la toile tachée ne soit découvert."
+    }
+  },
+  {
+    "id": "isabelle",
+    "name": "Isabelle",
+    "role": "Avocate de la succession",
+    "age": 47,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Avocate personnelle d'Édouard"
+    },
+    "private": {
+      "motif": "Édouard s'apprêtait à changer son testament, ce qui aurait réduit ses honoraires futurs.",
+      "secret": "Isabelle a consulté en cachette une version antérieure du testament dans le bureau.",
+      "alibi": "Elle affirme être restée dans le bureau d'Édouard à préparer des documents.",
+      "opportunite": "Le bureau est adjacent à la galerie privée par un couloir court.",
+      "informations": [
+        "Elle sait qu'Édouard voulait avantager une fondation plutôt que Nadia.",
+        "Elle a vu Victor traîner près du bureau plus tôt dans la soirée."
+      ],
+      "objectif": "Découvrir le contenu exact du nouveau testament avant qu'il ne soit signé."
+    }
+  },
+  {
+    "id": "rafael",
+    "name": "Rafael",
+    "role": "Acheteur étranger",
+    "age": 44,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Collectionneur venu spécialement pour l'enchère"
+    },
+    "private": {
+      "motif": "Édouard refusait de lui vendre le tableau en privé avant l'enchère publique.",
+      "secret": "Rafael a proposé une somme bien supérieure à Édouard en secret, qui a refusé.",
+      "alibi": "Il affirme être resté près de l'estrade avec Sophia jusqu'à minuit.",
+      "opportunite": "Faible : il connaît mal la disposition du château.",
+      "informations": [
+        "Il a vu Marc sortir précipitamment de son atelier vers 23h35.",
+        "Il sait que Chiara possède des doubles de plusieurs clés."
+      ],
+      "objectif": "Obtenir le tableau par tous les moyens légaux disponibles."
+    }
+  },
+  {
+    "id": "gustave",
+    "name": "Gustave",
+    "role": "Majordome",
+    "age": 61,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Majordome de la famille Castellane depuis vingt ans"
+    },
+    "private": {
+      "motif": "Édouard avait découvert que Gustave détournait de petites sommes depuis plusieurs années.",
+      "secret": "Gustave a pris une bouteille de vin rare dans la cave sans autorisation ce soir-là.",
+      "alibi": "Il affirme être resté à la cave à vin puis en cuisine toute la soirée.",
+      "opportunite": "Il connaît tous les passages de service du château, y compris vers la galerie.",
+      "informations": [
+        "Il a vu Laurent désactiver brièvement un panneau de contrôle.",
+        "Il sait qu'Isabelle a consulté des documents dans le bureau sans autorisation."
+      ],
+      "objectif": "Cacher le détournement avant qu'un audit ne soit lancé."
+    }
+  }
+]

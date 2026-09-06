@@ -1,0 +1,74 @@
+[
+  {
+    "order": 1,
+    "title": "Rapport financier modifié",
+    "linkedCharacterId": "julien2",
+    "description": "Un rapport financier présenté durant le séminaire a été discrètement modifié par Julien pour dissimuler un détournement."
+  },
+  {
+    "order": 2,
+    "title": "Dossier de plaintes disparu",
+    "linkedCharacterId": "audrey",
+    "description": "Un dossier de plaintes internes concernant Audrey a disparu des archives du groupe juste avant le séminaire."
+  },
+  {
+    "order": 3,
+    "title": "Documents de succession consultés",
+    "linkedCharacterId": "mathieu",
+    "description": "Mathieu a consulté en cachette des documents de succession dans le bureau de Nathalie. Motif fort, sans lien direct avec le meurtre."
+  },
+  {
+    "order": 4,
+    "title": "Audit truqué",
+    "linkedCharacterId": "sabine",
+    "description": "Un rapport d'audit distribué durant le séminaire a été modifié par Sabine pour cacher une fraude antérieure."
+  },
+  {
+    "order": 5,
+    "title": "Présence non invitée de David",
+    "linkedCharacterId": "david2",
+    "description": "David s'est introduit au séminaire sans invitation en se faisant passer pour un consultant."
+  },
+  {
+    "order": 6,
+    "title": "Messages privés consultés",
+    "linkedCharacterId": "lucie2",
+    "description": "Le téléphone professionnel de Nathalie montre des messages consultés par Lucie plus tôt dans la soirée."
+  },
+  {
+    "order": 7,
+    "title": "Clé USB non autorisée",
+    "linkedCharacterId": "fabien",
+    "description": "Des fichiers confidentiels ont été copiés sur une clé USB par Fabien durant le séminaire."
+  },
+  {
+    "order": 8,
+    "title": "Enregistrement audio secret",
+    "linkedCharacterId": "celine3",
+    "description": "Un enregistrement audio d'une conversation entre Nathalie et Julien est retrouvé sur l'appareil de Céline."
+  },
+  {
+    "order": 9,
+    "title": "Plan de succession secret",
+    "linkedCharacterId": "omar",
+    "description": "Omar a proposé en secret à Mathieu de le soutenir pour prendre la direction générale."
+  },
+  {
+    "order": 10,
+    "title": "Clé passe-partout non déclarée",
+    "linkedCharacterId": "agnes",
+    "description": "Agnès possède une clé passe-partout du chalet, y compris de la bibliothèque, jamais déclarée à la direction."
+  },
+  {
+    "order": 11,
+    "title": "Négociation parallèle de Paul",
+    "linkedCharacterId": "paul2",
+    "description": "Paul négociait en secret un contrat avec un cabinet concurrent pour ses propres intérêts."
+  },
+  {
+    "order": 12,
+    "title": "Porte de la bibliothèque entrouverte",
+    "linkedCharacterId": null,
+    "description": "La porte de la bibliothèque, habituellement fermée à clé le soir, a été retrouvée entrouverte au moment de la découverte du corps."
+  }
+]

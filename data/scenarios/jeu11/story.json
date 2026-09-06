@@ -1,0 +1,22 @@
+{
+  "id": "jeu11",
+  "title": "RIDEAU ROUGE",
+  "type": [
+    "meurtre mystérieux",
+    "enquête",
+    "déduction",
+    "bluff",
+    "jeu social"
+  ],
+  "minPlayers": 4,
+  "maxPlayers": 12,
+  "durationMinutes": 30,
+  "victim": {
+    "name": "Bernard Lacroix",
+    "age": 62,
+    "profession": "Metteur en scène et directeur du théâtre",
+    "deathFoundTime": "22h40",
+    "murderWindow": "22h15 - 22h30"
+  },
+  "publicIntroTemplate": "Le soir de la première d'une pièce très attendue, {{playerCount}} membres de la troupe et de l'équipe du théâtre se retrouvent en coulisses après le triomphe du rideau final. À 22h40, le metteur en scène Bernard Lacroix est retrouvé sans vie dans sa loge. Les portes du théâtre étaient closes depuis la fin de la représentation : le coupable est encore là, quelque part en coulisses."
+}

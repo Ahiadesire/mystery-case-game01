@@ -1,0 +1,42 @@
+[
+  {
+    "id": "bibliotheque",
+    "name": "Bibliothèque",
+    "description": "Lieu du meurtre. Salle de lecture attenante au bureau de Nathalie."
+  },
+  {
+    "id": "salon_principal",
+    "name": "Salon principal",
+    "description": "Où plusieurs cadres affirment être restés toute la soirée."
+  },
+  {
+    "id": "cuisine_chalet",
+    "name": "Cuisine",
+    "description": "Zone de passage entre le personnel et les invités."
+  },
+  {
+    "id": "cave_vin_chalet",
+    "name": "Cave à vin",
+    "description": "Peu fréquentée durant la soirée de clôture."
+  },
+  {
+    "id": "chambre_victime",
+    "name": "Chambre de Nathalie",
+    "description": "Adjacente à la bibliothèque par un petit couloir."
+  },
+  {
+    "id": "terrasse_neige",
+    "name": "Terrasse enneigée",
+    "description": "Inaccessible cette nuit-là à cause de la tempête."
+  },
+  {
+    "id": "chaufferie",
+    "name": "Chaufferie",
+    "description": "Où Agnès affirme être restée toute la nuit."
+  },
+  {
+    "id": "couloir_chambres",
+    "name": "Couloir des chambres",
+    "description": "Relie les chambres des cadres à la bibliothèque et au bureau."
+  }
+]

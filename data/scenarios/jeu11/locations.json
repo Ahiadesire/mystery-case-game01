@@ -1,0 +1,42 @@
+[
+  {
+    "id": "loge_victime",
+    "name": "Loge de Bernard",
+    "description": "Lieu du meurtre, à l'écart des coulisses principales."
+  },
+  {
+    "id": "coulisses",
+    "name": "Coulisses",
+    "description": "Zone de passage entre la scène et les loges."
+  },
+  {
+    "id": "scene",
+    "name": "Scène",
+    "description": "Où Marc-Antoine affirme avoir rangé les décors."
+  },
+  {
+    "id": "bar_theatre",
+    "name": "Bar du théâtre",
+    "description": "Où la troupe célèbre la première après la représentation."
+  },
+  {
+    "id": "bureau_admin",
+    "name": "Bureau administratif",
+    "description": "Lié à Camille et aux comptes de production."
+  },
+  {
+    "id": "atelier_couture",
+    "name": "Atelier de couture",
+    "description": "Adjacent à la loge de Bernard, lié à Sabrina."
+  },
+  {
+    "id": "regie_technique",
+    "name": "Régie technique",
+    "description": "Où Julien affirme être resté, reliée par un escalier technique."
+  },
+  {
+    "id": "hall_theatre",
+    "name": "Hall du théâtre",
+    "description": "Communique avec les coulisses par une porte habituellement fermée au public."
+  }
+]

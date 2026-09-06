@@ -1,0 +1,22 @@
+{
+  "id": "jeu08",
+  "title": "LE VOL DE MINUIT",
+  "type": [
+    "meurtre mystérieux",
+    "enquête",
+    "déduction",
+    "bluff",
+    "jeu social"
+  ],
+  "minPlayers": 4,
+  "maxPlayers": 12,
+  "durationMinutes": 30,
+  "victim": {
+    "name": "Édouard Castellane",
+    "age": 58,
+    "profession": "Collectionneur d'art et mécène",
+    "deathFoundTime": "23h50",
+    "murderWindow": "23h28 - 23h43"
+  },
+  "publicIntroTemplate": "Le gala masqué annuel d'Édouard Castellane réunit {{playerCount}} invités venus admirer le dévoilement de son tableau le plus précieux, \"L'Aube Pourpre\". À 23h50, Édouard est retrouvé sans vie dans sa galerie privée — et le tableau a disparu. Chacun avait une bonne raison de convoiter cette toile ou de craindre Édouard, mais tous ne sont pas allés jusqu'au meurtre."
+}

@@ -1,0 +1,42 @@
+[
+  {
+    "id": "compartiment_victime",
+    "name": "Compartiment de Frédéric",
+    "description": "Lieu du meurtre, dans le wagon-lit."
+  },
+  {
+    "id": "couloir_wagon_lit",
+    "name": "Couloir du wagon-lit",
+    "description": "Relie tous les compartiments du wagon-lit."
+  },
+  {
+    "id": "wagon_restaurant",
+    "name": "Wagon-restaurant",
+    "description": "Communique directement avec le wagon-lit."
+  },
+  {
+    "id": "plateforme",
+    "name": "Plateforme entre les wagons",
+    "description": "Zone de passage peu surveillée entre deux wagons."
+  },
+  {
+    "id": "local_service",
+    "name": "Local de service",
+    "description": "Où Simon affirme être resté."
+  },
+  {
+    "id": "cabine_controleur",
+    "name": "Cabine de la contrôleuse",
+    "description": "Liée à Hélène et aux passes du train."
+  },
+  {
+    "id": "quai_gare",
+    "name": "Quai de la gare intermédiaire",
+    "description": "Dernier arrêt avant que le train ne soit scellé."
+  },
+  {
+    "id": "compartiment_voisin",
+    "name": "Compartiment voisin",
+    "description": "Compartiment de Valérie et Claudine, adjacent à celui de Frédéric."
+  }
+]
