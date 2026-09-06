@@ -54,7 +54,7 @@
   <!-- ÉCRAN : LOBBY -->
   <section id="screen-lobby" class="screen">
     <div class="section-eyebrow">SALLE D'ATTENTE</div>
-    <h2>Salle : <span id="lobby-code" class="code-badge"></span></h2>
+    <h2>Salle : <span id="lobby-code" class="code-badge"></span></h2><p id="case-mode-badge" class="case-mode-badge">🎭 Affaire sélectionnée</p>
     <p id="lobby-count"></p><p id="adaptive-info" class="hint"></p><div id="lobby-readiness" class="readiness-bar"></div>
 
     <div id="scenario-picker" class="card" style="display:none">
@@ -89,6 +89,10 @@
   <!-- ÉCRAN : ENQUÊTE -->
   <section id="screen-investigation" class="screen">
     <div class="phase-progress"><div id="phase-progress-fill"></div></div>
+    <div class="tension-wrap" aria-label="Jauge de tension">
+      <div class="tension-meta"><span>JAUGE DE TENSION</span><strong id="tension-label">CALME</strong></div>
+      <div class="tension-track"><div id="tension-fill"></div></div>
+    </div>
     <div class="live-strip">
       <div><span class="live-dot"></span> EN DIRECT</div><div id="live-phase-status">Enquête en cours</div><div>🔎 <span id="clue-counter">0 / 0</span> indices</div><div>👥 <span id="player-counter">0</span></div>
     </div>
@@ -138,6 +142,15 @@
           <button id="btn-accuse">Publier l'accusation</button>
         </details>
 
+        <div class="confidence-box">
+          <div class="confidence-head">
+            <div><span class="eyebrow">OPTIONNEL · SECRET</span><h4>🕯️ Vote de confiance</h4></div>
+            <span id="confidence-status" class="hint">À mi-parcours : qui te semble le plus suspect ?</span>
+          </div>
+          <div id="confidence-list" class="confidence-list"></div>
+          <button id="btn-confidence" class="secondary-btn">Enregistrer mon intuition</button>
+        </div>
+
         <div id="guilty-chat-box" class="guilty-chat-box" style="display:none">
           <h4>Canal privé — coupables uniquement</h4>
           <div id="guilty-chat-log" class="chat-log"></div>
@@ -155,6 +168,7 @@
       <h3>Panneau Game Master</h3>
       <div class="gm-buttons">
         <button id="gm-btn-clue">🔎 Révéler un indice</button>
+        <button id="gm-btn-bonus-clue" class="bonus-btn">⚡ Indice bonus · −60 s</button>
         <button id="gm-btn-pause">⏸ Pause</button>
         <button id="gm-btn-resume">▶ Reprendre</button>
         <button id="gm-btn-solution">Voir la solution</button>
@@ -181,8 +195,25 @@
     <div class="section-eyebrow">L'AFFAIRE EST CLASSÉE</div>
     <h2>Révélation finale</h2>
     <div id="reveal-content"></div>
-    <button id="btn-replay" style="display:none">🔄 Rejouer avec les mêmes joueurs</button>
+    <div class="replay-actions"><button id="btn-replay" style="display:none">🔄 Rejouer la même affaire</button><button id="btn-new-case" class="secondary-btn" style="display:none">🎲 Nouvelle affaire surprise</button></div>
   </section>
+
+  <div id="episode-modal" class="episode-modal" style="display:none" role="dialog" aria-modal="true" aria-labelledby="episode-title">
+    <div class="episode-card">
+      <button id="episode-close" class="episode-close" aria-label="Fermer">×</button>
+      <span class="eyebrow">RAPPEL POUR LES RETARDATAIRES</span>
+      <h2 id="episode-title">Épisode précédent</h2>
+      <p id="episode-message" class="episode-message"></p>
+      <div class="episode-summary-grid">
+        <div><span>Affaire</span><strong id="episode-case"></strong></div>
+        <div><span>Phase</span><strong id="episode-phase"></strong></div>
+        <div><span>Victime</span><strong id="episode-victim"></strong></div>
+        <div><span>Indices</span><strong id="episode-clues"></strong></div>
+      </div>
+      <div id="episode-clues-list" class="episode-clues"></div>
+      <button id="episode-close-main" class="advance-btn">Reprendre l’enquête</button>
+    </div>
+  </div>
 
   <div id="toast"></div>
 </div>

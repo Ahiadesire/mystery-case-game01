@@ -9,5 +9,6 @@
     "accusation": 120,
     "reveal": null
   },
-  "clueRevealMinIntervalSeconds": 18
+  "clueRevealMinIntervalSeconds": 18,
+  "bonusClueCostSeconds": 60
 }

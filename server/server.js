@@ -172,6 +172,8 @@ function roomSummary(room) {
     guiltyCount: room.guiltyCharacterIds.length || null,
     revealedClueCount: room.revealedClueCount || 0,
     activeClueCount: (room.activeClues || []).length,
+    bonusClueUsed: !!room.bonusClueUsed,
+    confidenceVoteCount: room.confidenceVotes ? room.confidenceVotes.size : 0,
     paused: !!room.paused,
     readyPlayerCount: room.readyPlayers ? room.readyPlayers.size : 0,
     connectedReadyCount: room.readyPlayers ? [...room.readyPlayers].filter((id) => room.players.get(id)?.connected && room.players.get(id)?.socketId).length : 0
@@ -316,6 +318,8 @@ function setPhase(room, phase, durationSeconds) {
       return !textMentionsAbsentCharacter(c.description || '', scenarioOf(room), presentNames);
     });
     room.revealedClueCount = 0;
+    room.confidenceVotes = new Map();
+    room.bonusClueUsed = false;
     startClueTimer(room, durationSeconds);
   }
 
@@ -527,10 +531,60 @@ function buildReveal(room) {
     timeline: filterTimelineToPresentCharacters(scenario, scenario.timeline, presentNames),
     closingLine: scenario.solution.closingLine,
     assignments: [...room.characterAssignments.entries()].map(([playerId, charId]) => ({
+      playerId,
       playerName: room.players.get(playerId)?.name,
       characterName: scenario.charById[charId].name,
       wasGuilty: room.guiltyCharacterIds.includes(charId)
-    }))
+    })),
+    confidenceVotes: [...room.confidenceVotes.entries()].map(([voterId, targetId]) => ({
+      voterName: room.players.get(voterId)?.name,
+      targetName: room.players.get(targetId)?.name,
+      targetCharacterName: scenario.charById[room.characterAssignments.get(targetId)]?.name || ''
+    })),
+    bonusClueUsed: !!room.bonusClueUsed,
+    teamVictory: room.accusationResults.length
+      ? (room.accusationResults.every((r) => r.perfect) ? 'enqueteurs' : 'coupables')
+      : 'coupables',
+    playerOutcomes: [...room.players.values()].map((p) => {
+      const charId = room.characterAssignments.get(p.id);
+      const guilty = room.guiltyCharacterIds.includes(charId);
+      const teamWon = room.accusationResults.every((r) => r.perfect) ? !guilty : guilty;
+      return {
+        playerId: p.id,
+        playerName: p.name,
+        role: guilty ? 'coupable' : 'enqueteur',
+        victory: teamWon
+      };
+    })
+  };
+}
+
+
+// ---------- ÉPISODE PRÉCÉDENT / RÉCAPITULATIF PUBLIC ----------
+function buildEpisodeRecap(room) {
+  const scenario = scenarioOf(room);
+  const presentNames = new Set(
+    [...room.characterAssignments.values()]
+      .map((id) => scenario.charById[id]?.name)
+      .filter(Boolean)
+  );
+  const revealed = (room.activeClues || []).slice(0, room.revealedClueCount || 0)
+    .map((c) => ({ title: c.title, description: c.description }));
+  return {
+    title: 'Épisode précédent',
+    scenarioTitle: scenario.title,
+    phase: phaseLabelServer(room.phase),
+    story: scenario.story.publicIntroTemplate.replace(
+      '{{playerCount}}',
+      String(room.characterAssignments.size || room.players.size)
+    ),
+    victim: scenario.story.victim,
+    revealedClues: revealed,
+    clueCount: revealed.length,
+    activeClueCount: (room.activeClues || []).length,
+    message: room.phase === 'enquete'
+      ? 'La soirée est déjà bien entamée. Voici ce qui a été découvert avant ton arrivée.'
+      : 'Voici le contexte de la partie avant de reprendre.'
   };
 }
 
@@ -551,6 +605,7 @@ io.on('connection', (socket) => {
         code,
         hostPlayerId: playerId,
         scenarioId: DEFAULT_SCENARIO_ID,
+        lastScenarioId: null,
         phase: 'lobby',
         phaseEndsAt: null,
         players: new Map(),
@@ -566,7 +621,10 @@ io.on('connection', (socket) => {
         guiltyChatLog: [],
         gameMaster: null,
         paused: false,
-        pauseRemainingMs: null
+        pauseRemainingMs: null,
+        bonusClueUsed: false,
+        confidenceVotes: new Map(),
+        formalAccusationsSent: new Set()
       };
 
       if (asGameMaster) {
@@ -630,6 +688,7 @@ io.on('connection', (socket) => {
         pushChat(room, { system: true, text: `${existing.name} a repris sa place.`, ts: Date.now() });
 
         if (room.phase !== 'lobby' && room.phase !== 'distribution') {
+          socket.emit('story:recap', buildEpisodeRecap(room));
           socket.emit('dossier:yours', buildDossier(room, existing.id));
           if (room.guiltyCharacterIds.includes(room.characterAssignments.get(existing.id))) {
             socket.join(`${room.code}:guilty`);
@@ -677,6 +736,7 @@ io.on('connection', (socket) => {
         socket.data.playerId = playerId;
         socket.data.isGameMaster = true;
         cb({ ok: true, room: roomSummary(room), phase: room.phase, isGameMaster: true });
+        if (room.phase !== 'lobby' && room.phase !== 'distribution') socket.emit('story:recap', buildEpisodeRecap(room));
         return;
       }
 
@@ -691,6 +751,7 @@ io.on('connection', (socket) => {
 
       cb({ ok: true, room: roomSummary(room), phase: room.phase, isGameMaster: false });
       if (room.phase !== 'lobby' && room.phase !== 'distribution') {
+        socket.emit('story:recap', buildEpisodeRecap(room));
         socket.emit('dossier:yours', buildDossier(room, playerId));
         if (room.guiltyCharacterIds.includes(room.characterAssignments.get(playerId))) {
           socket.join(`${room.code}:guilty`);
@@ -776,6 +837,7 @@ io.on('connection', (socket) => {
       if (room.phase !== 'lobby') throw new Error('Impossible de changer de scénario après le lancement.');
       if (!SCENARIOS[scenarioId]) throw new Error('Scénario inconnu.');
       room.scenarioId = scenarioId;
+      room.lastScenarioId = scenarioId;
       broadcastRoomState(room);
       cb({ ok: true });
     } catch (err) {
@@ -808,6 +870,33 @@ io.on('connection', (socket) => {
     } catch (err) {
       cb({ ok: false, error: err.message });
     }
+  });
+
+
+  // ---------- INDICE BONUS : révélation immédiate contre du temps ----------
+  socket.on('gm:bonus_clue', (_payload, cb) => {
+    try {
+      const room = getRoomOrThrow(socket.data.roomCode);
+      if (!isController(room, socket)) throw new Error('Réservé à l’hôte ou au Game Master.');
+      if (room.phase !== 'enquete') throw new Error('L’indice bonus est disponible uniquement pendant l’enquête.');
+      if (room.bonusClueUsed) throw new Error('L’indice bonus a déjà été utilisé.');
+      const clues = room.activeClues || [];
+      if (room.revealedClueCount >= clues.length) throw new Error('Tous les indices sont déjà révélés.');
+      const costSeconds = Math.max(30, Number(RULES.bonusClueCostSeconds || 60));
+      const remaining = room.phaseEndsAt ? Math.max(0, room.phaseEndsAt - Date.now()) : 0;
+      if (remaining <= costSeconds * 1000) throw new Error('Il ne reste pas assez de temps pour payer cet indice bonus.');
+      room.bonusClueUsed = true;
+      room.phaseEndsAt -= costSeconds * 1000;
+      if (room.phaseTimer) clearTimeout(room.phaseTimer);
+      room.phaseTimer = setTimeout(() => advancePhase(room), Math.max(1, room.phaseEndsAt - Date.now()));
+      if (room.clueTimer) { clearInterval(room.clueTimer); room.clueTimer = null; }
+      const clue = clues[room.revealedClueCount++];
+      io.to(room.code).emit('clue:revealed', clue);
+      io.to(room.code).emit('bonus:used', { costSeconds, phaseEndsAt: room.phaseEndsAt, clue });
+      startClueTimer(room, Math.max(1, Math.round((room.phaseEndsAt - Date.now()) / 1000)));
+      broadcastRoomState(room);
+      cb({ ok: true });
+    } catch (err) { cb({ ok: false, error: err.message }); }
   });
 
   socket.on('gm:pause', (_payload, cb) => {
@@ -887,20 +976,32 @@ io.on('connection', (socket) => {
     }
   });
 
-  socket.on('game:replay', (_payload, cb) => {
+  socket.on('game:replay', ({ mode } = {}, cb) => {
     try {
       const room = getRoomOrThrow(socket.data.roomCode);
       if (!isController(room, socket)) throw new Error("Seul l'hôte ou le Game Master peut relancer la partie.");
       if (room.phase !== 'reveal') throw new Error('La partie doit être terminée pour être rejouée.');
       clearTimers(room);
+
+      // Le mode "nouvelle affaire" conserve les joueurs mais choisit un autre
+      // scénario aléatoire. Si plusieurs scénarios existent, on évite de
+      // reprendre immédiatement le même afin d'augmenter la rejouabilité.
+      if (mode === 'new-case') {
+        const ids = Object.keys(SCENARIOS);
+        const candidates = ids.length > 1 ? ids.filter((id) => id !== room.scenarioId) : ids;
+        room.scenarioId = candidates[Math.floor(Math.random() * candidates.length)];
+      }
+      room.lastScenarioId = room.scenarioId;
+
       for (const p of room.players.values()) { p.alive = true; p.score = 0; p.scoreEvents = []; }
       room.characterAssignments = new Map();
       room.guiltyCharacterIds = []; room.activeClues = []; room.revealedClueCount = 0;
       room.finalAccusations = new Map(); room.accusationResults = []; room.formalAccusationsSent = new Set();
+      room.confidenceVotes = new Map(); room.bonusClueUsed = false;
       room.chatLog = []; room.guiltyChatLog = [];
       room.phase = 'lobby'; room.phaseEndsAt = null; room.paused = false; room.pauseRemainingMs = null;
-      io.to(room.code).emit('game:restarted');
-      broadcastRoomState(room); cb({ ok: true });
+      io.to(room.code).emit('game:restarted', { newCase: mode === 'new-case', scenarioId: room.scenarioId });
+      broadcastRoomState(room); cb({ ok: true, scenarioId: room.scenarioId, newCase: mode === 'new-case' });
     } catch (err) { cb({ ok: false, error: err.message }); }
   });
 
@@ -932,6 +1033,24 @@ io.on('connection', (socket) => {
 
   // Accusation finale (une seule manche) : chaque joueur choisit librement,
   // une fois pour toutes, qui il pense être coupable — pas d'élimination.
+
+  // ---------- VOTE DE CONFIANCE À MI-PARCOURS ----------
+  socket.on('confidence:submit', ({ targetPlayerId }, cb) => {
+    try {
+      const room = getRoomOrThrow(socket.data.roomCode);
+      if (room.phase !== 'enquete') throw new Error('Le vote de confiance est ouvert pendant l’enquête.');
+      const voter = room.players.get(socket.data.playerId);
+      if (!voter) throw new Error('Joueur introuvable.');
+      if (room.confidenceVotes.has(voter.id)) throw new Error('Ton vote de confiance a déjà été enregistré.');
+      if (!targetPlayerId || targetPlayerId === voter.id || !room.characterAssignments.has(targetPlayerId)) {
+        throw new Error('Choisis un autre joueur.');
+      }
+      room.confidenceVotes.set(voter.id, targetPlayerId);
+      cb({ ok: true });
+      socket.emit('confidence:accepted', { message: 'Vote de confiance enregistré secrètement. Il sera révélé à la fin.' });
+    } catch (err) { cb({ ok: false, error: err.message }); }
+  });
+
   socket.on('accusation:submit', ({ accusedPlayerIds }, cb) => {
     try {
       const room = getRoomOrThrow(socket.data.roomCode);

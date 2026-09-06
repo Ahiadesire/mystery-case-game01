@@ -15,7 +15,10 @@ let state = {
   phase: 'lobby',
   alivePlayers: [],
   clues: [],
-  suspects: []
+  suspects: [],
+  bonusClueUsed: false,
+  confidenceSubmitted: false,
+  tensionStartedAt: null
 };
 
 // ---------- Helpers UI ----------
@@ -113,6 +116,7 @@ function renderRoomState(room) {
   state.phase = room.phase;
   state.isHost = room.players.find((p) => p.id === state.playerId)?.isHost || false;
   state.alivePlayers = room.players.filter((p) => p.alive);
+  state.bonusClueUsed = !!room.bonusClueUsed;
   const readiness = document.getElementById('lobby-readiness');
   if (readiness) readiness.innerHTML = room.phase === 'dossier' ? `<strong>📋 Dossiers lus :</strong> ${room.connectedReadyCount || 0} / ${room.connectedPlayerCount || 0}` : ''; 
 
@@ -236,6 +240,50 @@ socket.on('story:intro', (data) => {
     li.textContent = q;
     qEl.appendChild(li);
   });
+  showEpisodeRecap({
+    title: 'Épisode précédent',
+    scenarioTitle: data.scenarioTitle || 'Nouvelle affaire',
+    phase: 'Ouverture du dossier',
+    story: data.text,
+    message: 'Le dossier vient de s’ouvrir. Voici le contexte à connaître avant de mener l’enquête.',
+    victim: data.victim,
+    clueCount: 0,
+    activeClueCount: data.activeCharacters?.length ? '—' : 0,
+    revealedClues: []
+  });
+});
+
+
+// ---------- ÉPISODE PRÉCÉDENT / RETARDATAIRES ----------
+function showEpisodeRecap(data) {
+  const modal = document.getElementById('episode-modal');
+  if (!modal) return;
+  document.getElementById('episode-title').textContent = data.title || 'Épisode précédent';
+  document.getElementById('episode-message').textContent = data.message || '';
+  document.getElementById('episode-case').textContent = data.scenarioTitle || '—';
+  document.getElementById('episode-phase').textContent = data.phase || '—';
+  document.getElementById('episode-victim').textContent = data.victim?.name || '—';
+  document.getElementById('episode-clues').textContent = `${data.clueCount || 0} / ${data.activeClueCount || 0}`;
+  const list = document.getElementById('episode-clues-list');
+  list.innerHTML = '';
+  if ((data.revealedClues || []).length) {
+    data.revealedClues.forEach((c, i) => {
+      const el = document.createElement('div');
+      el.className = 'episode-clue';
+      el.innerHTML = `<strong>Indice ${i+1} · ${c.title}</strong><small>${c.description}</small>`;
+      list.appendChild(el);
+    });
+  } else {
+    list.innerHTML = '<div class="episode-clue"><strong>Aucun indice public encore révélé.</strong><small>Tu n’as rien manqué : l’enquête commence à peine.</small></div>';
+  }
+  modal.style.display = 'grid';
+}
+socket.on('story:recap', showEpisodeRecap);
+function closeEpisodeRecap() { const m=document.getElementById('episode-modal'); if(m) m.style.display='none'; }
+document.getElementById('episode-close').onclick = closeEpisodeRecap;
+document.getElementById('episode-close-main').onclick = closeEpisodeRecap;
+document.getElementById('episode-modal').addEventListener('click', (e) => {
+  if (e.target.id === 'episode-modal') closeEpisodeRecap();
 });
 
 // ---------- DOSSIER PRIVÉ ----------
@@ -243,7 +291,7 @@ let myDossierHTML = '';
 function renderDossierHTML(dossier) {
   const statusClass = dossier.statut === 'COUPABLE' ? 'status-guilty' : 'status-innocent';
   return `
-    <h3>DOSSIER CONFIDENTIEL</h3>
+    <div class="player-row-with-avatar dossier-avatar"><div>${avatarSVG(dossier.identite.nom)}</div><div><h3>DOSSIER CONFIDENTIEL</h3><span class="hint">Avatar de personnage</span></div></div>
     <div class="dossier-field"><div class="label">Identité</div>${dossier.identite.nom}, ${dossier.identite.age} ans — ${dossier.identite.role}</div>
     <div class="dossier-field"><div class="label">Relation avec Antoine</div>${dossier.relation}</div>
     <div class="dossier-field"><div class="label">Motif</div>${dossier.motif}</div>
@@ -291,6 +339,19 @@ socket.on('phase:changed', ({ phase, phaseEndsAt, revealedClueCount = 0, activeC
   startCountdown(phaseEndsAt);
   startPhaseProgress(phaseEndsAt);
   updateLiveStrip();
+  if (phase === 'enquete') {
+    state.tensionStartedAt = Date.now();
+    state.confidenceSubmitted = false;
+    renderConfidenceList(state.players);
+    const confidenceBox = document.querySelector('.confidence-box');
+    if (confidenceBox) confidenceBox.style.display = 'none';
+    updateTension(phaseEndsAt);
+  } else {
+    const tf = document.getElementById('tension-fill');
+    if (tf) tf.style.width = '0%';
+    const tl = document.getElementById('tension-label');
+    if (tl) tl.textContent = phase === 'reveal' ? 'DOSSIER CLASSÉ' : 'EN ATTENTE';
+  }
 
   const btnAdv = document.getElementById('btn-advance-phase');
   const controller = state.isHost || state.isGameMaster;
@@ -300,6 +361,12 @@ socket.on('phase:changed', ({ phase, phaseEndsAt, revealedClueCount = 0, activeC
   else if (phase === 'accusation') btnAdv.textContent = '⚡ Clore l’accusation finale';
   else btnAdv.textContent = '⚡ Passer à la phase suivante';
   document.getElementById('gm-panel').style.display = state.isGameMaster ? 'block' : 'none';
+  const bonusBtn = document.getElementById('gm-btn-bonus-clue');
+  if (bonusBtn) {
+    bonusBtn.style.display = controller && phase === 'enquete' ? 'inline-block' : 'none';
+    bonusBtn.disabled = !!state.bonusClueUsed;
+    bonusBtn.textContent = state.bonusClueUsed ? '✓ Bonus utilisé' : '⚡ Indice bonus · −60 s';
+  }
   if (phase === 'dossier') {
     startDossierCountdown(phaseEndsAt);
     const ready = document.getElementById('btn-dossier-ready');
@@ -384,8 +451,31 @@ function startCountdown(endsAt) {
     const m = String(Math.floor(remaining / 60)).padStart(2, '0');
     const s = String(remaining % 60).padStart(2, '0');
     label.textContent = `${m}:${s}`;
+    if (state.phase === 'enquete') updateTension(endsAt);
     if (remaining <= 0) clearInterval(countdownTimer);
   }, 500);
+}
+
+
+function updateTension(endsAt) {
+  const fill = document.getElementById('tension-fill');
+  const label = document.getElementById('tension-label');
+  if (!fill || !endsAt || !state.tensionStartedAt) return;
+  const total = Math.max(1, endsAt - state.tensionStartedAt);
+  const elapsed = Math.max(0, Math.min(total, Date.now() - state.tensionStartedAt));
+  const pct = Math.round((elapsed / total) * 100);
+  fill.style.width = `${pct}%`;
+  if (label) label.textContent = pct < 25 ? 'CALME' : pct < 50 ? 'SOUS TENSION' : pct < 75 ? 'DANGER' : 'CRITIQUE';
+  const confidenceBox = document.querySelector('.confidence-box');
+  if (confidenceBox) {
+    if (pct >= 45 || state.confidenceSubmitted) {
+      confidenceBox.style.display = 'block';
+      const st = document.getElementById('confidence-status');
+      if (st && !state.confidenceSubmitted) st.textContent = 'À mi-parcours : choisis silencieusement ton suspect.';
+    } else {
+      confidenceBox.style.display = 'none';
+    }
+  }
 }
 
 document.getElementById('btn-advance-phase').onclick = () => {
@@ -421,13 +511,20 @@ socket.on('phase:changed', ({ phase }) => {
   if (phase === 'enquete' && storyData) renderTimeline(storyData.timeline);
 });
 
+
+function avatarSVG(name) {
+  const initials = String(name || '?').trim().split(/\s+/).map(x => x[0]).slice(0,2).join('').toUpperCase();
+  return `<span class="avatar" aria-hidden="true"><span>${initials || '?'}</span></span>`;
+}
+
 // ---------- SUSPECTS ----------
 function renderSuspectsAndVoteList(players) {
   const suspectsEl = document.getElementById('suspects-list');
   suspectsEl.innerHTML = '';
   players.forEach((p) => {
     const li = document.createElement('li');
-    li.textContent = `${p.name}${p.characterName ? ' — ' + p.characterName : ''}`;
+    li.className = 'player-row-with-avatar';
+    li.innerHTML = `${avatarSVG(p.characterName || p.name)}<span>${p.name}${p.characterName ? ' — ' + p.characterName : ''}</span>`;
     suspectsEl.appendChild(li);
   });
   if (state.phase === 'accusation') renderAccusationChecklist(players);
@@ -448,7 +545,7 @@ function renderAccusationChecklist(players) {
     cb.value = p.id;
     label.appendChild(cb);
     const span = document.createElement('span');
-    span.textContent = `${p.name}${p.characterName ? ' — ' + p.characterName : ''}`;
+    span.innerHTML = `${avatarSVG(p.characterName || p.name)}<span>${p.name}${p.characterName ? ' — ' + p.characterName : ''}</span>`;
     label.appendChild(span);
     li.appendChild(label);
     el.appendChild(li);
@@ -475,6 +572,37 @@ document.getElementById('btn-submit-accusation').onclick = () => {
 socket.on('accusation:progress', ({ submitted, total }) => {
   document.getElementById('vote-progress').textContent = `${submitted} / ${total} joueurs ont scellé leur accusation.`;
 });
+
+
+// ---------- VOTE DE CONFIANCE SILENCIEUX ----------
+function renderConfidenceList(players) {
+  const el = document.getElementById('confidence-list');
+  const btn = document.getElementById('btn-confidence');
+  if (!el || !btn) return;
+  el.innerHTML = '';
+  players.filter(p => p.id !== state.playerId).forEach(p => {
+    const label = document.createElement('label');
+    label.className = 'confidence-option';
+    label.innerHTML = `<input type="radio" name="confidence-target" value="${p.id}"><span></span>`;
+    label.querySelector('span').textContent = `${p.name}${p.characterName ? ' — ' + p.characterName : ''}`;
+    el.appendChild(label);
+  });
+  btn.disabled = false;
+  btn.textContent = 'Enregistrer mon intuition';
+}
+document.getElementById('btn-confidence').onclick = () => {
+  const selected = document.querySelector('input[name="confidence-target"]:checked');
+  if (!selected) return toast('Choisis le joueur qui te paraît le plus suspect.');
+  socket.emit('confidence:submit', { targetPlayerId: selected.value }, (res) => {
+    if (!res.ok) return toast(res.error);
+    state.confidenceSubmitted = true;
+    document.querySelectorAll('input[name="confidence-target"]').forEach(x => x.disabled = true);
+    document.getElementById('btn-confidence').disabled = true;
+    document.getElementById('btn-confidence').textContent = '✓ Intuition scellée';
+    document.getElementById('confidence-status').textContent = 'Vote enregistré secrètement · révélation en fin de partie';
+  });
+};
+socket.on('confidence:accepted', ({message}) => toast('🕯️ ' + message));
 
 // ---------- CHAT ----------
 document.getElementById('btn-send-chat').onclick = sendChat;
@@ -515,31 +643,95 @@ document.getElementById('btn-accuse').onclick = () => {
 };
 
 // ---------- RÉVÉLATION FINALE ----------
+
+function loadHistory() {
+  try {
+    return Object.assign({
+      games:0,
+      guilty:{games:0,wins:0},
+      investigator:{games:0,wins:0}
+    }, JSON.parse(localStorage.getItem('mystery_history') || '{}'));
+  } catch { return {games:0,guilty:{games:0,wins:0},investigator:{games:0,wins:0}}; }
+}
+function saveHistory(h) { localStorage.setItem('mystery_history', JSON.stringify(h)); }
+
 socket.on('game:reveal', (reveal) => {
   const el = document.getElementById('reveal-content');
+  const myOutcome = (reveal.playerOutcomes || []).find(x => x.playerId === state.playerId);
+  const myRole = myOutcome?.role || 'enqueteur';
+  const history = loadHistory();
+  if (myOutcome) {
+    history.games += 1;
+    if (myOutcome.role === 'coupable') {
+      history.guilty.games += 1;
+      if (myOutcome.victory) history.guilty.wins += 1;
+    } else {
+      history.investigator.games += 1;
+      if (myOutcome.victory) history.investigator.wins += 1;
+    }
+    saveHistory(history);
+  }
+  const myHist = myRole === 'coupable' ? history.guilty : history.investigator;
+  const confidenceHtml = (reveal.confidenceVotes || []).length
+    ? `<div class="confidence-reveal"><h3>🕯️ Les intuitions secrètes</h3>${reveal.confidenceVotes.map(v =>
+        `<div class="confidence-reveal-item">${avatarSVG(v.voterName)}<span><strong>${v.voterName}</strong> soupçonnait <strong>${v.targetName}</strong>${v.targetCharacterName ? ` — ${v.targetCharacterName}` : ''}</span></div>`
+      ).join('')}</div>`
+    : `<div class="confidence-reveal"><h3>🕯️ Les intuitions secrètes</h3><p class="hint">Aucun vote de confiance n’a été enregistré.</p></div>`;
   el.innerHTML = `
+    <div class="history-card card">
+      <span class="eyebrow">TON HISTORIQUE LOCAL</span>
+      <h3>Parties jouées : ${history.games}</h3>
+      <div class="history-grid">
+        <div class="history-stat"><strong>${history.guilty.wins}</strong><span>victoires comme coupable · ${history.guilty.games} parties</span></div>
+        <div class="history-stat"><strong>${history.investigator.wins}</strong><span>victoires comme enquêteur · ${history.investigator.games} parties</span></div>
+      </div>
+      <p class="hint">Ces statistiques sont stockées uniquement sur cet appareil.</p>
+    </div>
     <h3>Victime : ${reveal.victim.name} (${reveal.victim.age} ans)</h3>
+    <h3>🏁 Verdict de ton équipe</h3>
+    <p class="hint">Tu étais <strong>${myRole === 'coupable' ? 'COUPABLE' : 'ENQUÊTEUR'}</strong> · ${myOutcome?.victory ? '🏆 Victoire' : '❌ Défaite'}.</p>
     <h3>Coupable(s)</h3>
     <ul>${reveal.guilty.map((g) => `<li><strong>${g.character}</strong> — ${g.explanation}</li>`).join('')}</ul>
     <h3>Fausses pistes</h3>
     <ul>${reveal.falseLeadsSummary.map((f) => `<li>${f}</li>`).join('')}</ul>
     <h3>Qui était qui</h3>
-    <ul>${reveal.assignments.map((a) => `<li>${a.playerName} incarnait <strong>${a.characterName}</strong>${a.wasGuilty ? ' — COUPABLE' : ''}</li>`).join('')}</ul>
+    <ul>${reveal.assignments.map((a) => `<li>${avatarSVG(a.characterName)} ${a.playerName} incarnait <strong>${a.characterName}</strong>${a.wasGuilty ? ' — COUPABLE' : ''}</li>`).join('')}</ul>
     <h3>⚖️ Verdicts</h3>
     <ul>${(reveal.accusationResults || []).map((r) => `<li><strong>${r.playerName}</strong> — ${
-      r.perfect
-        ? '🎯 accusation parfaite'
-        : `${r.correctCount} coupable(s) trouvé(s), ${r.wrongCount} innocent(s) accusé(s) à tort`
+      r.perfect ? '🎯 accusation parfaite' : `${r.correctCount} coupable(s) trouvé(s), ${r.wrongCount} innocent(s) accusé(s) à tort`
     } (${r.pointsEarned >= 0 ? '+' : ''}${r.pointsEarned} pts)${r.accusedCharacterNames.length ? ` — a accusé : ${r.accusedCharacterNames.join(', ')}` : ' — aucune accusation'}</li>`).join('')}</ul>
+    ${confidenceHtml}
     <h3>🏆 Scores</h3>
     <ol>${(reveal.scores || []).map((s) => `<li><strong>${s.playerName}</strong> — ${s.score} pts</li>`).join('')}</ol>
     <p><em>${reveal.closingLine}</em></p>
   `;
   show('screen-reveal');
   document.getElementById('btn-replay').style.display = (state.isHost || state.isGameMaster) ? 'block' : 'none';
+  document.getElementById('btn-new-case').style.display = (state.isHost || state.isGameMaster) ? 'block' : 'none';
 });
 
-document.getElementById('btn-replay').onclick = () => { socket.emit('game:replay', {}, (res) => { if (!res.ok) toast(res.error); }); };
+document.getElementById('btn-replay').onclick = () => {
+  socket.emit('game:replay', { mode: 'same-case' }, (res) => { if (!res.ok) toast(res.error); });
+};
+document.getElementById('btn-new-case').onclick = () => {
+  if (!confirm('Lancer une nouvelle affaire aléatoire avec les mêmes joueurs ? Le scénario changera, mais les fonctionnalités et statistiques resteront.')) return;
+  socket.emit('game:replay', { mode: 'new-case' }, (res) => { if (!res.ok) toast(res.error); });
+};
+
+socket.on('game:restarted', (info = {}) => {
+  state.clues = [];
+  state.bonusClueUsed = false;
+  state.confidenceSubmitted = false;
+  state.tensionStartedAt = null;
+  const same = document.getElementById('btn-replay');
+  const fresh = document.getElementById('btn-new-case');
+  if (same) same.style.display = 'none';
+  if (fresh) fresh.style.display = 'none';
+  const badge = document.getElementById('case-mode-badge');
+  if (badge) badge.textContent = info.newCase ? '🎲 Nouvelle affaire surprise' : '🎭 Affaire sélectionnée';
+  show('screen-lobby');
+  toast(info.newCase ? '🎲 Nouvelle affaire sélectionnée. Les mêmes joueurs peuvent repartir !' : '🔄 Retour au lobby.');
+});
 
 // ---------- CHAT PRIVÉ DES COUPABLES ----------
 socket.on('chat:guilty:enabled', (history) => {
@@ -571,6 +763,20 @@ document.getElementById('guilty-chat-input').addEventListener('keydown', (e) => 
   if (e.key === 'Enter') document.getElementById('btn-send-guilty-chat').click();
 });
 
+
+// ---------- INDICE BONUS ----------
+document.getElementById('gm-btn-bonus-clue').onclick = () => {
+  if (state.bonusClueUsed) return toast('L’indice bonus a déjà été utilisé.');
+  if (!confirm('Débloquer l’indice bonus ? Il sera révélé immédiatement, mais 60 secondes seront retirées du temps d’enquête.')) return;
+  socket.emit('gm:bonus_clue', {}, (res) => { if (!res.ok) toast(res.error); });
+};
+socket.on('bonus:used', ({costSeconds, phaseEndsAt}) => {
+  state.bonusClueUsed = true;
+  const btn = document.getElementById('gm-btn-bonus-clue');
+  if (btn) { btn.disabled = true; btn.textContent = `✓ Bonus utilisé · −${costSeconds}s`; }
+  startCountdown(phaseEndsAt);
+  toast(`⚡ Indice bonus débloqué : −${costSeconds} secondes.`);
+});
 // ---------- PANNEAU GAME MASTER ----------
 document.getElementById('gm-btn-clue').onclick = () => {
   socket.emit('gm:reveal_clue_now', {}, (res) => { if (!res.ok) toast(res.error); });
@@ -614,6 +820,8 @@ socket.on('game:restarted', () => {
   toast('La partie a été redémarrée.');
   document.getElementById('guilty-chat-box').style.display = 'none';
   document.getElementById('gm-solution-view').textContent = '';
+  state.confidenceSubmitted = false;
+  state.bonusClueUsed = false;
   show('screen-lobby');
 });
 

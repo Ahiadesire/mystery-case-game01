@@ -243,3 +243,24 @@ propose dans le sélecteur de scénario du lobby.
   bloqué). Le code est prêt ; suivez la section 3 ci-dessus pour le
   mettre en ligne vous-même (Render/Railway/Fly.io ou `ngrok` pour un
   test rapide).
+
+
+## 10. Nouvelles fonctionnalités — version dynamique
+
+- **Épisode précédent** : un récapitulatif visuel s’affiche à l’ouverture de
+  l’affaire et lorsqu’un joueur revient en cours de partie. Il reprend la
+  phase actuelle et les indices publics déjà révélés, sans exposer les
+  informations privées.
+- **Avatars SVG** : chaque personnage dispose d’un portrait abstrait généré
+  localement à partir de son nom, sans image externe.
+- **Jauge de tension** : pendant l’enquête, une barre passe progressivement
+  d’un état calme à critique à mesure que le temps restant diminue.
+- **Indice bonus stratégique** : l’hôte ou le Game Master peut révéler
+  immédiatement un indice supplémentaire une seule fois par manche, contre
+  60 secondes de temps d’enquête.
+- **Vote de confiance secret** : à mi-parcours, chaque joueur peut désigner
+  silencieusement un suspect. Les choix ne sont révélés qu’à la fin.
+- **Historique local** : après chaque révélation, le navigateur mémorise le
+  nombre de parties et les victoires du joueur comme coupable ou enquêteur.
+  Ces statistiques restent locales à l’appareil et ne sont pas envoyées au
+  serveur.

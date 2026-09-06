@@ -587,3 +587,78 @@ button:disabled { background: #383c48; color: #8890a0; cursor: not-allowed; box-
   .quick-chat { overflow-x:auto; flex-wrap:nowrap; }
   .quick-chat button { flex:0 0 auto; }
 }
+
+
+/* ---------- SURCOUCHE 2026 : tension, avatars, épisode précédent, confiance ---------- */
+.tension-wrap{
+  margin:10px 0 14px;
+  padding:9px 12px;
+  border:1px solid rgba(183,149,89,.24);
+  border-radius:12px;
+  background:rgba(10,12,18,.55);
+}
+.tension-meta{display:flex;justify-content:space-between;align-items:center;font:11px "Special Elite",serif;letter-spacing:.12em;color:#b8a47d;margin-bottom:6px}
+.tension-meta strong{font-size:10px;letter-spacing:.16em}
+.tension-track{height:7px;border-radius:999px;background:#17263b;overflow:hidden;box-shadow:inset 0 0 0 1px rgba(255,255,255,.06)}
+#tension-fill{height:100%;width:0%;border-radius:inherit;background:linear-gradient(90deg,#2e73c5 0%,#6a9fc9 40%,#d99a55 70%,#b53a3a 100%);transition:width .8s ease,filter .8s ease}
+
+.avatar{
+  width:42px;height:42px;min-width:42px;border-radius:50%;
+  display:grid;place-items:center;position:relative;overflow:hidden;
+  background:radial-gradient(circle at 35% 28%,#5b6472 0 9%,#2a303a 10% 44%,#151922 45% 100%);
+  border:1px solid rgba(205,176,111,.55);
+  box-shadow:0 5px 14px rgba(0,0,0,.28), inset 0 0 0 2px rgba(255,255,255,.04);
+  color:#f3e6c7;font-family:"Playfair Display",serif;font-weight:900;
+}
+.avatar::after{content:"";position:absolute;inset:auto 8px -18px;height:34px;border-radius:50% 50% 0 0;background:#0f131b;border-top:1px solid rgba(255,255,255,.1)}
+.avatar span{position:relative;z-index:2;font-size:13px}
+.player-row-with-avatar{display:flex;align-items:center;gap:10px}
+
+.confidence-box{
+  margin-top:16px;padding:14px;border:1px solid rgba(183,149,89,.28);
+  border-radius:14px;background:linear-gradient(135deg,rgba(28,25,20,.9),rgba(12,15,21,.9));
+}
+.confidence-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.confidence-head h4{margin:2px 0 4px}
+.confidence-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin:12px 0}
+.confidence-option{display:flex;align-items:center;gap:8px;padding:9px;border:1px solid rgba(255,255,255,.08);border-radius:9px;cursor:pointer}
+.confidence-option input{accent-color:#b99a62}
+.confidence-option.selected{border-color:#b99a62;background:rgba(185,154,98,.09)}
+#btn-confidence:disabled{opacity:.6;cursor:not-allowed}
+
+.bonus-btn{border:1px solid #b63e3e!important;background:linear-gradient(135deg,rgba(112,33,33,.9),rgba(60,19,22,.9))!important}
+.bonus-btn:disabled{opacity:.45;cursor:not-allowed}
+
+.episode-modal{position:fixed;inset:0;z-index:1000;display:grid;place-items:center;padding:20px;background:rgba(3,5,9,.78);backdrop-filter:blur(8px)}
+.episode-card{position:relative;width:min(720px,100%);max-height:min(88vh,760px);overflow:auto;padding:28px;border:1px solid rgba(203,171,105,.5);border-radius:18px;background:linear-gradient(145deg,#171a21,#0c0f15);box-shadow:0 28px 90px rgba(0,0,0,.65),0 0 0 1px rgba(255,255,255,.03) inset}
+.episode-card h2{margin:5px 0 8px;font-size:clamp(28px,5vw,44px)}
+.episode-close{position:absolute;right:15px;top:10px;border:0;background:none;color:#d9c8a6;font-size:32px;cursor:pointer}
+.episode-message{color:#d2c6b0;font-style:italic}
+.episode-summary-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:18px 0}
+.episode-summary-grid>div{padding:11px;border-radius:10px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.06)}
+.episode-summary-grid span{display:block;font:10px "Special Elite",serif;letter-spacing:.1em;color:#8f8b82;text-transform:uppercase;margin-bottom:4px}
+.episode-summary-grid strong{font-size:13px}
+.episode-clues{display:grid;gap:8px;margin-bottom:18px}
+.episode-clue{padding:11px 13px;border-left:3px solid #b99a62;background:rgba(185,154,98,.07);border-radius:7px}
+.episode-clue small{display:block;color:#a89c88;margin-top:3px}
+
+.history-card{margin-top:18px}
+.history-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.history-stat{padding:12px;border:1px solid rgba(255,255,255,.07);border-radius:10px;background:rgba(255,255,255,.025)}
+.history-stat strong{font-size:22px;display:block}
+.history-stat span{font-size:11px;color:#a7a39b}
+.confidence-reveal{margin-top:18px}
+.confidence-reveal-item{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px dashed rgba(255,255,255,.08)}
+
+@media (max-width:700px){
+  .episode-summary-grid{grid-template-columns:repeat(2,1fr)}
+  .confidence-head{display:block}
+  .confidence-list{grid-template-columns:1fr}
+  .episode-card{padding:22px 17px}
+}
+
+
+/* Rejouabilité / nouvelle affaire */
+.replay-actions { display:flex; gap:12px; flex-wrap:wrap; align-items:center; margin-top:18px; }
+.case-mode-badge { display:inline-block; margin:4px 0 16px; padding:7px 12px; border:1px solid rgba(180,150,100,.35); border-radius:999px; font-size:.82rem; letter-spacing:.04em; opacity:.9; }
+@media (max-width:640px){ .replay-actions button{width:100%;} }
