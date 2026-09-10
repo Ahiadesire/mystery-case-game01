@@ -218,8 +218,9 @@ function playerRangeFor(scenario) {
   if (!scenario.guiltyRules || !scenario.guiltyRules.length) {
     return { min: RULES.minPlayers, max: RULES.maxPlayers };
   }
-  const mins = scenario.guiltyRules.map((r) => r.minPlayers);
-  const maxs = scenario.guiltyRules.map((r) => r.maxPlayers);
+  const mins = scenario.guiltyRules.map((r) => Number(r.minPlayers)).filter(Number.isFinite);
+  const maxs = scenario.guiltyRules.map((r) => Number(r.maxPlayers)).filter(Number.isFinite);
+  if (!mins.length || !maxs.length) return { min: RULES.minPlayers, max: RULES.maxPlayers };
   return { min: Math.min(...mins), max: Math.max(...maxs) };
 }
 
@@ -298,6 +299,8 @@ function phaseLabelServer(phase) {
 
 function setPhase(room, phase, durationSeconds) {
   clearTimers(room);
+  room.lastPhaseTransitionAt = Date.now();
+  room.lastActivityAt = Date.now();
   room.phase = phase;
   room.phaseEndsAt = durationSeconds ? Date.now() + durationSeconds * 1000 : null;
 
@@ -306,6 +309,7 @@ function setPhase(room, phase, durationSeconds) {
   }
 
   if (phase === 'enquete') {
+    room.interrogationCounts = new Map();
     // Ne garder que les indices pertinents pour les personnages réellement
     // distribués cette partie (+ les indices génériques sans personnage lié),
     // pour que l'histoire s'adapte au nombre de joueurs connectés.
@@ -374,7 +378,9 @@ function startClueTimer(room, phaseDurationSeconds) {
 }
 
 function advancePhase(room) {
+  if (!room || room.phase === 'reveal') return false;
   const idx = PHASES.indexOf(room.phase);
+  if (idx < 0) return false;
   const next = PHASES[idx + 1] || 'reveal';
 
   // Une seule manche : à la fin de l'accusation finale (temps écoulé ou tous
@@ -382,11 +388,12 @@ function advancePhase(room) {
   if (room.phase === 'accusation') {
     resolveAccusations(room);
     setPhase(room, 'reveal', null);
-    return;
+    return true;
   }
 
   const durations = RULES.phaseDurations;
   setPhase(room, next, durations[next] || null);
+  return true;
 }
 
 // ---------- DOSSIER PRIVÉ ----------
@@ -446,6 +453,14 @@ function buildDossier(room, playerId) {
   };
 }
 
+function activeParticipantIds(room) {
+  return new Set(room.activePlayerIds ? [...room.activePlayerIds] : [...room.players.keys()]);
+}
+
+function connectedActiveParticipantCount(room) {
+  return [...activeParticipantIds(room)].filter(id => { const p=room.players.get(id); return p?.connected && p?.socketId; }).length;
+}
+
 // ---------- ACCUSATION FINALE (libre, sans élimination) ----------
 // Chaque joueur désigne, une seule fois et sans retour en arrière possible,
 // le ou les personnages qu'il pense coupables (0, 1 ou plusieurs). Le score
@@ -461,12 +476,15 @@ function submitFinalAccusation(room, accuserPlayerId, accusedPlayerIds) {
 
   room.finalAccusations.set(accuserPlayerId, accusedCharIds);
 
+  const activeIds = activeParticipantIds(room);
   io.to(room.code).emit('accusation:progress', {
-    submitted: room.finalAccusations.size,
-    total: room.players.size
+    submitted: [...room.finalAccusations.keys()].filter(id => activeIds.has(id)).length,
+    total: activeIds.size
   });
 
-  if (room.finalAccusations.size >= room.players.size) {
+  const connectedRemaining = connectedActiveParticipantCount(room);
+  const submittedConnected = [...room.finalAccusations.keys()].filter(id => activeIds.has(id) && room.players.get(id)?.connected && room.players.get(id)?.socketId).length;
+  if (connectedRemaining > 0 && submittedConnected >= connectedRemaining) {
     resolveAccusations(room);
     setPhase(room, 'reveal', null);
   }
@@ -479,6 +497,7 @@ function resolveAccusations(room) {
   const results = [];
 
   for (const player of room.players.values()) {
+    if (!activeParticipantIds(room).has(player.id)) continue;
     const accusedIds = room.finalAccusations.get(player.id) || [];
     const accusedSet = new Set(accusedIds);
     const correctCount = accusedIds.filter((id) => guiltySet.has(id)).length;
@@ -542,13 +561,24 @@ function buildReveal(room) {
       targetCharacterName: scenario.charById[room.characterAssignments.get(targetId)]?.name || ''
     })),
     bonusClueUsed: !!room.bonusClueUsed,
-    teamVictory: room.accusationResults.length
-      ? (room.accusationResults.every((r) => r.perfect) ? 'enqueteurs' : 'coupables')
-      : 'coupables',
-    playerOutcomes: [...room.players.values()].map((p) => {
+    teamVictory: (() => {
+      const investigatorResults = room.accusationResults.filter(r => {
+        const p = room.players.get(r.playerId);
+        return p && !room.guiltyCharacterIds.includes(room.characterAssignments.get(p.id));
+      });
+      if (!investigatorResults.length) return 'coupables';
+      const perfectInvestigators = investigatorResults.filter(r => r.perfect).length;
+      return perfectInvestigators >= Math.ceil(investigatorResults.length / 2) ? 'enqueteurs' : 'coupables';
+    })(),
+    playerOutcomes: [...room.players.values()].filter(p => activeParticipantIds(room).has(p.id)).map((p) => {
       const charId = room.characterAssignments.get(p.id);
       const guilty = room.guiltyCharacterIds.includes(charId);
-      const teamWon = room.accusationResults.every((r) => r.perfect) ? !guilty : guilty;
+      const investigatorResults = room.accusationResults.filter(r => {
+        const rp = room.players.get(r.playerId);
+        return rp && !room.guiltyCharacterIds.includes(room.characterAssignments.get(rp.id));
+      });
+      const investigatorsWon = investigatorResults.length > 0 && investigatorResults.filter(r => r.perfect).length >= Math.ceil(investigatorResults.length / 2);
+      const teamWon = guilty ? !investigatorsWon : investigatorsWon;
       return {
         playerId: p.id,
         playerName: p.name,
@@ -624,7 +654,11 @@ io.on('connection', (socket) => {
         pauseRemainingMs: null,
         bonusClueUsed: false,
         confidenceVotes: new Map(),
-        formalAccusationsSent: new Set()
+        formalAccusationsSent: new Set(),
+        interrogationCounts: new Map(),
+        lastPhaseTransitionAt: 0,
+        lastActivityAt: Date.now(),
+        chatRate: new Map()
       };
 
       if (asGameMaster) {
@@ -743,6 +777,10 @@ io.on('connection', (socket) => {
       const player = room.players.get(playerId);
       if (!player || player.token !== token) throw new Error('Reconnexion invalide.');
 
+      if (player.socketId && player.socketId !== socket.id) {
+        const oldSocket = io.sockets.sockets.get(player.socketId);
+        if (oldSocket) { oldSocket.data.roomCode = null; oldSocket.data.playerId = null; oldSocket.disconnect(true); }
+      }
       player.socketId = socket.id;
       player.connected = true;
       socket.join(room.code);
@@ -964,6 +1002,8 @@ io.on('connection', (socket) => {
       room.pauseRemainingMs = null;
       room.readyPlayers = new Set();
       room.formalAccusationsSent = new Set();
+      room.interrogationCounts = new Map();
+      room.chatRate = new Map();
       room.chatLog = [];
       room.guiltyChatLog = [];
       room.phase = 'lobby';
@@ -996,7 +1036,7 @@ io.on('connection', (socket) => {
       for (const p of room.players.values()) { p.alive = true; p.score = 0; p.scoreEvents = []; }
       room.characterAssignments = new Map();
       room.guiltyCharacterIds = []; room.activeClues = []; room.revealedClueCount = 0;
-      room.finalAccusations = new Map(); room.accusationResults = []; room.formalAccusationsSent = new Set();
+      room.finalAccusations = new Map(); room.accusationResults = []; room.formalAccusationsSent = new Set(); room.interrogationCounts = new Map(); room.chatRate = new Map();
       room.confidenceVotes = new Map(); room.bonusClueUsed = false;
       room.chatLog = []; room.guiltyChatLog = [];
       room.phase = 'lobby'; room.phaseEndsAt = null; room.paused = false; room.pauseRemainingMs = null;
@@ -1010,7 +1050,7 @@ io.on('connection', (socket) => {
     const room = rooms.get(socket.data.roomCode);
     if (!room) return;
     const player = room.players.get(socket.data.playerId);
-    if (!player || !text || !text.trim()) return;
+    if (!player || player.socketId !== socket.id || !text || !text.trim()) return;
     const charId = room.characterAssignments.get(player.id);
     if (!room.guiltyCharacterIds.includes(charId)) return; // seuls les coupables peuvent écrire ici
     const entry = { playerId: player.id, name: player.name, text: text.trim().slice(0, 500), ts: Date.now() };
@@ -1022,7 +1062,12 @@ io.on('connection', (socket) => {
     const room = rooms.get(socket.data.roomCode);
     if (!room) return;
     const player = room.players.get(socket.data.playerId);
-    if (!player || !text || !text.trim()) return;
+    if (!player || !player.connected || player.socketId !== socket.id || !text || !text.trim()) return;
+    room.chatRate = room.chatRate || new Map();
+    const now = Date.now(); const r = room.chatRate.get(player.id) || {start: now, count: 0};
+    if (now - r.start > 2000) { r.start = now; r.count = 0; }
+    if (r.count >= 4) return socket.emit('chat:rate_limited', {message:'Ralentis un peu : maximum 4 messages toutes les 2 secondes.'});
+    r.count++; room.chatRate.set(player.id, r);
     pushChat(room, {
       playerId: player.id,
       name: player.name,
@@ -1031,10 +1076,61 @@ io.on('connection', (socket) => {
     });
   });
 
+  // ---------- DOSSIER : confirmation de lecture ----------
+  socket.on('dossier:ready', (_payload, cb) => {
+    try {
+      const room = getRoomOrThrow(socket.data.roomCode);
+      if (room.phase !== 'dossier') throw new Error('La phase des dossiers est terminée.');
+      const player = room.players.get(socket.data.playerId);
+      if (!player || !room.activePlayerIds?.has(player.id)) throw new Error('Joueur non participant.');
+      room.readyPlayers = room.readyPlayers || new Set();
+      room.readyPlayers.add(player.id);
+      room.lastActivityAt = Date.now();
+      const active = [...room.activePlayerIds].filter(id => { const p=room.players.get(id); return p?.connected && p?.socketId; });
+      io.to(room.code).emit('dossier:ready:progress', { ready: [...room.readyPlayers].filter(id => room.activePlayerIds.has(id)).length, total: active.length });
+      broadcastRoomState(room);
+      cb({ ok: true, ready: room.readyPlayers.size, total: active.length });
+    } catch (err) { cb({ ok: false, error: err.message }); }
+  });
+
   // Accusation finale (une seule manche) : chaque joueur choisit librement,
   // une fois pour toutes, qui il pense être coupable — pas d'élimination.
 
   // ---------- VOTE DE CONFIANCE À MI-PARCOURS ----------
+  // ---------- INTERROGATOIRE DYNAMIQUE ----------
+  socket.on('investigation:interrogate', ({ targetPlayerId, questionIndex }, cb) => {
+    try {
+      const room = getRoomOrThrow(socket.data.roomCode);
+      if (room.phase !== 'enquete') throw new Error('Les interrogatoires sont disponibles pendant l’enquête.');
+      const asker = room.players.get(socket.data.playerId);
+      const target = room.players.get(targetPlayerId);
+      if (!asker || !target || !room.activePlayerIds?.has(asker.id) || !room.activePlayerIds?.has(target.id) || !room.characterAssignments.has(target.id)) throw new Error('Suspect introuvable.');
+      if (target.id === asker.id) throw new Error('Tu ne peux pas t’interroger toi-même.');
+      if (!asker.connected || !asker.socketId) throw new Error('Ta connexion n’est plus active.');
+      room.interrogationCounts = room.interrogationCounts || new Map();
+      const now = Date.now();
+      const stat = room.interrogationCounts.get(asker.id) || { count: 0, lastAt: 0 };
+      if (now - stat.lastAt < 8000) throw new Error('Attends quelques secondes avant un nouvel interrogatoire.');
+      if (stat.count >= 10) throw new Error('Tu as atteint la limite de 10 interrogatoires pour cette enquête.');
+      stat.count += 1; stat.lastAt = now; room.interrogationCounts.set(asker.id, stat);
+      const scenario = scenarioOf(room);
+      const char = scenario.charById[room.characterAssignments.get(target.id)];
+      if (!char) throw new Error('Dossier du suspect indisponible.');
+      const questions = Array.isArray(scenario.questions) ? scenario.questions : [];
+      const q = questions[Math.max(0, Math.min(Number(questionIndex) || 0, questions.length - 1))] || 'Où étais-tu au moment des faits ?';
+      const lower = q.toLowerCase();
+      let answer = '';
+      if (lower.includes('où') || lower.includes('alibi') || lower.includes('confirm')) answer = `${target.name} répond : « ${char.private.alibi} »`;
+      else if (lower.includes('relation')) answer = `${target.name} répond : « ${char.public.relation}. »`;
+      else if (lower.includes('raison') || lower.includes('en vouloir') || lower.includes('motif')) answer = `${target.name} répond : « Je n'avais aucune raison de lui vouloir du mal. »`;
+      else if (lower.includes('bureau') || lower.includes('lieu') || lower.includes('accès')) answer = `${target.name} répond : « ${char.private.opportunite} »`;
+      else answer = `${target.name} hésite, puis répond : « Je préfère ne pas en parler pour l'instant. »`;
+      if (Math.random() < 0.18) answer += ' ⚠️ Une hésitation inhabituelle est signalée.';
+      addScore(room, asker.id, 2, 'Interrogatoire');
+      cb({ ok: true, target: target.name, question: q, answer });
+    } catch (e) { cb({ ok: false, error: e.message }); }
+  });
+
   socket.on('confidence:submit', ({ targetPlayerId }, cb) => {
     try {
       const room = getRoomOrThrow(socket.data.roomCode);
@@ -1090,7 +1186,7 @@ io.on('connection', (socket) => {
     const room = rooms.get(socket.data.roomCode);
     if (!room || socket.data.isGameMaster) return;
     const player = room.players.get(socket.data.playerId);
-    if (!player) return;
+    if (!player || (player.socketId && player.socketId !== socket.id)) return;
     player.connected = false;
     if (room.readyPlayers) room.readyPlayers.delete(player.id);
     broadcastRoomState(room);
@@ -1100,8 +1196,9 @@ io.on('connection', (socket) => {
     const room = rooms.get(socket.data.roomCode);
     if (!room || socket.data.isGameMaster) return;
     const player = room.players.get(socket.data.playerId);
-    if (!player) return;
+    if (!player || (player.socketId && player.socketId !== socket.id)) return;
     player.connected = true;
+    player.socketId = socket.id;
     broadcastRoomState(room);
   });
 
@@ -1114,6 +1211,8 @@ io.on('connection', (socket) => {
     }
     const player = room.players.get(socket.data.playerId);
     if (!player) return;
+    // Un ancien socket ne doit jamais pouvoir déconnecter une session plus récente.
+    if (player.socketId && player.socketId !== socket.id) return;
     player.connected = false;
     player.socketId = null;
     broadcastRoomState(room);

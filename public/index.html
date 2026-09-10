@@ -129,6 +129,27 @@
       </div>
 
       <div class="col">
+        <h3>🗺️ Carte interactive</h3>
+        <div id="interactive-map" class="interactive-map" aria-label="Carte interactive des lieux"></div>
+        <div id="map-detail" class="map-detail"><strong>Sélectionne un lieu</strong><span>Explore les endroits de l'affaire pour croiser les alibis.</span></div>
+
+        <h3>🕵️ Interrogatoire</h3>
+        <div class="interrogation-box">
+          <select id="interrogation-target"><option value="">Choisir un suspect…</option></select>
+          <select id="interrogation-question"><option value="">Choisir une question…</option></select>
+          <button id="btn-interrogate" class="secondary-btn">Interroger</button>
+          <div id="interrogation-answer" class="interrogation-answer">Les réponses seront ajoutées ici.</div>
+        </div>
+
+        <h3>🧩 Tableau d'enquête</h3>
+        <div class="evidence-board-tools">
+          <input id="investigation-note" placeholder="Ajouter une note personnelle…" maxlength="180" />
+          <button id="btn-add-note" class="secondary-btn">+ Note</button>
+        </div>
+        <div id="evidence-board" class="evidence-board"></div>
+        <button id="btn-combine-evidence" class="secondary-btn">🔗 Combiner les éléments sélectionnés</button>
+        <div id="combination-result" class="combination-result"></div>
+
         <h3>Discussion</h3>
         <div id="chat-log" class="chat-log"></div>
         <div id="quick-chat" class="quick-chat"><button data-msg="J'ai un doute sur cet alibi.">💭 Doute</button><button data-msg="Quelqu'un peut confirmer cette information ?">❓ Question</button><button data-msg="J'ai trouvé une contradiction.">⚠️ Contradiction</button></div>
@@ -198,7 +219,10 @@
   <section id="screen-reveal" class="screen">
     <div class="section-eyebrow">L'AFFAIRE EST CLASSÉE</div>
     <h2>Révélation finale</h2>
+    <div class="final-verdict-banner" id="final-verdict-banner"></div>
     <div id="reveal-content"></div>
+    <div id="final-reconstruction" class="final-reconstruction"></div>
+    <div id="final-awards" class="final-awards"></div>
     <div class="replay-actions"><button id="btn-replay" style="display:none">🔄 Rejouer la même affaire</button><button id="btn-new-case" class="secondary-btn" style="display:none">🎲 Nouvelle affaire surprise</button></div>
   </section>
 
@@ -219,7 +243,16 @@
     </div>
   </div>
 
-  <div id="toast"></div>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <div id="clue-announce" class="clue-announce" role="status" aria-live="polite" aria-hidden="true">
+    <div class="clue-announce-card">
+      <span class="clue-announce-icon">🔎</span>
+      <div class="clue-announce-text">
+        <span class="clue-announce-kicker" id="clue-announce-kicker">Nouvel indice dévoilé</span>
+        <span class="clue-announce-title" id="clue-announce-title"></span>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script src="/socket.io/socket.io.js"></script>

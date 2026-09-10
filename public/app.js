@@ -79,6 +79,22 @@ const SFX = (() => {
   };
 })();
 
+// ---------- Bandeau d'annonce plein écran (indice, phase, alerte) ----------
+function announceBanner({ icon = '🔎', kicker = '', title = '', type = 'clue', duration = 3200 } = {}) {
+  const el = document.getElementById('clue-announce');
+  if (!el) return;
+  clearTimeout(announceBanner._hide);
+  el.className = `clue-announce show type-${type}`;
+  el.setAttribute('aria-hidden', 'false');
+  document.getElementById('clue-announce-kicker').textContent = kicker;
+  document.getElementById('clue-announce-title').textContent = title;
+  el.querySelector('.clue-announce-icon').textContent = icon;
+  announceBanner._hide = setTimeout(() => {
+    el.classList.remove('show');
+    el.setAttribute('aria-hidden', 'true');
+  }, duration);
+}
+
 function initSoundToggle() {
   const btn = document.getElementById('btn-sound-toggle');
   if (!btn) return;
@@ -235,10 +251,14 @@ function applyJoinResult(res) {
 }
 
 // ---------- Reconnexion automatique (perte de connexion) ----------
-window.addEventListener('load', () => {
+let reconnectInFlight = false;
+function tryReconnectSession() {
+  if (reconnectInFlight) return;
   const saved = loadSession();
-  if (!saved) return;
+  if (!saved?.code || !saved?.playerId || !saved?.token) return;
+  reconnectInFlight = true;
   socket.emit('room:reconnect', saved, (res) => {
+    reconnectInFlight = false;
     if (!res.ok) { clearSession(); return; }
     state.code = saved.code;
     state.playerId = saved.playerId;
@@ -248,6 +268,24 @@ window.addEventListener('load', () => {
     routeToPhaseScreen(res.phase);
     toast('Reconnecté à la partie.');
   });
+}
+
+socket.on('connect', () => {
+  // Après une vraie coupure réseau, Socket.IO crée un nouveau socket :
+  // on réassocie immédiatement la session au joueur côté serveur.
+  if (!state.code) {
+    const saved = loadSession();
+    if (saved) { state.code=saved.code; state.playerId=saved.playerId; state.token=saved.token; }
+  }
+  if (state.code && state.playerId && state.token) tryReconnectSession();
+});
+
+window.addEventListener('load', () => {
+  if (!state.code) {
+    const saved = loadSession();
+    if (saved) { state.code=saved.code; state.playerId=saved.playerId; state.token=saved.token; }
+  }
+  if (socket.connected) tryReconnectSession();
 });
 
 // ---------- ÉTAT DE SALLE (poussé par le serveur) ----------
@@ -478,6 +516,7 @@ socket.on('phase:changed', ({ phase, phaseEndsAt, revealedClueCount = 0, activeC
   state.phase = phase;
   setPhaseTheme(phase);
   SFX.phase();
+  announceBanner({ icon: '🎬', kicker: 'Nouvelle phase', title: phaseLabel(phase), type: 'phase', duration: 2600 });
   routeToPhaseScreen(phase);
   document.getElementById('phase-label').textContent = phaseLabel(phase);
   startCountdown(phaseEndsAt);
@@ -633,8 +672,15 @@ function updateTension(endsAt) {
   }
 }
 
+let phaseAdvanceBusy = false;
 document.getElementById('btn-advance-phase').onclick = () => {
-  socket.emit('phase:advance', {}, (res) => { if (!res.ok) toast(res.error); });
+  if (phaseAdvanceBusy) return;
+  phaseAdvanceBusy = true;
+  const btn = document.getElementById('btn-advance-phase'); if (btn) btn.disabled = true;
+  socket.emit('phase:advance', {}, (res) => {
+    phaseAdvanceBusy = false; if (btn) btn.disabled = false;
+    if (!res.ok) toast(res.error);
+  });
 };
 
 // ---------- INDICES ----------
@@ -654,7 +700,7 @@ socket.on('clue:revealed', (clue) => {
   li.innerHTML = `<span class="clue-number">INDICE ${state.clues.length}</span><strong>${clue.title}</strong><br><span>${clue.description}</span>`;
   el.appendChild(li);
   const badge = document.getElementById('clue-new-badge'); if (badge) { badge.style.display='inline-block'; setTimeout(()=>badge.style.display='none',4000); }
-  toast(`🔎 Nouvel indice : ${clue.title}`);
+  announceBanner({ icon: '🔎', kicker: 'Nouvel indice dévoilé', title: clue.title, type: 'clue' });
 });
 
 // ---------- CHRONOLOGIE (adaptée au scénario et aux personnages présents) ----------
@@ -780,13 +826,14 @@ function sendChat() {
   input.value = '';
 }
 
+socket.on('chat:rate_limited', ({message}) => toast('⚠️ ' + message));
 socket.on('chat:message', (msg) => {
   const log = document.getElementById('chat-log');
   const div = document.createElement('div');
   div.className = 'msg' + (msg.system ? ' system' : '') + (msg.accusation ? ' accusation' : '');
   div.innerHTML = msg.system
-    ? msg.text
-    : `<span class="author">${msg.name} :</span> ${msg.text}`;
+    ? escSafe(msg.text)
+    : `<span class="author">${escSafe(msg.name)} :</span> ${escSafe(msg.text)}`;
   log.appendChild(div);
   log.scrollTop = log.scrollHeight;
 });
@@ -853,18 +900,18 @@ socket.on('game:reveal', (reveal) => {
     <h3>🏁 Verdict de ton équipe</h3>
     <p class="hint">Tu étais <strong>${myRole === 'coupable' ? 'COUPABLE' : 'ENQUÊTEUR'}</strong> · ${myOutcome?.victory ? '🏆 Victoire' : '❌ Défaite'}.</p>
     <h3>Coupable(s)</h3>
-    <ul>${reveal.guilty.map((g) => `<li><strong>${g.character}</strong> — ${g.explanation}</li>`).join('')}</ul>
+    <ul>${reveal.guilty.map((g) => `<li><strong>${escSafe(g.character)}</strong> — ${escSafe(g.explanation)}</li>`).join('')}</ul>
     <h3>Fausses pistes</h3>
-    <ul>${reveal.falseLeadsSummary.map((f) => `<li>${f}</li>`).join('')}</ul>
+    <ul>${reveal.falseLeadsSummary.map((f) => `<li>${escSafe(f)}</li>`).join('')}</ul>
     <h3>Qui était qui</h3>
-    <ul>${reveal.assignments.map((a) => `<li>${avatarSVG(a.characterName)} ${a.playerName} incarnait <strong>${a.characterName}</strong>${a.wasGuilty ? ' — COUPABLE' : ''}</li>`).join('')}</ul>
+    <ul>${reveal.assignments.map((a) => `<li>${avatarSVG(a.characterName)} ${escSafe(a.playerName)} incarnait <strong>${escSafe(a.characterName)}</strong>${a.wasGuilty ? ' — COUPABLE' : ''}</li>`).join('')}</ul>
     <h3>⚖️ Verdicts</h3>
-    <ul>${(reveal.accusationResults || []).map((r) => `<li><strong>${r.playerName}</strong> — ${
+    <ul>${(reveal.accusationResults || []).map((r) => `<li><strong>${escSafe(r.playerName)}</strong> — ${
       r.perfect ? '🎯 accusation parfaite' : `${r.correctCount} coupable(s) trouvé(s), ${r.wrongCount} innocent(s) accusé(s) à tort`
-    } (${r.pointsEarned >= 0 ? '+' : ''}${r.pointsEarned} pts)${r.accusedCharacterNames.length ? ` — a accusé : ${r.accusedCharacterNames.join(', ')}` : ' — aucune accusation'}</li>`).join('')}</ul>
+    } (${r.pointsEarned >= 0 ? '+' : ''}${r.pointsEarned} pts)${r.accusedCharacterNames.length ? ` — a accusé : ${r.accusedCharacterNames.map(escSafe).join(', ')}` : ' — aucune accusation'}</li>`).join('')}</ul>
     ${confidenceHtml}
     <h3>🏆 Scores</h3>
-    <ol>${(reveal.scores || []).map((s) => `<li><strong>${s.playerName}</strong> — ${s.score} pts</li>`).join('')}</ol>
+    <ol>${(reveal.scores || []).map((s) => `<li><strong>${escSafe(s.playerName)}</strong> — ${Number(s.score)||0} pts</li>`).join('')}</ol>
     <p><em>${reveal.closingLine}</em></p>
   `;
   setPhaseTheme('reveal');
@@ -996,3 +1043,107 @@ document.addEventListener('visibilitychange', () => {
   if (document.hidden) socket.emit('presence:away');
   else socket.emit('presence:back');
 });
+
+
+// ============================================================================
+// ENQUÊTE ULTIME : carte, interrogatoires, tableau de preuves et statistiques
+// ============================================================================
+const InvestigationUI = (() => {
+  let notes = [];
+  let evidence = [];
+  let selected = new Set();
+  let interrogations = 0;
+
+  function storageKey() { return `mystery_investigation_${state.code || 'local'}_${state.playerId || 'player'}`; }
+  function load() {
+    try { const x=JSON.parse(localStorage.getItem(storageKey())||'{}'); notes=x.notes||[]; evidence=x.evidence||[]; } catch { notes=[]; evidence=[]; }
+  }
+  function save() { localStorage.setItem(storageKey(), JSON.stringify({notes,evidence})); }
+  function esc(v){const d=document.createElement('div');d.textContent=String(v??'');return d.innerHTML;}
+
+  function renderMap(locations=[]) {
+    const map=document.getElementById('interactive-map'); if(!map) return;
+    map.innerHTML='';
+    locations.forEach((l,i)=>{
+      const b=document.createElement('button'); b.className='map-place'; b.dataset.id=l.id;
+      b.innerHTML=`<strong>${esc(l.name)}</strong><small>${esc(l.description||'Lieu de l’affaire')}</small>`;
+      b.onclick=()=>{
+        map.querySelectorAll('.map-place').forEach(x=>x.classList.remove('active')); b.classList.add('active');
+        const d=document.getElementById('map-detail'); if(d)d.innerHTML=`<strong>📍 ${esc(l.name)}</strong><span>${esc(l.description||'Aucune information supplémentaire.')}</span>`;
+        addEvidence('Lieu',l.name,l.description||'');
+      }; map.appendChild(b);
+    });
+  }
+
+  function renderInterrogation(players, questions=[]) {
+    const t=document.getElementById('interrogation-target'), q=document.getElementById('interrogation-question'); if(!t||!q)return;
+    const oldT=t.value, oldQ=q.value;
+    t.innerHTML='<option value="">Choisir un suspect…</option>';
+    players.filter(p=>p.id!==state.playerId&&p.connected&&p.alive&&p.characterName).forEach(p=>{const o=document.createElement('option');o.value=p.id;o.textContent=`${p.name} — ${p.characterName}`;t.appendChild(o);});
+    q.innerHTML='<option value="">Choisir une question…</option>';
+    questions.forEach((x,i)=>{const o=document.createElement('option');o.value=i;o.textContent=x;q.appendChild(o);});
+    t.value=oldT;q.value=oldQ;
+  }
+
+  function addEvidence(type,title,description='') {
+    const key=title+'|'+description; if(evidence.some(x=>x.key===key)) return;
+    evidence.unshift({key,type,title,description}); evidence=evidence.slice(0,30); save(); renderBoard();
+  }
+  function renderBoard(){
+    const b=document.getElementById('evidence-board'); if(!b)return; b.innerHTML='';
+    notes.forEach((n,i)=>{const el=document.createElement('div');el.className='evidence-card';el.innerHTML=`<span class="evidence-type">NOTE</span><button data-note="${i}" aria-label="Supprimer">×</button><strong>${esc(n)}</strong>`;el.querySelector('button').onclick=()=>{notes.splice(i,1);save();renderBoard()};b.appendChild(el);});
+    evidence.forEach((e,i)=>{const el=document.createElement('div');el.className='evidence-card'+(selected.has(e.key)?' selected':'');el.innerHTML=`<span class="evidence-type">${esc(e.type)}</span><strong>${esc(e.title)}</strong><div>${esc(e.description)}</div>`;el.onclick=()=>{selected.has(e.key)?selected.delete(e.key):selected.add(e.key);renderBoard()};b.appendChild(el);});
+  }
+  function init(){load();renderBoard();}
+  function bind(){
+    document.getElementById('btn-add-note')?.addEventListener('click',()=>{const x=document.getElementById('investigation-note');if(!x?.value.trim())return;notes.unshift(x.value.trim());x.value='';save();renderBoard();toast('📝 Note ajoutée à ton tableau d’enquête.');});
+    document.getElementById('btn-combine-evidence')?.addEventListener('click',()=>{
+      const picks=evidence.filter(e=>selected.has(e.key)); if(picks.length<2)return toast('Sélectionne au moins 2 éléments à croiser.');
+      const result=document.getElementById('combination-result'); if(!result)return;
+      result.style.display='block'; result.innerHTML=`🔗 <strong>Déduction :</strong> ${picks.map(p=>esc(p.title)).join(' + ')} → ces éléments peuvent être reliés. Vérifie cette hypothèse avec les prochains indices et les alibis.`;
+      addEvidence('DÉDUCTION','Hypothèse créée',picks.map(p=>p.title).join(' + ')); selected.clear();
+    });
+    document.getElementById('btn-interrogate')?.addEventListener('click',()=>{
+      const t=document.getElementById('interrogation-target'),q=document.getElementById('interrogation-question');
+      if(!t?.value||q?.value==='')return toast('Choisis un suspect et une question.');
+      socket.emit('investigation:interrogate',{targetPlayerId:t.value,questionIndex:Number(q.value)},res=>{
+        if(!res.ok)return toast(res.error); interrogations++; const a=document.getElementById('interrogation-answer');
+        a.innerHTML=`<strong>❯ ${esc(res.question)}</strong><br>${esc(res.answer)}`; addEvidence('Interrogatoire',`Réponse de ${res.target}`,res.answer); toast('🕵️ Interrogatoire enregistré.');
+      });
+    });
+  }
+  function clues(clue){addEvidence('Indice',clue.title,clue.description||'');}
+  return {init,bind,renderMap,renderInterrogation,clues,getInterrogations:()=>interrogations};
+})();
+
+socket.on('story:intro', data => { InvestigationUI.renderMap(data.locations||[]); InvestigationUI.renderInterrogation(state.players||[], data.questions||[]); });
+socket.on('clue:revealed', clue => InvestigationUI.clues(clue));
+const _oldRenderRoomState=renderRoomState;
+renderRoomState=function(room){_oldRenderRoomState(room); InvestigationUI.renderInterrogation(room.players||[], storyData?.questions||[]);};
+const _oldStoryIntro=socket.listeners('story:intro')[0]; // preserve existing listener; map listener above handles same event
+
+document.addEventListener('DOMContentLoaded',()=>{InvestigationUI.init();InvestigationUI.bind();});
+
+// Ajoute les éléments connus dès qu'un dossier privé arrive.
+socket.on('dossier:yours', d=>{
+  if(d?.alibi) { const x=document.getElementById('evidence-board'); if(x) { /* tableau privé : aucune donnée n'est envoyée aux autres */ } }
+});
+
+// Reconstruction finale + récompenses : on réutilise les données autoritaires du serveur.
+function renderUltimateReveal(reveal){
+  const banner=document.getElementById('final-verdict-banner'); if(banner){
+    const names=(reveal.guilty||[]).map(x=>x.character).join(' + ');
+    banner.innerHTML=`🔐 <strong>Verdict officiel</strong><br><span>${escSafe(names||'Affaire résolue')}</span>`;
+  }
+  const rec=document.getElementById('final-reconstruction'); if(rec){
+    const events=(reveal.timeline||[]).slice().sort((a,b)=>String(a.time||'').localeCompare(String(b.time||'')));
+    rec.innerHTML='<h3>🎬 Reconstitution des faits</h3>'+events.map(e=>`<div class="reconstruction-line"><div class="reconstruction-time">${escSafe(e.time||'—')}</div><div>${escSafe(e.event||'')}</div></div>`).join('');
+  }
+  const awards=document.getElementById('final-awards'); if(awards){
+    const scores=(reveal.scores||[]).slice().sort((a,b)=>(b.score||0)-(a.score||0));
+    awards.innerHTML='<h3>🏆 Palmarès de la partie</h3>'+scores.slice(0,4).map((s,i)=>`<div class="award-card">${['🥇','🥈','🥉','⭐'][i]||'⭐'}<strong>${escSafe(s.playerName)}</strong><span>${s.score||0} points</span></div>`).join('');
+  }
+}
+function escSafe(v){const d=document.createElement('div');d.textContent=String(v??'');return d.innerHTML;}
+const _existingRevealHandlers=socket.listeners('game:reveal');
+socket.on('game:reveal', reveal=>setTimeout(()=>renderUltimateReveal(reveal),50));

@@ -819,3 +819,78 @@ body.phase-reveal::before {
   .card, .wax-card { transition: transform .25s ease, box-shadow .25s ease; }
   .card:hover, .wax-card:hover { transform: translateY(-4px) rotate(-.2deg); box-shadow: 0 24px 50px rgba(0,0,0,.5); }
 }
+
+/* ---------- Bandeau d'annonce (nouvel indice / événement clé) ---------- */
+.clue-announce {
+  position: fixed;
+  top: 18px;
+  left: 50%;
+  transform: translate(-50%, -140%);
+  z-index: 980;
+  pointer-events: none;
+  opacity: 0;
+  transition: transform .5s cubic-bezier(.2,.9,.25,1.15), opacity .35s ease;
+  width: min(92vw, 420px);
+}
+.clue-announce.show {
+  transform: translate(-50%, 0);
+  opacity: 1;
+}
+.clue-announce-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  border-radius: 10px;
+  background: linear-gradient(145deg, rgba(20,30,46,.96), rgba(10,16,26,.97));
+  border: 1px solid var(--clue-bright, #7be9f4);
+  box-shadow: 0 18px 40px rgba(0,0,0,.55), 0 0 0 1px rgba(123,233,244,.12), 0 0 26px rgba(41,194,214,.35);
+}
+.clue-announce-icon {
+  font-size: 1.6rem;
+  filter: drop-shadow(0 0 8px rgba(123,233,244,.5));
+  animation: clueIconPulse 1.6s ease-in-out infinite;
+}
+@keyframes clueIconPulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.15)} }
+.clue-announce-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.clue-announce-kicker {
+  font-family: var(--font-display);
+  font-size: .72rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--clue-bright, #7be9f4);
+}
+.clue-announce-title {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  color: #f7ecd6;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.clue-announce.type-phase .clue-announce-card { border-color: var(--brass-bright); box-shadow: 0 18px 40px rgba(0,0,0,.55), 0 0 26px rgba(214,166,63,.32); }
+.clue-announce.type-phase .clue-announce-kicker { color: var(--brass-bright); }
+.clue-announce.type-alert .clue-announce-card { border-color: var(--wax-bright); box-shadow: 0 18px 40px rgba(0,0,0,.55), 0 0 26px rgba(214,69,58,.35); }
+.clue-announce.type-alert .clue-announce-kicker { color: var(--wax-bright); }
+@media (max-width: 650px) {
+  .clue-announce { top: 58px; }
+  .clue-announce-card { padding: 11px 14px; }
+  .clue-announce-title { font-size: .92rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .clue-announce { transition: opacity .3s ease; transform: translate(-50%, 0) !important; }
+}
+
+/* =========================================================================
+   PACK « ENQUÊTE ULTIME »
+   Carte interactive · interrogatoires · tableau d'enquête · fin cinématique
+   ========================================================================= */
+.interactive-map{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:10px;border:1px solid var(--border);border-radius:14px;background:rgba(5,7,12,.55);min-height:120px}
+.map-place{border:1px solid rgba(214,166,63,.28);background:linear-gradient(145deg,rgba(23,34,54,.95),rgba(10,16,26,.9));color:var(--text);border-radius:10px;padding:10px 7px;cursor:pointer;text-align:left;min-height:58px;transition:.2s;position:relative;overflow:hidden}
+.map-place:hover,.map-place.active{transform:translateY(-2px);border-color:var(--accent,var(--brass-bright));box-shadow:0 8px 24px rgba(0,0,0,.35),0 0 18px var(--accent-soft,rgba(214,166,63,.12))}
+.map-place small{display:block;color:var(--text-dim);font-size:.68rem;margin-top:3px}.map-place::after{content:'⌖';position:absolute;right:6px;bottom:4px;opacity:.28}
+.map-detail{margin:8px 0 16px;padding:11px;border-left:3px solid var(--accent,var(--brass));background:rgba(255,255,255,.035);display:grid;gap:3px}.map-detail span{color:var(--text-dim);font-size:.8rem}
+.interrogation-box{padding:12px;border:1px solid rgba(123,233,244,.2);border-radius:12px;background:rgba(8,16,25,.7);display:grid;gap:8px}.interrogation-answer{min-height:55px;padding:10px;border-radius:9px;background:rgba(255,255,255,.035);color:#e9e4d8;font-size:.88rem;line-height:1.45}
+.evidence-board-tools{display:flex;gap:7px;margin-bottom:8px}.evidence-board-tools input{min-width:0;flex:1}.evidence-board{display:grid;grid-template-columns:repeat(2,1fr);gap:7px;max-height:270px;overflow:auto;padding:2px}.evidence-card{padding:9px;border:1px solid rgba(214,166,63,.22);border-radius:9px;background:rgba(18,27,43,.8);cursor:pointer;font-size:.8rem}.evidence-card.selected{border-color:var(--clue-bright);box-shadow:0 0 15px rgba(41,194,214,.2);transform:translateY(-1px)}.evidence-card .evidence-type{font-size:.62rem;letter-spacing:.08em;color:var(--accent,var(--brass));text-transform:uppercase}.evidence-card button{float:right;background:none;border:0;padding:0;color:var(--text-dim);cursor:pointer}.combination-result{margin-top:8px;padding:10px;border-radius:9px;background:rgba(52,201,154,.08);border:1px solid rgba(52,201,154,.2);font-size:.82rem;display:none}.final-verdict-banner{margin:12px 0;padding:16px;border-radius:14px;text-align:center;background:linear-gradient(145deg,rgba(52,201,154,.12),rgba(214,166,63,.08));border:1px solid rgba(214,166,63,.3);font-size:1.1rem}.final-reconstruction{margin-top:18px}.reconstruction-line{display:grid;grid-template-columns:72px 1fr;gap:12px;padding:10px;border-bottom:1px dashed rgba(255,255,255,.1)}.reconstruction-time{font-family:var(--font-display);color:var(--brass-bright);font-weight:700}.final-awards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:18px}.award-card{padding:14px;border:1px solid rgba(214,166,63,.22);border-radius:12px;background:rgba(16,25,40,.8);text-align:center}.award-card strong{display:block;margin-top:5px}
+@media(max-width:700px){.interactive-map{grid-template-columns:repeat(2,1fr)}.evidence-board{grid-template-columns:1fr}.evidence-board-tools{display:grid}.reconstruction-line{grid-template-columns:58px 1fr}}
