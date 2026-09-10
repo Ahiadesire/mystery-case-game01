@@ -31,9 +31,151 @@ function toast(msg) {
   const t = document.getElementById('toast');
   t.textContent = msg;
   t.style.display = 'block';
+  t.style.animation = 'none';
+  void t.offsetWidth; // relance l'animation d'entrée même si un toast précédent est encore visible
+  t.style.animation = '';
   clearTimeout(toast._t);
   toast._t = setTimeout(() => (t.style.display = 'none'), 3500);
 }
+
+// ---------- Ambiance sonore (générée, aucun fichier audio requis) ----------
+const SFX = (() => {
+  let ctx = null;
+  let muted = localStorage.getItem('mystery_muted') === '1';
+  function ensureCtx() {
+    if (!ctx) {
+      const AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) return null;
+      ctx = new AC();
+    }
+    if (ctx.state === 'suspended') ctx.resume();
+    return ctx;
+  }
+  function tone(freq, { duration = 0.18, type = 'sine', gain = 0.06, delay = 0, glideTo = null } = {}) {
+    if (muted) return;
+    const c = ensureCtx();
+    if (!c) return;
+    const osc = c.createOscillator();
+    const amp = c.createGain();
+    osc.type = type;
+    osc.frequency.setValueAtTime(freq, c.currentTime + delay);
+    if (glideTo) osc.frequency.exponentialRampToValueAtTime(glideTo, c.currentTime + delay + duration);
+    amp.gain.setValueAtTime(0, c.currentTime + delay);
+    amp.gain.linearRampToValueAtTime(gain, c.currentTime + delay + 0.015);
+    amp.gain.exponentialRampToValueAtTime(0.0001, c.currentTime + delay + duration);
+    osc.connect(amp).connect(c.destination);
+    osc.start(c.currentTime + delay);
+    osc.stop(c.currentTime + delay + duration + 0.05);
+  }
+  return {
+    isMuted: () => muted,
+    setMuted(v) { muted = v; localStorage.setItem('mystery_muted', v ? '1' : '0'); },
+    clue() { tone(660, { type: 'triangle', duration: .22, gain: .05 }); tone(990, { type: 'triangle', duration: .25, gain: .045, delay: .07 }); },
+    phase() { tone(220, { type: 'sine', duration: .3, gain: .05 }); tone(440, { type: 'sine', duration: .35, gain: .04, delay: .1 }); },
+    tick() { tone(880, { type: 'square', duration: .06, gain: .035 }); },
+    send() { tone(520, { type: 'sine', duration: .08, gain: .03 }); },
+    victory() { [523, 659, 784, 1046].forEach((f, i) => tone(f, { type: 'triangle', duration: .35, gain: .05, delay: i * .12 })); },
+    defeat() { tone(300, { type: 'sawtooth', duration: .6, gain: .05, glideTo: 120 }); }
+  };
+})();
+
+function initSoundToggle() {
+  const btn = document.getElementById('btn-sound-toggle');
+  if (!btn) return;
+  const paint = () => {
+    const muted = SFX.isMuted();
+    btn.textContent = muted ? '🔇' : '🔈';
+    btn.classList.toggle('muted', muted);
+  };
+  paint();
+  btn.onclick = () => { SFX.setMuted(!SFX.isMuted()); paint(); if (!SFX.isMuted()) SFX.send(); };
+}
+
+// ---------- Particules d'ambiance sur l'écran d'accueil ----------
+function initAmbientParticles() {
+  const wrap = document.getElementById('ambient-particles');
+  if (!wrap || wrap.childElementCount) return;
+  const count = window.matchMedia('(max-width: 650px)').matches ? 10 : 18;
+  for (let i = 0; i < count; i++) {
+    const mote = document.createElement('span');
+    mote.className = 'mote' + (i % 3 === 0 ? ' cyan' : '');
+    mote.style.setProperty('--x', `${Math.random() * 100}%`);
+    mote.style.setProperty('--size', `${2 + Math.random() * 3}px`);
+    mote.style.setProperty('--dur', `${11 + Math.random() * 10}s`);
+    mote.style.setProperty('--delay', `${-Math.random() * 20}s`);
+    wrap.appendChild(mote);
+  }
+}
+
+// ---------- Confettis de victoire (canvas, sans librairie) ----------
+function launchConfetti() {
+  const canvas = document.getElementById('confetti-canvas');
+  if (!canvas) return;
+  const ctx2d = canvas.getContext('2d');
+  canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+  canvas.style.display = 'block';
+  const colors = ['#d6a63f', '#f6cd6b', '#29c2d6', '#7be9f4', '#8c1f1f', '#34c99a'];
+  const pieces = Array.from({ length: 140 }, () => ({
+    x: Math.random() * canvas.width,
+    y: -20 - Math.random() * canvas.height * 0.4,
+    w: 5 + Math.random() * 5,
+    h: 8 + Math.random() * 8,
+    vy: 2 + Math.random() * 3,
+    vx: -1.5 + Math.random() * 3,
+    rot: Math.random() * Math.PI,
+    vrot: -0.2 + Math.random() * 0.4,
+    color: colors[Math.floor(Math.random() * colors.length)]
+  }));
+  const start = Date.now();
+  function frame() {
+    ctx2d.clearRect(0, 0, canvas.width, canvas.height);
+    let anyVisible = false;
+    for (const p of pieces) {
+      p.x += p.vx; p.y += p.vy; p.rot += p.vrot;
+      if (p.y < canvas.height + 20) anyVisible = true;
+      ctx2d.save();
+      ctx2d.translate(p.x, p.y);
+      ctx2d.rotate(p.rot);
+      ctx2d.fillStyle = p.color;
+      ctx2d.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+      ctx2d.restore();
+    }
+    if (anyVisible && Date.now() - start < 4200) {
+      requestAnimationFrame(frame);
+    } else {
+      canvas.style.display = 'none';
+    }
+  }
+  requestAnimationFrame(frame);
+}
+window.addEventListener('resize', () => {
+  const canvas = document.getElementById('confetti-canvas');
+  if (canvas && canvas.style.display === 'block') { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+});
+
+// ---------- Thème dynamique par phase ----------
+function setPhaseTheme(phase) {
+  document.body.classList.remove('phase-dossier', 'phase-distribution', 'phase-enquete', 'phase-accusation', 'phase-reveal');
+  const cls = { dossier: 'phase-dossier', distribution: 'phase-distribution', enquete: 'phase-enquete', accusation: 'phase-accusation', reveal: 'phase-reveal' }[phase];
+  if (cls) document.body.classList.add(cls);
+}
+
+// ---------- Urgence visuelle + sonore du minuteur ----------
+function applyTimerUrgency(el, remaining) {
+  if (!el) return;
+  const critical = remaining > 0 && remaining <= 10;
+  el.classList.toggle('timer-critical', critical);
+  if (critical && remaining <= 5 && Number.isInteger(remaining) && applyTimerUrgency._last !== remaining) {
+    applyTimerUrgency._last = remaining;
+    SFX.tick();
+  }
+  if (!critical) applyTimerUrgency._last = null;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initSoundToggle();
+  initAmbientParticles();
+});
 
 function saveSession() {
   // localStorage (et non sessionStorage) : la session doit survivre même si
@@ -334,6 +476,8 @@ document.getElementById('btn-toggle-dossier').onclick = () => {
 // ---------- CHANGEMENT DE PHASE ----------
 socket.on('phase:changed', ({ phase, phaseEndsAt, revealedClueCount = 0, activeClueCount = 0 }) => {
   state.phase = phase;
+  setPhaseTheme(phase);
+  SFX.phase();
   routeToPhaseScreen(phase);
   document.getElementById('phase-label').textContent = phaseLabel(phase);
   startCountdown(phaseEndsAt);
@@ -394,7 +538,11 @@ function updateLiveStrip() {
 function startDossierCountdown(endsAt) {
   clearInterval(dossierCountdownTimer);
   const label = document.getElementById('dossier-timer-label');
-  const tick = () => { label.textContent = formatRemaining(endsAt); };
+  const tick = () => {
+    label.textContent = formatRemaining(endsAt);
+    const remaining = endsAt ? Math.max(0, Math.round((endsAt - Date.now()) / 1000)) : 0;
+    applyTimerUrgency(label, remaining);
+  };
   tick(); dossierCountdownTimer = setInterval(tick, 500);
 }
 
@@ -415,7 +563,12 @@ function startVoteCountdown(endsAt) {
   const label = document.getElementById('vote-timer-label');
   if (!label) return;
   clearInterval(startVoteCountdown._t);
-  const tick = () => { label.textContent = formatRemaining(endsAt); };
+  const tick = () => {
+    label.textContent = formatRemaining(endsAt);
+    const remaining = endsAt ? Math.max(0, Math.round((endsAt - Date.now()) / 1000)) : 0;
+    applyTimerUrgency(label, remaining);
+    applyTimerUrgency(document.querySelector('.vote-timer'), remaining);
+  };
   tick(); startVoteCountdown._t = setInterval(tick, 500);
 }
 
@@ -451,6 +604,8 @@ function startCountdown(endsAt) {
     const m = String(Math.floor(remaining / 60)).padStart(2, '0');
     const s = String(remaining % 60).padStart(2, '0');
     label.textContent = `${m}:${s}`;
+    applyTimerUrgency(label, remaining);
+    applyTimerUrgency(document.querySelector('.phase-hero .hero-timer'), remaining);
     if (state.phase === 'enquete') updateTension(endsAt);
     if (remaining <= 0) clearInterval(countdownTimer);
   }, 500);
@@ -485,8 +640,14 @@ document.getElementById('btn-advance-phase').onclick = () => {
 // ---------- INDICES ----------
 socket.on('clue:revealed', (clue) => {
   state.clues.push(clue);
+  SFX.clue();
   const counter = document.getElementById('clue-counter');
-  if (counter) counter.textContent = `${state.clues.length} / ${Math.max(state.clues.length, Number(counter.dataset.total || state.clues.length))}`;
+  if (counter) {
+    counter.textContent = `${state.clues.length} / ${Math.max(state.clues.length, Number(counter.dataset.total || state.clues.length))}`;
+    counter.classList.remove('counter-pop');
+    void counter.offsetWidth;
+    counter.classList.add('counter-pop');
+  }
   const el = document.getElementById('clues-list');
   const li = document.createElement('li');
   li.className = 'clue-card clue-new';
@@ -615,6 +776,7 @@ function sendChat() {
   const text = input.value.trim();
   if (!text) return;
   socket.emit('chat:send', { text });
+  SFX.send();
   input.value = '';
 }
 
@@ -705,9 +867,12 @@ socket.on('game:reveal', (reveal) => {
     <ol>${(reveal.scores || []).map((s) => `<li><strong>${s.playerName}</strong> — ${s.score} pts</li>`).join('')}</ol>
     <p><em>${reveal.closingLine}</em></p>
   `;
+  setPhaseTheme('reveal');
   show('screen-reveal');
   document.getElementById('btn-replay').style.display = (state.isHost || state.isGameMaster) ? 'block' : 'none';
   document.getElementById('btn-new-case').style.display = (state.isHost || state.isGameMaster) ? 'block' : 'none';
+  if (myOutcome?.victory) { SFX.victory(); launchConfetti(); }
+  else SFX.defeat();
 });
 
 document.getElementById('btn-replay').onclick = () => {

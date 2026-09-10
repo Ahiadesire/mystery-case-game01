@@ -220,10 +220,26 @@ button {
   font-size: 1rem;
   transition: transform .15s ease, box-shadow .15s ease, background .15s ease, filter .15s ease;
   box-shadow: 0 8px 20px rgba(140,31,31,.28);
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
 }
-button:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(140,31,31,.4); filter: brightness(1.06); }
-button:active { transform: translateY(0); }
+button::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(100deg, transparent 30%, rgba(255,255,255,.22) 48%, rgba(255,255,255,.05) 55%, transparent 70%);
+  background-size: 240% 100%;
+  background-position: 140% 0;
+  transition: background-position .55s ease;
+  pointer-events: none;
+}
+button:hover::before { background-position: -40% 0; }
+button:hover { transform: translateY(-2px) scale(1.008); box-shadow: 0 12px 28px rgba(140,31,31,.4); filter: brightness(1.06); }
+button:active { transform: translateY(0) scale(.98); filter: brightness(.97); }
 button:disabled { background: #383c48; color: #8890a0; cursor: not-allowed; box-shadow: none; transform: none; filter: none; }
+button:disabled::before { display: none; }
 
 .error { color: var(--wax-bright); text-align: center; min-height: 1.2em; font-style: italic; }
 .hint { color: var(--text-dim); font-size: 0.9rem; }
@@ -662,3 +678,144 @@ button:disabled { background: #383c48; color: #8890a0; cursor: not-allowed; box-
 .replay-actions { display:flex; gap:12px; flex-wrap:wrap; align-items:center; margin-top:18px; }
 .case-mode-badge { display:inline-block; margin:4px 0 16px; padding:7px 12px; border:1px solid rgba(180,150,100,.35); border-radius:999px; font-size:.82rem; letter-spacing:.04em; opacity:.9; }
 @media (max-width:640px){ .replay-actions button{width:100%;} }
+
+/* =========================================================================
+   AMÉLIORATIONS DYNAMIQUES — version « plus vivante »
+   Ajouts : thème par phase, particules d'ambiance, urgence du minuteur,
+   bouton son, confettis de victoire, défilement personnalisé, toasts.
+   Rien ici ne dépend d'images externes ni de librairies tierces.
+   ========================================================================= */
+
+/* ---------- Accent dynamique par phase ---------- */
+body { transition: background-color .8s ease; }
+body.phase-dossier    { --accent: var(--brass-bright); --accent-soft: rgba(214,166,63,.16); }
+body.phase-distribution{ --accent: var(--brass-bright); --accent-soft: rgba(214,166,63,.16); }
+body.phase-enquete    { --accent: var(--clue-bright);  --accent-soft: rgba(41,194,214,.16); }
+body.phase-accusation { --accent: var(--wax-bright);   --accent-soft: rgba(214,69,58,.18); }
+body.phase-reveal     { --accent: var(--emerald);      --accent-soft: rgba(52,201,154,.16); }
+body::before { transition: background .9s ease; }
+body.phase-enquete::before {
+  background:
+    radial-gradient(circle at 12% 15%, var(--accent-soft), transparent 32%),
+    radial-gradient(circle at 88% 75%, rgba(140,31,31,.08), transparent 32%),
+    radial-gradient(circle at 60% 40%, var(--accent-soft), transparent 42%);
+}
+body.phase-accusation::before {
+  background:
+    radial-gradient(circle at 15% 20%, var(--accent-soft), transparent 34%),
+    radial-gradient(circle at 85% 80%, var(--accent-soft), transparent 36%);
+}
+body.phase-reveal::before {
+  background:
+    radial-gradient(circle at 20% 20%, var(--accent-soft), transparent 36%),
+    radial-gradient(circle at 80% 70%, var(--accent-soft), transparent 36%);
+}
+.game-header, .phase-progress { transition: box-shadow .6s ease; }
+#phase-progress-fill { background: linear-gradient(90deg, var(--accent, var(--clue)), var(--brass-bright)); }
+
+/* ---------- Particules d'ambiance (poussière / lucioles) ---------- */
+.ambient-particles {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+.ambient-particles .mote {
+  position: absolute;
+  bottom: -10px;
+  width: var(--size, 3px);
+  height: var(--size, 3px);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(246,205,107,.9), rgba(246,205,107,0) 70%);
+  opacity: 0;
+  animation: moteRise var(--dur, 14s) linear infinite;
+  animation-delay: var(--delay, 0s);
+  left: var(--x, 50%);
+}
+.ambient-particles .mote.cyan {
+  background: radial-gradient(circle, rgba(123,233,244,.9), rgba(123,233,244,0) 70%);
+}
+@keyframes moteRise {
+  0%   { transform: translateY(0) translateX(0); opacity: 0; }
+  8%   { opacity: .55; }
+  50%  { transform: translateY(-52vh) translateX(12px); }
+  92%  { opacity: .3; }
+  100% { transform: translateY(-100vh) translateX(-8px); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ambient-particles { display: none; }
+}
+
+/* ---------- Bouton son (fixe, toujours visible) ---------- */
+.sound-toggle {
+  position: fixed;
+  top: 14px;
+  right: 14px;
+  z-index: 900;
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  margin: 0;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(16,25,40,.82);
+  border: 1px solid var(--border);
+  box-shadow: 0 6px 18px rgba(0,0,0,.35);
+  backdrop-filter: blur(6px);
+}
+.sound-toggle:hover { transform: translateY(-2px) scale(1.05); box-shadow: 0 8px 22px rgba(0,0,0,.45); }
+.sound-toggle.muted { color: var(--text-dim); opacity: .75; }
+@media (max-width: 650px) { .sound-toggle { top: 8px; right: 8px; width: 38px; height: 38px; font-size: 1.05rem; } }
+
+/* ---------- Urgence du minuteur (dernières secondes) ---------- */
+.timer-critical {
+  color: var(--wax-bright) !important;
+  animation: timerPulse .8s ease-in-out infinite;
+}
+@keyframes timerPulse {
+  0%,100% { text-shadow: 0 0 8px rgba(214,69,58,.35); transform: scale(1); }
+  50%     { text-shadow: 0 0 20px rgba(214,69,58,.85); transform: scale(1.07); }
+}
+.hero-timer.timer-critical, .vote-timer.timer-critical { filter: drop-shadow(0 0 10px rgba(214,69,58,.6)); }
+
+/* ---------- Compteur d'indices : petit « pop » à chaque changement ---------- */
+.counter-pop { animation: counterPop .4s cubic-bezier(.3,1.6,.5,1); }
+@keyframes counterPop { 0%{transform:scale(1)} 40%{transform:scale(1.35)} 100%{transform:scale(1)} }
+
+/* ---------- Confettis de victoire ---------- */
+#confetti-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 950;
+  pointer-events: none;
+  display: none;
+}
+
+/* ---------- Défilement personnalisé ---------- */
+.chat-log, .list-box, .episode-card, #gm-solution-view {
+  scrollbar-width: thin;
+  scrollbar-color: var(--brass) rgba(255,255,255,.05);
+}
+.chat-log::-webkit-scrollbar, .list-box::-webkit-scrollbar, .episode-card::-webkit-scrollbar { width: 8px; }
+.chat-log::-webkit-scrollbar-track, .list-box::-webkit-scrollbar-track { background: rgba(255,255,255,.04); border-radius: 8px; }
+.chat-log::-webkit-scrollbar-thumb, .list-box::-webkit-scrollbar-thumb { background: var(--brass); border-radius: 8px; }
+.chat-log::-webkit-scrollbar-thumb:hover, .list-box::-webkit-scrollbar-thumb:hover { background: var(--brass-bright); }
+
+/* ---------- Toast amélioré ---------- */
+#toast {
+  animation: toastIn .35s cubic-bezier(.2,.8,.2,1);
+  border: 1px solid var(--accent, var(--brass));
+  box-shadow: 0 14px 34px rgba(0,0,0,.45), 0 0 0 1px rgba(255,255,255,.03) inset;
+}
+@keyframes toastIn { from { opacity:0; transform: translate(-50%, 12px) scale(.96); } to { opacity:1; transform: translate(-50%,0) scale(1); } }
+
+/* ---------- Survol 3D léger sur les cartes principales ---------- */
+@media (hover: hover) and (pointer: fine) {
+  .card, .wax-card { transition: transform .25s ease, box-shadow .25s ease; }
+  .card:hover, .wax-card:hover { transform: translateY(-4px) rotate(-.2deg); box-shadow: 0 24px 50px rgba(0,0,0,.5); }
+}
