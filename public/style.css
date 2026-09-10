@@ -894,3 +894,23 @@ body.phase-reveal::before {
 .interrogation-box{padding:12px;border:1px solid rgba(123,233,244,.2);border-radius:12px;background:rgba(8,16,25,.7);display:grid;gap:8px}.interrogation-answer{min-height:55px;padding:10px;border-radius:9px;background:rgba(255,255,255,.035);color:#e9e4d8;font-size:.88rem;line-height:1.45}
 .evidence-board-tools{display:flex;gap:7px;margin-bottom:8px}.evidence-board-tools input{min-width:0;flex:1}.evidence-board{display:grid;grid-template-columns:repeat(2,1fr);gap:7px;max-height:270px;overflow:auto;padding:2px}.evidence-card{padding:9px;border:1px solid rgba(214,166,63,.22);border-radius:9px;background:rgba(18,27,43,.8);cursor:pointer;font-size:.8rem}.evidence-card.selected{border-color:var(--clue-bright);box-shadow:0 0 15px rgba(41,194,214,.2);transform:translateY(-1px)}.evidence-card .evidence-type{font-size:.62rem;letter-spacing:.08em;color:var(--accent,var(--brass));text-transform:uppercase}.evidence-card button{float:right;background:none;border:0;padding:0;color:var(--text-dim);cursor:pointer}.combination-result{margin-top:8px;padding:10px;border-radius:9px;background:rgba(52,201,154,.08);border:1px solid rgba(52,201,154,.2);font-size:.82rem;display:none}.final-verdict-banner{margin:12px 0;padding:16px;border-radius:14px;text-align:center;background:linear-gradient(145deg,rgba(52,201,154,.12),rgba(214,166,63,.08));border:1px solid rgba(214,166,63,.3);font-size:1.1rem}.final-reconstruction{margin-top:18px}.reconstruction-line{display:grid;grid-template-columns:72px 1fr;gap:12px;padding:10px;border-bottom:1px dashed rgba(255,255,255,.1)}.reconstruction-time{font-family:var(--font-display);color:var(--brass-bright);font-weight:700}.final-awards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:18px}.award-card{padding:14px;border:1px solid rgba(214,166,63,.22);border-radius:12px;background:rgba(16,25,40,.8);text-align:center}.award-card strong{display:block;margin-top:5px}
 @media(max-width:700px){.interactive-map{grid-template-columns:repeat(2,1fr)}.evidence-board{grid-template-columns:1fr}.evidence-board-tools{display:grid}.reconstruction-line{grid-template-columns:58px 1fr}}
+
+/* ===== PATCH FINAL : portraits illustrés + guidage débutant ===== */
+.character-portrait{width:64px;height:64px;display:inline-grid;place-items:center;border-radius:18px;overflow:hidden;flex:none;background:linear-gradient(145deg,#1a2438,#0b101a);box-shadow:0 8px 22px rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.12)}
+.character-portrait svg{width:100%;height:100%;display:block}
+.character-portrait.large{width:96px;height:96px;border-radius:24px}
+.player-row-with-avatar{display:flex;align-items:center;gap:12px}
+.player-row-with-avatar .character-portrait{margin-right:2px}
+.avatar-label{display:flex;flex-direction:column;gap:2px;min-width:0}
+.avatar-label strong{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.avatar-label small{opacity:.7}
+.guide-card{margin:14px 0;padding:16px;border:1px solid rgba(214,166,63,.28);background:linear-gradient(135deg,rgba(214,166,63,.08),rgba(41,194,214,.04));border-radius:18px}
+.guide-card h3{margin:0 0 7px}.guide-card p{margin:0 0 10px;line-height:1.5}.guide-actions{display:flex;gap:8px;flex-wrap:wrap}.guide-step{font-size:.86rem;opacity:.82}
+.map-help{display:flex;gap:8px;align-items:flex-start;margin:8px 0 12px;padding:10px 12px;border-radius:12px;background:rgba(255,255,255,.035);font-size:.88rem;line-height:1.4}
+.map-place{cursor:pointer;transition:transform .16s ease,box-shadow .16s ease}.map-place:hover{transform:translateY(-2px)}
+.map-place.active{outline:2px solid rgba(41,194,214,.55);box-shadow:0 0 0 5px rgba(41,194,214,.08)}
+.evidence-card.important{border-left:3px solid #d6a63f}.evidence-card .evidence-check{position:absolute;top:8px;right:8px;font-size:.8rem;opacity:.65}
+.hint-button{display:inline-flex;align-items:center;gap:6px}.hint-level{font-size:.75rem;opacity:.65;margin-left:auto}
+.objective-card{display:flex;gap:12px;align-items:center;margin:12px 0;padding:13px 15px;border-radius:16px;background:rgba(41,194,214,.06);border:1px solid rgba(41,194,214,.18)}
+.objective-icon{font-size:1.5rem}.objective-card strong{display:block}.objective-card span{font-size:.88rem;opacity:.78}
+@media(max-width:700px){.character-portrait{width:52px;height:52px}.character-portrait.large{width:78px;height:78px}.objective-card{align-items:flex-start}.guide-card{padding:13px}}

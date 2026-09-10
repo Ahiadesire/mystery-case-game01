@@ -523,6 +523,7 @@ socket.on('phase:changed', ({ phase, phaseEndsAt, revealedClueCount = 0, activeC
   startPhaseProgress(phaseEndsAt);
   updateLiveStrip();
   if (phase === 'enquete') {
+    renderInvestigationGuide(Number(localStorage.getItem('mystery_guide_step') || 0));
     state.tensionStartedAt = Date.now();
     state.confidenceSubmitted = false;
     renderConfidenceList(state.players);
@@ -697,7 +698,7 @@ socket.on('clue:revealed', (clue) => {
   const el = document.getElementById('clues-list');
   const li = document.createElement('li');
   li.className = 'clue-card clue-new';
-  li.innerHTML = `<span class="clue-number">INDICE ${state.clues.length}</span><strong>${clue.title}</strong><br><span>${clue.description}</span>`;
+  li.innerHTML = `<span class="clue-number">INDICE ${state.clues.length}</span>${clue.linkedCharacterId ? '<span class="hint"> PISTE LIÉE À UN SUSPECT</span>' : '<span class="hint"> PREUVE DE CONTEXTE</span>'}<br><strong>${clue.title}</strong><br><span>${clue.description}</span>`;
   el.appendChild(li);
   const badge = document.getElementById('clue-new-badge'); if (badge) { badge.style.display='inline-block'; setTimeout(()=>badge.style.display='none',4000); }
   announceBanner({ icon: '🔎', kicker: 'Nouvel indice dévoilé', title: clue.title, type: 'clue' });
@@ -719,10 +720,34 @@ socket.on('phase:changed', ({ phase }) => {
 });
 
 
-function avatarSVG(name) {
-  const initials = String(name || '?').trim().split(/\s+/).map(x => x[0]).slice(0,2).join('').toUpperCase();
-  return `<span class="avatar" aria-hidden="true"><span>${initials || '?'}</span></span>`;
+function portraitSVG(name, large=false) {
+  const n = String(name || '?').trim();
+  let h = 0; for (let i=0;i<n.length;i++) h = (h*31 + n.charCodeAt(i)) >>> 0;
+  const skin = ['#f0c7a5','#d99b72','#b97850','#8f573d'][h%4];
+  const hair = ['#1c1512','#3b2418','#6b4427','#9b6a3d','#242b35'][((h>>>3)%5)];
+  const shirt = ['#2b6b78','#70423b','#475b80','#66502f','#3c6a4c','#5b426e'][((h>>>7)%6)];
+  const bg = ['#172235','#241d2b','#1c2a27','#29251c','#20243a'][((h>>>11)%5)];
+  const glasses = ((h>>>13)%4===0);
+  const beard = ((h>>>15)%5===0);
+  const female = /sarah|emma|julie|claire/i.test(n);
+  const hairLong = female || ((h>>>17)%4===0);
+  const mouth = (h>>>19)%3;
+  const safe = n.replace(/[<>&"']/g,'');
+  return `<span class="character-portrait${large?' large':''}" title="${safe}" aria-label="Portrait de ${safe}">
+  <svg viewBox="0 0 100 100" role="img" aria-hidden="true">
+    <rect width="100" height="100" rx="20" fill="${bg}"/>
+    <circle cx="50" cy="48" r="29" fill="${skin}"/>
+    ${hairLong ? `<path d="M21 50 Q14 18 50 13 Q87 18 79 57 L70 47 Q71 28 50 27 Q28 28 27 51Z" fill="${hair}"/>` : `<path d="M21 48 Q20 18 50 13 Q80 18 79 48 L70 38 Q65 25 50 25 Q34 25 29 39Z" fill="${hair}"/>`}
+    <path d="M31 49 Q37 44 43 49 M57 49 Q63 44 69 49" fill="none" stroke="#3a251c" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="39" cy="52" r="3" fill="#111820"/><circle cx="61" cy="52" r="3" fill="#111820"/>
+    ${glasses ? `<rect x="29" y="46" width="20" height="14" rx="5" fill="none" stroke="#111820" stroke-width="2"/><rect x="51" y="46" width="20" height="14" rx="5" fill="none" stroke="#111820" stroke-width="2"/><path d="M49 50h2" stroke="#111820" stroke-width="2"/>` : ''}
+    ${beard ? `<path d="M35 62 Q50 75 65 62 L62 73 Q50 82 38 73Z" fill="${hair}" opacity=".85"/>` : ''}
+    <path d="M43 65 Q50 ${mouth===0?'69':mouth===1?'67':'71'} 57 65" fill="none" stroke="#8f4c48" stroke-width="2.5" stroke-linecap="round"/>
+    <path d="M28 78 Q50 67 72 78 L82 100 H18Z" fill="${shirt}"/>
+    <circle cx="50" cy="82" r="3" fill="rgba(255,255,255,.22)"/>
+  </svg></span>`;
 }
+function avatarSVG(name) { return portraitSVG(name); }
 
 // ---------- SUSPECTS ----------
 function renderSuspectsAndVoteList(players) {
@@ -736,6 +761,22 @@ function renderSuspectsAndVoteList(players) {
   });
   if (state.phase === 'accusation') renderAccusationChecklist(players);
 }
+
+function renderInvestigationGuide(step=0) {
+  const el=document.getElementById('investigation-guide'); if(!el) return;
+  const steps=[
+    ['🎯','Objectif actuel','Commence par lire les indices révélés et repère un suspect qui a à la fois un motif et une opportunité.'],
+    ['📍','Objectif actuel','Clique sur un lieu de la carte pour vérifier les déplacements et compare-les aux alibis.'],
+    ['🕵️','Objectif actuel','Interroge un suspect sur son alibi ou son accès au lieu du crime. Une réponse peut révéler une contradiction.'],
+    ['🧩','Objectif actuel','Sélectionne 2 éléments dans ton tableau puis utilise « Croiser » pour formuler une hypothèse.'],
+    ['⚖️','Dernière étape','Avant de voter, vérifie toujours : motif + opportunité + élément qui relie le suspect au crime.']
+  ];
+  const [icon,title,text]=steps[Math.min(step,steps.length-1)];
+  el.style.display='block';
+  el.innerHTML=`<div class="objective-card"><div class="objective-icon">${icon}</div><div><strong>${title}</strong><span>${text}</span></div><button id="guide-next" class="secondary-btn">Compris ✓</button></div>`;
+  document.getElementById('guide-next')?.addEventListener('click',()=>{ const next=Math.min(step+1,steps.length-1); localStorage.setItem('mystery_guide_step',String(next)); renderInvestigationGuide(next); });
+}
+
 
 // ---------- ACCUSATION FINALE (manche unique, libre, sans élimination) ----------
 function renderAccusationChecklist(players) {
@@ -1102,6 +1143,19 @@ const InvestigationUI = (() => {
       const result=document.getElementById('combination-result'); if(!result)return;
       result.style.display='block'; result.innerHTML=`🔗 <strong>Déduction :</strong> ${picks.map(p=>esc(p.title)).join(' + ')} → ces éléments peuvent être reliés. Vérifie cette hypothèse avec les prochains indices et les alibis.`;
       addEvidence('DÉDUCTION','Hypothèse créée',picks.map(p=>p.title).join(' + ')); selected.clear();
+    });
+    document.getElementById('btn-get-hint')?.addEventListener('click',()=>{
+      const cluesNow=evidence.filter(e=>e.type==='Indice' || e.type==='Interrogatoire');
+      const hints=[
+        'Regarde d’abord les alibis qui couvrent précisément l’heure du crime.',
+        'Un motif seul ne suffit pas : cherche une opportunité réelle d’accéder au lieu.',
+        'Utilise la carte pour vérifier si un déplacement annoncé est plausible.',
+        'Compare les réponses d’interrogatoire aux indices déjà révélés.',
+        'Si tu hésites entre deux suspects, privilégie celui dont l’alibi est contredit par un élément indépendant.'
+      ];
+      const idx=Math.min(cluesNow.length, hints.length-1);
+      toast(`💡 Conseil : ${hints[idx]}`);
+      renderInvestigationGuide(Math.min(idx+1,4));
     });
     document.getElementById('btn-interrogate')?.addEventListener('click',()=>{
       const t=document.getElementById('interrogation-target'),q=document.getElementById('interrogation-question');

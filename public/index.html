@@ -108,6 +108,8 @@
 
     <div id="my-dossier-panel" class="dossier-box confidential" style="display:none"></div>
 
+    <div id="investigation-guide" class="guide-card" style="display:none"></div>
+
     <div class="grid">
       <div class="col">
         <h3>Chronologie</h3>
@@ -129,7 +131,8 @@
       </div>
 
       <div class="col">
-        <h3>🗺️ Carte interactive</h3>
+        <h3>🗺️ Carte de l’enquête</h3>
+        <div class="map-help">👆 <span><strong>Comment ça marche ?</strong> Clique simplement sur un lieu pour voir ce qu’on sait sur cet endroit. La carte sert à croiser les déplacements et les alibis — tu n’as rien à chercher pixel par pixel.</span></div>
         <div id="interactive-map" class="interactive-map" aria-label="Carte interactive des lieux"></div>
         <div id="map-detail" class="map-detail"><strong>Sélectionne un lieu</strong><span>Explore les endroits de l'affaire pour croiser les alibis.</span></div>
 
@@ -147,7 +150,8 @@
           <button id="btn-add-note" class="secondary-btn">+ Note</button>
         </div>
         <div id="evidence-board" class="evidence-board"></div>
-        <button id="btn-combine-evidence" class="secondary-btn">🔗 Combiner les éléments sélectionnés</button>
+        <button id="btn-combine-evidence" class="secondary-btn">🔗 Croiser les éléments sélectionnés</button>
+        <button id="btn-get-hint" class="secondary-btn hint-button">💡 Besoin d’aide ?</button>
         <div id="combination-result" class="combination-result"></div>
 
         <h3>Discussion</h3>
