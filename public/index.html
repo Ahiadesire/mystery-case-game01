@@ -1,261 +1,181 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="theme-color" content="#0b0d12" />
-<title>Le Dernier Dîner — Jeu de mystère</title>
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Special+Elite&family=Bebas+Neue&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="style.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#071018">
+<title>Le Dernier Dîner — Enquête</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
+<div id="ambient"></div>
+<div id="toast" role="status" aria-live="polite"></div>
+<div id="connection-banner" class="connection-banner" aria-live="polite"><span class="connection-dot"></span><span id="connection-text">Connexion en direct</span></div>
 
-<div class="grain-overlay" aria-hidden="true"></div>
-<div class="ambient-particles" id="ambient-particles" aria-hidden="true"></div>
-<canvas id="confetti-canvas" aria-hidden="true"></canvas>
-
-<button id="btn-sound-toggle" class="sound-toggle" title="Activer / couper les sons" aria-label="Activer ou couper les sons">🔈</button>
-
-<div id="app">
-
-  <!-- ÉCRAN : ACCUEIL -->
+<main id="app">
   <section id="screen-home" class="screen active">
-    <div class="case-file-mark" aria-hidden="true">DOSSIER N° 01</div>
-    <div class="crest">
-      <svg viewBox="0 0 100 100" class="crest-icon" aria-hidden="true">
-        <circle cx="40" cy="40" r="24" fill="none" stroke="currentColor" stroke-width="4"/>
-        <line x1="58" y1="58" x2="82" y2="82" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
-      </svg>
+    <div class="home-shell">
+      <div class="brand-mark">🔎</div>
+      <span class="eyebrow">JEU D'ENQUÊTE MULTIJOUEUR</span>
+      <h1>Le Dernier Dîner</h1>
+      <p class="lead">Une affaire. Des secrets. Des alibis. À vous de découvrir ce qui s'est réellement passé.</p>
+      <div class="home-grid">
+        <article class="panel">
+          <span class="label">CRÉER</span>
+          <h2>Nouvelle salle</h2>
+          <input id="create-name" maxlength="20" placeholder="Ton nom">
+          <label class="check"><input id="create-gm" type="checkbox"> Je suis Game Master</label>
+          <button id="btn-create" class="primary">Créer la salle</button>
+        </article>
+        <article class="panel">
+          <span class="label">REJOINDRE</span>
+          <h2>Entrer dans une enquête</h2>
+          <input id="join-name" maxlength="20" placeholder="Ton nom">
+          <input id="join-code" maxlength="5" placeholder="Code de salle" style="text-transform:uppercase">
+          <button id="btn-join" class="primary">Rejoindre</button>
+        </article>
+      </div>
+      <p id="home-error" class="error"></p>
     </div>
-    <h1 class="title">Le Dernier Dîner</h1>
-    <p class="subtitle">Un jeu de mystère, d'enquête et de bluff — 4 à 12 joueurs</p>
-    <div class="title-divider" aria-hidden="true"><span></span>◆<span></span></div>
-
-    <div class="card wax-card">
-      <span class="card-tab">ENTRÉE EN SCÈNE</span>
-      <h2>Créer une partie</h2>
-      <input id="create-name" placeholder="Ton nom" maxlength="20" />
-      <label class="checkbox-row">
-        <input type="checkbox" id="create-gm" style="width:auto" />
-        Je suis Game Master (je ne joue pas, je contrôle la partie)
-      </label>
-      <button id="btn-create">Créer une partie</button>
-    </div>
-
-    <div class="card wax-card">
-      <span class="card-tab">REJOINDRE L'ENQUÊTE</span>
-      <h2>Rejoindre une partie</h2>
-      <input id="join-name" placeholder="Ton nom" maxlength="20" />
-      <input id="join-code" placeholder="Code de salle (ex : A7K4P)" maxlength="5" style="text-transform:uppercase" />
-      <button id="btn-join">Rejoindre</button>
-    </div>
-
-    <p id="home-error" class="error"></p>
   </section>
 
-  <!-- ÉCRAN : LOBBY -->
   <section id="screen-lobby" class="screen">
-    <div class="section-eyebrow">SALLE D'ATTENTE</div>
-    <h2>Salle : <span id="lobby-code" class="code-badge"></span></h2><p id="case-mode-badge" class="case-mode-badge">🎭 Affaire sélectionnée</p>
-    <p id="lobby-count"></p><p id="adaptive-info" class="hint"></p><div id="lobby-readiness" class="readiness-bar"></div>
-
-    <div id="scenario-picker" class="card" style="display:none">
-      <h2>Scénario</h2>
-      <div id="scenario-options"></div>
+    <div class="topbar">
+      <div><span class="eyebrow">SALLE</span><strong id="lobby-code" class="room-code"></strong></div>
+      <div id="lobby-count" class="pill"></div>
     </div>
-    <p id="scenario-readonly" class="hint"></p>
-
-    <ul id="lobby-players" class="player-list"></ul>
-    <button id="btn-start" style="display:none">Lancer la partie</button>
-    <p id="lobby-hint" class="hint"></p>
+    <div class="lobby-layout">
+      <article class="panel case-card">
+        <div class="case-kicker">🎲 AFFAIRE TIRÉE AU SORT</div>
+        <h1 id="case-title">—</h1>
+        <div class="case-meta"><span id="case-difficulty"></span><span id="case-pool"></span></div>
+        <p id="case-description">Le serveur choisit automatiquement une affaire. Aucune longue liste de scénarios à parcourir.</p>
+        <button id="btn-reroll-scenario" class="secondary" style="display:none">🎲 Changer d'affaire</button>
+        <p id="scenario-note" class="muted"></p>
+      </article>
+      <article class="panel">
+        <div class="panel-head"><div><span class="label">JOUEURS</span><h2>Dans la salle</h2></div><span id="lobby-readiness" class="muted"></span></div>
+        <ul id="lobby-players" class="player-list"></ul>
+        <button id="btn-start" class="primary" style="display:none">Lancer l'enquête</button>
+        <p id="lobby-hint" class="muted"></p>
+      </article>
+    </div>
   </section>
 
-  <!-- ÉCRAN : INTRODUCTION / DOSSIER PRIVÉ -->
   <section id="screen-dossier" class="screen">
-    <div class="phase-hero dossier-hero">
-      <div><span class="eyebrow">PHASE SECRÈTE</span><h2>Votre identité est confidentielle</h2><p id="dossier-phase-tip">Lisez votre dossier, retenez vos informations et préparez votre stratégie.</p></div>
-      <div class="hero-timer"><span class="timer-label-small">TEMPS</span> ⏱ <span id="dossier-timer-label">01:30</span></div>
-    </div>
-    <div class="intro-box">
-      <span class="corner-ornament tl" aria-hidden="true"></span><span class="corner-ornament tr" aria-hidden="true"></span>
-      <h2>Le Dernier Dîner</h2>
-      <p id="story-text"></p>
-    </div>
-    <div class="dossier-box confidential">
-      <div class="dossier-actions"><button id="btn-dossier-ready" class="secondary-btn">✓ J'ai fini de lire</button></div>
-      <h3>DOSSIER CONFIDENTIEL</h3>
+    <header class="phase-head">
+      <div><span class="eyebrow">PHASE 1 · SECRET</span><h1>Ton rôle dans l'affaire</h1><p>Lis attentivement. Ce que tu vois ici ne sera jamais révélé aux autres.</p></div>
+      <div class="timer"><span>⏱</span><strong id="dossier-timer">—</strong></div>
+    </header>
+    <article class="story-card"><span class="label">LE CONTEXTE</span><p id="story-text"></p></article>
+    <article class="panel dossier">
+      <div class="panel-head"><h2>🔐 Dossier confidentiel</h2><button id="btn-dossier-ready" class="secondary">J'ai fini de lire</button></div>
       <div id="dossier-content"></div>
-    </div>
+    </article>
   </section>
 
-  <!-- ÉCRAN : ENQUÊTE -->
   <section id="screen-investigation" class="screen">
-    <div class="phase-progress"><div id="phase-progress-fill"></div></div>
-    <div class="tension-wrap" aria-label="Jauge de tension">
-      <div class="tension-meta"><span>JAUGE DE TENSION</span><strong id="tension-label">CALME</strong></div>
-      <div class="tension-track"><div id="tension-fill"></div></div>
-    </div>
-    <div class="live-strip">
-      <div><span class="live-dot"></span> EN DIRECT</div><div id="live-phase-status">Enquête en cours</div><div>🔎 <span id="clue-counter">0 / 0</span> indices</div><div>👥 <span id="player-counter">0</span></div>
-    </div>
-    <header class="game-header">
-      <div>Phase : <span id="phase-label"></span></div>
-      <div>⏱ <span id="timer-label"></span></div>
-      <button id="btn-toggle-dossier" class="header-btn">Mon dossier</button>
+    <header class="investigation-head">
+      <div>
+        <span class="eyebrow">ENQUÊTE EN DIRECT</span>
+        <h1 id="phase-title">Enquête</h1>
+        <div class="live-meta"><span class="live-dot"></span><span id="live-phase-status">Sous pression</span><span>•</span><span id="player-counter">0</span> joueurs</div>
+        <div class="phase-steps" aria-label="Progression"><span class="active">Dossier</span><i>›</i><span class="active">Enquête</span><i>›</i><span>Vérité</span></div>
+      </div>
+      <div class="timer"><span>⏱</span><strong id="timer-label">—</strong></div>
     </header>
+    <div class="pressure"><div class="pressure-bar"><span id="pressure-fill"></span></div><span id="pressure-label">CALME</span></div>
 
-    <div id="my-dossier-panel" class="dossier-box confidential" style="display:none"></div>
+    <div class="investigation-layout">
+      <div class="investigation-main">
+        <article class="panel compact dossier-mini">
+          <div class="panel-head"><h3>🔐 Mon dossier</h3><button id="btn-toggle-dossier" class="text-btn">Afficher</button></div>
+          <div id="my-dossier-panel" class="hidden"></div>
+        </article>
 
-    <div id="investigation-guide" class="guide-card" style="display:none"></div>
+        <article class="panel">
+          <div class="panel-head"><div><span class="label">PREUVES</span><h2>Indices découverts</h2></div><span id="clue-counter" class="pill">0 / 0</span></div>
+          <div id="clues-list" class="clues"></div>
+          <div id="empty-clues" class="empty">L'enquête commence. Le premier indice arrivera bientôt…</div>
+        </article>
 
-    <div class="grid">
-      <div class="col">
-        <h3>Chronologie</h3>
-        <ul id="timeline-list" class="list-box"></ul>
-
-        <h3>Lieux</h3>
-        <ul id="locations-list" class="list-box"></ul>
-
-        <h3>Questions suggérées</h3>
-        <ul id="questions-list" class="list-box"></ul>
-      </div>
-
-      <div class="col">
-        <h3>Indices révélés <span id="clue-new-badge" class="new-badge" style="display:none">NOUVEAU</span></h3>
-        <ul id="clues-list" class="list-box"></ul>
-
-        <h3>Suspects</h3><p class="hint">Seuls les joueurs de cette partie apparaissent ici.</p>
-        <ul id="suspects-list" class="player-list"></ul>
-      </div>
-
-      <div class="col">
-        <h3>🗺️ Carte de l’enquête</h3>
-        <div class="map-help">👆 <span><strong>Comment ça marche ?</strong> Clique simplement sur un lieu pour voir ce qu’on sait sur cet endroit. La carte sert à croiser les déplacements et les alibis — tu n’as rien à chercher pixel par pixel.</span></div>
-        <div id="interactive-map" class="interactive-map" aria-label="Carte interactive des lieux"></div>
-        <div id="map-detail" class="map-detail"><strong>Sélectionne un lieu</strong><span>Explore les endroits de l'affaire pour croiser les alibis.</span></div>
-
-        <h3>🕵️ Interrogatoire</h3>
-        <div class="interrogation-box">
-          <select id="interrogation-target"><option value="">Choisir un suspect…</option></select>
-          <select id="interrogation-question"><option value="">Choisir une question…</option></select>
-          <button id="btn-interrogate" class="secondary-btn">Interroger</button>
-          <div id="interrogation-answer" class="interrogation-answer">Les réponses seront ajoutées ici.</div>
-        </div>
-
-        <h3>🧩 Tableau d'enquête</h3>
-        <div class="evidence-board-tools">
-          <input id="investigation-note" placeholder="Ajouter une note personnelle…" maxlength="180" />
-          <button id="btn-add-note" class="secondary-btn">+ Note</button>
-        </div>
-        <div id="evidence-board" class="evidence-board"></div>
-        <button id="btn-combine-evidence" class="secondary-btn">🔗 Croiser les éléments sélectionnés</button>
-        <button id="btn-get-hint" class="secondary-btn hint-button">💡 Besoin d’aide ?</button>
-        <div id="combination-result" class="combination-result"></div>
-
-        <h3>Discussion</h3>
-        <div id="chat-log" class="chat-log"></div>
-        <div id="quick-chat" class="quick-chat"><button data-msg="J'ai un doute sur cet alibi.">💭 Doute</button><button data-msg="Quelqu'un peut confirmer cette information ?">❓ Question</button><button data-msg="J'ai trouvé une contradiction.">⚠️ Contradiction</button></div>
-        <div class="chat-input-row">
-          <input id="chat-input" placeholder="Écrire un message..." maxlength="500" />
-          <button id="btn-send-chat">Envoyer</button>
-        </div>
-
-        <details class="accusation-box">
-          <summary>Faire une accusation formelle (bonus, sans conséquence)</summary>
-          <input id="acc-suspect" placeholder="Nom du suspect" />
-          <input id="acc-motif" placeholder="Quel est son motif ?" />
-          <input id="acc-opportunite" placeholder="Comment accédait-il au lieu du crime ?" />
-          <input id="acc-indice" placeholder="Quel indice soutient l'accusation ?" />
-          <button id="btn-accuse">Publier l'accusation</button>
+        <details class="panel timeline-panel">
+          <summary><span><span class="label">CONTEXTE</span><strong>Chronologie</strong></span><span>Voir</span></summary>
+          <div id="timeline-list" class="timeline"></div>
         </details>
-
-        <div class="confidence-box">
-          <div class="confidence-head">
-            <div><span class="eyebrow">OPTIONNEL · SECRET</span><h4>🕯️ Vote de confiance</h4></div>
-            <span id="confidence-status" class="hint">À mi-parcours : qui te semble le plus suspect ?</span>
-          </div>
-          <div id="confidence-list" class="confidence-list"></div>
-          <button id="btn-confidence" class="secondary-btn">Enregistrer mon intuition</button>
-        </div>
-
-        <div id="guilty-chat-box" class="guilty-chat-box" style="display:none">
-          <h4>Canal privé — coupables uniquement</h4>
-          <div id="guilty-chat-log" class="chat-log"></div>
-          <div class="chat-input-row">
-            <input id="guilty-chat-input" placeholder="Message aux complices..." maxlength="500" />
-            <button id="btn-send-guilty-chat">Envoyer</button>
-          </div>
-        </div>
       </div>
-    </div>
 
-    <button id="btn-advance-phase" class="advance-btn" style="display:none">⚡ Passer à la phase suivante</button>
+      <aside class="investigation-side">
+        <article class="panel">
+          <div class="panel-head"><div><span class="label">PERSONNES PRÉSENTES</span><h2>Suspects</h2></div></div>
+          <ul id="suspects-list" class="suspects"></ul>
+        </article>
+
+        <article class="panel chat-panel">
+          <div class="panel-head"><div><span class="label">DISCUSSION</span><h2>Salon d'enquête</h2></div><span class="chat-live">EN DIRECT</span></div>
+          <div id="chat-log" class="chat-log"></div>
+          <div id="reply-preview" class="reply-preview hidden"><div><strong id="reply-name"></strong><span id="reply-text"></span></div><button id="cancel-reply">×</button></div>
+          <div class="chat-compose">
+            <input id="chat-input" maxlength="500" placeholder="Écrire un message…">
+            <button id="btn-send-chat" class="send">➤</button>
+          </div>
+          <p class="chat-hint">Appuie sur « Répondre » sous un message pour garder le fil.</p>
+        </article>
+
+        <article id="guilty-chat-box" class="panel guilty-panel" style="display:none">
+          <div class="panel-head"><h3>🤫 Canal des complices</h3><span>PRIVÉ</span></div>
+          <div id="guilty-chat-log" class="chat-log"></div>
+          <div class="chat-compose"><input id="guilty-chat-input" maxlength="500" placeholder="Message aux complices…"><button id="btn-send-guilty-chat" class="send">➤</button></div>
+        </article>
+      </aside>
+    </div>
 
     <div id="gm-panel" class="gm-panel" style="display:none">
-      <h3>Panneau Game Master</h3>
-      <div class="gm-buttons">
-        <button id="gm-btn-clue">🔎 Révéler un indice</button>
-        <button id="gm-btn-bonus-clue" class="bonus-btn">⚡ Indice bonus · −60 s</button>
-        <button id="gm-btn-pause">⏸ Pause</button>
-        <button id="gm-btn-resume">▶ Reprendre</button>
-        <button id="gm-btn-solution">Voir la solution</button>
-        <button id="gm-btn-restart" class="danger">Redémarrer la partie</button>
+      <div><span class="label">CONTRÔLE</span><h3>Game Master</h3></div>
+      <div class="gm-actions">
+        <button id="gm-btn-clue">Révéler un indice</button>
+        <button id="gm-btn-bonus-clue">Indice bonus · −60 s</button>
+        <button id="gm-btn-pause">Pause</button>
+        <button id="gm-btn-resume">Reprendre</button>
+        <button id="gm-btn-solution">Solution</button>
+        <button id="gm-btn-restart" class="danger">Redémarrer</button>
       </div>
       <pre id="gm-solution-view"></pre>
     </div>
+
+    <button id="btn-advance-phase" class="primary controller-btn" style="display:none">Terminer l'enquête</button>
   </section>
 
-  <!-- ÉCRAN : ACCUSATION FINALE (manche unique, sans élimination) -->
-  <section id="screen-vote" class="screen">
-    <div class="vote-hero">
-      <div><span class="eyebrow">DERNIÈRE LIGNE DROITE</span><h2>Qui est coupable ?</h2><p id="vote-progress"></p></div>
-      <div class="vote-timer">⏱ <span id="vote-timer-label">02:00</span></div>
-    </div>
-    <p class="hint accusation-warning">⚖️ Coche un ou plusieurs suspects (ou aucun). Ton verdict est <strong>définitif</strong> : impossible de le modifier une fois envoyé.</p>
-    <ul id="vote-list" class="accusation-list"></ul>
-    <button id="btn-submit-accusation" class="advance-btn">🔏 Sceller mon accusation</button>
-    <p id="vote-result"></p>
-  </section>
-
-  <!-- ÉCRAN : RÉVÉLATION -->
   <section id="screen-reveal" class="screen">
-    <div class="section-eyebrow">L'AFFAIRE EST CLASSÉE</div>
-    <h2>Révélation finale</h2>
-    <div class="final-verdict-banner" id="final-verdict-banner"></div>
-    <div id="reveal-content"></div>
-    <div id="final-reconstruction" class="final-reconstruction"></div>
-    <div id="final-awards" class="final-awards"></div>
-    <div class="replay-actions"><button id="btn-replay" style="display:none">🔄 Rejouer la même affaire</button><button id="btn-new-case" class="secondary-btn" style="display:none">🎲 Nouvelle affaire surprise</button></div>
+    <div class="reveal-hero"><span class="eyebrow">AFFAIRE RÉSOLUE</span><h1>La vérité est révélée.</h1><p id="reveal-intro"></p></div>
+    <article id="reveal-content" class="panel"></article>
+    <div class="replay-actions"><button id="btn-new-case" class="primary" style="display:none">🎲 Nouvelle affaire</button></div>
   </section>
+</main>
 
-  <div id="episode-modal" class="episode-modal" style="display:none" role="dialog" aria-modal="true" aria-labelledby="episode-title">
-    <div class="episode-card">
-      <button id="episode-close" class="episode-close" aria-label="Fermer">×</button>
-      <span class="eyebrow">RAPPEL POUR LES RETARDATAIRES</span>
-      <h2 id="episode-title">Épisode précédent</h2>
-      <p id="episode-message" class="episode-message"></p>
-      <div class="episode-summary-grid">
-        <div><span>Affaire</span><strong id="episode-case"></strong></div>
-        <div><span>Phase</span><strong id="episode-phase"></strong></div>
-        <div><span>Victime</span><strong id="episode-victim"></strong></div>
-        <div><span>Indices</span><strong id="episode-clues"></strong></div>
-      </div>
-      <div id="episode-clues-list" class="episode-clues"></div>
-      <button id="episode-close-main" class="advance-btn">Reprendre l’enquête</button>
-    </div>
+<div id="episode-modal" class="modal hidden">
+  <div class="modal-card">
+    <button id="episode-close" class="modal-close">×</button>
+    <span class="eyebrow">RÉCAP EXPRESS</span>
+    <h2 id="episode-title">Ce qui s'est passé</h2>
+    <p id="episode-message"></p>
+    <div class="recap-grid"><div><span>Affaire</span><strong id="episode-case"></strong></div><div><span>Phase</span><strong id="episode-phase"></strong></div><div><span>Victime</span><strong id="episode-victim"></strong></div><div><span>Indices</span><strong id="episode-clues"></strong></div></div>
+    <div id="episode-clues-list"></div>
+    <button id="episode-close-main" class="primary">Reprendre</button>
   </div>
+</div>
 
-  <div id="toast" role="status" aria-live="polite"></div>
-  <div id="clue-announce" class="clue-announce" role="status" aria-live="polite" aria-hidden="true">
-    <div class="clue-announce-card">
-      <span class="clue-announce-icon">🔎</span>
-      <div class="clue-announce-text">
-        <span class="clue-announce-kicker" id="clue-announce-kicker">Nouvel indice dévoilé</span>
-        <span class="clue-announce-title" id="clue-announce-title"></span>
-      </div>
-    </div>
+<div id="interrogate-modal" class="modal hidden">
+  <div class="modal-card small-modal">
+    <button id="interrogate-close" class="modal-close">×</button>
+    <span class="eyebrow">INTERROGATOIRE</span>
+    <h2 id="interrogate-title">Interroger le suspect</h2>
+    <p class="muted">Choisis une question. Les réponses peuvent contenir des hésitations ou des détours.</p>
+    <div id="interrogate-questions" class="question-list"></div>
+    <div id="interrogate-answer" class="interrogate-answer hidden"></div>
   </div>
 </div>
 
