@@ -22,6 +22,10 @@
       <span class="eyebrow">JEU D'ENQUÊTE MULTIJOUEUR</span>
       <h1>Le Dernier Dîner</h1>
       <p class="lead">Une affaire. Des secrets. Des alibis. À vous de découvrir ce qui s'est réellement passé.</p>
+      <div class="home-toolbar">
+        <button id="btn-rules" class="text-btn" type="button">📖 Règles du jeu</button>
+        <button id="btn-sound" class="text-btn" type="button" aria-pressed="false">🔔 Sons activés</button>
+      </div>
       <div class="home-grid">
         <article class="panel">
           <span class="label">CRÉER</span>
@@ -44,7 +48,7 @@
 
   <section id="screen-lobby" class="screen">
     <div class="topbar">
-      <div><span class="eyebrow">SALLE</span><strong id="lobby-code" class="room-code"></strong></div>
+      <div><span class="eyebrow">SALLE</span><strong id="lobby-code" class="room-code"></strong><button id="btn-copy-code" class="text-btn copy-code-btn" type="button" title="Copier le code">⧉ Copier</button></div>
       <div id="lobby-count" class="pill"></div>
     </div>
     <div class="lobby-layout">
@@ -74,6 +78,7 @@
     <article class="panel dossier">
       <div class="panel-head"><h2>🔐 Dossier confidentiel</h2><button id="btn-dossier-ready" class="secondary">J'ai fini de lire</button></div>
       <div id="dossier-content"></div>
+      <p id="dossier-readiness" class="muted readiness-note"></p>
     </article>
   </section>
 
@@ -102,10 +107,10 @@
           <div id="empty-clues" class="empty">L'enquête commence. Le premier indice arrivera bientôt…</div>
         </article>
 
-        <details class="panel timeline-panel">
-          <summary><span><span class="label">CONTEXTE</span><strong>Chronologie</strong></span><span>Voir</span></summary>
+        <article class="panel timeline-panel">
+          <div class="panel-head"><div><span class="label">CONTEXTE</span><h2>Chronologie</h2></div></div>
           <div id="timeline-list" class="timeline"></div>
-        </details>
+        </article>
       </div>
 
       <aside class="investigation-side">
@@ -129,6 +134,14 @@
           <div class="panel-head"><h3>🤫 Canal des complices</h3><span>PRIVÉ</span></div>
           <div id="guilty-chat-log" class="chat-log"></div>
           <div class="chat-compose"><input id="guilty-chat-input" maxlength="500" placeholder="Message aux complices…"><button id="btn-send-guilty-chat" class="send">➤</button></div>
+        </article>
+
+        <article id="vote-panel" class="panel vote-panel" style="display:none">
+          <div class="panel-head"><div><span class="label">AVANT LA VÉRITÉ</span><h2>Vote final</h2></div><span id="vote-status" class="pill">0 / 0</span></div>
+          <p class="muted">Choisis le suspect que tu penses responsable. Ton vote reste secret jusqu'à la révélation.</p>
+          <div id="vote-list" class="vote-list"></div>
+          <button id="btn-submit-vote" class="primary" disabled>Voter pour ce suspect</button>
+          <p id="vote-note" class="muted"></p>
         </article>
       </aside>
     </div>
@@ -156,6 +169,22 @@
   </section>
 </main>
 
+<div id="rules-modal" class="modal hidden">
+  <div class="modal-card">
+    <button id="rules-close" class="modal-close">×</button>
+    <span class="eyebrow">EN 30 SECONDES</span>
+    <h2>Comment jouer</h2>
+    <div class="rules-list">
+      <div><strong>1. Une affaire tirée au sort</strong><p>4 à 12 joueurs. Chacun incarne un personnage impliqué dans l'affaire — certains sont coupables, la plupart non.</p></div>
+      <div><strong>2. Dossier secret</strong><p>Tu lis seul(e) ton rôle : motif, alibi, secret. Personne d'autre ne le voit.</p></div>
+      <div><strong>3. Enquête en direct</strong><p>Des indices tombent au fil du temps. Discutez, comparez vos versions, repérez les contradictions dans le chat commun.</p></div>
+      <div><strong>4. Vote final</strong><p>Chacun désigne en secret le suspect qu'il pense coupable avant la révélation.</p></div>
+      <div><strong>5. La vérité</strong><p>Les coupables, les votes, le classement et la reconstitution complète de l'affaire sont dévoilés.</p></div>
+    </div>
+    <button id="rules-close-main" class="primary">Compris</button>
+  </div>
+</div>
+
 <div id="episode-modal" class="modal hidden">
   <div class="modal-card">
     <button id="episode-close" class="modal-close">×</button>
@@ -165,17 +194,6 @@
     <div class="recap-grid"><div><span>Affaire</span><strong id="episode-case"></strong></div><div><span>Phase</span><strong id="episode-phase"></strong></div><div><span>Victime</span><strong id="episode-victim"></strong></div><div><span>Indices</span><strong id="episode-clues"></strong></div></div>
     <div id="episode-clues-list"></div>
     <button id="episode-close-main" class="primary">Reprendre</button>
-  </div>
-</div>
-
-<div id="interrogate-modal" class="modal hidden">
-  <div class="modal-card small-modal">
-    <button id="interrogate-close" class="modal-close">×</button>
-    <span class="eyebrow">INTERROGATOIRE</span>
-    <h2 id="interrogate-title">Interroger le suspect</h2>
-    <p class="muted">Choisis une question. Les réponses peuvent contenir des hésitations ou des détours.</p>
-    <div id="interrogate-questions" class="question-list"></div>
-    <div id="interrogate-answer" class="interrogate-answer hidden"></div>
   </div>
 </div>
 

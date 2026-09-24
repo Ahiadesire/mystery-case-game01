@@ -12,6 +12,7 @@ let state = {
   clues: [],
   phaseEndsAt: null,
   bonusClueUsed: false,
+  myVote: null,
   connected: socket.connected
 };
 
@@ -63,15 +64,105 @@ function clearSession() {
   localStorage.removeItem('mystery_session');
 }
 
-function avatar(name) {
+function avatar(name, extraClass = '') {
+  // Petit avatar illustré, déterministe : un même personnage garde toujours le même visage.
   const value = String(name || '?').trim();
-  const parts = value.split(/\s+/).filter(Boolean);
-  const initials = (parts[0]?.[0] || '?') + (parts.length > 1 ? parts[parts.length-1][0] : '');
   let hash = 0;
   for (const c of value) hash = (hash * 31 + c.charCodeAt(0)) >>> 0;
-  const icons = ['🕵️','🎭','🧩','🔐','🗝️','🎩','🕯️','📜'];
-  return `<span class="avatar a${hash % 8}">${esc(initials.toUpperCase())}</span>`;
+  const skins = ['#f2c7a5','#d89b72','#8d5b3f','#f0b98d','#b87552'];
+  const hairs = ['#1b1513','#3b2418','#5b3a22','#22252a','#7b4b2b','#d0a45b'];
+  const shirts = ['#234e5a','#5a354e','#3f5a42','#5a4728','#3c4764','#6a3834'];
+  const skin = skins[hash % skins.length];
+  const hair = hairs[(hash >>> 3) % hairs.length];
+  const shirt = shirts[(hash >>> 6) % shirts.length];
+  const accessory = (hash >>> 9) % 6;
+  const accessories = [
+    '<path d="M12 25h24" stroke="#e5b85c" stroke-width="2"/><circle cx="24" cy="25" r="2.4" fill="#e5b85c"/>',
+    '<path d="M15 17h18" stroke="#55d9e8" stroke-width="2"/><path d="M15 17l-2 5m20-5l2 5" stroke="#55d9e8" stroke-width="2"/>',
+    '<path d="M14 15h20l-2 5H16z" fill="#e5b85c" opacity=".9"/>',
+    '<circle cx="19" cy="21" r="3" fill="none" stroke="#dbe7ea" stroke-width="1.5"/><circle cx="29" cy="21" r="3" fill="none" stroke="#dbe7ea" stroke-width="1.5"/><path d="M22 21h4" stroke="#dbe7ea" stroke-width="1.5"/>',
+    '<path d="M31 19l4 4-4 4" fill="none" stroke="#e35b55" stroke-width="2"/>',
+    '<path d="M16 16h16v4H16z" fill="#dbe7ea" opacity=".8"/>'
+  ];
+  const svg = `<svg class="avatar-svg" viewBox="0 0 48 48" role="img" aria-label="Avatar de ${esc(value)}">
+    <defs><linearGradient id="av${hash}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#183743"/><stop offset="1" stop-color="#09171f"/></linearGradient></defs>
+    <circle cx="24" cy="24" r="23" fill="url(#av${hash})"/>
+    <path d="M9 44c1-9 7-14 15-14s14 5 15 14" fill="${shirt}"/>
+    <ellipse cx="24" cy="21" rx="10" ry="12" fill="${skin}"/>
+    <path d="M14 20c0-9 4-13 10-13s10 4 10 13c-3-4-6-6-10-6s-7 2-10 6z" fill="${hair}"/>
+    <circle cx="20" cy="21" r="1.2" fill="#172127"/><circle cx="28" cy="21" r="1.2" fill="#172127"/>
+    <path d="M21 26c2 1 4 1 6 0" fill="none" stroke="#8d5b3f" stroke-width="1.2" stroke-linecap="round"/>
+    ${accessories[accessory]}
+    <circle cx="24" cy="24" r="22" fill="none" stroke="#315967" stroke-width="1"/>
+  </svg>`;
+  return `<span class="avatar ${extraClass}" data-avatar="${esc(value)}">${svg}</span>`;
 }
+
+/* ---------------- Son (synthétisé, sans fichier externe) ---------------- */
+
+let audioCtx = null;
+state.soundOn = localStorage.getItem('mystery_sound') !== 'off';
+
+function ensureAudioCtx() {
+  if (!state.soundOn) return null;
+  if (!audioCtx) {
+    try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); }
+    catch { return null; }
+  }
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+  return audioCtx;
+}
+
+function playTone(freq = 660, duration = 0.14, when = 0, gain = 0.05) {
+  const ctx = ensureAudioCtx();
+  if (!ctx) return;
+  const osc = ctx.createOscillator();
+  const g = ctx.createGain();
+  osc.type = 'sine';
+  osc.frequency.value = freq;
+  g.gain.value = gain;
+  g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + when + duration);
+  osc.connect(g).connect(ctx.destination);
+  osc.start(ctx.currentTime + when);
+  osc.stop(ctx.currentTime + when + duration + 0.02);
+}
+
+function chimeClue() { playTone(880, 0.12, 0, 0.05); playTone(1180, 0.16, 0.09, 0.045); }
+function chimeChat() { playTone(520, 0.09, 0, 0.03); }
+function chimeReveal() { playTone(440, 0.18, 0, 0.05); playTone(660, 0.22, 0.16, 0.05); playTone(880, 0.3, 0.34, 0.05); }
+
+function setSoundButton() {
+  const btn = $('btn-sound');
+  if (!btn) return;
+  btn.textContent = state.soundOn ? '🔔 Sons activés' : '🔕 Sons coupés';
+  btn.setAttribute('aria-pressed', String(state.soundOn));
+}
+setSoundButton();
+$('btn-sound').onclick = () => {
+  state.soundOn = !state.soundOn;
+  localStorage.setItem('mystery_sound', state.soundOn ? 'on' : 'off');
+  setSoundButton();
+  if (state.soundOn) { ensureAudioCtx(); playTone(700, 0.1); }
+};
+
+/* ---------------- Règles du jeu ---------------- */
+
+$('btn-rules').onclick = () => $('rules-modal').classList.remove('hidden');
+$('rules-close').onclick = () => $('rules-modal').classList.add('hidden');
+$('rules-close-main').onclick = () => $('rules-modal').classList.add('hidden');
+
+/* ---------------- Copier le code de salle ---------------- */
+
+$('btn-copy-code').onclick = async () => {
+  const code = $('lobby-code').textContent.trim();
+  if (!code || code === '—') return;
+  try {
+    await navigator.clipboard.writeText(code);
+    toast('📋 Code copié : ' + code);
+  } catch {
+    toast('Code de salle : ' + code);
+  }
+};
 
 function setConnectionStatus(connected, reconnecting = false) {
   state.connected = connected;
@@ -169,7 +260,7 @@ function renderRoom(room) {
   state.players = room.players || [];
   state.phase = room.phase;
   state.scenarioId = room.scenarioId;
-  document.querySelectorAll('.phase-steps span').forEach((el, i) => el.classList.toggle('active', room.phase === 'enquete' ? i < 2 : room.phase === 'reveal' ? true : i === 0));
+  document.querySelectorAll('.phase-steps span').forEach((el, i) => el.classList.toggle('active', (room.phase === 'enquete' || room.phase === 'vote') ? i < 2 : room.phase === 'reveal' ? true : i === 0));
   state.bonusClueUsed = !!room.bonusClueUsed;
   state.isHost = !!room.players?.find(p => p.id === state.playerId)?.isHost;
 
@@ -215,7 +306,12 @@ function renderRoom(room) {
   }
 
   renderSuspects(room.players);
+  if (room.phase === 'vote') {
+    $('vote-status').textContent = `${room.voteCount || 0} / ${room.voteTotal || room.players.length}`;
+    renderVotePanel();
+  }
 }
+
 
 $('btn-reroll-scenario').onclick = () => {
   const btn = $('btn-reroll-scenario');
@@ -243,12 +339,12 @@ socket.on('room:kicked', () => {
 function route(phase) {
   if (phase === 'lobby') show('screen-lobby');
   else if (phase === 'distribution' || phase === 'dossier') show('screen-dossier');
-  else if (phase === 'enquete') show('screen-investigation');
+  else if (phase === 'enquete' || phase === 'vote') show('screen-investigation');
   else if (phase === 'reveal') show('screen-reveal');
 }
 
 function phaseLabel(phase) {
-  return ({distribution:'Distribution', dossier:'Dossier secret', enquete:'Enquête', reveal:'Révélation'}[phase] || phase);
+  return ({distribution:'Distribution', dossier:'Dossier secret', enquete:'Enquête', vote:'Vote final', reveal:'Révélation'}[phase] || phase);
 }
 
 socket.on('phase:changed', ({ phase, phaseEndsAt, revealedClueCount = 0, activeClueCount = 0 }) => {
@@ -264,11 +360,20 @@ socket.on('phase:changed', ({ phase, phaseEndsAt, revealedClueCount = 0, activeC
     startDossierTimer(phaseEndsAt);
     $('btn-dossier-ready').disabled = false;
     $('btn-dossier-ready').textContent = 'J’ai fini de lire';
+    $('dossier-readiness').textContent = '';
   }
   if (phase === 'enquete') {
     startCountdown(phaseEndsAt);
     updatePressure(phaseEndsAt);
   }
+  if (phase === 'vote') {
+    clearInterval(countdownTimer);
+    startCountdown(phaseEndsAt);
+    state.myVote = null;
+    renderVotePanel();
+  }
+  $('vote-panel').style.display = phase === 'vote' ? 'block' : 'none';
+
   if (phase === 'reveal') {
     clearInterval(countdownTimer);
     $('pressure-fill').style.width = '100%';
@@ -277,8 +382,8 @@ socket.on('phase:changed', ({ phase, phaseEndsAt, revealedClueCount = 0, activeC
 
   const controller = state.isHost || state.isGameMaster;
   const adv = $('btn-advance-phase');
-  adv.style.display = controller && phase === 'enquete' ? 'block' : 'none';
-  adv.textContent = 'Terminer l’enquête → Révéler la vérité';
+  adv.style.display = controller && (phase === 'enquete' || phase === 'vote') ? 'block' : 'none';
+  adv.textContent = phase === 'vote' ? 'Révéler la vérité →' : 'Terminer l’enquête → Passer au vote';
 
   $('gm-panel').style.display = state.isGameMaster ? 'block' : 'none';
   $('gm-btn-bonus-clue').disabled = !!state.bonusClueUsed;
@@ -299,6 +404,7 @@ function startCountdown(endsAt) {
     const left = Math.max(0, Math.round((endsAt - Date.now()) / 1000));
     const pct = Math.max(0, Math.min(100, 100 - (left / Math.max(1, (endsAt - (state.phaseStartedAt || Date.now()))) * 100)));
     updatePressure(endsAt, pct);
+    $('timer-label').classList.toggle('warning', left <= 60 && left > 20);
     $('timer-label').classList.toggle('critical', left <= 20);
     if (left <= 0) clearInterval(countdownTimer);
   };
@@ -310,7 +416,9 @@ function startDossierTimer(endsAt) {
   clearInterval(dossierTimer);
   const tick = () => {
     $('dossier-timer').textContent = formatTime(endsAt);
-    $('dossier-timer').classList.toggle('critical', (endsAt-Date.now()) <= 20000);
+    const left = endsAt - Date.now();
+    $('dossier-timer').classList.toggle('warning', left <= 30000 && left > 10000);
+    $('dossier-timer').classList.toggle('critical', left <= 10000);
   };
   tick();
   dossierTimer = setInterval(tick, 500);
@@ -350,6 +458,12 @@ function renderDossier(d) {
 
 socket.on('dossier:yours', renderDossier);
 
+socket.on('dossier:ready:progress', ({ ready = 0, total = 0 }) => {
+  const el = $('dossier-readiness');
+  if (!el) return;
+  el.textContent = total ? `${ready} / ${total} joueur(s) ont fini de lire leur dossier.` : '';
+});
+
 $('btn-dossier-ready').onclick = () => {
   socket.emit('dossier:ready', {}, res => {
     if (!res.ok) return toast(res.error);
@@ -383,6 +497,13 @@ socket.on('game:sync', data => {
   clearClues();
   (data.revealedClues || []).forEach(c => renderClue(c, false));
   renderChatHistory(data.chatLog || []);
+  state.myVote = data.myVote ?? state.myVote;
+  if (data.room?.phase === 'vote') {
+    state.phaseEndsAt = data.room.phaseEndsAt;
+    state.phaseStartedAt = data.room.phaseStartedAt || Date.now();
+    renderVotePanel();
+    startCountdown(data.room.phaseEndsAt);
+  }
   if (data.room?.phase === 'enquete') {
     state.phaseEndsAt = data.room.phaseEndsAt;
     state.phaseStartedAt = data.room.phaseStartedAt || Date.now();
@@ -415,6 +536,7 @@ function renderClue(clue, animate = true) {
 socket.on('clue:revealed', clue => {
   renderClue(clue, true);
   toast(`🔎 Nouvel indice : ${clue.title}`);
+  chimeClue();
 });
 
 function renderTimeline(items) {
@@ -428,57 +550,56 @@ function renderSuspects(players) {
   (players || []).filter(p => p.characterName).forEach(p => {
     const li = document.createElement('li');
     li.innerHTML = `${avatar(p.characterName)}<div><strong>${esc(p.name)}</strong><small>${esc(p.characterName)}</small></div><span class="${p.connected?'online':'offline'}">${p.connected?'●':'○'}</span>`;
-    if (p.id !== state.playerId && p.connected && state.phase === 'enquete') {
-      const btn = document.createElement('button');
-      btn.className = 'interrogate-btn';
-      btn.textContent = 'Interroger';
-      btn.onclick = () => openInterrogation(p);
-      li.appendChild(btn);
-    }
     list.appendChild(li);
   });
 }
 
-let interrogationTarget = null;
-const interrogationQuestions = [
-  'Où étais-tu au moment des faits ?',
-  'Quelle était ta relation avec la victime ?',
-  'Pourquoi aurais-tu pu lui en vouloir ?'
-];
+/* ---------------- Vote final ---------------- */
 
-function openInterrogation(player) {
-  interrogationTarget = player;
-  $('interrogate-title').textContent = `Interroger ${player.name}`;
-  $('interrogate-answer').classList.add('hidden');
-  $('interrogate-answer').textContent = '';
-  const box = $('interrogate-questions');
-  box.innerHTML = '';
-  interrogationQuestions.forEach((q, index) => {
-    const b = document.createElement('button');
-    b.className = 'secondary question-btn';
-    b.textContent = q;
-    b.onclick = () => askInterrogation(index);
-    box.appendChild(b);
+function renderVotePanel() {
+  const panel = $('vote-panel');
+  if (!panel) return;
+  panel.style.display = state.phase === 'vote' ? 'block' : 'none';
+  if (state.phase !== 'vote') return;
+  const list = $('vote-list');
+  list.innerHTML = '';
+  const players = (state.players || []).filter(p => p.characterName && p.id !== state.playerId);
+  players.forEach(p => {
+    const label = document.createElement('label');
+    label.className = 'vote-option' + (state.myVote === p.id ? ' selected' : '');
+    label.innerHTML = `${avatar(p.characterName)}<span><strong>${esc(p.name)}</strong><small>${esc(p.characterName)}</small></span><input type="radio" name="final-vote" value="${esc(p.id)}" ${state.myVote === p.id ? 'checked' : ''}>`;
+    label.onclick = () => {
+      state.myVote = p.id;
+      list.querySelectorAll('.vote-option').forEach(x => x.classList.remove('selected'));
+      label.classList.add('selected');
+      $('btn-submit-vote').disabled = false;
+    };
+    list.appendChild(label);
   });
-  $('interrogate-modal').classList.remove('hidden');
+  $('btn-submit-vote').disabled = !state.myVote;
+  $('btn-submit-vote').textContent = state.myVote ? '✓ Confirmer mon vote' : 'Voter pour ce suspect';
+  $('vote-note').textContent = state.myVote ? 'Ton choix est prêt. Tu peux encore le modifier avant la fin du vote.' : 'Un seul vote par joueur. Les résultats resteront secrets jusqu’à la révélation.';
 }
 
-function askInterrogation(questionIndex) {
-  if (!interrogationTarget) return;
-  $('interrogate-questions').querySelectorAll('button').forEach(b => b.disabled = true);
-  socket.emit('investigation:interrogate', { targetPlayerId: interrogationTarget.id, questionIndex }, res => {
-    $('interrogate-questions').querySelectorAll('button').forEach(b => b.disabled = false);
-    if (!res.ok) return toast(res.error);
-    const answer = $('interrogate-answer');
-    answer.innerHTML = `<strong>${esc(res.question)}</strong><p>${esc(res.answer)}</p>`;
-    answer.classList.remove('hidden');
-    toast(`🔎 Réponse obtenue de ${res.target}`);
+$('btn-submit-vote').onclick = () => {
+  if (!state.myVote) return;
+  $('btn-submit-vote').disabled = true;
+  socket.emit('vote:submit', { targetPlayerId: state.myVote }, res => {
+    if (!res.ok) {
+      $('btn-submit-vote').disabled = false;
+      return toast(res.error);
+    }
+    $('btn-submit-vote').textContent = '✓ Vote enregistré';
+    $('vote-note').textContent = 'Vote enregistré. Tu peux encore changer ton choix si tu le souhaites.';
+    toast('🗳️ Vote enregistré.');
   });
-}
+};
 
-function closeInterrogation() { $('interrogate-modal').classList.add('hidden'); interrogationTarget = null; }
-$('interrogate-close').onclick = closeInterrogation;
-$('interrogate-modal').addEventListener('click', e => { if (e.target.id === 'interrogate-modal') closeInterrogation(); });
+socket.on('vote:status', ({ submitted = 0, total = 0, myVote = null }) => {
+  if (myVote !== undefined) state.myVote = myVote;
+  $('vote-status').textContent = `${submitted} / ${total}`;
+  if (state.phase === 'vote') renderVotePanel();
+});
 
 /* ---------------- Chat façon WhatsApp ---------------- */
 
@@ -506,7 +627,7 @@ function renderChatMessage(msg) {
     : '';
   wrap.innerHTML = msg.system
     ? `<div class="system-bubble">${esc(msg.text)}</div>`
-    : `<div class="bubble">${reply}<div class="message-author">${esc(msg.name)}</div><div class="message-text">${esc(msg.text)}</div><div class="message-foot"><time>${new Date(msg.ts).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}</time><button class="reply-btn">Répondre</button></div></div>`;
+    : `${msg.playerId === state.playerId ? '' : avatar(msg.name, 'avatar-chat')}<div class="bubble">${reply}<div class="message-author">${esc(msg.name)}</div><div class="message-text">${esc(msg.text)}</div><div class="message-foot"><time>${new Date(msg.ts).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}</time><button class="reply-btn">Répondre</button></div></div>${msg.playerId === state.playerId ? avatar(msg.name, 'avatar-chat') : ''}`;
   wrap.querySelector('.reply-btn')?.addEventListener('click', () => setReply(msg));
   log.appendChild(wrap);
   log.scrollTop = log.scrollHeight;
@@ -529,7 +650,10 @@ $('btn-send-chat').onclick = sendChat;
 $('chat-input').addEventListener('keydown', e => {
   if (e.key === 'Enter') sendChat();
 });
-socket.on('chat:message', renderChatMessage);
+socket.on('chat:message', msg => {
+  renderChatMessage(msg);
+  if (!msg.system && msg.playerId !== state.playerId) chimeChat();
+});
 socket.on('chat:rate_limited', ({message}) => toast(message));
 
 /* ---------------- Canal coupables ---------------- */
@@ -538,7 +662,7 @@ function renderGuilty(msg) {
   const log = $('guilty-chat-log');
   const div = document.createElement('div');
   div.className = `guilty-msg ${msg.playerId === state.playerId ? 'mine' : ''}`;
-  div.innerHTML = `<strong>${esc(msg.name)}</strong><span>${esc(msg.text)}</span>`;
+  div.innerHTML = `${avatar(msg.name, 'avatar-chat')}<div class="guilty-msg-body"><strong>${esc(msg.name)}</strong><span>${esc(msg.text)}</span></div>`;
   log.appendChild(div);
   log.scrollTop = log.scrollHeight;
 }
@@ -601,6 +725,10 @@ socket.on('game:reveal', reveal => {
     <div class="reveal-section"><span class="label">FAUSSES PISTES</span>
       ${(reveal.falseLeadsSummary || []).map(x => `<p>• ${esc(x)}</p>`).join('')}
     </div>
+    <div class="reveal-section"><span class="label">VOTES & CLASSEMENT</span>
+      <div class="vote-results">${(reveal.votes || []).map(v => `<div class="vote-result"><div>${avatar(v.characterName)}<span><strong>${esc(v.playerName)}</strong><small>${esc(v.characterName)}</small></span></div><b>${v.count} vote${v.count>1?'s':''}</b></div>`).join('') || '<p class="muted">Aucun vote enregistré.</p>'}</div>
+      <div class="ranking">${(reveal.scores || []).map((s,i) => `<div class="rank-row"><span class="rank">${i+1}</span>${avatar(s.playerName, 'avatar-rank')}<strong>${esc(s.playerName)}</strong><span>${s.score} pts</span></div>`).join('')}</div>
+    </div>
     <div class="reveal-section"><span class="label">QUI ÉTAIT QUI ?</span>
       <div class="assignment-grid">${(reveal.assignments || []).map(a => `<div>${avatar(a.characterName)}<span><strong>${esc(a.playerName)}</strong><small>${esc(a.characterName)}${a.wasGuilty?' · COUPABLE':''}</small></span></div>`).join('')}</div>
     </div>
@@ -611,6 +739,7 @@ socket.on('game:reveal', reveal => {
   `;
   $('btn-new-case').style.display = (state.isHost || state.isGameMaster) ? 'inline-flex' : 'none';
   show('screen-reveal');
+  chimeReveal();
 });
 
 $('btn-new-case').onclick = () => {
@@ -620,10 +749,12 @@ $('btn-new-case').onclick = () => {
 socket.on('game:restarted', info => {
   state.clues = [];
   state.bonusClueUsed = false;
+  state.myVote = null;
   myDossier = null;
   $('guilty-chat-box').style.display = 'none';
   $('gm-solution-view').textContent = '';
   $('btn-new-case').style.display = 'none';
+  $('dossier-readiness').textContent = '';
   show('screen-lobby');
   if (info?.newCase) toast('🎲 Nouvelle affaire sélectionnée.');
 });

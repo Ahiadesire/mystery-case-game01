@@ -147,7 +147,7 @@ function isController(room, socket) {
 }
 
 const PHASES = [
-  'lobby', 'distribution', 'dossier', 'enquete', 'reveal'
+  'lobby', 'distribution', 'dossier', 'enquete', 'vote', 'reveal'
 ];
 
 // ---------- Utilitaires ----------
@@ -215,7 +215,9 @@ function roomSummary(room) {
     bonusClueUsed: !!room.bonusClueUsed,
     paused: !!room.paused,
     readyPlayerCount: room.readyPlayers ? room.readyPlayers.size : 0,
-    connectedReadyCount: room.readyPlayers ? [...room.readyPlayers].filter((id) => room.players.get(id)?.connected && room.players.get(id)?.socketId).length : 0
+    connectedReadyCount: room.readyPlayers ? [...room.readyPlayers].filter((id) => room.players.get(id)?.connected && room.players.get(id)?.socketId).length : 0,
+    voteCount: room.votes ? room.votes.size : 0,
+    voteTotal: room.activePlayerIds ? room.activePlayerIds.size : 0
   };
 }
 
@@ -343,7 +345,7 @@ function clearTimers(room) {
 }
 
 function phaseLabelServer(phase) {
-  return ({ distribution: 'Distribution des rôles', dossier: 'Dossier secret', enquete: 'Enquête', reveal: 'Révélation' }[phase] || phase);
+  return ({ distribution: 'Distribution des rôles', dossier: 'Dossier secret', enquete: 'Enquête', vote: 'Vote final', reveal: 'Révélation' }[phase] || phase);
 }
 
 function setPhase(room, phase, durationSeconds) {
@@ -388,8 +390,16 @@ function setPhase(room, phase, durationSeconds) {
     room.readyPlayers = new Set();
   }
 
+  if (phase === 'vote') {
+    room.votes = new Map();
+    room.votesFinalized = false;
+  }
+
   broadcastRoomState(room);
   io.to(room.code).emit('phase:changed', { phase, phaseEndsAt: room.phaseEndsAt, revealedClueCount: room.revealedClueCount || 0, activeClueCount: (room.activeClues || []).length });
+  if (phase === 'vote') {
+    io.to(room.code).emit('vote:status', { submitted: 0, total: room.activePlayerIds ? room.activePlayerIds.size : 0 });
+  }
   if (phase !== 'lobby') pushChat(room, { system: true, text: `⏱ Phase : ${phaseLabelServer(phase)}.`, ts: Date.now() });
 
   if (phase === 'dossier') {
@@ -407,6 +417,7 @@ function setPhase(room, phase, durationSeconds) {
   }
 
   if (phase === 'reveal') {
+    finalizeVotes(room);
     io.to(room.code).emit('game:reveal', buildReveal(room));
   }
 }
@@ -506,6 +517,45 @@ function connectedActiveParticipantCount(room) {
   return [...activeParticipantIds(room)].filter(id => { const p=room.players.get(id); return p?.connected && p?.socketId; }).length;
 }
 
+// ---------- VOTE FINAL / SCORE ----------
+function finalizeVotes(room) {
+  if (room.votesFinalized) return;
+  room.votesFinalized = true;
+  const votes = room.votes || new Map();
+  const activeIds = activeParticipantIds(room);
+  const counts = new Map();
+  for (const targetId of votes.values()) counts.set(targetId, (counts.get(targetId) || 0) + 1);
+
+  // Enquêteur : 100 points si son vote désigne un vrai coupable.
+  for (const id of activeIds) {
+    const p = room.players.get(id);
+    if (!p) continue;
+    const targetId = votes.get(id);
+    const targetCharId = targetId ? room.characterAssignments.get(targetId) : null;
+    if (targetCharId && room.guiltyCharacterIds.includes(targetCharId)) addScore(room, id, 100, 'Vote correct');
+  }
+
+  // Coupable : bonus s'il passe sous le radar.
+  for (const [playerId, charId] of room.characterAssignments.entries()) {
+    if (!room.guiltyCharacterIds.includes(charId)) continue;
+    const received = counts.get(playerId) || 0;
+    if (received === 0) addScore(room, playerId, 75, 'Coupable non repéré');
+    else if (received < Math.ceil(activeIds.size / 2)) addScore(room, playerId, 30, 'Coupable presque passé inaperçu');
+  }
+}
+
+function buildVoteResults(room) {
+  const scenario = scenarioOf(room);
+  const activeIds = activeParticipantIds(room);
+  const counts = new Map();
+  for (const targetId of (room.votes || new Map()).values()) counts.set(targetId, (counts.get(targetId) || 0) + 1);
+  return [...activeIds].map(playerId => {
+    const p = room.players.get(playerId);
+    const charId = room.characterAssignments.get(playerId);
+    return { playerId, playerName: p?.name || 'Joueur', characterName: scenario.charById[charId]?.name || '—', count: counts.get(playerId) || 0 };
+  }).sort((a,b) => b.count - a.count || a.playerName.localeCompare(b.playerName));
+}
+
 // ---------- RÉVÉLATION FINALE ----------
 function buildReveal(room) {
   const scenario = scenarioOf(room);
@@ -520,7 +570,8 @@ function buildReveal(room) {
     victim: scenario.story.victim,
     guilty: guiltyDetails,
     falseLeadsSummary: filterFalseLeadsToPresentCharacters(scenario, scenario.solution.falseLeadsSummary, presentNames),
-    scores: [...room.players.values()].map((p) => ({ playerId: p.id, playerName: p.name, score: p.score || 0 })).sort((a,b) => b.score-a.score),
+    scores: [...room.players.values()].map((p) => ({ playerId: p.id, playerName: p.name, score: p.score || 0 })).sort((a,b) => b.score-a.score || a.playerName.localeCompare(b.playerName)),
+    votes: buildVoteResults(room),
     timeline: filterTimelineToPresentCharacters(scenario, scenario.timeline, presentNames),
     closingLine: scenario.solution.closingLine,
     assignments: [...room.characterAssignments.entries()].map(([playerId, charId]) => ({
@@ -592,6 +643,7 @@ function sendGameSync(socket, room, playerId) {
     story: room.characterAssignments.size ? buildStoryIntro(room) : null,
     revealedClues: (room.activeClues || []).slice(0, room.revealedClueCount || 0).map(publicClue),
     chatLog: (room.chatLog || []).slice(-150),
+    myVote: room.votes?.get(playerId) || null,
     dossier: room.characterAssignments.has(playerId) ? buildDossier(room, playerId) : null
   });
 }
@@ -630,7 +682,8 @@ io.on('connection', (socket) => {
         paused: false,
         pauseRemainingMs: null,
         bonusClueUsed: false,
-        interrogationCounts: new Map(),
+        votes: new Map(),
+        votesFinalized: false,
         lastPhaseTransitionAt: 0,
         lastActivityAt: Date.now(),
         chatRate: new Map()
@@ -768,6 +821,7 @@ io.on('connection', (socket) => {
       if (room.phase !== 'lobby' && room.phase !== 'distribution') {
         socket.emit('story:recap', buildEpisodeRecap(room));
         sendGameSync(socket, room, playerId);
+        if (room.phase === 'vote') socket.emit('vote:status', { submitted: room.votes?.size || 0, total: room.activePlayerIds?.size || 0, myVote: room.votes?.get(playerId) || null });
         socket.emit('dossier:yours', buildDossier(room, playerId));
         if (room.guiltyCharacterIds.includes(room.characterAssignments.get(playerId))) {
           socket.join(`${room.code}:guilty`);
@@ -984,7 +1038,8 @@ io.on('connection', (socket) => {
       room.paused = false;
       room.pauseRemainingMs = null;
       room.readyPlayers = new Set();
-      room.interrogationCounts = new Map();
+      room.votes = new Map();
+      room.votesFinalized = false;
       room.chatRate = new Map();
       room.chatLog = [];
       room.guiltyChatLog = [];
@@ -1020,7 +1075,7 @@ io.on('connection', (socket) => {
       for (const p of room.players.values()) { p.alive = true; p.score = 0; p.scoreEvents = []; }
       room.characterAssignments = new Map();
       room.guiltyCharacterIds = []; room.activeClues = []; room.revealedClueCount = 0;
-      room.interrogationCounts = new Map(); room.chatRate = new Map();
+      room.votes = new Map(); room.votesFinalized = false; room.chatRate = new Map();
       room.bonusClueUsed = false;
       room.chatLog = []; room.guiltyChatLog = [];
       room.phase = 'lobby'; room.phaseEndsAt = null; room.paused = false; room.pauseRemainingMs = null;
@@ -1091,40 +1146,25 @@ io.on('connection', (socket) => {
     } catch (err) { cb({ ok: false, error: err.message }); }
   });
 
-  // ---------- INTERROGATOIRE DYNAMIQUE ----------
-  socket.on('investigation:interrogate', ({ targetPlayerId, questionIndex }, cb) => {
+  // ---------- VOTE FINAL ----------
+  socket.on('vote:submit', ({ targetPlayerId }, cb) => {
     try {
       const room = getRoomOrThrow(socket.data.roomCode);
-      if (room.phase !== 'enquete') throw new Error('Les interrogatoires sont disponibles pendant l’enquête.');
-      const asker = room.players.get(socket.data.playerId);
+      if (room.phase !== 'vote') throw new Error('Le vote n’est pas ouvert.');
+      const voter = room.players.get(socket.data.playerId);
       const target = room.players.get(targetPlayerId);
-      if (!asker || !target || !room.activePlayerIds?.has(asker.id) || !room.activePlayerIds?.has(target.id) || !room.characterAssignments.has(target.id)) throw new Error('Suspect introuvable.');
-      if (target.id === asker.id) throw new Error('Tu ne peux pas t’interroger toi-même.');
-      if (!asker.connected || !asker.socketId) throw new Error('Ta connexion n’est plus active.');
-      room.interrogationCounts = room.interrogationCounts || new Map();
-      const now = Date.now();
-      const stat = room.interrogationCounts.get(asker.id) || { count: 0, lastAt: 0 };
-      if (now - stat.lastAt < 8000) throw new Error('Attends quelques secondes avant un nouvel interrogatoire.');
-      if (stat.count >= 10) throw new Error('Tu as atteint la limite de 10 interrogatoires pour cette enquête.');
-      stat.count += 1; stat.lastAt = now; room.interrogationCounts.set(asker.id, stat);
-      const scenario = scenarioOf(room);
-      const char = scenario.charById[room.characterAssignments.get(target.id)];
-      if (!char) throw new Error('Dossier du suspect indisponible.');
-      const questions = Array.isArray(scenario.questions) ? scenario.questions : [];
-      const q = questions[Math.max(0, Math.min(Number(questionIndex) || 0, questions.length - 1))] || 'Où étais-tu au moment des faits ?';
-      const lower = q.toLowerCase();
-      let answer = '';
-      if (lower.includes('où') || lower.includes('alibi') || lower.includes('confirm')) answer = `${target.name} répond : « ${char.private.alibi} »`;
-      else if (lower.includes('relation')) answer = `${target.name} répond : « ${char.public.relation}. »`;
-      else if (lower.includes('raison') || lower.includes('en vouloir') || lower.includes('motif')) {
-        answer = `${target.name} répond : « Je n'avais aucune raison de lui vouloir du mal. »`;
-        if (room.guiltyCharacterIds.includes(char.id) && Math.random() < 0.45) answer = `${target.name} évite la question : « Ce n'est pas le moment de parler de ça. »`;
-      } else if (lower.includes('bureau') || lower.includes('lieu') || lower.includes('accès')) answer = `${target.name} répond : « ${char.private.opportunite} »`;
-      else if (lower.includes('secret') || lower.includes('cach')) answer = `${target.name} hésite : « Tout le monde a ses secrets. »`;
-      else answer = `${target.name} hésite, puis répond : « Je préfère ne pas en parler pour l'instant. »`;
-      if (Math.random() < 0.18) answer += ' ⚠️ Une hésitation inhabituelle est signalée.';
-      addScore(room, asker.id, 2, 'Interrogatoire');
-      cb({ ok: true, target: target.name, question: q, answer });
+      if (!voter || !target || !room.activePlayerIds?.has(voter.id) || !room.activePlayerIds?.has(target.id)) throw new Error('Joueur invalide.');
+      if (!voter.connected || voter.socketId !== socket.id) throw new Error('Ta connexion n’est plus active.');
+      if (target.id === voter.id) throw new Error('Tu ne peux pas voter pour toi-même.');
+      room.votes = room.votes || new Map();
+      room.votes.set(voter.id, target.id);
+      room.lastActivityAt = Date.now();
+      const total = room.activePlayerIds.size;
+      const submitted = [...room.activePlayerIds].filter(id => room.votes.has(id)).length;
+      io.to(room.code).emit('vote:status', { submitted, total });
+      socket.emit('vote:status', { submitted, total, myVote: target.id });
+      broadcastRoomState(room);
+      cb({ ok: true });
     } catch (e) { cb({ ok: false, error: e.message }); }
   });
 

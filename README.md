@@ -60,10 +60,12 @@ DOSSIER SECRET
   ↓
 ENQUÊTE
   ↓
+VOTE FINAL (secret, un suspect par joueur)
+  ↓
 RÉVÉLATION
 ```
 
-Il n'y a plus de phase d'accusation finale, de vote final, ni de formulaire d'accusation. Cela évite la surcharge d'options et laisse la discussion et les indices au centre du jeu.
+L'écran d'enquête reste volontairement épuré (pas de tableau de déduction ni d'aide automatique), mais un vote final secret précède la révélation : chaque joueur désigne le suspect qu'il pense coupable avant que la vérité, les votes et le classement ne soient dévoilés.
 
 ### 3. Enquête plus difficile
 
@@ -121,6 +123,15 @@ Le Game Master peut :
 - mettre en pause/reprendre ;
 - consulter la solution ;
 - redémarrer la salle.
+
+### 7. Confort de jeu
+
+- **Règles en un clin d'œil** : un bouton « 📖 Règles du jeu » sur l'accueil ouvre un rappel des 5 étapes, utile pour accueillir de nouveaux joueurs sans réexpliquer à l'oral.
+- **Code de salle copiable** en un tap dans le lobby.
+- **Sons discrets** (activables/désactivables, générés sans fichier audio externe) pour un nouvel indice, un message reçu et la révélation finale.
+- **Suivi de lecture du dossier** : pendant la phase secrète, chacun voit combien de joueurs ont terminé leur lecture (« 3 / 6 joueurs ont fini de lire »), pour savoir quand l'enquête peut vraiment démarrer.
+- **Alerte progressive du minuteur** : orange à moins d'une minute (30 s en phase dossier), rouge clignotant dans la dernière ligne droite.
+- **Zones sûres sur mobile** : l'interface respecte les encoches et barres système (iOS/Android) via `env(safe-area-inset-*)`.
 
 ## Ajouter un scénario
 
