@@ -13,6 +13,7 @@ const http = require('http');
 const express = require('express');
 const cors = require('cors');
 const { Server } = require('socket.io');
+const QRCode = require('qrcode');
 const { customAlphabet } = require('nanoid');
 
 // ---------- Chargement des scénarios (contenu séparé du moteur) ----------
@@ -107,7 +108,7 @@ const ALLOWED_ORIGIN = process.env.FRONTEND_ORIGIN || '*';
 const HOST = '0.0.0.0'; // écoute sur toutes les interfaces réseau -> accessible à distance une fois déployé/exposé
 
 const app = express();
-app.use(cors());
+app.use(cors({ origin: ALLOWED_ORIGIN === '*' ? true : ALLOWED_ORIGIN, credentials: false }));
 app.disable('x-powered-by');
 app.use((req, res, next) => {
   res.setHeader('X-Content-Type-Options', 'nosniff');
@@ -116,8 +117,26 @@ app.use((req, res, next) => {
   next();
 });
 app.use(express.json({ limit: '64kb' }));
-app.use(express.static(path.join(__dirname, '..', 'public')));
-app.get('/rejoindre/:code', (_req, res) => res.sendFile(path.join(__dirname, '..', 'public', 'index.html')));
+app.use(express.static(path.join(__dirname, '..', 'public'), { etag: true, maxAge: process.env.NODE_ENV === 'production' ? '1h' : 0 }));
+app.get('/healthz', (_req, res) => res.json({ ok: true, service: 'le-dernier-diner', uptime: Math.round(process.uptime()) }));
+app.get('/rejoindre/:code', (req, res) => {
+  const code = String(req.params.code || '').toUpperCase();
+  if (!/^[A-Z0-9]{5}$/.test(code)) return res.status(404).send('Salle invalide.');
+  res.setHeader('Cache-Control', 'no-store, max-age=0');
+  res.sendFile(path.join(__dirname, '..', 'public', 'index.html'));
+});
+app.get('/api/qr/:code', async (req, res) => {
+  try {
+    const code = String(req.params.code || '').toUpperCase();
+    if (!/^[A-Z0-9]{5}$/.test(code)) return res.status(400).json({ ok:false, error:'Code de salle invalide.' });
+    const origin = `${req.protocol}://${req.get('host')}`;
+    const target = `${origin}/rejoindre/${code}`;
+    const png = await QRCode.toBuffer(target, { type:'png', width:520, margin:2, errorCorrectionLevel:'M' });
+    res.setHeader('Content-Type','image/png');
+    res.setHeader('Cache-Control','public, max-age=300');
+    res.send(png);
+  } catch { res.status(500).json({ ok:false, error:'QR indisponible.' }); }
+});
 
 const server = http.createServer(app);
 const io = new Server(server, {
@@ -556,7 +575,7 @@ function finalizeVotes(room) {
     const targetCharId = targetId ? room.characterAssignments.get(targetId) : null;
     if (targetCharId && room.guiltyCharacterIds.includes(targetCharId)) {
       addScore(room, id, 100, 'Vote correct');
-      if (votes.size && [...votes.keys()].indexOf(id) === 0) addScore(room, id, 10, 'Premier vote');
+      if (room.firstVotePlayerId === id) addScore(room, id, 10, 'Premier vote');
     }
   }
 
@@ -899,6 +918,11 @@ io.on('connection', (socket) => {
     try {
       const room = getRoomOrThrow(socket.data.roomCode);
       if (!isController(room, socket)) throw new Error('Seul l\'hôte (ou le Game Master) peut lancer la partie.');
+      if (room.phase !== 'lobby') throw new Error('La partie a déjà été lancée.');
+      if (payload.mode !== undefined) {
+        if (!['classic','quick','hardcore'].includes(payload.mode)) throw new Error('Mode invalide.');
+        room.mode = payload.mode;
+      }
       const n = [...room.players.values()].filter((p) => p.connected && p.socketId).length;
       const compatible = eligibleScenarioIds(n);
       if (!compatible.length) throw new Error('Aucun scénario ne peut accueillir ce nombre de joueurs.');
@@ -1088,6 +1112,7 @@ io.on('connection', (socket) => {
       room.chatRate = new Map();
       room.chatLog = [];
       room.guiltyChatLog = [];
+      room.gameId = makeGameId();
       room.phase = 'lobby';
       room.phaseEndsAt = null;
       io.to(room.code).emit('game:restarted');

@@ -210,3 +210,18 @@ npm start
 ```
 
 En production, définir `FRONTEND_ORIGIN` avec le domaine du front au lieu de laisser `*`.
+
+## V10 — fiabilisation et QR
+- Correction du bug d'affichage sur `/rejoindre/:code` : les assets CSS/JS/manifest sont désormais chargés avec des chemins absolus versionnés.
+- Service Worker V10 avec invalidation du cache précédent et stratégie réseau d'abord pour les navigations.
+- QR généré localement par le serveur via `qrcode` (plus de dépendance au service QR externe).
+- Endpoint `/healthz` pour vérifier rapidement l'état du serveur.
+- Endpoint `/api/qr/:code` pour générer le QR d'une salle.
+- CORS serveur aligné sur `FRONTEND_ORIGIN`.
+- Le mode envoyé au lancement est validé côté serveur.
+- Identifiant de partie renouvelé lors d'un redémarrage.
+- Le bonus de « Premier vote » utilise réellement le premier votant enregistré.
+- Badge « Premier vote » ajouté.
+
+### QR et téléphone
+Le QR code contient une URL web `/rejoindre/ABCDE`. Le scan ouvre donc normalement le navigateur : c'est le comportement attendu d'un jeu web. La page doit ensuite afficher l'interface complète et préremplir le code de salle. Un lancement automatique de l'application installée depuis la caméra iOS nécessite des mécanismes natifs de type Universal Links/App Clip, qui ne sont pas garantis par une simple PWA.

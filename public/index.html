@@ -8,8 +8,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
-<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="/style.css?v=10">
+<link rel="manifest" href="/manifest.json?v=10">
 </head>
 <body>
 <div id="ambient"></div>
@@ -207,8 +207,8 @@
 <div id="profile-modal" class="modal hidden"><div class="modal-card"><button class="modal-close" data-close="profile-modal">×</button><span class="eyebrow">TON PROFIL LOCAL</span><h2>🏆 Statistiques & badges</h2><div id="profile-content"></div></div></div>
 <div id="settings-modal" class="modal hidden"><div class="modal-card"><button class="modal-close" data-close="settings-modal">×</button><span class="eyebrow">CONFORT DE JEU</span><h2>⚙️ Réglages</h2><div class="settings-grid"><label>Contraste<select id="setting-contrast"><option value="normal">Normal</option><option value="high">Élevé</option></select></label><label>Taille du texte<select id="setting-font"><option value="normal">Normale</option><option value="large">Grande</option><option value="xl">Très grande</option></select></label><label>Animations<select id="setting-motion"><option value="on">Activées</option><option value="off">Réduites</option></select></label><label>Mode daltonien<select id="setting-color"><option value="normal">Normal</option><option value="colorblind">Daltonien</option></select></label></div><button id="btn-install" class="secondary">📱 Installer l'application</button></div></div>
 <div id="notes-modal" class="modal hidden"><div class="modal-card"><button class="modal-close" data-close="notes-modal">×</button><span class="eyebrow">CARNET PERSONNEL</span><h2>📝 Mes notes</h2><textarea id="notes-area" rows="12" placeholder="Chronologie, suspects, contradictions… tes notes restent sur cet appareil."></textarea><div class="modal-actions"><button id="btn-clear-notes" class="text-btn">Effacer</button><button id="btn-save-notes" class="primary">Enregistrer</button></div></div></div>
-<div id="qr-modal" class="modal hidden"><div class="modal-card qr-card"><button class="modal-close" data-close="qr-modal">×</button><span class="eyebrow">INVITATION</span><h2>▣ Scanner pour rejoindre</h2><img id="room-qr" alt="QR code de la salle"><strong id="qr-code-label"></strong><p class="muted">Le QR ouvre directement la page de cette salle.</p></div></div>
+<div id="qr-modal" class="modal hidden"><div class="modal-card qr-card"><button class="modal-close" data-close="qr-modal">×</button><span class="eyebrow">INVITATION</span><h2>▣ Scanner pour rejoindre</h2><img id="room-qr" alt="QR code de la salle"><strong id="qr-code-label"></strong><p id="qr-link-label" class="muted"></p><div class="modal-actions"><button id="btn-copy-room-link" class="primary-btn" type="button">🔗 Copier le lien</button><button data-close="qr-modal" class="ghost-btn" type="button">Fermer</button></div><p class="muted">Sur téléphone, le scan ouvre le jeu dans le navigateur. Si le jeu est installé comme application, utilise aussi son icône depuis l’écran d’accueil.</p></div></div>
 <script src="/socket.io/socket.io.js"></script>
-<script src="app.js"></script>
+<script src="/app.js?v=10" defer></script>
 </body>
 </html>
