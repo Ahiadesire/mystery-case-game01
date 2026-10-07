@@ -1,0 +1,42 @@
+[
+  {
+    "id": "cave",
+    "name": "Cave à vin",
+    "description": "Lieu du crime, accessible depuis le chai, le garage et une porte latérale de la cour."
+  },
+  {
+    "id": "salle_degustation",
+    "name": "Salle de dégustation",
+    "description": "Où la majorité des invités se trouvaient pendant la soirée."
+  },
+  {
+    "id": "cour",
+    "name": "Cour",
+    "description": "Passage entre la maison, le garage et l'entrée de la cave."
+  },
+  {
+    "id": "chai",
+    "name": "Chai",
+    "description": "Local de stockage attenant à la cave."
+  },
+  {
+    "id": "bureau",
+    "name": "Bureau",
+    "description": "Bureau du comptable, donnant une vue partielle sur la cave."
+  },
+  {
+    "id": "vignes",
+    "name": "Vignes",
+    "description": "Parcelles en pente, dont deux rangées sabotées."
+  },
+  {
+    "id": "garage",
+    "name": "Garage",
+    "description": "Relié à la cave par un escalier intérieur peu utilisé."
+  },
+  {
+    "id": "cuisine",
+    "name": "Cuisine",
+    "description": "Où Odile préparait le dessert."
+  }
+]

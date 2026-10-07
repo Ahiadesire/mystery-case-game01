@@ -1,0 +1,74 @@
+[
+  {
+    "order": 1,
+    "title": "Facture d'assurance récolte falsifiée",
+    "linkedCharacterId": "julien12",
+    "description": "Un document montre que Julien a récemment modifié une déclaration de sinistre concernant deux parcelles."
+  },
+  {
+    "order": 2,
+    "title": "Étiquettes non conformes",
+    "linkedCharacterId": "marco12",
+    "description": "Des étiquettes de contre-façon d'appellation portent les initiales de Marco."
+  },
+  {
+    "order": 3,
+    "title": "Enregistrement d'Inès",
+    "linkedCharacterId": "marco12",
+    "description": "On y entend Bernard promettre de dénoncer Marco dès le lendemain matin."
+  },
+  {
+    "order": 4,
+    "title": "Registre des rondes de la cave",
+    "linkedCharacterId": "julien12",
+    "description": "Le registre indique une entrée non signée correspondant à la fenêtre du crime, sur le trajet que seul Julien emprunte encore depuis le garage."
+  },
+  {
+    "order": 5,
+    "title": "Lettre de dette de Yves",
+    "linkedCharacterId": "yves12",
+    "description": "Une lettre montre que Yves devait une forte somme à Bernard, mais son alibi en extérieur avec deux autres invités le disculpe."
+  },
+  {
+    "order": 6,
+    "title": "Copie corrigée de l'acte notarié",
+    "linkedCharacterId": "sabine12",
+    "description": "Cette copie révèle une modification discrète, sans lien avec le meurtre : fausse piste."
+  },
+  {
+    "order": 7,
+    "title": "Sécateur emprunté",
+    "linkedCharacterId": "theo12",
+    "description": "Cet objet explique l'accusation de vol contre Théo, mais ne le relie pas au crime."
+  },
+  {
+    "order": 8,
+    "title": "Message à un domaine concurrent",
+    "linkedCharacterId": "denis12",
+    "description": "Denis cherchait un nouveau poste ; motif réel mais opportunité limitée par sa présence prolongée aux vignes, confirmée par deux ouvriers."
+  },
+  {
+    "order": 9,
+    "title": "Ticket de comptabilité douteux",
+    "linkedCharacterId": "renaud12",
+    "description": "Renaud a détourné une petite somme, sans rapport avec le meurtre."
+  },
+  {
+    "order": 10,
+    "title": "Empreinte de terre sur l'escalier du garage",
+    "linkedCharacterId": "julien12",
+    "description": "De la terre de vigne, identique à celle des parcelles sabotées par Julien, est retrouvée sur l'escalier menant à la cave."
+  },
+  {
+    "order": 11,
+    "title": "Bouchon de cuvée frauduleuse",
+    "linkedCharacterId": "marco12",
+    "description": "Un bouchon caché dans la poche de veste de Marco correspond aux bouteilles falsifiées, retrouvé près du corps."
+  },
+  {
+    "order": 12,
+    "title": "Rapport du médecin légiste local",
+    "linkedCharacterId": null,
+    "description": "L'heure du décès est confirmée entre 22h20 et 22h35, resserrant la fenêtre autour des rondes de la cave."
+  }
+]

@@ -1,0 +1,244 @@
+[
+  {
+    "id": "roxane18",
+    "name": "Roxane",
+    "role": "Nièce héritière",
+    "age": 29,
+    "guiltyEligible": true,
+    "public": {
+      "relation": "Nièce et héritière présomptive d'Aurélien"
+    },
+    "private": {
+      "motif": "Aurélien s'apprêtait à déshériter Roxane au profit d'une fondation culturelle, une décision qu'il devait annoncer le soir même.",
+      "secret": "Roxane avait déjà engagé des dépenses considérables en anticipant son héritage.",
+      "alibi": "Elle affirme avoir dansé sans interruption en salle de bal, masquée, entre 23h45 et 00h15.",
+      "opportunite": "Son costume à capuche rendait son identification difficile même par des proches, et un passage discret par le vestiaire des masques menait droit à la bibliothèque.",
+      "informations": [
+        "Elle sait que Gustave avait aussi un différend avec son oncle.",
+        "Elle a vu une silhouette en cape sombre sortir du vestiaire des masques peu après 00h00."
+      ],
+      "objectif": "Empêcher l'annonce du déshéritement avant qu'elle ne soit officialisée."
+    }
+  },
+  {
+    "id": "gustave18",
+    "name": "Gustave",
+    "role": "Majordome de longue date",
+    "age": 55,
+    "guiltyEligible": true,
+    "public": {
+      "relation": "Majordome au service d'Aurélien depuis vingt-cinq ans"
+    },
+    "private": {
+      "motif": "Aurélien avait découvert que Gustave subtilisait discrètement des objets de valeur depuis des années et s'apprêtait à le renvoyer et à porter plainte.",
+      "secret": "Gustave a revendu plusieurs pièces de la collection familiale via un antiquaire complice.",
+      "alibi": "Il affirme être resté à la cuisine à superviser le service jusqu'à 00h10.",
+      "opportunite": "En tant que majordome, il possède toutes les clés du château, y compris celle de la bibliothèque.",
+      "informations": [
+        "Il sait qu'Aurélien comptait faire un inventaire complet de la collection dès le lendemain.",
+        "Il a vu Marcel traîner près de la bibliothèque plus tôt dans la soirée."
+      ],
+      "objectif": "Empêcher la plainte et l'inventaire qui révélerait les pièces manquantes."
+    }
+  },
+  {
+    "id": "beatrice18",
+    "name": "Béatrice",
+    "role": "Épouse séparée",
+    "age": 58,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Épouse séparée d'Aurélien"
+    },
+    "private": {
+      "motif": "Leur séparation n'était pas encore officialisée, et Aurélien menaçait de la couper de tout soutien financier.",
+      "secret": "Béatrice avait un amant présent au bal, sous un masque, dont l'identité devait rester secrète.",
+      "alibi": "Elle affirme être restée sur la terrasse avec son amant masqué toute la soirée.",
+      "opportunite": "Elle refuse de révéler l'identité de son compagnon de soirée, ce qui affaiblit son alibi.",
+      "informations": [
+        "Elle a vu Gustave s'entretenir nerveusement avec Aurélien plus tôt dans la soirée."
+      ],
+      "objectif": "Protéger l'identité de son amant sans paraître impliquée dans le meurtre."
+    }
+  },
+  {
+    "id": "laurent18",
+    "name": "Laurent",
+    "role": "Ami d'affaires",
+    "age": 50,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Ami d'affaires d'Aurélien"
+    },
+    "private": {
+      "motif": "Aurélien s'apprêtait à révéler un investissement raté que Laurent lui avait dissimulé.",
+      "secret": "Laurent avait falsifié un rapport financier pour cacher cette perte.",
+      "alibi": "Il affirme être resté dans le jardin illuminé avec d'autres invités.",
+      "opportunite": "Le jardin illuminé est éloigné de la bibliothèque.",
+      "informations": [
+        "Il a vu Roxane s'éclipser discrètement de la salle de bal vers 00h00."
+      ],
+      "objectif": "Empêcher la révélation avant que ses propres investisseurs ne l'apprennent."
+    }
+  },
+  {
+    "id": "clemence18",
+    "name": "Clémence",
+    "role": "Organisatrice du bal",
+    "age": 34,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Organisatrice événementielle du bal annuel"
+    },
+    "private": {
+      "motif": "Aurélien menaçait de ne pas la reconduire pour l'édition suivante après un incident logistique mineur.",
+      "secret": "Clémence avait déjà signé un contrat avec un autre client prestigieux pour la même date, en cas de non-reconduction.",
+      "alibi": "Elle affirme être restée au vestiaire des masques à gérer les arrivées tardives.",
+      "opportunite": "Le vestiaire des masques communique directement avec la bibliothèque par un couloir peu éclairé.",
+      "informations": [
+        "Elle a vu Gustave emprunter ce couloir vers 00h05."
+      ],
+      "objectif": "Sécuriser sa réputation professionnelle avant l'annonce de non-reconduction."
+    }
+  },
+  {
+    "id": "victor18",
+    "name": "Victor",
+    "role": "Neveu, joueur endetté",
+    "age": 31,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Neveu d'Aurélien"
+    },
+    "private": {
+      "motif": "Aurélien avait refusé de renflouer ses dettes de jeu une dernière fois, menaçant de couper les ponts définitivement.",
+      "secret": "Victor doit une somme importante à des créanciers peu recommandables.",
+      "alibi": "Il affirme être resté à la cave à choisir des bouteilles pour le bal.",
+      "opportunite": "La cave communique avec la bibliothèque par un escalier peu emprunté.",
+      "informations": [
+        "Il a vu Béatrice et son compagnon masqué s'éclipser vers la terrasse."
+      ],
+      "objectif": "Trouver un autre moyen de rembourser ses dettes avant qu'elles ne s'aggravent."
+    }
+  },
+  {
+    "id": "francoise18",
+    "name": "Françoise",
+    "role": "Cuisinière",
+    "age": 49,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Cuisinière du château"
+    },
+    "private": {
+      "motif": "Aurélien l'avait menacée de licenciement après une intoxication alimentaire mineure lors d'un précédent événement.",
+      "secret": "Françoise avait dissimulé un incident d'hygiène similaire, plus grave, quelques semaines auparavant.",
+      "alibi": "Elle affirme être restée en cuisine toute la soirée avec Gustave et son équipe.",
+      "opportunite": "Elle partage partiellement l'alibi de Gustave, ce qui complique la vérification.",
+      "informations": [
+        "Elle a vu Gustave s'absenter brièvement de la cuisine vers 00h05, contrairement à ce qu'il prétend."
+      ],
+      "objectif": "Éviter le licenciement en minimisant l'ampleur de l'incident dissimulé."
+    }
+  },
+  {
+    "id": "damien18",
+    "name": "Damien",
+    "role": "Photographe mondain",
+    "age": 38,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Photographe invité pour couvrir le bal"
+    },
+    "private": {
+      "motif": "Aurélien menaçait de censurer la publication de photos compromettantes prises lors d'un précédent événement.",
+      "secret": "Damien avait déjà vendu certaines de ces photos à un magazine, à l'insu d'Aurélien.",
+      "alibi": "Il affirme avoir circulé dans toute la salle de bal pour photographier les invités.",
+      "opportunite": "Sa liberté de mouvement rend son alibi difficile à vérifier précisément.",
+      "informations": [
+        "Il a photographié, sans le savoir, une silhouette suspecte près du vestiaire des masques."
+      ],
+      "objectif": "Éviter que la censure ne s'applique aussi aux photos déjà vendues."
+    }
+  },
+  {
+    "id": "iris18",
+    "name": "Iris",
+    "role": "Invitée masquée non identifiée",
+    "age": 40,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Invitée se présentant comme comtesse"
+    },
+    "private": {
+      "motif": "Aurélien avait commencé à douter publiquement de son titre de noblesse revendiqué, menaçant de la démasquer devant tous.",
+      "secret": "Iris n'est pas comtesse : elle s'est introduite au bal sous une fausse identité pour approcher les invités fortunés.",
+      "alibi": "Elle affirme être restée en salle de bal, dansant avec plusieurs invités successifs.",
+      "opportunite": "Son identité incertaine rend toute vérification d'alibi particulièrement difficile.",
+      "informations": [
+        "Elle a vu Victor descendre à la cave plus tôt que prévu."
+      ],
+      "objectif": "Éviter d'être démasquée et expulsée avant la fin de la soirée."
+    }
+  },
+  {
+    "id": "marcel18",
+    "name": "Marcel",
+    "role": "Jardinier",
+    "age": 62,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Jardinier du château"
+    },
+    "private": {
+      "motif": "Aurélien l'avait accusé d'avoir endommagé une statue ancienne du jardin, menaçant de retenir son salaire.",
+      "secret": "Marcel avait effectivement causé ce dommage par négligence, qu'il dissimulait depuis.",
+      "alibi": "Il affirme être resté au jardin illuminé pour surveiller les décorations.",
+      "opportunite": "Il connaît un passage discret du jardin vers la bibliothèque par une porte-fenêtre rarement verrouillée.",
+      "informations": [
+        "Il a vu Laurent s'isoler nerveusement près du jardin."
+      ],
+      "objectif": "Éviter la retenue sur salaire pour le dommage causé à la statue."
+    }
+  },
+  {
+    "id": "celine18",
+    "name": "Céline",
+    "role": "Avocate de la famille",
+    "age": 46,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Avocate en charge des affaires familiales"
+    },
+    "private": {
+      "motif": "Aurélien venait de lui demander de préparer en urgence l'acte de déshéritement de Roxane, un document qu'elle jugeait risqué juridiquement.",
+      "secret": "Céline avait des doutes sur la validité de la fondation culturelle bénéficiaire, potentiellement fictive.",
+      "alibi": "Elle affirme être restée dans la salle de bal à observer la soirée sans danser.",
+      "opportunite": "Faible : plusieurs témoins confirment sa présence continue.",
+      "informations": [
+        "Elle a vu Hugo s'entretenir en privé avec Aurélien plus tôt dans la soirée."
+      ],
+      "objectif": "Décider si elle doit révéler ses doutes sur la fondation bénéficiaire."
+    }
+  },
+  {
+    "id": "hugo18",
+    "name": "Hugo",
+    "role": "Fils illégitime récemment découvert",
+    "age": 27,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Fils illégitime d'Aurélien, récemment reconnu"
+    },
+    "private": {
+      "motif": "Aurélien venait tout juste de le reconnaître officiellement, mais refusait de l'inclure dans son testament au même titre que Roxane.",
+      "secret": "Hugo a fait authentifier discrètement des documents prouvant sa filiation, au cas où Aurélien reviendrait sur sa parole.",
+      "alibi": "Il affirme être resté en salle de bal, encore mal à l'aise dans ce nouveau monde social.",
+      "opportunite": "Il connaît mal le château, rendant un déplacement discret vers la bibliothèque peu probable.",
+      "informations": [
+        "Il a vu Roxane et Aurélien avoir une discussion tendue juste avant le bal."
+      ],
+      "objectif": "Faire valoir sa reconnaissance officielle dans la succession à venir."
+    }
+  }
+]

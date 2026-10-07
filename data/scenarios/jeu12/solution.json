@@ -1,0 +1,15 @@
+{
+  "guiltyExplanations": {
+    "julien12": "Julien a tué son père. Bernard avait découvert le sabotage des vignes pour l'assurance et menaçait de le déshériter et de porter plainte. L'escalier reliant le garage à la cave, que lui seul emprunte encore, et la terre retrouvée sur les marches le confondent.",
+    "marco12": "Marco a tué Bernard. Ce dernier s'apprêtait à le dénoncer publiquement pour fraude sur les appellations dès le lendemain, ruinant sa carrière. Le bouchon des bouteilles falsifiées retrouvé près du corps le désigne clairement."
+  },
+  "falseLeadsSummary": [
+    "Fabienne avait un motif financier réel mais un alibi confirmé à la dégustation.",
+    "Odile cachait une liaison avec Yves, sans lien avec le meurtre.",
+    "Renaud détournait de petites sommes, sans rapport avec le crime.",
+    "Théo était injustement soupçonné pour un simple sécateur emprunté.",
+    "Denis cherchait un reclassement mais son alibi aux vignes est confirmé par des témoins.",
+    "Sabine cachait une erreur professionnelle ancienne, sans lien avec le meurtre."
+  ],
+  "closingLine": "Le vin le plus âgé du domaine n'a pas menti, contrairement à ses héritiers."
+}

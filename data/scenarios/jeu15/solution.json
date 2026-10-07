@@ -1,0 +1,15 @@
+{
+  "guiltyExplanations": {
+    "florence15": "Florence a tué Gaston. Il l'avait publiquement accusée d'avoir vendu un faux meuble, ruinant sa réputation du jour au lendemain. Le registre d'accès confirmant son passage vers la réserve durant la fenêtre du crime la confond.",
+    "mehdi15": "Mehdi a tué Gaston. Ce dernier avait découvert la vente d'un objet volé et menaçait de le dénoncer à la police le soir même. La poussière de la réserve retrouvée sur sa manche contredit son alibi au bureau voisin."
+  },
+  "falseLeadsSummary": [
+    "Vincent gonflait ses estimations, mais son alibi en salle des ventes est confirmé.",
+    "Thérèse cherchait à revendre une pièce douteuse, sans lien avec le meurtre.",
+    "Bruno cachait un dommage causé à une œuvre, sans rapport avec le crime.",
+    "André préparait des mémoires compromettantes, mais sa mobilité réduite l'innocente.",
+    "Léa avait pris un raccourci sur une restauration, sans lien avec le meurtre.",
+    "Simon contestait le testament de son père, mais son alibi dans le hall est confirmé."
+  ],
+  "closingLine": "Sous la poussière des vieux objets, un secret bien plus récent attendait d'être découvert."
+}

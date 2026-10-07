@@ -1,0 +1,22 @@
+{
+  "id": "jeu18",
+  "title": "LE BAL MASQUÉ",
+  "type": [
+    "meurtre mystérieux",
+    "enquête",
+    "déduction",
+    "bluff",
+    "jeu social"
+  ],
+  "minPlayers": 4,
+  "maxPlayers": 12,
+  "durationMinutes": 30,
+  "victim": {
+    "name": "Aurélien de Vasselot",
+    "age": 63,
+    "profession": "Aristocrate, hôte du bal masqué annuel",
+    "deathFoundTime": "00h20",
+    "murderWindow": "23h50 - 00h10"
+  },
+  "publicIntroTemplate": "Masques, dorures et lumières tamisées : le bal annuel d'Aurélien de Vasselot réunit {{playerCount}} invités dans son château. À 00h20, on le découvre sans vie dans sa bibliothèque, un masque tombé à ses pieds. Sous les costumes, personne n'était vraiment celui qu'il prétendait être."
+}

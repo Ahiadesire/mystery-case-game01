@@ -1,0 +1,22 @@
+{
+  "id": "jeu14",
+  "title": "LE SPA DU SILENCE",
+  "type": [
+    "meurtre mystérieux",
+    "enquête",
+    "déduction",
+    "bluff",
+    "jeu social"
+  ],
+  "minPlayers": 4,
+  "maxPlayers": 12,
+  "durationMinutes": 30,
+  "victim": {
+    "name": "Isabelle Lambert",
+    "age": 55,
+    "profession": "Fondatrice du spa 'Le Silence'",
+    "deathFoundTime": "07h15",
+    "murderWindow": "06h40 - 06h55"
+  },
+  "publicIntroTemplate": "{{playerCount}} proches, associées et clientes fidèles passent la nuit dans la retraite bien-être d'Isabelle Lambert pour une soirée de méditation silencieuse. Au petit matin, à 07h15, Isabelle est retrouvée sans vie dans le hammam désert. Le silence de la retraite cachait des tensions bien réelles."
+}

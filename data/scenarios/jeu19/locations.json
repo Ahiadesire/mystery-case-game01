@@ -1,0 +1,42 @@
+[
+  {
+    "id": "loge",
+    "name": "Loge de Vera",
+    "description": "Lieu du crime, à l'écart de la soirée."
+  },
+  {
+    "id": "salle_projection",
+    "name": "Salle de projection",
+    "description": "Éloignée de la loge."
+  },
+  {
+    "id": "tapis_rouge",
+    "name": "Tapis rouge",
+    "description": "Zone publique et médiatique de l'événement."
+  },
+  {
+    "id": "backstage",
+    "name": "Backstage",
+    "description": "Communique directement avec la loge par un couloir étroit."
+  },
+  {
+    "id": "bar_soiree",
+    "name": "Bar de la soirée",
+    "description": "Relié à la loge par le couloir backstage."
+  },
+  {
+    "id": "bureau_production",
+    "name": "Bureau de production",
+    "description": "Relié à la loge par un escalier de service."
+  },
+  {
+    "id": "parking_vip",
+    "name": "Parking VIP",
+    "description": "Éloigné de la loge."
+  },
+  {
+    "id": "toit_terrasse",
+    "name": "Toit-terrasse",
+    "description": "Hors de vue des caméras du backstage."
+  }
+]

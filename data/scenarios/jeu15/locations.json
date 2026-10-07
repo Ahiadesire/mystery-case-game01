@@ -1,0 +1,42 @@
+[
+  {
+    "id": "hall_expo",
+    "name": "Hall d'exposition",
+    "description": "Zone publique où se tenaient la majorité des invités."
+  },
+  {
+    "id": "reserve_privee",
+    "name": "Réserve privée",
+    "description": "Lieu du crime, accès restreint aux experts."
+  },
+  {
+    "id": "bureau_expert",
+    "name": "Bureau de l'expert",
+    "description": "Communique directement avec la réserve privée."
+  },
+  {
+    "id": "buvette",
+    "name": "Buvette",
+    "description": "Où plusieurs invités discutaient toute la soirée."
+  },
+  {
+    "id": "quai_livraison",
+    "name": "Quai de livraison",
+    "description": "Relié à la réserve privée, utilisé par les transporteurs."
+  },
+  {
+    "id": "salle_ventes",
+    "name": "Salle des ventes",
+    "description": "Éloignée de la réserve privée."
+  },
+  {
+    "id": "vestiaire",
+    "name": "Vestiaire",
+    "description": "Géré par Nadège pendant la soirée."
+  },
+  {
+    "id": "parking",
+    "name": "Parking",
+    "description": "Surveillé par Gilbert, hors caméra du hall."
+  }
+]

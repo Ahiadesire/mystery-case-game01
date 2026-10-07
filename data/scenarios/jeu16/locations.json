@@ -1,0 +1,42 @@
+[
+  {
+    "id": "rooftop",
+    "name": "Rooftop",
+    "description": "Lieu du crime, accessible par la terrasse et l'ascenseur de service."
+  },
+  {
+    "id": "salle_conference",
+    "name": "Salle de conférence",
+    "description": "Éloignée du rooftop, séparée par plusieurs étages."
+  },
+  {
+    "id": "espace_networking",
+    "name": "Espace networking",
+    "description": "Communique par une terrasse commune avec le rooftop."
+  },
+  {
+    "id": "bureau_organisation",
+    "name": "Bureau de l'organisation",
+    "description": "Relié au rooftop par l'ascenseur de service."
+  },
+  {
+    "id": "ascenseur_service",
+    "name": "Ascenseur de service",
+    "description": "Réservé au personnel, peu surveillé."
+  },
+  {
+    "id": "terrasse",
+    "name": "Terrasse",
+    "description": "Passage entre l'espace networking et le rooftop."
+  },
+  {
+    "id": "vestiaire",
+    "name": "Vestiaire",
+    "description": "Éloigné du rooftop."
+  },
+  {
+    "id": "parking_sous_sol",
+    "name": "Parking sous-sol",
+    "description": "Relié au rooftop par l'ascenseur de service."
+  }
+]

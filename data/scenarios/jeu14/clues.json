@@ -1,0 +1,74 @@
+[
+  {
+    "order": 1,
+    "title": "Offre de rachat concurrente",
+    "linkedCharacterId": "valentine14",
+    "description": "Un document révèle que Valentine négociait secrètement le rachat des parts d'Isabelle avec un tiers."
+  },
+  {
+    "order": 2,
+    "title": "Messages d'infidélité",
+    "linkedCharacterId": "karim14",
+    "description": "Des messages échangés avec une cliente confirment la liaison de Karim, découverte par Isabelle la veille."
+  },
+  {
+    "order": 3,
+    "title": "Rendez-vous chez le notaire",
+    "linkedCharacterId": "karim14",
+    "description": "Une note dans l'agenda d'Isabelle confirme un rendez-vous pour modifier son testament, prévu le jour même."
+  },
+  {
+    "order": 4,
+    "title": "Registre d'accès du couloir de service",
+    "linkedCharacterId": "valentine14",
+    "description": "Il indique un passage non déclaré entre le salon de thé et le hammam durant la fenêtre du crime."
+  },
+  {
+    "order": 5,
+    "title": "Dette entre Agathe et Isabelle",
+    "linkedCharacterId": "agathe14",
+    "description": "Ce document confirme une vieille tension, mais l'alibi d'Agathe à la piscine, confirmé par Félix, la disculpe."
+  },
+  {
+    "order": 6,
+    "title": "Produits non déclarés",
+    "linkedCharacterId": "noemie14",
+    "description": "Ils expliquent l'accusation de vol contre Noémie, sans la relier au meurtre."
+  },
+  {
+    "order": 7,
+    "title": "Facture falsifiée de la boutique",
+    "linkedCharacterId": "laurence14",
+    "description": "Elle révèle un écart comptable mineur, sans lien avec le crime."
+  },
+  {
+    "order": 8,
+    "title": "Contrat de fournisseur douteux",
+    "linkedCharacterId": "olivier14",
+    "description": "Il confirme la substitution de produits non conformes, sans rapport avec le meurtre."
+  },
+  {
+    "order": 9,
+    "title": "Enregistrement de Juliette",
+    "linkedCharacterId": "karim14",
+    "description": "On y entend Isabelle confier qu'elle romprait avec Karim 'dès qu'elle aurait vu le notaire'."
+  },
+  {
+    "order": 10,
+    "title": "Matériel de jardinage revendu",
+    "linkedCharacterId": "remy14",
+    "description": "Il explique le motif de licenciement de Rémy, sans lien avec le crime."
+  },
+  {
+    "order": 11,
+    "title": "Trace de vapeur sur une clé de vestiaire",
+    "linkedCharacterId": "valentine14",
+    "description": "Une clé du salon de thé, humide de vapeur du hammam, est retrouvée dans la poche de Valentine."
+  },
+  {
+    "order": 12,
+    "title": "Rapport du médecin légiste",
+    "linkedCharacterId": null,
+    "description": "L'heure du décès est confirmée entre 06h40 et 06h55, période où les vestiaires étaient quasiment déserts."
+  }
+]

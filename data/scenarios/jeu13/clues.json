@@ -1,0 +1,74 @@
+[
+  {
+    "order": 1,
+    "title": "Rapports sanitaires falsifiés",
+    "linkedCharacterId": "antoine13",
+    "description": "Trois rapports sanitaires portent des corrections dans l'écriture d'Antoine, dissimulant des infractions aux normes."
+  },
+  {
+    "order": 2,
+    "title": "Registre vétérinaire maquillé",
+    "linkedCharacterId": "leila13",
+    "description": "Le registre des bassins montre des dates modifiées correspondant à des morts de spécimens rares non déclarées."
+  },
+  {
+    "order": 3,
+    "title": "Enregistrement de Sophie",
+    "linkedCharacterId": "antoine13",
+    "description": "On y entend Sylvie annoncer à Antoine qu'elle transmettra son dossier aux autorités dès le lendemain."
+  },
+  {
+    "order": 4,
+    "title": "Caméra du couloir technique coupée",
+    "linkedCharacterId": null,
+    "description": "La caméra reliant le bureau de direction au bassin des requins a été désactivée entre 00h20 et 00h35, expliqué par la maintenance de Patrick."
+  },
+  {
+    "order": 5,
+    "title": "Poisson mort non déclaré",
+    "linkedCharacterId": "leila13",
+    "description": "Un rapport d'Hugo révèle une mort suspecte dissimulée par Leila une semaine avant les faits."
+  },
+  {
+    "order": 6,
+    "title": "Accord secret avec un investisseur",
+    "linkedCharacterId": "claudine13",
+    "description": "Ce document engage Claudine dans un projet controversé, sans lien direct avec le meurtre."
+  },
+  {
+    "order": 7,
+    "title": "Facture de réparation de caméra",
+    "linkedCharacterId": "patrick13",
+    "description": "Elle confirme l'intervention légitime de Patrick sur le système, sans le relier au crime."
+  },
+  {
+    "order": 8,
+    "title": "Appel personnel de Farid",
+    "linkedCharacterId": "farid13",
+    "description": "Le relevé téléphonique confirme son absence de poste, mais aussi son alibi hors de la zone du crime."
+  },
+  {
+    "order": 9,
+    "title": "Notes de l'audit des dons",
+    "linkedCharacterId": "lucie13",
+    "description": "Elles révèlent un écart comptable mineur, sans rapport avec le meurtre."
+  },
+  {
+    "order": 10,
+    "title": "Traces humides près du local technique",
+    "linkedCharacterId": "antoine13",
+    "description": "Des traces de pas mouillées, typiques de la zone des bassins, mènent du bassin des requins au bureau de direction."
+  },
+  {
+    "order": 11,
+    "title": "Gants de biologiste tachés",
+    "linkedCharacterId": "leila13",
+    "description": "Une paire de gants de Leila, portant des traces suspectes, est retrouvée cachée dans la réserve."
+  },
+  {
+    "order": 12,
+    "title": "Rapport du médecin légiste",
+    "linkedCharacterId": null,
+    "description": "L'heure du décès est confirmée entre 00h25 et 00h38, période où la caméra du couloir était hors service."
+  }
+]

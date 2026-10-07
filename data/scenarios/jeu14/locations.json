@@ -1,0 +1,42 @@
+[
+  {
+    "id": "hammam",
+    "name": "Hammam",
+    "description": "Lieu du crime, vide à cette heure matinale."
+  },
+  {
+    "id": "salle_massage",
+    "name": "Salle de massage",
+    "description": "Fermée pour la nuit, peu fréquentée."
+  },
+  {
+    "id": "piscine",
+    "name": "Piscine",
+    "description": "Surveillée en continu par Félix."
+  },
+  {
+    "id": "salon_the",
+    "name": "Salon de thé",
+    "description": "Relié au hammam par un couloir de service."
+  },
+  {
+    "id": "reception",
+    "name": "Réception",
+    "description": "Occupée par Manon toute la matinée."
+  },
+  {
+    "id": "jardin_zen",
+    "name": "Jardin zen",
+    "description": "Relié aux vestiaires par une allée directe."
+  },
+  {
+    "id": "vestiaires",
+    "name": "Vestiaires",
+    "description": "Juxtaposent le hammam et la chambre de Karim et Isabelle."
+  },
+  {
+    "id": "cuisine_bio",
+    "name": "Cuisine bio",
+    "description": "Éloignée du hammam, occupée par Olivier."
+  }
+]

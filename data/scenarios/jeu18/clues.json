@@ -1,0 +1,74 @@
+[
+  {
+    "order": 1,
+    "title": "Acte de déshéritement rédigé",
+    "linkedCharacterId": "roxane18",
+    "description": "Ce document, préparé par Céline à la demande d'Aurélien, devait être signé le soir même au détriment de Roxane."
+  },
+  {
+    "order": 2,
+    "title": "Factures d'objets disparus",
+    "linkedCharacterId": "gustave18",
+    "description": "Un antiquaire complice confirme avoir racheté plusieurs pièces de la collection via Gustave."
+  },
+  {
+    "order": 3,
+    "title": "Dépenses anticipées de Roxane",
+    "linkedCharacterId": "roxane18",
+    "description": "Des relevés bancaires montrent que Roxane avait déjà engagé des dépenses considérables en anticipant son héritage."
+  },
+  {
+    "order": 4,
+    "title": "Inventaire prévu de la collection",
+    "linkedCharacterId": "gustave18",
+    "description": "Une note confirme qu'Aurélien prévoyait un inventaire complet dès le lendemain matin."
+  },
+  {
+    "order": 5,
+    "title": "Alibi troué de Françoise",
+    "linkedCharacterId": "gustave18",
+    "description": "Françoise contredit involontairement l'alibi de Gustave en confirmant son absence brève de la cuisine vers 00h05."
+  },
+  {
+    "order": 6,
+    "title": "Photo suspecte de Damien",
+    "linkedCharacterId": null,
+    "description": "Une photographie prise par Damien montre une silhouette encapuchonnée près du vestiaire des masques peu après minuit, sans visage identifiable."
+  },
+  {
+    "order": 7,
+    "title": "Rapport financier falsifié",
+    "linkedCharacterId": "laurent18",
+    "description": "Il confirme le motif de Laurent, sans le relier au meurtre : son alibi au jardin illuminé est confirmé."
+  },
+  {
+    "order": 8,
+    "title": "Dette de jeu de Victor",
+    "linkedCharacterId": "victor18",
+    "description": "Elle confirme le motif de Victor, sans le relier directement au meurtre."
+  },
+  {
+    "order": 9,
+    "title": "Fausse identité d'Iris",
+    "linkedCharacterId": "iris18",
+    "description": "Il confirme qu'Iris n'est pas comtesse, sans la relier au meurtre : son alibi en salle de bal est confirmé par plusieurs danseurs."
+  },
+  {
+    "order": 10,
+    "title": "Dommage dissimulé sur la statue",
+    "linkedCharacterId": "marcel18",
+    "description": "Il confirme le motif de Marcel, sans le relier au meurtre."
+  },
+  {
+    "order": 11,
+    "title": "Fil de costume accroché à une étagère",
+    "linkedCharacterId": "roxane18",
+    "description": "Un fil provenant de la cape de Roxane est retrouvé accroché à une étagère de la bibliothèque, près du corps."
+  },
+  {
+    "order": 12,
+    "title": "Clé de la bibliothèque manquante",
+    "linkedCharacterId": "gustave18",
+    "description": "La clé de la bibliothèque, habituellement conservée par Gustave, est introuvable sur son trousseau au moment de la découverte du corps."
+  }
+]

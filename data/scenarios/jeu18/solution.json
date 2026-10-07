@@ -1,0 +1,16 @@
+{
+  "guiltyExplanations": {
+    "roxane18": "Roxane a tué son oncle. Il s'apprêtait à signer l'acte de déshéritement en sa défaveur le soir même. Le fil de sa cape, retrouvé accroché près du corps dans la bibliothèque, la confond malgré son costume à capuche.",
+    "gustave18": "Gustave a tué Aurélien. Ce dernier avait découvert ses vols répétés dans la collection et prévoyait un inventaire complet et une plainte dès le lendemain. La clé de la bibliothèque manquante de son trousseau, au moment précis de la découverte, le trahit."
+  },
+  "falseLeadsSummary": [
+    "Béatrice protégeait l'identité de son amant masqué, sans lien avec le meurtre.",
+    "Laurent cachait un investissement raté, mais son alibi au jardin est confirmé.",
+    "Clémence craignait pour sa réputation professionnelle, sans rapport avec le crime.",
+    "Victor avait des dettes de jeu, sans lien direct avec le meurtre.",
+    "Iris dissimulait une fausse identité, sans rapport avec le crime.",
+    "Marcel cachait un dommage causé à une statue, sans lien avec le meurtre.",
+    "Hugo venait d'être reconnu et craignait d'être exclu du testament, mais son alibi en salle de bal est confirmé."
+  ],
+  "closingLine": "Au bal masqué, tout le monde portait un masque — un seul cachait un meurtrier."
+}

@@ -1,0 +1,16 @@
+{
+  "guiltyExplanations": {
+    "nathan19": "Nathan a tué Vera. Elle s'apprêtait à révéler publiquement qu'il s'était approprié une scène écrite par Simon, ruinant sa crédibilité d'acteur révélé par elle. Le registre du couloir backstage, confirmant son passage vers la loge durant la fenêtre du crime, le confond.",
+    "priscille19": "Priscille a tué Vera. Cette dernière détenait des preuves d'un sabotage financier orchestré par Priscille des années plus tôt et s'apprêtait à les rendre publiques. Le disque dur disparu, retrouvé caché dans son sac, la relie directement au vol des preuves et au meurtre."
+  },
+  "falseLeadsSummary": [
+    "Simon avait un motif réel de rancune, mais son alibi partagé avec Priscille au bureau tient.",
+    "Alice avait vendu des informations exclusives, sans lien avec le meurtre.",
+    "Marco cachait un montage alternatif, sans rapport avec le crime.",
+    "Tania menaçait de boycotter la promotion, sans lien direct avec le meurtre.",
+    "Odile craignait de payer un costume endommagé, sans rapport avec le crime.",
+    "Guillaume négociait un poste chez la rivale de sa sœur, sans lien avec le meurtre.",
+    "Bernard finalisait des accords sans l'accord de Vera, sans rapport avec le crime."
+  ],
+  "closingLine": "Le générique de fin n'aura jamais été aussi vrai : personne ne joue un rôle innocent."
+}

@@ -1,0 +1,15 @@
+{
+  "guiltyExplanations": {
+    "valentine14": "Valentine a tué Isabelle. Elle négociait en secret un rachat concurrent des parts avant que la vente au fonds étranger ne menace sa place. La clé humide du salon de thé, retrouvée dans sa poche, la relie directement au passage vers le hammam.",
+    "karim14": "Karim a tué Isabelle. Elle venait de découvrir son infidélité et s'apprêtait à modifier son testament le jour même. L'enregistrement de Juliette, révélant la rupture imminente, confirme son mobile."
+  },
+  "falseLeadsSummary": [
+    "Agathe avait une dette ancienne avec Isabelle, mais un alibi confirmé à la piscine.",
+    "Noémie était injustement soupçonnée pour de simples produits non déclarés.",
+    "Laurence couvrait un écart comptable mineur, sans rapport avec le crime.",
+    "Olivier risquait de perdre son contrat, sans lien avec le meurtre.",
+    "Rémy craignait un licenciement pour du matériel revendu, sans rapport avec le crime.",
+    "Brigitte redoutait un placement en résidence, mais sa mobilité réduite l'innocente."
+  ],
+  "closingLine": "Le silence de la retraite n'a pas suffi à étouffer la vérité."
+}

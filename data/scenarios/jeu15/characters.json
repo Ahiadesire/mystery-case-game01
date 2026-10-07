@@ -1,0 +1,245 @@
+[
+  {
+    "id": "florence15",
+    "name": "Florence",
+    "role": "Antiquaire rivale",
+    "age": 55,
+    "guiltyEligible": true,
+    "public": {
+      "relation": "Antiquaire concurrente exposant à la foire"
+    },
+    "private": {
+      "motif": "Gaston l'avait accusée publiquement, la veille, d'avoir vendu un faux meuble Louis XV, ruinant sa réputation du jour au lendemain.",
+      "secret": "Florence savait effectivement que le meuble était une copie, mais l'avait vendu en toute connaissance de cause.",
+      "alibi": "Elle affirme être restée à son stand du hall d'exposition entre 19h40 et 20h00.",
+      "opportunite": "Son stand est proche d'un accès discret vers la réserve privée, par un couloir peu surveillé.",
+      "informations": [
+        "Elle sait que Mehdi avait aussi un différend avec Gaston.",
+        "Elle a vu Bruno décharger une caisse près de la réserve plus tôt."
+      ],
+      "objectif": "Réhabiliter sa réputation avant la clôture de la foire."
+    }
+  },
+  {
+    "id": "mehdi15",
+    "name": "Mehdi",
+    "role": "Jeune expert, protégé de Gaston",
+    "age": 30,
+    "guiltyEligible": true,
+    "public": {
+      "relation": "Protégé et assistant occasionnel de Gaston"
+    },
+    "private": {
+      "motif": "Gaston avait découvert que Mehdi avait sciemment authentifié et vendu un objet volé, et menaçait de le dénoncer à la police le soir même.",
+      "secret": "Mehdi a falsifié un certificat de provenance pour cet objet.",
+      "alibi": "Il affirme être resté au bureau de l'expert à préparer les dossiers du lendemain.",
+      "opportunite": "Le bureau de l'expert communique directement avec la réserve privée par une porte intérieure.",
+      "informations": [
+        "Il sait que Gaston devait appeler la police après la soirée.",
+        "Il a vu Pauline sortir du bureau de l'expert peu avant lui."
+      ],
+      "objectif": "Empêcher la dénonciation avant qu'elle ne ruine sa carrière naissante."
+    }
+  },
+  {
+    "id": "therese15",
+    "name": "Thérèse",
+    "role": "Collectionneuse fortunée",
+    "age": 66,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Cliente fidèle et collectionneuse"
+    },
+    "private": {
+      "motif": "Gaston avait refusé d'authentifier une pièce qu'elle voulait revendre à prix d'or, la jugeant douteuse.",
+      "secret": "Thérèse savait elle-même que la pièce était probablement fausse.",
+      "alibi": "Elle affirme être restée à la buvette avec d'autres collectionneurs.",
+      "opportunite": "Elle connaît mal la disposition de la réserve, rendant un déplacement discret improbable.",
+      "informations": [
+        "Elle a vu Vincent s'isoler avec Gaston plus tôt dans la soirée."
+      ],
+      "objectif": "Revendre sa pièce ailleurs sans éveiller les soupçons sur son authenticité."
+    }
+  },
+  {
+    "id": "vincent15",
+    "name": "Vincent",
+    "role": "Commissaire-priseur",
+    "age": 51,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Commissaire-priseur de la foire"
+    },
+    "private": {
+      "motif": "Gaston s'apprêtait à révéler que Vincent gonflait certaines estimations pour toucher de plus grosses commissions.",
+      "secret": "Vincent a effectivement truqué plusieurs estimations récentes.",
+      "alibi": "Il affirme être resté en salle des ventes à préparer la vacation du lendemain.",
+      "opportunite": "La salle des ventes est éloignée de la réserve privée.",
+      "informations": [
+        "Il a vu Florence se diriger vers la réserve peu avant 19h50."
+      ],
+      "objectif": "Éviter que la révélation ne ruine sa réputation professionnelle."
+    }
+  },
+  {
+    "id": "pauline15",
+    "name": "Pauline",
+    "role": "Assistante de Gaston",
+    "age": 27,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Assistante personnelle de Gaston"
+    },
+    "private": {
+      "motif": "Gaston l'avait réprimandée publiquement pour une erreur de classement ayant fait perdre une vente importante.",
+      "secret": "Pauline cherchait discrètement un autre emploi dans le milieu.",
+      "alibi": "Elle affirme être restée au bureau de l'expert jusqu'à 19h50 puis être partie chercher un dossier.",
+      "opportunite": "Elle a un accès direct et légitime à la réserve privée.",
+      "informations": [
+        "Elle a vu Mehdi consulter nerveusement des documents avant elle."
+      ],
+      "objectif": "Décrocher son nouvel emploi sans mauvaise référence de Gaston."
+    }
+  },
+  {
+    "id": "bruno15",
+    "name": "Bruno",
+    "role": "Transporteur d'œuvres",
+    "age": 44,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Transporteur indépendant"
+    },
+    "private": {
+      "motif": "Gaston l'avait accusé d'avoir endommagé une pièce rare lors d'une précédente livraison, menaçant de ne plus le recommander.",
+      "secret": "Bruno avait effectivement causé un dommage mineur, dissimulé depuis.",
+      "alibi": "Il affirme être resté au quai de livraison à décharger du matériel jusqu'à 20h00.",
+      "opportunite": "Le quai de livraison communique directement avec la réserve privée.",
+      "informations": [
+        "Il a vu une silhouette sortir rapidement de la réserve vers 19h55."
+      ],
+      "objectif": "Éviter de perdre la confiance de ses clients de la foire."
+    }
+  },
+  {
+    "id": "christine15",
+    "name": "Christine",
+    "role": "Journaliste spécialisée",
+    "age": 39,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Journaliste couvrant la foire"
+    },
+    "private": {
+      "motif": "Gaston menaçait de démentir publiquement un article de Christine sur les pratiques douteuses du marché de l'art.",
+      "secret": "Christine enregistrait discrètement certaines conversations pour son enquête.",
+      "alibi": "Elle affirme être restée dans le hall d'exposition, micro caché, jusqu'à 20h00.",
+      "opportunite": "Elle circulait librement mais aurait été remarquée près de la réserve.",
+      "informations": [
+        "Son enregistrement contient une dispute entre Gaston et Mehdi.",
+        "Elle sait que Vincent truquait certaines estimations."
+      ],
+      "objectif": "Protéger ses sources et publier son enquête."
+    }
+  },
+  {
+    "id": "andre15",
+    "name": "André",
+    "role": "Ancien associé de Gaston",
+    "age": 70,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Ancien associé, retraité"
+    },
+    "private": {
+      "motif": "Une vieille rupture d'association les opposait depuis vingt ans, Gaston l'ayant évincé de leur galerie commune.",
+      "secret": "André prépare en secret des mémoires révélant des pratiques douteuses de Gaston.",
+      "alibi": "Il affirme être resté à la buvette à discuter avec Thérèse.",
+      "opportunite": "Sa mobilité réduite rend un déplacement rapide vers la réserve peu crédible.",
+      "informations": [
+        "Il a vu Gaston s'isoler avec Mehdi plus tôt dans la soirée."
+      ],
+      "objectif": "Publier ses mémoires sans que cela ne paraisse suspect après le meurtre."
+    }
+  },
+  {
+    "id": "nadege15",
+    "name": "Nadège",
+    "role": "Organisatrice de la foire",
+    "age": 48,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Organisatrice événementielle"
+    },
+    "private": {
+      "motif": "Gaston menaçait de se retirer du jury, ce qui aurait terni la réputation de l'événement qu'elle organise depuis dix ans.",
+      "secret": "Nadège avait dissimulé cette menace au comité d'organisation.",
+      "alibi": "Elle affirme être restée au vestiaire à gérer un problème logistique.",
+      "opportunite": "Le vestiaire est éloigné de la réserve privée.",
+      "informations": [
+        "Elle a vu Bruno décharger des caisses près du quai de livraison."
+      ],
+      "objectif": "Éviter que le retrait de Gaston ne compromette la foire."
+    }
+  },
+  {
+    "id": "simon15",
+    "name": "Simon",
+    "role": "Fils de Gaston",
+    "age": 35,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Fils de la victime, avocat"
+    },
+    "private": {
+      "motif": "Gaston avait récemment modifié son testament en faveur d'une fondation, réduisant considérablement la part de Simon.",
+      "secret": "Simon avait consulté un avocat pour contester ce testament avant même le décès de son père.",
+      "alibi": "Il affirme être resté dans le hall d'exposition avec des invités toute la soirée.",
+      "opportunite": "Faible : plusieurs témoins confirment sa présence continue.",
+      "informations": [
+        "Il a entendu Florence et son père se disputer violemment la veille."
+      ],
+      "objectif": "Contester le testament sans paraître intéressé par la mort de son père."
+    }
+  },
+  {
+    "id": "lea15",
+    "name": "Léa",
+    "role": "Restauratrice d'œuvres",
+    "age": 33,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Restauratrice indépendante"
+    },
+    "private": {
+      "motif": "Gaston avait remis en question la qualité d'une restauration récente, menaçant sa réputation naissante.",
+      "secret": "Léa avait effectivement pris un raccourci technique sur cette restauration.",
+      "alibi": "Elle affirme être restée au bureau de l'expert à consulter des références jusqu'à 19h55.",
+      "opportunite": "Elle a un accès légitime à la réserve pour examiner les pièces à restaurer.",
+      "informations": [
+        "Elle a vu Pauline et Mehdi se croiser nerveusement près du bureau."
+      ],
+      "objectif": "Défendre la qualité de son travail sans reconnaître le raccourci pris."
+    }
+  },
+  {
+    "id": "gilbert15",
+    "name": "Gilbert",
+    "role": "Gardien de nuit",
+    "age": 58,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Gardien de sécurité de la foire"
+    },
+    "private": {
+      "motif": "Aucun motif personnel connu, mais il a été vu en dehors de sa ronde habituelle pendant la fenêtre du crime.",
+      "secret": "Gilbert s'est absenté de sa ronde pour un appel personnel urgent.",
+      "alibi": "Il affirme être resté au parking, hors de vue des caméras du hall.",
+      "opportunite": "Il connaît toutes les issues du bâtiment et les horaires de ronde.",
+      "informations": [
+        "Il a vu André et Thérèse discuter calmement à la buvette pendant toute la période concernée."
+      ],
+      "objectif": "Éviter d'être sanctionné pour avoir quitté son poste."
+    }
+  }
+]

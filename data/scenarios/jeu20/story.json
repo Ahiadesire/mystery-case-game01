@@ -1,0 +1,22 @@
+{
+  "id": "jeu20",
+  "title": "LA BIBLIOTHÈQUE SECRÈTE",
+  "type": [
+    "meurtre mystérieux",
+    "enquête",
+    "déduction",
+    "bluff",
+    "jeu social"
+  ],
+  "minPlayers": 4,
+  "maxPlayers": 12,
+  "durationMinutes": 30,
+  "victim": {
+    "name": "Édouard Cazenove",
+    "age": 70,
+    "profession": "Bibliophile, fondateur d'un cercle littéraire privé",
+    "deathFoundTime": "21h35",
+    "murderWindow": "21h10 - 21h25"
+  },
+  "publicIntroTemplate": "Le cercle littéraire d'Édouard Cazenove se réunit pour la présentation exceptionnelle d'un manuscrit rarissime, devant {{playerCount}} membres, experts et proches. À 21h35, Édouard est retrouvé sans vie dans la réserve des manuscrits. Entre vieux livres et vieilles rancunes, une page s'est tournée pour de bon."
+}

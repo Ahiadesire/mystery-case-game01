@@ -1,0 +1,74 @@
+[
+  {
+    "order": 1,
+    "title": "Preuves des manœuvres juridiques",
+    "linkedCharacterId": "sacha16",
+    "description": "Des documents montrent que Sacha conservait des preuves des manœuvres ayant conduit à son éviction, qu'il comptait révéler ce soir-là."
+  },
+  {
+    "order": 2,
+    "title": "Message de chantage",
+    "linkedCharacterId": "diane16",
+    "description": "Un échange de messages confirme que Maxime faisait chanter Diane sur son opération financière limite."
+  },
+  {
+    "order": 3,
+    "title": "Enregistrement d'Amira",
+    "linkedCharacterId": "sacha16",
+    "description": "On y entend Maxime menacer Sacha de révéler la fausse accusation devant tous les investisseurs présents."
+  },
+  {
+    "order": 4,
+    "title": "Registre de l'ascenseur de service",
+    "linkedCharacterId": "diane16",
+    "description": "Il indique un trajet du bureau de l'organisation vers le rooftop, durant la fenêtre du crime, correspondant aux horaires de Diane."
+  },
+  {
+    "order": 5,
+    "title": "Clause de sortie abusive",
+    "linkedCharacterId": "benoit16",
+    "description": "Ce document confirme la responsabilité de Benoît dans la clause litigieuse, sans le relier au meurtre."
+  },
+  {
+    "order": 6,
+    "title": "Brevet controversé",
+    "linkedCharacterId": "ryad16",
+    "description": "Il confirme le motif de Ryad, mais son alibi à l'espace networking, confirmé par plusieurs témoins, le disculpe."
+  },
+  {
+    "order": 7,
+    "title": "Plaintes internes conservées",
+    "linkedCharacterId": "helene16",
+    "description": "Elles révèlent les manquements de Maxime en matière de ressources humaines, sans lien direct avec le meurtre."
+  },
+  {
+    "order": 8,
+    "title": "Négociation parallèle de Victor",
+    "linkedCharacterId": "victor16",
+    "description": "Elle confirme le motif de Victor, mais son alibi à l'espace networking, confirmé par d'autres investisseurs, le disculpe."
+  },
+  {
+    "order": 9,
+    "title": "Preuve de contribution non rémunérée",
+    "linkedCharacterId": "nina16",
+    "description": "Elle confirme le motif de Nina, mais son passage par l'ascenseur de service précède de peu celui de Diane, sans se croiser directement."
+  },
+  {
+    "order": 10,
+    "title": "Accord de sponsoring alternatif",
+    "linkedCharacterId": "gaspard16",
+    "description": "Il confirme le motif de Gaspard, sans le relier au meurtre : son alibi en salle de conférence est confirmé."
+  },
+  {
+    "order": 11,
+    "title": "Support de stockage disparu",
+    "linkedCharacterId": "diane16",
+    "description": "Le support sur lequel Maxime conservait ses preuves de délit d'initié a disparu, retrouvé plus tard caché dans le sac de Diane."
+  },
+  {
+    "order": 12,
+    "title": "Rapport du médecin légiste",
+    "linkedCharacterId": null,
+    "description": "L'heure du décès est confirmée entre 23h30 et 23h50, période où l'accès au rooftop se faisait presque exclusivement par la terrasse ou l'ascenseur de service."
+  }
+]

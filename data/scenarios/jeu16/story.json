@@ -1,0 +1,23 @@
+{
+  "id": "jeu16",
+  "title": "LE SOMMET DES STARTUPS",
+  "type": [
+    "meurtre mystérieux",
+    "enquête",
+    "déduction",
+    "bluff",
+    "jeu social",
+    "difficile"
+  ],
+  "minPlayers": 4,
+  "maxPlayers": 12,
+  "durationMinutes": 30,
+  "victim": {
+    "name": "Maxime Berger",
+    "age": 41,
+    "profession": "Fondateur et CEO d'une startup en vue",
+    "deathFoundTime": "23h58",
+    "murderWindow": "23h30 - 23h50"
+  },
+  "publicIntroTemplate": "Le Sommet des Startups s'achève par une soirée exclusive sur le rooftop de l'hôtel, où {{playerCount}} entrepreneurs, investisseurs et journalistes célèbrent la levée de fonds record de Maxime Berger. À 23h58, son corps est découvert derrière le bar du rooftop. Sous les paillettes de la tech, les coups bas n'ont jamais cessé."
+}

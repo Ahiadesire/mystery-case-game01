@@ -1,0 +1,23 @@
+{
+  "id": "jeu19",
+  "title": "LE FESTIVAL DU FILM",
+  "type": [
+    "meurtre mystérieux",
+    "enquête",
+    "déduction",
+    "bluff",
+    "jeu social",
+    "difficile"
+  ],
+  "minPlayers": 4,
+  "maxPlayers": 12,
+  "durationMinutes": 30,
+  "victim": {
+    "name": "Vera Solenza",
+    "age": 46,
+    "profession": "Réalisatrice et productrice, en compétition officielle",
+    "deathFoundTime": "22h55",
+    "murderWindow": "22h30 - 22h45"
+  },
+  "publicIntroTemplate": "Après la projection triomphale de son dernier film, Vera Solenza célèbre avec {{playerCount}} acteurs, producteurs et journalistes lors de la soirée qui suit la première. À 22h55, elle est retrouvée sans vie dans sa loge. Sous les flashs et les compliments, une rivalité mortelle couvait depuis longtemps."
+}

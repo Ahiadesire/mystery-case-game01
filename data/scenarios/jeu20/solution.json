@@ -1,0 +1,15 @@
+{
+  "guiltyExplanations": {
+    "quentin20": "Quentin a tué Édouard. Ce dernier s'apprêtait à le dénoncer devant tout le cercle pour la vente d'un manuscrit contrefait. La poussière de la réserve retrouvée sur sa manche, incompatible avec son alibi déclaré au salon cheminée, le confond.",
+    "adele20": "Adèle a tué Édouard. Il s'apprêtait à vendre toute la collection à un musée étranger dès le lendemain, supprimant son poste et dispersant l'œuvre de toute une vie. Son passage confirmé hors de la bibliothèque générale durant la fenêtre du crime la relie directement aux faits."
+  },
+  "falseLeadsSummary": [
+    "Raphaël convoitait un manuscrit précis, sans lien direct avec le meurtre.",
+    "Martine menaçait de retirer son financement, sans rapport avec le crime.",
+    "Louis contestait le testament de son grand-père, mais son passage dans la réserve est bref et confirmé.",
+    "Béatrice cachait une expertise erronée, sans lien avec le meurtre.",
+    "Fabrice avait vendu un ouvrage à la provenance douteuse, sans rapport avec le crime.",
+    "David poursuivait un projet de numérisation non autorisé, sans lien avec le meurtre."
+  ],
+  "closingLine": "Le manuscrit le plus rare de la soirée n'aura pas suffi à couvrir la vérité."
+}

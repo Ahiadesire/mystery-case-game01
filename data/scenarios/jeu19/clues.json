@@ -1,0 +1,74 @@
+[
+  {
+    "order": 1,
+    "title": "Brouillons originaux de Simon",
+    "linkedCharacterId": "nathan19",
+    "description": "Ces brouillons prouvent que Nathan s'est approprié une scène entière écrite par Simon."
+  },
+  {
+    "order": 2,
+    "title": "Dossier de sabotage financier",
+    "linkedCharacterId": "priscille19",
+    "description": "Ce dossier, conservé par Vera, prouve que Priscille avait orchestré le sabotage d'un de ses précédents films."
+  },
+  {
+    "order": 3,
+    "title": "Enregistrement de Yasmine",
+    "linkedCharacterId": "nathan19",
+    "description": "On y entend Vera annoncer qu'elle révélera la vérité sur la scène contestée dès la conférence de presse du lendemain."
+  },
+  {
+    "order": 4,
+    "title": "Registre du couloir backstage",
+    "linkedCharacterId": "nathan19",
+    "description": "Il indique un passage du bar vers la loge de Vera durant la fenêtre du crime, correspondant aux horaires de Nathan."
+  },
+  {
+    "order": 5,
+    "title": "Accords préliminaires de Bernard",
+    "linkedCharacterId": "bernard19",
+    "description": "Ils confirment le motif de Bernard, sans le relier au meurtre : son alibi au bar est confirmé."
+  },
+  {
+    "order": 6,
+    "title": "Fuite d'informations d'Alice",
+    "linkedCharacterId": "alice19",
+    "description": "Elle confirme le motif d'Alice, sans la relier au meurtre : son alibi sur le tapis rouge est confirmé."
+  },
+  {
+    "order": 7,
+    "title": "Montage alternatif de Marco",
+    "linkedCharacterId": "marco19",
+    "description": "Il confirme le motif de Marco, sans le relier au meurtre : son alibi en salle de projection est confirmé."
+  },
+  {
+    "order": 8,
+    "title": "Menace de boycott de Tania",
+    "linkedCharacterId": "tania19",
+    "description": "Elle confirme le motif de Tania, sans la relier directement au meurtre."
+  },
+  {
+    "order": 9,
+    "title": "Costume endommagé d'Odile",
+    "linkedCharacterId": "odile19",
+    "description": "Il confirme le motif d'Odile, sans la relier au meurtre : son passage dans la loge est bref et confirmé par Camille."
+  },
+  {
+    "order": 10,
+    "title": "Négociation secrète de Guillaume",
+    "linkedCharacterId": "guillaume19",
+    "description": "Elle confirme le motif de Guillaume, sans le relier au meurtre : son alibi au parking VIP est confirmé."
+  },
+  {
+    "order": 11,
+    "title": "Disque dur disparu",
+    "linkedCharacterId": "priscille19",
+    "description": "Le disque dur sur lequel Vera conservait ses preuves contre Priscille a disparu, retrouvé plus tard caché dans son sac."
+  },
+  {
+    "order": 12,
+    "title": "Rapport du médecin légiste",
+    "linkedCharacterId": null,
+    "description": "L'heure du décès est confirmée entre 22h30 et 22h45, période où l'accès à la loge se faisait principalement par le bar ou l'escalier de service."
+  }
+]

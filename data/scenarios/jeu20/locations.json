@@ -1,0 +1,42 @@
+[
+  {
+    "id": "salle_lecture",
+    "name": "Salle de lecture",
+    "description": "Lieu du crime, adjacente à la réserve des manuscrits."
+  },
+  {
+    "id": "reserve_manuscrits",
+    "name": "Réserve des manuscrits",
+    "description": "Accès restreint, cœur de la collection rare."
+  },
+  {
+    "id": "salon_cheminee",
+    "name": "Salon cheminée",
+    "description": "Relié à la réserve par un escalier dérobé."
+  },
+  {
+    "id": "bureau_conservateur",
+    "name": "Bureau du conservateur",
+    "description": "Communique directement avec la réserve des manuscrits."
+  },
+  {
+    "id": "escalier_derobe",
+    "name": "Escalier dérobé",
+    "description": "Passage discret entre le salon cheminée et la réserve."
+  },
+  {
+    "id": "bibliotheque_generale",
+    "name": "Bibliothèque générale",
+    "description": "Reliée à la réserve par un couloir surveillé par Adèle."
+  },
+  {
+    "id": "cour_interieure",
+    "name": "Cour intérieure",
+    "description": "Éloignée de la réserve des manuscrits."
+  },
+  {
+    "id": "cave_archives",
+    "name": "Cave des archives",
+    "description": "Connue seulement des anciens employés comme Colette."
+  }
+]

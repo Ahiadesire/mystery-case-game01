@@ -1,0 +1,245 @@
+[
+  {
+    "id": "nathan19",
+    "name": "Nathan",
+    "role": "Acteur principal du film",
+    "age": 35,
+    "guiltyEligible": true,
+    "public": {
+      "relation": "Acteur principal, révélé par Vera"
+    },
+    "private": {
+      "motif": "Vera avait découvert que Nathan s'était approprié une scène entière écrite par un scénariste qu'elle protégeait, et menaçait de le révéler publiquement pendant la conférence de presse du lendemain.",
+      "secret": "Nathan a effectivement fait passer pour siennes des idées de mise en scène qui ne lui appartenaient pas.",
+      "alibi": "Il affirme être resté au bar de la soirée à recevoir des félicitations jusqu'à 22h50.",
+      "opportunite": "Le bar communique par un couloir backstage directement avec la loge de Vera.",
+      "informations": [
+        "Il sait que Priscille avait aussi un différend financier avec Vera.",
+        "Il a vu Odile sortir de la loge de Vera peu avant lui."
+      ],
+      "objectif": "Empêcher la révélation avant la conférence de presse du lendemain."
+    }
+  },
+  {
+    "id": "priscille19",
+    "name": "Priscille",
+    "role": "Productrice rivale",
+    "age": 44,
+    "guiltyEligible": true,
+    "public": {
+      "relation": "Productrice concurrente ayant financé un précédent film de Vera"
+    },
+    "private": {
+      "motif": "Vera détenait des preuves que Priscille avait saboté financièrement un de ses précédents films par pure rivalité, et menaçait de les rendre publiques.",
+      "secret": "Priscille a effectivement orchestré ce sabotage financier plusieurs années auparavant.",
+      "alibi": "Elle affirme être restée au bureau de production pour un appel avec des distributeurs jusqu'à 22h48.",
+      "opportunite": "Le bureau de production communique par un escalier de service directement avec la loge de Vera.",
+      "informations": [
+        "Elle sait que Vera conservait ses preuves sur un disque dur qu'elle gardait toujours à portée de main.",
+        "Elle a vu Guillaume s'entretenir tendument avec Vera plus tôt dans la soirée."
+      ],
+      "objectif": "Récupérer ou détruire les preuves du sabotage avant leur publication."
+    }
+  },
+  {
+    "id": "simon19",
+    "name": "Simon",
+    "role": "Scénariste",
+    "age": 39,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Scénariste du film primé"
+    },
+    "private": {
+      "motif": "Vera s'apprêtait à créditer publiquement Nathan pour une scène que Simon avait réellement écrite, une injustice qui le rongeait.",
+      "secret": "Simon avait conservé tous ses brouillons originaux comme preuve, sans jamais oser les montrer à Vera.",
+      "alibi": "Il affirme être resté au bureau de production à revoir des notes de scénario.",
+      "opportunite": "Il partage partiellement l'alibi de Priscille, ce qui complique la vérification.",
+      "informations": [
+        "Il a vu Priscille nerveuse après un appel juste avant de quitter le bureau."
+      ],
+      "objectif": "Faire reconnaître sa paternité sur la scène contestée, désormais sans Vera pour trancher."
+    }
+  },
+  {
+    "id": "alice19",
+    "name": "Alice",
+    "role": "Attachée de presse",
+    "age": 28,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Attachée de presse du film"
+    },
+    "private": {
+      "motif": "Vera l'avait réprimandée publiquement pour une fuite d'information sur le scénario avant la première.",
+      "secret": "Alice avait effectivement vendu discrètement des informations exclusives à un magazine pour financer un projet personnel.",
+      "alibi": "Elle affirme être restée sur le tapis rouge à gérer les interviews jusqu'à 22h40.",
+      "opportunite": "Le tapis rouge est éloigné de la loge de Vera.",
+      "informations": [
+        "Elle a vu Nathan et Vera avoir une altercation tendue juste après la projection."
+      ],
+      "objectif": "Éviter que la fuite ne lui coûte son poste dans l'industrie."
+    }
+  },
+  {
+    "id": "marco19",
+    "name": "Marco",
+    "role": "Monteur du film",
+    "age": 42,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Monteur et éditeur du film"
+    },
+    "private": {
+      "motif": "Vera avait imposé un montage final contre l'avis de Marco, qu'il jugeait catastrophique pour sa réputation professionnelle.",
+      "secret": "Marco conservait secrètement une version alternative du montage, contre la volonté de Vera.",
+      "alibi": "Il affirme être resté en salle de projection à revoir des rushes jusqu'à 22h45.",
+      "opportunite": "La salle de projection est éloignée de la loge de Vera.",
+      "informations": [
+        "Il a vu Tania s'énerver contre Nathan en coulisses plus tôt dans la soirée."
+      ],
+      "objectif": "Faire circuler sa version alternative du montage, désormais sans l'accord de Vera."
+    }
+  },
+  {
+    "id": "tania19",
+    "name": "Tania",
+    "role": "Actrice secondaire",
+    "age": 31,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Actrice secondaire du film, jalouse de Nathan"
+    },
+    "private": {
+      "motif": "Vera avait réduit son rôle au montage final au profit de scènes supplémentaires pour Nathan.",
+      "secret": "Tania avait menacé Vera en privé de ne pas assurer la promotion du film si son rôle n'était pas restauré.",
+      "alibi": "Elle affirme être restée en backstage à se préparer pour des photos jusqu'à 22h50.",
+      "opportunite": "Le backstage communique directement avec la loge de Vera par un couloir étroit.",
+      "informations": [
+        "Elle a vu François faire une ronde de sécurité inhabituelle vers 22h35."
+      ],
+      "objectif": "Faire pression pour restaurer son rôle dans une éventuelle version longue."
+    }
+  },
+  {
+    "id": "bernard19",
+    "name": "Bernard",
+    "role": "Distributeur et financier",
+    "age": 57,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Distributeur principal du film"
+    },
+    "private": {
+      "motif": "Vera refusait une sortie internationale anticipée que Bernard jugeait pourtant très lucrative.",
+      "secret": "Bernard avait déjà signé des accords préliminaires avec des distributeurs étrangers, à l'insu de Vera.",
+      "alibi": "Il affirme être resté au bar de la soirée à négocier avec d'autres investisseurs.",
+      "opportunite": "Faible : plusieurs témoins confirment sa présence continue au bar.",
+      "informations": [
+        "Il a vu Priscille s'isoler au bureau de production vers 22h20."
+      ],
+      "objectif": "Finaliser ses accords préliminaires avant que Vera ne les découvre."
+    }
+  },
+  {
+    "id": "yasmine19",
+    "name": "Yasmine",
+    "role": "Journaliste cinéma",
+    "age": 33,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Journaliste couvrant le festival"
+    },
+    "private": {
+      "motif": "Vera menaçait de démentir publiquement un article de Yasmine sur les conditions de travail difficiles sur le tournage.",
+      "secret": "Yasmine enregistrait discrètement certaines conversations pour son enquête.",
+      "alibi": "Elle affirme être restée sur le tapis rouge, micro caché, jusqu'à 22h45.",
+      "opportunite": "Elle circulait librement mais aurait été remarquée près du backstage.",
+      "informations": [
+        "Son enregistrement contient une dispute entre Vera et Priscille.",
+        "Elle sait que Nathan s'était approprié une scène du scénario."
+      ],
+      "objectif": "Protéger ses sources et publier son enquête."
+    }
+  },
+  {
+    "id": "guillaume19",
+    "name": "Guillaume",
+    "role": "Frère de Vera, régisseur",
+    "age": 40,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Frère de la victime, régisseur du tournage"
+    },
+    "private": {
+      "motif": "Vera refusait de lui confier la régie de son prochain film malgré ses années d'expérience à ses côtés.",
+      "secret": "Guillaume négociait en secret un poste sur le prochain film de Priscille, la rivale de sa sœur.",
+      "alibi": "Il affirme être resté au parking VIP à superviser les départs des invités.",
+      "opportunite": "Le parking VIP est éloigné de la loge de Vera.",
+      "informations": [
+        "Il a vu Nathan se diriger vers le couloir backstage peu avant 22h40."
+      ],
+      "objectif": "Sécuriser son futur poste chez Priscille sans que sa sœur ne l'apprenne."
+    }
+  },
+  {
+    "id": "odile19",
+    "name": "Odile",
+    "role": "Costumière",
+    "age": 51,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Costumière du film"
+    },
+    "private": {
+      "motif": "Vera l'avait accusée d'avoir endommagé un costume de scène coûteux, menaçant de lui faire payer les réparations.",
+      "secret": "Odile avait effectivement causé ce dommage par négligence, qu'elle dissimulait depuis.",
+      "alibi": "Elle affirme être passée rapidement dans la loge de Vera pour récupérer un costume, puis en être ressortie aussitôt.",
+      "opportunite": "Elle a été l'une des dernières personnes connues à être entrée dans la loge avant la découverte du corps.",
+      "informations": [
+        "Elle a vu Nathan rôder près du couloir backstage juste avant elle."
+      ],
+      "objectif": "Éviter de payer les réparations du costume endommagé."
+    }
+  },
+  {
+    "id": "francois19",
+    "name": "François",
+    "role": "Garde du corps",
+    "age": 45,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Garde du corps et responsable sécurité de Vera"
+    },
+    "private": {
+      "motif": "Aucun motif personnel connu, mais il a modifié sa ronde habituelle sans en informer l'équipe ce soir-là.",
+      "secret": "François s'est absenté de son poste pour un appel personnel urgent.",
+      "alibi": "Il affirme être resté sur le toit-terrasse, hors de vue des caméras du backstage.",
+      "opportunite": "Il connaît tous les accès de la salle, backstage et loges compris.",
+      "informations": [
+        "Il a vu Tania se préparer nerveusement pour des photos vers 22h35."
+      ],
+      "objectif": "Éviter d'être sanctionné pour avoir quitté son poste de sécurité."
+    }
+  },
+  {
+    "id": "camille19",
+    "name": "Camille",
+    "role": "Assistante de production, stagiaire",
+    "age": 23,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Assistante de production stagiaire"
+    },
+    "private": {
+      "motif": "Vera l'avait publiquement réprimandée pour une erreur d'organisation mineure sur le tapis rouge.",
+      "secret": "Camille cherchait discrètement un stage plus valorisant dans une autre production.",
+      "alibi": "Elle affirme être restée sur le tapis rouge à gérer la logistique jusqu'à 22h45.",
+      "opportunite": "Faible : plusieurs témoins confirment sa présence continue.",
+      "informations": [
+        "Elle a vu Odile entrer puis ressortir rapidement de la loge de Vera."
+      ],
+      "objectif": "Décrocher un nouveau stage sans mauvaise référence de Vera."
+    }
+  }
+]

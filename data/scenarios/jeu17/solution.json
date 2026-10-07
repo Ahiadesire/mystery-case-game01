@@ -1,0 +1,15 @@
+{
+  "guiltyExplanations": {
+    "hadrien17": "Hadrien a tué Constance. Elle avait découvert ses authentifications frauduleuses et s'apprêtait à le dénoncer au syndicat professionnel dès le lendemain. L'empreinte partielle sur la porte du coffre-fort, incompatible avec son alibi déclaré, le confond.",
+    "morgane17": "Morgane a tué Constance. Cette dernière avait découvert le montage de blanchiment d'argent via les enchères et menaçait de la dénoncer aux autorités financières. Le registre de l'escalier privé, confirmant son passage vers le coffre-fort durant la fenêtre du crime, la relie directement aux faits."
+  },
+  "falseLeadsSummary": [
+    "Philippe négociait sa propre sortie, mais son alibi en salle des ventes est confirmé.",
+    "Roxane cherchait un poste ailleurs, sans lien avec le meurtre.",
+    "Cédric détournait une somme modeste, sans rapport avec le crime.",
+    "Agnès sous-évaluait délibérément des lots, sans lien avec le meurtre.",
+    "Thibault contestait le testament de sa mère, mais son alibi en salle des ventes est confirmé.",
+    "Malika avait pris un raccourci sur une restauration, sans rapport avec le crime."
+  ],
+  "closingLine": "Le dernier coup de marteau de la soirée n'aura adjugé qu'un silence définitif."
+}

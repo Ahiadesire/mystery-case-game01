@@ -1,0 +1,245 @@
+[
+  {
+    "id": "sacha16",
+    "name": "Sacha",
+    "role": "Co-fondateur évincé",
+    "age": 38,
+    "guiltyEligible": true,
+    "public": {
+      "relation": "Ancien co-fondateur de la startup de Maxime"
+    },
+    "private": {
+      "motif": "Maxime l'avait évincé de l'entreprise par des manœuvres juridiques douteuses et s'apprêtait à révéler publiquement une fausse accusation de harcèlement contre lui ce soir-là.",
+      "secret": "Sacha a discrètement conservé des preuves des manœuvres juridiques de Maxime, qu'il comptait utiliser en représailles.",
+      "alibi": "Il affirme être resté à l'espace networking à discuter avec des investisseurs jusqu'à 23h45.",
+      "opportunite": "L'espace networking communique par une terrasse commune avec le rooftop où le crime a eu lieu.",
+      "informations": [
+        "Il sait que Diane négociait aussi avec Maxime sur une clause de sortie.",
+        "Il a vu Claire quitter le rooftop précipitamment avant lui."
+      ],
+      "objectif": "Empêcher la révélation publique prévue le soir même."
+    }
+  },
+  {
+    "id": "diane16",
+    "name": "Diane",
+    "role": "Investisseuse en capital-risque",
+    "age": 47,
+    "guiltyEligible": true,
+    "public": {
+      "relation": "Principale investisseuse de la startup"
+    },
+    "private": {
+      "motif": "Maxime détenait des preuves d'un délit d'initié commis par Diane et la faisait chanter pour qu'elle conserve ses parts à un prix imposé.",
+      "secret": "Diane a effectivement réalisé une opération financière limite qu'elle dissimule depuis un an.",
+      "alibi": "Elle affirme être restée au bureau de l'organisation pour un appel avec ses associés jusqu'à 23h50.",
+      "opportunite": "Le bureau de l'organisation communique par un ascenseur de service directement avec le rooftop.",
+      "informations": [
+        "Elle sait que Maxime gardait ses preuves sur un support qu'il portait toujours sur lui.",
+        "Elle a vu Tom s'énerver contre Maxime plus tôt dans la soirée."
+      ],
+      "objectif": "Récupérer ou détruire les preuves du chantage avant qu'elles ne soient découvertes."
+    }
+  },
+  {
+    "id": "tom16",
+    "name": "Tom",
+    "role": "CTO actuel de la startup",
+    "age": 34,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Directeur technique et associé de Maxime"
+    },
+    "private": {
+      "motif": "Maxime s'apprêtait à vendre l'entreprise à un géant du secteur, sabordant le projet technique auquel Tom avait consacré cinq ans.",
+      "secret": "Tom négociait en secret la fuite de certains employés clés vers un projet concurrent.",
+      "alibi": "Il affirme être resté en salle de conférence à finaliser une présentation jusqu'à 23h55.",
+      "opportunite": "La salle de conférence est éloignée du rooftop, séparée par plusieurs étages.",
+      "informations": [
+        "Il a vu Ryad s'entretenir discrètement avec Maxime plus tôt dans la soirée."
+      ],
+      "objectif": "Empêcher la vente ou, à défaut, sécuriser son propre avenir professionnel."
+    }
+  },
+  {
+    "id": "amira16",
+    "name": "Amira",
+    "role": "Journaliste tech",
+    "age": 31,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Journaliste couvrant le sommet"
+    },
+    "private": {
+      "motif": "Maxime menaçait de démentir publiquement un article d'Amira sur les pratiques managériales toxiques de sa startup.",
+      "secret": "Amira enregistrait discrètement certaines conversations pour son enquête.",
+      "alibi": "Elle affirme être restée sur la terrasse, micro caché, jusqu'à 23h50.",
+      "opportunite": "La terrasse communique directement avec le rooftop où le crime a eu lieu.",
+      "informations": [
+        "Son enregistrement contient une dispute entre Maxime et Sacha.",
+        "Elle sait que Diane subissait un chantage de la part de Maxime."
+      ],
+      "objectif": "Protéger ses sources et publier son enquête."
+    }
+  },
+  {
+    "id": "benoit16",
+    "name": "Benoît",
+    "role": "Avocat d'affaires",
+    "age": 50,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Avocat de la startup"
+    },
+    "private": {
+      "motif": "Maxime s'apprêtait à le remplacer par un autre cabinet après une erreur dans la clause de sortie de Diane.",
+      "secret": "Benoît avait rédigé cette clause en connaissance de son caractère abusif envers Diane.",
+      "alibi": "Il affirme être resté au bureau de l'organisation avec Diane une partie de la soirée.",
+      "opportunite": "Il partage partiellement l'alibi de Diane, ce qui complique la vérification.",
+      "informations": [
+        "Il a vu Diane nerveuse après un appel juste avant de quitter le bureau."
+      ],
+      "objectif": "Éviter d'être tenu responsable de la clause abusive."
+    }
+  },
+  {
+    "id": "claire16",
+    "name": "Claire",
+    "role": "Assistante personnelle de Maxime",
+    "age": 26,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Assistante personnelle de la victime"
+    },
+    "private": {
+      "motif": "Maxime l'avait publiquement humiliée devant des investisseurs pour une erreur d'agenda mineure.",
+      "secret": "Claire consultait discrètement des offres d'emploi concurrentes depuis son téléphone professionnel.",
+      "alibi": "Elle affirme être restée près du rooftop à gérer la logistique de la soirée jusqu'à 23h40.",
+      "opportunite": "Elle était la dernière personne connue à avoir parlé à Maxime avant sa mort.",
+      "informations": [
+        "Elle a vu Sacha et Maxime avoir une altercation verbale vers 23h35."
+      ],
+      "objectif": "Décrocher un nouvel emploi loin de l'ambiance toxique de la startup."
+    }
+  },
+  {
+    "id": "ryad16",
+    "name": "Ryad",
+    "role": "Rival startupeur",
+    "age": 36,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Fondateur d'une startup concurrente"
+    },
+    "private": {
+      "motif": "Maxime avait déposé un brevet controversé bloquant le développement du produit de Ryad.",
+      "secret": "Ryad avait tenté de débaucher discrètement des employés clés de Maxime.",
+      "alibi": "Il affirme être resté à l'espace networking toute la soirée à réseauter.",
+      "opportunite": "Faible : plusieurs témoins confirment sa présence continue.",
+      "informations": [
+        "Il a vu Tom s'isoler nerveusement après sa conversation avec Maxime."
+      ],
+      "objectif": "Contester le brevet sans paraître impliqué dans le meurtre."
+    }
+  },
+  {
+    "id": "helene16",
+    "name": "Hélène",
+    "role": "Responsable RH",
+    "age": 44,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Responsable des ressources humaines"
+    },
+    "private": {
+      "motif": "Maxime avait étouffé plusieurs plaintes internes qu'Hélène avait tenté de faire remonter, la mettant en porte-à-faux légal.",
+      "secret": "Hélène a conservé des copies de ces plaintes, en dehors des canaux officiels de l'entreprise.",
+      "alibi": "Elle affirme être restée au vestiaire à ranger des affaires jusqu'à 23h45.",
+      "opportunite": "Le vestiaire est éloigné du rooftop.",
+      "informations": [
+        "Elle a vu Claire quitter précipitamment la zone du rooftop."
+      ],
+      "objectif": "Protéger sa position si les plaintes venaient à être découvertes."
+    }
+  },
+  {
+    "id": "victor16",
+    "name": "Victor",
+    "role": "Business angel",
+    "age": 62,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Premier investisseur historique de la startup"
+    },
+    "private": {
+      "motif": "Maxime voulait racheter ses parts à un prix jugé dérisoire par Victor avant la vente au géant du secteur.",
+      "secret": "Victor négociait en parallèle avec un autre repreneur, à l'insu de Maxime.",
+      "alibi": "Il affirme être resté à l'espace networking en pleine négociation avec d'autres investisseurs.",
+      "opportunite": "Faible : plusieurs témoins confirment sa présence continue.",
+      "informations": [
+        "Il a vu Diane s'isoler au bureau de l'organisation vers 23h20."
+      ],
+      "objectif": "Finaliser sa négociation parallèle avant l'annonce officielle de la vente."
+    }
+  },
+  {
+    "id": "nina16",
+    "name": "Nina",
+    "role": "Ex-compagne de Maxime, designeuse",
+    "age": 33,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Ex-compagne de la victime, ancienne employée"
+    },
+    "private": {
+      "motif": "Maxime avait mis fin à leur relation par message juste avant le sommet, et refusait de lui verser ses parts d'ancienne associée informelle.",
+      "secret": "Nina a conservé des preuves de sa contribution non rémunérée au produit initial de la startup.",
+      "alibi": "Elle affirme être restée au parking sous-sol pour prendre l'air après leur rupture.",
+      "opportunite": "Le parking sous-sol est relié au rooftop par l'ascenseur de service, habituellement réservé au personnel.",
+      "informations": [
+        "Elle a vu Diane emprunter l'ascenseur de service peu avant elle."
+      ],
+      "objectif": "Faire valoir sa contribution au produit avant que tout ne soit vendu."
+    }
+  },
+  {
+    "id": "gaspard16",
+    "name": "Gaspard",
+    "role": "Organisateur du sommet",
+    "age": 40,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Organisateur événementiel du sommet"
+    },
+    "private": {
+      "motif": "Maxime menaçait de retirer son sponsoring principal après un désaccord sur la mise en avant d'un concurrent.",
+      "secret": "Gaspard avait déjà signé un accord de sponsoring alternatif, à l'insu de Maxime.",
+      "alibi": "Il affirme être resté en salle de conférence à superviser la logistique jusqu'à 23h55.",
+      "opportunite": "La salle de conférence est éloignée du rooftop.",
+      "informations": [
+        "Il a vu Tom et Ryad discuter discrètement plus tôt dans la soirée."
+      ],
+      "objectif": "Sécuriser le sponsoring alternatif avant l'annonce du retrait de Maxime."
+    }
+  },
+  {
+    "id": "lucien16",
+    "name": "Lucien",
+    "role": "Agent de sécurité de l'événement",
+    "age": 45,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Agent de sécurité privé"
+    },
+    "private": {
+      "motif": "Aucun motif personnel connu, mais il a été vu en dehors de sa ronde habituelle pendant la fenêtre du crime.",
+      "secret": "Lucien s'est absenté de son poste pour un appel personnel urgent.",
+      "alibi": "Il affirme être resté près de l'ascenseur de service, hors de vue des caméras du rooftop.",
+      "opportunite": "Il connaît tous les accès de l'hôtel, ascenseur de service compris.",
+      "informations": [
+        "Il a vu Diane et Nina emprunter l'ascenseur de service à quelques minutes d'intervalle."
+      ],
+      "objectif": "Éviter d'être sanctionné pour avoir quitté son poste."
+    }
+  }
+]

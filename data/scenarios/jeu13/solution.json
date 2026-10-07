@@ -1,0 +1,15 @@
+{
+  "guiltyExplanations": {
+    "antoine13": "Antoine a tué Sylvie. Elle s'apprêtait à le dénoncer pour fraude aux subventions dès le lendemain. Les traces humides menant du bassin des requins à son bureau, pendant la coupure de caméra qu'il savait imminente, le confondent.",
+    "leila13": "Leila a tué Sylvie. Cette dernière avait découvert la dissimulation de morts d'animaux rares et s'apprêtait à la licencier et porter plainte. Les gants tachés retrouvés dans la réserve, sa zone de responsabilité directe, la trahissent."
+  },
+  "falseLeadsSummary": [
+    "Marc menaçait de retirer son financement, sans lien avec le meurtre.",
+    "Claudine cachait un accord d'investisseur controversé, mais un alibi confirmé à la cafétéria.",
+    "Patrick avait coupé la caméra pour une maintenance légitime, sans rapport avec le crime.",
+    "Farid avait quitté son poste pour un appel personnel, sans lien avec le meurtre.",
+    "Lucie couvrait un écart comptable mineur, sans rapport avec le crime.",
+    "Valérie préparait un projet concurrent, mais son alibi au hall des méduses est confirmé."
+  ],
+  "closingLine": "Dans l'obscurité bleutée des bassins, la lumière a fini par percer."
+}

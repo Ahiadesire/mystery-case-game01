@@ -1,0 +1,42 @@
+[
+  {
+    "id": "bassin_requins",
+    "name": "Bassin des requins",
+    "description": "Lieu du crime, faiblement éclairé la nuit."
+  },
+  {
+    "id": "hall_meduses",
+    "name": "Hall des méduses",
+    "description": "Où se tenait la majorité du gala."
+  },
+  {
+    "id": "bureau_direction",
+    "name": "Bureau de direction",
+    "description": "Relié au bassin des requins par un couloir technique."
+  },
+  {
+    "id": "local_technique",
+    "name": "Local technique",
+    "description": "Contient le boîtier des caméras de sécurité."
+  },
+  {
+    "id": "reserve",
+    "name": "Réserve vétérinaire",
+    "description": "Jouxte le bassin des requins par une porte peu verrouillée."
+  },
+  {
+    "id": "cafeteria",
+    "name": "Cafétéria",
+    "description": "Où Claudine tenait une réunion informelle."
+  },
+  {
+    "id": "jardin_exterieur",
+    "name": "Jardin extérieur",
+    "description": "Éloigné des zones techniques."
+  },
+  {
+    "id": "quai_livraison",
+    "name": "Quai de livraison",
+    "description": "Hors de vue des caméras principales."
+  }
+]

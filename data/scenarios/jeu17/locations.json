@@ -1,0 +1,42 @@
+[
+  {
+    "id": "salle_ventes",
+    "name": "Salle des ventes",
+    "description": "Zone publique où se tenait la vacation."
+  },
+  {
+    "id": "coffre_fort",
+    "name": "Coffre-fort",
+    "description": "Lieu du crime, accessible par l'escalier privé et un couloir de service."
+  },
+  {
+    "id": "bureau_direction",
+    "name": "Bureau de direction",
+    "description": "Adjacent au coffre-fort par une porte habituellement verrouillée."
+  },
+  {
+    "id": "salle_expertise",
+    "name": "Salle d'expertise",
+    "description": "Communique directement avec le coffre-fort."
+  },
+  {
+    "id": "quai_reception",
+    "name": "Quai de réception",
+    "description": "Relié au coffre-fort par un couloir de service."
+  },
+  {
+    "id": "salon_vip",
+    "name": "Salon VIP",
+    "description": "Relié au coffre-fort par un escalier privé."
+  },
+  {
+    "id": "vestiaire",
+    "name": "Vestiaire",
+    "description": "Éloigné du coffre-fort."
+  },
+  {
+    "id": "parking",
+    "name": "Parking",
+    "description": "Éloigné de la zone du crime."
+  }
+]

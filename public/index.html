@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+<link rel="manifest" href="manifest.json">
 </head>
 <body>
 <div id="ambient"></div>
@@ -25,6 +26,8 @@
       <div class="home-toolbar">
         <button id="btn-rules" class="text-btn" type="button">📖 Règles du jeu</button>
         <button id="btn-sound" class="text-btn" type="button" aria-pressed="false">🔔 Sons activés</button>
+        <button id="btn-profile" class="text-btn" type="button">🏆 Mes stats</button>
+        <button id="btn-settings" class="text-btn" type="button">⚙️ Réglages</button>
       </div>
       <div class="home-grid">
         <article class="panel">
@@ -48,7 +51,7 @@
 
   <section id="screen-lobby" class="screen">
     <div class="topbar">
-      <div><span class="eyebrow">SALLE</span><strong id="lobby-code" class="room-code"></strong><button id="btn-copy-code" class="text-btn copy-code-btn" type="button" title="Copier le code">⧉ Copier</button></div>
+      <div><span class="eyebrow">SALLE</span><strong id="lobby-code" class="room-code"></strong><button id="btn-copy-code" class="text-btn copy-code-btn" type="button" title="Copier le code">⧉ Copier</button> <button id="btn-share-room" class="text-btn copy-code-btn" type="button">📤 Inviter</button> <button id="btn-qr-room" class="text-btn copy-code-btn" type="button">▣ QR</button></div>
       <div id="lobby-count" class="pill"></div>
     </div>
     <div class="lobby-layout">
@@ -58,7 +61,7 @@
         <div class="case-meta"><span id="case-difficulty"></span><span id="case-pool"></span></div>
         <p id="case-description">Le serveur choisit automatiquement une affaire. Aucune longue liste de scénarios à parcourir.</p>
         <button id="btn-reroll-scenario" class="secondary" style="display:none">🎲 Changer d'affaire</button>
-        <p id="scenario-note" class="muted"></p>
+        <div class="mode-picker"><span class="label">MODE DE PARTIE</span><div class="mode-buttons"><button class="mode-btn active" data-mode="classic">🕵️ Classique · 30 min</button><button class="mode-btn" data-mode="quick">⚡ Rapide · 15 min</button><button class="mode-btn" data-mode="hardcore">☠️ Hardcore</button></div></div><p id="scenario-note" class="muted"></p>
       </article>
       <article class="panel">
         <div class="panel-head"><div><span class="label">JOUEURS</span><h2>Dans la salle</h2></div><span id="lobby-readiness" class="muted"></span></div>
@@ -99,11 +102,13 @@
         <article class="panel compact dossier-mini">
           <div class="panel-head"><h3>🔐 Mon dossier</h3><button id="btn-toggle-dossier" class="text-btn">Afficher</button></div>
           <div id="my-dossier-panel" class="hidden"></div>
+          <div class="notes-tools"><button id="btn-read-dossier" class="text-btn" type="button">🔊 Lire le dossier</button><button id="btn-notes" class="text-btn" type="button">📝 Mes notes</button></div>
         </article>
 
         <article class="panel">
           <div class="panel-head"><div><span class="label">PREUVES</span><h2>Indices découverts</h2></div><span id="clue-counter" class="pill">0 / 0</span></div>
           <div id="clues-list" class="clues"></div>
+          <div class="clue-tools"><button id="btn-read-clues" class="text-btn" type="button">🔊 Lire les indices</button><button id="btn-mark-clue" class="text-btn" type="button">⭐ Marquer le dernier indice</button></div>
           <div id="empty-clues" class="empty">L'enquête commence. Le premier indice arrivera bientôt…</div>
         </article>
 
@@ -165,9 +170,11 @@
   <section id="screen-reveal" class="screen">
     <div class="reveal-hero"><span class="eyebrow">AFFAIRE RÉSOLUE</span><h1>La vérité est révélée.</h1><p id="reveal-intro"></p></div>
     <article id="reveal-content" class="panel"></article>
-    <div class="replay-actions"><button id="btn-new-case" class="primary" style="display:none">🎲 Nouvelle affaire</button></div>
+    <div id="reveal-share-card" class="share-card"></div><div class="replay-actions"><button id="btn-new-case" class="primary" style="display:none">🎲 Nouvelle affaire</button><button id="btn-share-result" class="secondary">📸 Partager le résultat</button></div>
   </section>
 </main>
+
+<div id="onboarding-modal" class="modal hidden"><div class="modal-card onboarding"><span class="eyebrow">BIENVENUE DANS L'ENQUÊTE</span><h2>🕵️ Prêt à résoudre une affaire ?</h2><p class="muted">Le Dernier Dîner est conçu pour 4 à 12 joueurs. Choisis un mode, partage le code ou le QR, puis confronte les alibis.</p><div class="onboarding-grid"><div><b>🔐 Dossier secret</b><span>Ton personnage a son motif, son alibi, ses secrets et son objectif.</span></div><div><b>🔎 Indices progressifs</b><span>Les preuves arrivent automatiquement pendant l'enquête.</span></div><div><b>💬 Débat</b><span>Discute, réponds aux messages et construis ta théorie.</span></div><div><b>🗳️ Vote</b><span>Le vote final est secret jusqu'à la révélation.</span></div></div><div class="modal-actions"><button id="btn-onboarding-skip" class="text-btn">Ne plus afficher</button><button id="btn-onboarding-close" class="primary">C'est parti !</button></div></div></div>
 
 <div id="rules-modal" class="modal hidden">
   <div class="modal-card">
@@ -197,6 +204,10 @@
   </div>
 </div>
 
+<div id="profile-modal" class="modal hidden"><div class="modal-card"><button class="modal-close" data-close="profile-modal">×</button><span class="eyebrow">TON PROFIL LOCAL</span><h2>🏆 Statistiques & badges</h2><div id="profile-content"></div></div></div>
+<div id="settings-modal" class="modal hidden"><div class="modal-card"><button class="modal-close" data-close="settings-modal">×</button><span class="eyebrow">CONFORT DE JEU</span><h2>⚙️ Réglages</h2><div class="settings-grid"><label>Contraste<select id="setting-contrast"><option value="normal">Normal</option><option value="high">Élevé</option></select></label><label>Taille du texte<select id="setting-font"><option value="normal">Normale</option><option value="large">Grande</option><option value="xl">Très grande</option></select></label><label>Animations<select id="setting-motion"><option value="on">Activées</option><option value="off">Réduites</option></select></label><label>Mode daltonien<select id="setting-color"><option value="normal">Normal</option><option value="colorblind">Daltonien</option></select></label></div><button id="btn-install" class="secondary">📱 Installer l'application</button></div></div>
+<div id="notes-modal" class="modal hidden"><div class="modal-card"><button class="modal-close" data-close="notes-modal">×</button><span class="eyebrow">CARNET PERSONNEL</span><h2>📝 Mes notes</h2><textarea id="notes-area" rows="12" placeholder="Chronologie, suspects, contradictions… tes notes restent sur cet appareil."></textarea><div class="modal-actions"><button id="btn-clear-notes" class="text-btn">Effacer</button><button id="btn-save-notes" class="primary">Enregistrer</button></div></div></div>
+<div id="qr-modal" class="modal hidden"><div class="modal-card qr-card"><button class="modal-close" data-close="qr-modal">×</button><span class="eyebrow">INVITATION</span><h2>▣ Scanner pour rejoindre</h2><img id="room-qr" alt="QR code de la salle"><strong id="qr-code-label"></strong><p class="muted">Le QR ouvre directement la page de cette salle.</p></div></div>
 <script src="/socket.io/socket.io.js"></script>
 <script src="app.js"></script>
 </body>

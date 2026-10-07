@@ -1,0 +1,74 @@
+[
+  {
+    "order": 1,
+    "title": "Meuble authentifié frauduleusement",
+    "linkedCharacterId": "florence15",
+    "description": "Un rapport d'expertise prouve que Florence savait que le meuble vendu était une copie."
+  },
+  {
+    "order": 2,
+    "title": "Certificat de provenance falsifié",
+    "linkedCharacterId": "mehdi15",
+    "description": "Ce certificat, signé par Mehdi, dissimule l'origine volée d'un objet vendu récemment."
+  },
+  {
+    "order": 3,
+    "title": "Enregistrement de Christine",
+    "linkedCharacterId": "mehdi15",
+    "description": "On y entend Gaston annoncer qu'il appellera la police dès la fin de la soirée à propos de Mehdi."
+  },
+  {
+    "order": 4,
+    "title": "Registre d'accès de la réserve",
+    "linkedCharacterId": "florence15",
+    "description": "Il indique un passage non déclaré depuis le stand de Florence vers la réserve durant la fenêtre du crime."
+  },
+  {
+    "order": 5,
+    "title": "Estimations gonflées de Vincent",
+    "linkedCharacterId": "vincent15",
+    "description": "Ce document confirme la fraude de Vincent, mais son alibi en salle des ventes le disculpe."
+  },
+  {
+    "order": 6,
+    "title": "Pièce douteuse de Thérèse",
+    "linkedCharacterId": "therese15",
+    "description": "Elle confirme le motif de Thérèse, mais son alibi à la buvette, confirmé par André, la disculpe."
+  },
+  {
+    "order": 7,
+    "title": "Rapport de dommage dissimulé",
+    "linkedCharacterId": "bruno15",
+    "description": "Il explique le motif de Bruno, sans le relier directement au meurtre."
+  },
+  {
+    "order": 8,
+    "title": "Mémoires inachevées d'André",
+    "linkedCharacterId": "andre15",
+    "description": "Elles révèlent d'anciennes tensions, sans lien avec le meurtre : sa mobilité réduite le disculpe."
+  },
+  {
+    "order": 9,
+    "title": "Note de restauration accélérée",
+    "linkedCharacterId": "lea15",
+    "description": "Elle confirme le raccourci pris par Léa, sans la relier au crime."
+  },
+  {
+    "order": 10,
+    "title": "Testament modifié",
+    "linkedCharacterId": "simon15",
+    "description": "Il confirme le motif de Simon, mais son alibi dans le hall, confirmé par plusieurs témoins, le disculpe."
+  },
+  {
+    "order": 11,
+    "title": "Poussière de réserve sur une manche",
+    "linkedCharacterId": "mehdi15",
+    "description": "Une poussière caractéristique de la réserve privée est retrouvée sur la manche de Mehdi, incompatible avec son alibi au bureau voisin."
+  },
+  {
+    "order": 12,
+    "title": "Rapport du médecin légiste",
+    "linkedCharacterId": null,
+    "description": "L'heure du décès est confirmée entre 19h45 et 19h58, resserrant la fenêtre autour de la réserve."
+  }
+]

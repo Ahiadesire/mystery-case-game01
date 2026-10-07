@@ -1,0 +1,29 @@
+{
+  "id": "jeu15",
+  "title": "LA FOIRE AUX ANTIQUITÉS",
+  "difficulty": "normale",
+  "guiltyPool": [
+    "florence15",
+    "mehdi15"
+  ],
+  "guiltyRules": [
+    {
+      "minPlayers": 4,
+      "maxPlayers": 5,
+      "guiltyCount": 1,
+      "mode": "random-one"
+    },
+    {
+      "minPlayers": 6,
+      "maxPlayers": 8,
+      "guiltyCount": 1,
+      "mode": "random-one"
+    },
+    {
+      "minPlayers": 9,
+      "maxPlayers": 12,
+      "guiltyCount": 2,
+      "mode": "both"
+    }
+  ]
+}

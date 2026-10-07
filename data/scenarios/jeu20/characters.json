@@ -1,0 +1,245 @@
+[
+  {
+    "id": "quentin20",
+    "name": "Quentin",
+    "role": "Relieur et restaurateur",
+    "age": 46,
+    "guiltyEligible": true,
+    "public": {
+      "relation": "Relieur attitré du cercle littéraire"
+    },
+    "private": {
+      "motif": "Édouard avait découvert que Quentin avait vendu une copie contrefaite d'un manuscrit ancien à un collectionneur étranger, et s'apprêtait à le dénoncer devant tout le cercle ce soir-là.",
+      "secret": "Quentin a fabriqué et vendu cette contrefaçon deux ans auparavant.",
+      "alibi": "Il affirme être resté au salon cheminée à discuter avec d'autres membres jusqu'à 21h30.",
+      "opportunite": "Le salon cheminée communique par un escalier dérobé directement avec la réserve des manuscrits.",
+      "informations": [
+        "Il sait qu'Adèle avait aussi un différend avec Édouard.",
+        "Il a vu Louis sortir de la réserve peu avant lui."
+      ],
+      "objectif": "Empêcher la dénonciation publique prévue ce soir-là."
+    }
+  },
+  {
+    "id": "adele20",
+    "name": "Adèle",
+    "role": "Bibliothécaire en chef",
+    "age": 41,
+    "guiltyEligible": true,
+    "public": {
+      "relation": "Bibliothécaire en chef, gardienne de la collection"
+    },
+    "private": {
+      "motif": "Édouard voulait vendre l'intégralité de la collection à un musée étranger, ce qui aurait supprimé le poste d'Adèle et dispersé l'œuvre de toute une vie.",
+      "secret": "Adèle avait commencé à contacter secrètement des mécènes pour proposer une alternative à la vente, sans en informer Édouard.",
+      "alibi": "Elle affirme être restée à la bibliothèque générale à ranger des ouvrages jusqu'à 21h30.",
+      "opportunite": "Elle possède les clés de toutes les salles, réserve des manuscrits comprise.",
+      "informations": [
+        "Elle sait que la vente devait être annoncée le lendemain matin au cercle.",
+        "Elle a vu Fabrice consulter nerveusement un catalogue près de la réserve."
+      ],
+      "objectif": "Empêcher la vente ou, à défaut, trouver une alternative avant l'annonce."
+    }
+  },
+  {
+    "id": "raphael20",
+    "name": "Raphaël",
+    "role": "Collectionneur rival",
+    "age": 60,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Membre du cercle, collectionneur rival"
+    },
+    "private": {
+      "motif": "Édouard avait refusé de lui céder un manuscrit convoité malgré une offre généreuse, préférant le garder dans sa collection personnelle.",
+      "secret": "Raphaël négociait en secret avec un intermédiaire pour obtenir le manuscrit après la mort d'Édouard, prévoyant son grand âge.",
+      "alibi": "Il affirme être resté au salon cheminée avec Quentin et d'autres membres.",
+      "opportunite": "Il partage partiellement l'alibi de Quentin, ce qui complique la vérification.",
+      "informations": [
+        "Il a vu Quentin nerveux après avoir reçu un message juste avant la présentation."
+      ],
+      "objectif": "Obtenir le manuscrit convoité par tous les moyens légaux disponibles."
+    }
+  },
+  {
+    "id": "martine20",
+    "name": "Martine",
+    "role": "Mécène",
+    "age": 65,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Mécène principale du cercle littéraire"
+    },
+    "private": {
+      "motif": "Édouard avait refusé de faire graver son nom sur la nouvelle aile de la bibliothèque malgré ses dons importants.",
+      "secret": "Martine avait menacé en privé de retirer tout financement futur si elle n'obtenait pas cette reconnaissance.",
+      "alibi": "Elle affirme être restée à la cour intérieure à discuter avec d'autres mécènes.",
+      "opportunite": "La cour intérieure est éloignée de la réserve des manuscrits.",
+      "informations": [
+        "Elle a entendu Nathalie et Édouard avoir une discussion tendue plus tôt."
+      ],
+      "objectif": "Éviter que sa menace de retrait de fonds ne paraisse suspecte après le meurtre."
+    }
+  },
+  {
+    "id": "louis20",
+    "name": "Louis",
+    "role": "Petit-fils d'Édouard",
+    "age": 24,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Petit-fils de la victime, étudiant en lettres"
+    },
+    "private": {
+      "motif": "Édouard avait récemment modifié son testament en faveur du musée, réduisant fortement la part de Louis.",
+      "secret": "Louis avait consulté un avocat pour contester ce testament avant même le décès de son grand-père.",
+      "alibi": "Il affirme être passé rapidement dans la réserve pour consulter un ouvrage, puis en être ressorti aussitôt.",
+      "opportunite": "Il a été l'une des dernières personnes connues à être entré dans la réserve avant la découverte du corps.",
+      "informations": [
+        "Il a vu Quentin s'attarder près de l'escalier dérobé juste avant lui."
+      ],
+      "objectif": "Contester le testament sans paraître intéressé par la mort de son grand-père."
+    }
+  },
+  {
+    "id": "beatrice20",
+    "name": "Béatrice",
+    "role": "Experte en manuscrits anciens",
+    "age": 52,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Experte invitée pour authentifier le manuscrit"
+    },
+    "private": {
+      "motif": "Édouard avait remis en question la fiabilité d'une précédente expertise de Béatrice, menaçant sa réputation dans le milieu.",
+      "secret": "Béatrice savait que cette précédente expertise contenait effectivement une erreur qu'elle avait dissimulée.",
+      "alibi": "Elle affirme être restée au bureau du conservateur à préparer son rapport d'authentification.",
+      "opportunite": "Le bureau du conservateur communique directement avec la réserve des manuscrits.",
+      "informations": [
+        "Elle a vu Adèle consulter nerveusement des documents avant elle."
+      ],
+      "objectif": "Défendre sa réputation d'experte sans reconnaître l'erreur passée."
+    }
+  },
+  {
+    "id": "fabrice20",
+    "name": "Fabrice",
+    "role": "Libraire d'occasion",
+    "age": 48,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Libraire spécialisé, membre du cercle"
+    },
+    "private": {
+      "motif": "Édouard l'avait accusé d'avoir vendu un ouvrage volé à la bibliothèque du cercle, menaçant de l'exclure définitivement.",
+      "secret": "Fabrice avait effectivement acquis cet ouvrage sans vérifier suffisamment sa provenance.",
+      "alibi": "Il affirme être resté à la bibliothèque générale à consulter un catalogue jusqu'à 21h30.",
+      "opportunite": "La bibliothèque générale communique avec la réserve des manuscrits par un couloir surveillé par Adèle.",
+      "informations": [
+        "Il a vu Adèle sortir brièvement de la bibliothèque générale vers 21h15."
+      ],
+      "objectif": "Éviter l'exclusion définitive du cercle littéraire."
+    }
+  },
+  {
+    "id": "nathalie20",
+    "name": "Nathalie",
+    "role": "Avocate du cercle",
+    "age": 50,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Avocate chargée des affaires du cercle littéraire"
+    },
+    "private": {
+      "motif": "Édouard venait de lui demander de préparer en urgence l'acte de vente de la collection au musée étranger, un document qu'elle jugeait précipité.",
+      "secret": "Nathalie avait des doutes sur la légalité de la vente au regard du statut associatif du cercle.",
+      "alibi": "Elle affirme être restée à la cour intérieure avec Martine et d'autres membres.",
+      "opportunite": "Faible : plusieurs témoins confirment sa présence continue.",
+      "informations": [
+        "Elle a vu Adèle et Édouard avoir une discussion tendue juste avant la présentation."
+      ],
+      "objectif": "Décider si elle doit révéler ses doutes sur la légalité de la vente."
+    }
+  },
+  {
+    "id": "stephane20",
+    "name": "Stéphane",
+    "role": "Journaliste littéraire",
+    "age": 37,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Journaliste couvrant la présentation du manuscrit"
+    },
+    "private": {
+      "motif": "Édouard menaçait de démentir publiquement un article de Stéphane sur les pratiques opaques du marché des manuscrits anciens.",
+      "secret": "Stéphane enregistrait discrètement certaines conversations pour son enquête.",
+      "alibi": "Il affirme être resté à la bibliothèque générale, micro caché, jusqu'à 21h30.",
+      "opportunite": "Il circulait librement mais aurait été remarqué près de la réserve.",
+      "informations": [
+        "Son enregistrement contient une dispute entre Édouard et Quentin.",
+        "Il sait qu'Adèle contactait secrètement des mécènes."
+      ],
+      "objectif": "Protéger ses sources et publier son enquête."
+    }
+  },
+  {
+    "id": "colette20",
+    "name": "Colette",
+    "role": "Ancienne secrétaire d'Édouard",
+    "age": 63,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Ancienne secrétaire personnelle d'Édouard"
+    },
+    "private": {
+      "motif": "Édouard l'avait mise à la retraite un an plus tôt contre son gré, une décision qu'elle jugeait injuste après trente ans de service.",
+      "secret": "Colette s'était introduite à la soirée sans invitation officielle, en se faisant discrète.",
+      "alibi": "Elle affirme être restée à la cave des archives, évitant de se faire remarquer.",
+      "opportunite": "Elle connaît bien les lieux pour y avoir travaillé trente ans, réserve des manuscrits comprise.",
+      "informations": [
+        "Elle a vu Quentin consulter nerveusement des documents plus tôt dans la soirée."
+      ],
+      "objectif": "Éviter d'être repérée et expulsée de la soirée avant la fin."
+    }
+  },
+  {
+    "id": "david20",
+    "name": "David",
+    "role": "Informaticien",
+    "age": 29,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Chargé de la numérisation de la collection"
+    },
+    "private": {
+      "motif": "Édouard avait interrompu son projet de numérisation, jugé trop coûteux, après des mois de travail de David.",
+      "secret": "David avait déjà numérisé une partie de la collection sans autorisation officielle, en dehors du cadre prévu.",
+      "alibi": "Il affirme être resté au bureau du conservateur à sauvegarder des fichiers jusqu'à 21h25.",
+      "opportunite": "Il partage partiellement l'alibi de Béatrice, ce qui complique la vérification.",
+      "informations": [
+        "Il a vu Louis entrer puis ressortir rapidement de la réserve des manuscrits."
+      ],
+      "objectif": "Faire valoir son travail de numérisation malgré l'arrêt du projet."
+    }
+  },
+  {
+    "id": "marion20",
+    "name": "Marion",
+    "role": "Nièce d'Édouard, artiste",
+    "age": 33,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Nièce de la victime, artiste peintre"
+    },
+    "private": {
+      "motif": "Édouard avait refusé de financer une exposition personnelle de Marion, la jugeant trop peu rentable.",
+      "secret": "Marion avait emprunté discrètement une somme à Martine pour financer son exposition malgré tout.",
+      "alibi": "Elle affirme être restée à la cour intérieure toute la soirée.",
+      "opportunite": "Faible : plusieurs témoins confirment sa présence continue.",
+      "informations": [
+        "Elle a vu Raphaël s'entretenir discrètement avec un inconnu près de l'entrée."
+      ],
+      "objectif": "Financer son exposition sans l'aide de son oncle, désormais impossible autrement."
+    }
+  }
+]

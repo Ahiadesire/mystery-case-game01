@@ -1,0 +1,22 @@
+{
+  "id": "jeu15",
+  "title": "LA FOIRE AUX ANTIQUITÉS",
+  "type": [
+    "meurtre mystérieux",
+    "enquête",
+    "déduction",
+    "bluff",
+    "jeu social"
+  ],
+  "minPlayers": 4,
+  "maxPlayers": 12,
+  "durationMinutes": 30,
+  "victim": {
+    "name": "Gaston Duperrier",
+    "age": 68,
+    "profession": "Expert antiquaire, juré de la foire",
+    "deathFoundTime": "20h05",
+    "murderWindow": "19h45 - 19h58"
+  },
+  "publicIntroTemplate": "La soirée d'ouverture de la Foire aux Antiquités réunit {{playerCount}} exposants, collectionneurs et journalistes autour de Gaston Duperrier, expert redouté et juré du concours. À 20h05, on le retrouve sans vie dans la réserve privée. Entre pièces rares et vieilles rancunes, chacun avait ses raisons de le voir disparaître."
+}

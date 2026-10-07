@@ -1,0 +1,249 @@
+[
+  {
+    "id": "fabienne12",
+    "name": "Fabienne",
+    "role": "Fille aînée",
+    "age": 38,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Fille aînée de Bernard"
+    },
+    "private": {
+      "motif": "Bernard refusait de lui céder la direction du domaine et parlait de le vendre à un groupe.",
+      "secret": "Elle a contracté des dettes de jeu qu'elle cache à toute la famille.",
+      "alibi": "Elle affirme être restée à la salle de dégustation entre 22h15 et 22h35.",
+      "opportunite": "Elle connaît la cave par cœur et peut y accéder sans être vue depuis le chai.",
+      "informations": [
+        "Elle sait que Bernard avait rendez-vous avec un notaire la semaine suivante.",
+        "Elle a vu Julien sortir précipitamment vers la cave."
+      ],
+      "objectif": "Cacher ses dettes et récupérer sa part d'héritage."
+    }
+  },
+  {
+    "id": "julien12",
+    "name": "Julien",
+    "role": "Fils cadet",
+    "age": 33,
+    "guiltyEligible": true,
+    "public": {
+      "relation": "Fils cadet de Bernard"
+    },
+    "private": {
+      "motif": "Bernard avait découvert que Julien sabotait certaines parcelles pour toucher l'assurance récolte et menaçait de le déshériter et de porter plainte.",
+      "secret": "Julien a volontairement infecté deux rangées de vigne avec un parasite.",
+      "alibi": "Il affirme être resté au garage à réparer un tracteur entre 22h10 et 22h40.",
+      "opportunite": "Le garage communique directement avec la cave par un escalier intérieur que lui seul utilise encore.",
+      "informations": [
+        "Il sait que Marco avait lui aussi un différend récent avec son père.",
+        "Il a entendu Bernard crier au téléphone juste avant sa mort."
+      ],
+      "objectif": "Empêcher son père de porter plainte et de le déshériter."
+    }
+  },
+  {
+    "id": "odile12",
+    "name": "Odile",
+    "role": "Épouse",
+    "age": 57,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Épouse de Bernard"
+    },
+    "private": {
+      "motif": "Bernard venait de découvrir sa liaison avec Yves et voulait divorcer sans lui laisser sa part du domaine.",
+      "secret": "Elle voit Yves en secret depuis un an.",
+      "alibi": "Elle affirme être restée à la cuisine à préparer le dessert entre 22h15 et 22h40.",
+      "opportunite": "Elle pouvait quitter la cuisine par la cour sans passer devant les invités.",
+      "informations": [
+        "Elle sait que Bernard avait changé son testament récemment.",
+        "Elle a vu Renaud consulter les comptes du domaine plus tôt dans la soirée."
+      ],
+      "objectif": "Cacher sa liaison et sécuriser sa part du domaine avant le divorce."
+    }
+  },
+  {
+    "id": "marco12",
+    "name": "Marco",
+    "role": "Œnologue du domaine",
+    "age": 45,
+    "guiltyEligible": true,
+    "public": {
+      "relation": "Œnologue salarié du domaine"
+    },
+    "private": {
+      "motif": "Bernard avait découvert que Marco vendait des bouteilles sous de fausses appellations et s'apprêtait à le dénoncer et à le renvoyer, ruinant sa réputation dans toute la région.",
+      "secret": "Marco a falsifié les étiquettes de trois cuvées de l'an passé.",
+      "alibi": "Il affirme être resté à la salle de dégustation à servir les invités entre 22h15 et 22h35.",
+      "opportunite": "Il détient un double des clés de la cave et connaît l'heure exacte des rondes.",
+      "informations": [
+        "Il sait qu'Inès enquêtait discrètement sur les fraudes viticoles de la région.",
+        "Il a vu Théo traîner près de la cave plus tôt dans la soirée."
+      ],
+      "objectif": "Empêcher Bernard de le dénoncer avant qu'il ne trouve un nouvel emploi."
+    }
+  },
+  {
+    "id": "chantal12",
+    "name": "Chantal",
+    "role": "Voisine viticultrice",
+    "age": 52,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Voisine et rivale professionnelle"
+    },
+    "private": {
+      "motif": "Un vieux conflit de bornage et de droits d'eau l'opposait à Bernard depuis des années.",
+      "secret": "Elle a déplacé une borne de propriété l'an dernier sans le dire.",
+      "alibi": "Elle affirme être restée dans la cour à discuter avec d'autres invités.",
+      "opportunite": "Elle connaît mal l'intérieur de la cave, rendant son accès peu discret.",
+      "informations": [
+        "Elle a vu Fabienne sortir en direction du chai vers 22h20."
+      ],
+      "objectif": "Éviter que le conflit de bornage ne refasse surface pendant l'enquête."
+    }
+  },
+  {
+    "id": "renaud12",
+    "name": "Renaud",
+    "role": "Comptable du domaine",
+    "age": 49,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Comptable salarié"
+    },
+    "private": {
+      "motif": "Bernard avait remarqué des écarts dans les comptes et s'apprêtait à faire auditer l'exercice.",
+      "secret": "Renaud a détourné une petite somme pour rembourser une dette personnelle.",
+      "alibi": "Il affirme être resté au bureau à finaliser des factures jusqu'à 22h35.",
+      "opportunite": "Le bureau est isolé et personne ne peut confirmer sa présence continue.",
+      "informations": [
+        "Il a vu la lumière de la cave s'allumer vers 22h22.",
+        "Il sait que Marco truquait certaines factures d'étiquetage."
+      ],
+      "objectif": "Rembourser discrètement avant que l'audit ne commence."
+    }
+  },
+  {
+    "id": "ines12",
+    "name": "Inès",
+    "role": "Sommelière et journaliste gastronomique",
+    "age": 34,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Invitée, sommelière indépendante"
+    },
+    "private": {
+      "motif": "Bernard menaçait de démentir publiquement un article qu'elle préparait sur la fraude viticole régionale.",
+      "secret": "Elle enregistrait discrètement certaines conversations de la soirée pour son article.",
+      "alibi": "Elle affirme être restée à la salle de dégustation, micro caché, entre 22h10 et 22h35.",
+      "opportunite": "Elle circulait librement mais serait remarquée dans la cave, peu éclairée.",
+      "informations": [
+        "Son enregistrement contient une dispute entre Bernard et Marco.",
+        "Elle sait que Chantal et Bernard se disputaient un droit de passage."
+      ],
+      "objectif": "Protéger ses sources et décider quoi publier."
+    }
+  },
+  {
+    "id": "theo12",
+    "name": "Théo",
+    "role": "Ouvrier saisonnier",
+    "age": 24,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Ouvrier saisonnier des vendanges"
+    },
+    "private": {
+      "motif": "Bernard l'avait accusé à tort de vol de matériel et menaçait de ne pas le repayer pour la saison.",
+      "secret": "Théo a emprunté un sécateur sans le déclarer, ce qui a motivé l'accusation.",
+      "alibi": "Il affirme être resté au chai à ranger les caisses jusqu'à 22h30.",
+      "opportunite": "Le chai jouxte la cave ; il pouvait s'y rendre en quelques secondes.",
+      "informations": [
+        "Il a vu Julien descendre à la cave un peu avant 22h20."
+      ],
+      "objectif": "Être payé pour sa saison et prouver son innocence sur le vol."
+    }
+  },
+  {
+    "id": "sabine12",
+    "name": "Sabine",
+    "role": "Notaire de la famille",
+    "age": 47,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Notaire chargée de la succession"
+    },
+    "private": {
+      "motif": "Une erreur dans un ancien acte de donation aux enfants Costes pourrait engager sa responsabilité si Bernard la faisait réviser.",
+      "secret": "Elle a corrigé discrètement une copie de l'acte avant la soirée.",
+      "alibi": "Elle affirme être restée à la salle de dégustation avec les invités.",
+      "opportunite": "Elle connaît peu la disposition de la cave.",
+      "informations": [
+        "Elle sait que Bernard voulait revoir la répartition de l'héritage entre Fabienne et Julien."
+      ],
+      "objectif": "Éviter que son erreur professionnelle ne soit révélée."
+    }
+  },
+  {
+    "id": "yves12",
+    "name": "Yves",
+    "role": "Ami d'enfance, négociant en vin",
+    "age": 60,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Ami d'enfance de Bernard"
+    },
+    "private": {
+      "motif": "Il devait une grosse somme à Bernard pour un prêt jamais remboursé, et Bernard menaçait de le réclamer publiquement.",
+      "secret": "Il entretient une liaison avec Odile depuis un an.",
+      "alibi": "Il affirme être resté dans la cour à fumer entre 22h10 et 22h35.",
+      "opportunite": "La cour donne un accès direct et discret à la cave par une porte latérale.",
+      "informations": [
+        "Il sait qu'Odile et Bernard devaient se voir en tête-à-tête après le dîner."
+      ],
+      "objectif": "Cacher sa liaison et gagner du temps sur sa dette."
+    }
+  },
+  {
+    "id": "camille12",
+    "name": "Camille",
+    "role": "Petite-fille, étudiante en œnologie",
+    "age": 21,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Petite-fille de Bernard"
+    },
+    "private": {
+      "motif": "Aucun motif sérieux : elle admirait son grand-père, mais craignait qu'il ne finance plus ses études après une dispute récente.",
+      "secret": "Elle a menti sur une mauvaise note pour ne pas le décevoir.",
+      "alibi": "Elle affirme être restée avec Théo au chai une bonne partie de la soirée.",
+      "opportunite": "Faible : elle était généralement accompagnée.",
+      "informations": [
+        "Elle a entendu Renaud parler nerveusement au téléphone plus tôt dans la soirée."
+      ],
+      "objectif": "Prouver qu'elle n'a rien à voir avec les tensions familiales."
+    }
+  },
+  {
+    "id": "denis12",
+    "name": "Denis",
+    "role": "Régisseur du domaine",
+    "age": 50,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Régisseur et bras droit de Bernard"
+    },
+    "private": {
+      "motif": "Bernard négociait en secret la vente du domaine à un groupe étranger, ce qui aurait coûté sa place à Denis après vingt ans de service.",
+      "secret": "Denis a commencé à démarcher discrètement d'autres domaines pour se reclasser.",
+      "alibi": "Il affirme être resté aux vignes à vérifier les cuves de fermentation jusqu'à 22h40.",
+      "opportunite": "Il a les clés de toutes les portes du domaine, cave comprise.",
+      "informations": [
+        "Il sait que la vente devait être annoncée le lendemain matin.",
+        "Il a vu une lumière bouger dans la cave vers 22h25."
+      ],
+      "objectif": "Empêcher la vente ou, à défaut, négocier son reclassement."
+    }
+  }
+]

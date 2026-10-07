@@ -103,15 +103,25 @@ function scenarioOf(room) {
 
 // ---------- Config serveur ----------
 const PORT = process.env.PORT || 3000;
+const ALLOWED_ORIGIN = process.env.FRONTEND_ORIGIN || '*';
 const HOST = '0.0.0.0'; // écoute sur toutes les interfaces réseau -> accessible à distance une fois déployé/exposé
 
 const app = express();
 app.use(cors());
+app.disable('x-powered-by');
+app.use((req, res, next) => {
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+  res.setHeader('X-Frame-Options', 'SAMEORIGIN');
+  next();
+});
+app.use(express.json({ limit: '64kb' }));
 app.use(express.static(path.join(__dirname, '..', 'public')));
+app.get('/rejoindre/:code', (_req, res) => res.sendFile(path.join(__dirname, '..', 'public', 'index.html')));
 
 const server = http.createServer(app);
 const io = new Server(server, {
-  cors: { origin: '*' } // en production, restreindre au domaine du front-end
+  cors: { origin: ALLOWED_ORIGIN } // FRONTEND_ORIGIN en production
 });
 
 // ---------- Générateur de code de salle ----------
@@ -168,6 +178,10 @@ function makePlayerId() {
   return customAlphabet('abcdefghijklmnopqrstuvwxyz0123456789', 12)();
 }
 
+function makeGameId() {
+  return customAlphabet('abcdefghijklmnopqrstuvwxyz0123456789', 18)();
+}
+
 function getRoomOrThrow(code) {
   const room = rooms.get(code);
   if (!room) throw new Error('Salle introuvable.');
@@ -206,6 +220,7 @@ function roomSummary(room) {
     scenarioDifficulty: scenario.difficulty,
     scenarioPoolSize: Object.keys(SCENARIOS).length,
     scenarioPlayedCount: (room.scenarioHistory || []).length,
+    mode: room.mode || 'classic',
     scenarioCanReroll: room.phase === 'lobby' && Object.keys(SCENARIOS).length > 1,
     connectedPlayerCount: [...room.players.values()].filter((p) => p.connected && p.socketId).length,
     activeCharacterCount: room.characterAssignments.size,
@@ -344,6 +359,13 @@ function clearTimers(room) {
   room.clueTimer = null;
 }
 
+function modeDurations(mode) {
+  const base = RULES.phaseDurations;
+  if (mode === 'quick') return { ...base, dossier: 45, enquete: 600, vote: 60 };
+  if (mode === 'hardcore') return { ...base, dossier: 60, enquete: 720, vote: 45 };
+  return { ...base };
+}
+
 function phaseLabelServer(phase) {
   return ({ distribution: 'Distribution des rôles', dossier: 'Dossier secret', enquete: 'Enquête', vote: 'Vote final', reveal: 'Révélation' }[phase] || phase);
 }
@@ -447,7 +469,7 @@ function advancePhase(room) {
   if (idx < 0) return false;
   const next = PHASES[idx + 1] || 'reveal';
 
-  const durations = RULES.phaseDurations;
+  const durations = modeDurations(room.mode || 'classic');
   setPhase(room, next, durations[next] || null);
   return true;
 }
@@ -532,7 +554,10 @@ function finalizeVotes(room) {
     if (!p) continue;
     const targetId = votes.get(id);
     const targetCharId = targetId ? room.characterAssignments.get(targetId) : null;
-    if (targetCharId && room.guiltyCharacterIds.includes(targetCharId)) addScore(room, id, 100, 'Vote correct');
+    if (targetCharId && room.guiltyCharacterIds.includes(targetCharId)) {
+      addScore(room, id, 100, 'Vote correct');
+      if (votes.size && [...votes.keys()].indexOf(id) === 0) addScore(room, id, 10, 'Premier vote');
+    }
   }
 
   // Coupable : bonus s'il passe sous le radar.
@@ -582,7 +607,11 @@ function buildReveal(room) {
     })),
     scenarioTitle: scenario.title,
     scenarioDifficulty: scenario.difficulty,
-    scenarioHistory: room.scenarioHistory || []
+    scenarioHistory: room.scenarioHistory || [],
+    gameId: room.gameId,
+    mode: room.mode || 'classic',
+    bonusClueUsed: !!room.bonusClueUsed,
+    firstVotePlayerId: room.firstVotePlayerId || null
   };
 }
 
@@ -663,11 +692,13 @@ io.on('connection', (socket) => {
 
       const room = {
         code,
+        gameId: makeGameId(),
         hostPlayerId: playerId,
         scenarioId: pickScenarioId({ playerCount: 0 }),
         lastScenarioId: null,
         scenarioHistory: [],
         phase: 'lobby',
+        mode: 'classic',
         phaseEndsAt: null,
         players: new Map(),
         characterAssignments: new Map(),
@@ -684,6 +715,8 @@ io.on('connection', (socket) => {
         bonusClueUsed: false,
         votes: new Map(),
         votesFinalized: false,
+        firstVoteAt: null,
+        firstVotePlayerId: null,
         lastPhaseTransitionAt: 0,
         lastActivityAt: Date.now(),
         chatRate: new Map()
@@ -862,7 +895,7 @@ io.on('connection', (socket) => {
     }
   });
 
-  socket.on('room:start', (_payload, cb) => {
+  socket.on('room:start', (payload = {}, cb) => {
     try {
       const room = getRoomOrThrow(socket.data.roomCode);
       if (!isController(room, socket)) throw new Error('Seul l\'hôte (ou le Game Master) peut lancer la partie.');
@@ -884,7 +917,7 @@ io.on('connection', (socket) => {
       room.scenarioHistory = [...new Set([...(room.scenarioHistory || []), scenario.id])];
       room.lastScenarioId = scenario.id;
 
-      setPhase(room, 'distribution', RULES.phaseDurations.distribution);
+      setPhase(room, 'distribution', modeDurations(room.mode || 'classic').distribution);
       const { guiltyCount } = distributeCharacters(room);
 
       io.to(room.code).emit('story:intro', {
@@ -902,6 +935,16 @@ io.on('connection', (socket) => {
   // Le contrôleur ne parcourt plus une longue liste : il peut simplement
   // demander une nouvelle affaire aléatoire. Les affaires déjà jouées sont
   // évitées jusqu'à épuisement du catalogue.
+  socket.on('room:set_mode', ({ mode }, cb) => {
+    try {
+      const room = getRoomOrThrow(socket.data.roomCode);
+      if (!isController(room, socket)) throw new Error('Seul l’hôte ou le Game Master peut changer le mode.');
+      if (room.phase !== 'lobby') throw new Error('Le mode ne peut être changé qu’avant la partie.');
+      if (!['classic','quick','hardcore'].includes(mode)) throw new Error('Mode invalide.');
+      room.mode = mode; broadcastRoomState(room); cb({ ok:true, mode });
+    } catch (err) { cb({ok:false,error:err.message}); }
+  });
+
   socket.on('room:reroll_scenario', (_payload, cb) => {
     try {
       const room = getRoomOrThrow(socket.data.roomCode);
@@ -1040,6 +1083,8 @@ io.on('connection', (socket) => {
       room.readyPlayers = new Set();
       room.votes = new Map();
       room.votesFinalized = false;
+      room.firstVoteAt = null;
+      room.firstVotePlayerId = null;
       room.chatRate = new Map();
       room.chatLog = [];
       room.guiltyChatLog = [];
@@ -1075,10 +1120,11 @@ io.on('connection', (socket) => {
       for (const p of room.players.values()) { p.alive = true; p.score = 0; p.scoreEvents = []; }
       room.characterAssignments = new Map();
       room.guiltyCharacterIds = []; room.activeClues = []; room.revealedClueCount = 0;
-      room.votes = new Map(); room.votesFinalized = false; room.chatRate = new Map();
+      room.votes = new Map(); room.votesFinalized = false; room.firstVoteAt = null; room.firstVotePlayerId = null; room.chatRate = new Map();
+      room.gameId = makeGameId();
       room.bonusClueUsed = false;
       room.chatLog = []; room.guiltyChatLog = [];
-      room.phase = 'lobby'; room.phaseEndsAt = null; room.paused = false; room.pauseRemainingMs = null;
+      room.phase = 'lobby'; room.phaseEndsAt = null; room.mode = room.mode || 'classic'; room.paused = false; room.pauseRemainingMs = null;
       io.to(room.code).emit('game:restarted', { newCase: true, scenarioId: room.scenarioId });
       broadcastRoomState(room); cb({ ok: true, scenarioId: room.scenarioId, newCase: true });
     } catch (err) { cb({ ok: false, error: err.message }); }
@@ -1156,6 +1202,12 @@ io.on('connection', (socket) => {
       if (!voter || !target || !room.activePlayerIds?.has(voter.id) || !room.activePlayerIds?.has(target.id)) throw new Error('Joueur invalide.');
       if (!voter.connected || voter.socketId !== socket.id) throw new Error('Ta connexion n’est plus active.');
       if (target.id === voter.id) throw new Error('Tu ne peux pas voter pour toi-même.');
+      if (room.votes.has(voter.id)) {
+        room.votes.set(voter.id, target.id);
+      } else {
+        room.votes.set(voter.id, target.id);
+        if (!room.firstVoteAt) { room.firstVoteAt = Date.now(); room.firstVotePlayerId = voter.id; }
+      }
       room.votes = room.votes || new Map();
       room.votes.set(voter.id, target.id);
       room.lastActivityAt = Date.now();

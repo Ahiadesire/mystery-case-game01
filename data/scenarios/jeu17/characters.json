@@ -1,0 +1,246 @@
+[
+  {
+    "id": "hadrien17",
+    "name": "Hadrien",
+    "role": "Expert en tableaux",
+    "age": 42,
+    "guiltyEligible": true,
+    "public": {
+      "relation": "Expert en tableaux de la maison"
+    },
+    "private": {
+      "motif": "Constance avait découvert qu'Hadrien authentifiait de faux tableaux contre commission occulte, et s'apprêtait à le dénoncer au syndicat professionnel.",
+      "secret": "Hadrien a authentifié frauduleusement trois tableaux au cours de l'année écoulée.",
+      "alibi": "Il affirme être resté en salle d'expertise à examiner un lot jusqu'à 21h35.",
+      "opportunite": "La salle d'expertise communique par un couloir direct avec le coffre-fort.",
+      "informations": [
+        "Il sait que Morgane avait aussi un différend avec Constance.",
+        "Il a vu Cédric consulter nerveusement des comptes plus tôt dans la soirée."
+      ],
+      "objectif": "Empêcher la dénonciation avant que sa carrière ne soit détruite."
+    }
+  },
+  {
+    "id": "morgane17",
+    "name": "Morgane",
+    "role": "Acheteuse mystérieuse, collectionneuse",
+    "age": 39,
+    "guiltyEligible": true,
+    "public": {
+      "relation": "Acheteuse régulière aux enchères"
+    },
+    "private": {
+      "motif": "Constance avait découvert que Morgane utilisait les enchères pour blanchir de l'argent et menaçait de la dénoncer aux autorités financières.",
+      "secret": "Morgane a effectivement structuré plusieurs achats fictifs pour dissimuler des fonds d'origine douteuse.",
+      "alibi": "Elle affirme être restée au salon VIP à négocier discrètement avec un autre acheteur.",
+      "opportunite": "Le salon VIP communique par un escalier privé directement avec le coffre-fort.",
+      "informations": [
+        "Elle sait que Constance conservait les preuves de ses transactions dans le coffre-fort.",
+        "Elle a vu Pierre effectuer sa ronde plus tôt que d'habitude."
+      ],
+      "objectif": "Récupérer ou détruire les preuves de blanchiment avant la dénonciation."
+    }
+  },
+  {
+    "id": "philippe17",
+    "name": "Philippe",
+    "role": "Associé fondateur",
+    "age": 64,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Associé fondateur de la maison de vente"
+    },
+    "private": {
+      "motif": "Constance voulait le pousser vers la sortie pour prendre seule les rênes de la maison familiale.",
+      "secret": "Philippe négociait en secret sa propre sortie avec un concurrent, à des conditions avantageuses.",
+      "alibi": "Il affirme être resté en salle des ventes à superviser la clôture de la vacation.",
+      "opportunite": "La salle des ventes est éloignée du coffre-fort.",
+      "informations": [
+        "Il a vu Hadrien s'isoler nerveusement après la vente du lot principal."
+      ],
+      "objectif": "Finaliser sa sortie négociée avant que Constance ne l'évince sans compensation."
+    }
+  },
+  {
+    "id": "roxane17",
+    "name": "Roxane",
+    "role": "Commissaire-priseuse adjointe",
+    "age": 45,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Commissaire-priseuse adjointe"
+    },
+    "private": {
+      "motif": "Constance avait refusé de la promouvoir commissaire-priseuse titulaire malgré ses années de service.",
+      "secret": "Roxane avait déjà accepté une offre d'une maison concurrente, sans en informer Constance.",
+      "alibi": "Elle affirme être restée en salle des ventes à clôturer les registres de la vacation.",
+      "opportunite": "Faible : plusieurs témoins confirment sa présence continue en salle des ventes.",
+      "informations": [
+        "Elle a vu Morgane quitter discrètement le salon VIP vers 21h20."
+      ],
+      "objectif": "Décrocher officiellement son nouveau poste sans mauvaise référence."
+    }
+  },
+  {
+    "id": "cedric17",
+    "name": "Cédric",
+    "role": "Comptable de la maison",
+    "age": 50,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Comptable salarié"
+    },
+    "private": {
+      "motif": "Constance avait détecté un écart dans les comptes des commissions et s'apprêtait à demander un audit.",
+      "secret": "Cédric a détourné une somme modeste pour couvrir des dettes personnelles.",
+      "alibi": "Il affirme être resté au bureau de direction à finaliser des factures jusqu'à 21h35.",
+      "opportunite": "Le bureau de direction est adjacent au coffre-fort par une porte habituellement verrouillée.",
+      "informations": [
+        "Il a vu la porte du coffre-fort entrouverte vers 21h22.",
+        "Il sait qu'Hadrien recevait des paiements occultes de certains vendeurs."
+      ],
+      "objectif": "Rembourser discrètement avant que l'audit ne débute."
+    }
+  },
+  {
+    "id": "agnes17",
+    "name": "Agnès",
+    "role": "Experte en bijoux rivale",
+    "age": 55,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Experte en bijoux d'une maison concurrente"
+    },
+    "private": {
+      "motif": "Constance l'avait publiquement accusée de sous-évaluer délibérément des lots pour les racheter ensuite à bas prix.",
+      "secret": "Agnès avait effectivement pratiqué ce procédé sur un lot récent.",
+      "alibi": "Elle affirme être restée en salle d'exposition avec d'autres invités.",
+      "opportunite": "Elle connaît mal la disposition du coffre-fort, rendant un accès discret improbable.",
+      "informations": [
+        "Elle a vu Thibault s'entretenir tendument avec sa mère avant la vente."
+      ],
+      "objectif": "Éviter que l'accusation ne ternisse sa réputation dans le milieu."
+    }
+  },
+  {
+    "id": "thibault17",
+    "name": "Thibault",
+    "role": "Fils de Constance, avocat",
+    "age": 32,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Fils de la victime"
+    },
+    "private": {
+      "motif": "Constance avait modifié son testament en faveur d'une fondation culturelle, réduisant fortement la part de Thibault.",
+      "secret": "Thibault avait consulté un confrère pour contester ce testament avant même le décès de sa mère.",
+      "alibi": "Il affirme être resté en salle des ventes avec les invités toute la soirée.",
+      "opportunite": "Faible : plusieurs témoins confirment sa présence continue.",
+      "informations": [
+        "Il a entendu Philippe et sa mère se disputer sur l'avenir de la maison."
+      ],
+      "objectif": "Contester le testament sans paraître intéressé par la mort de sa mère."
+    }
+  },
+  {
+    "id": "malika17",
+    "name": "Malika",
+    "role": "Restauratrice d'art",
+    "age": 41,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Restauratrice indépendante"
+    },
+    "private": {
+      "motif": "Constance avait remis en question la qualité d'une restauration récente, menaçant sa réputation naissante.",
+      "secret": "Malika avait pris un raccourci technique sur cette restauration pour respecter un délai serré.",
+      "alibi": "Elle affirme être restée en salle d'expertise à consulter des références jusqu'à 21h30.",
+      "opportunite": "Elle partage partiellement l'alibi d'Hadrien, ce qui complique la vérification.",
+      "informations": [
+        "Elle a vu Hadrien nerveux après avoir reçu un appel juste avant la vente."
+      ],
+      "objectif": "Défendre la qualité de son travail sans reconnaître le raccourci pris."
+    }
+  },
+  {
+    "id": "pierre17",
+    "name": "Pierre",
+    "role": "Vigile de la maison de vente",
+    "age": 48,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Agent de sécurité de la maison"
+    },
+    "private": {
+      "motif": "Aucun motif personnel connu, mais il a modifié sa ronde habituelle sans en informer sa hiérarchie ce soir-là.",
+      "secret": "Pierre a avancé sa ronde pour s'absenter discrètement plus tôt dans la soirée.",
+      "alibi": "Il affirme être resté au quai de réception, hors de vue des caméras principales.",
+      "opportunite": "Il connaît toutes les issues de la maison de vente et les horaires des caméras.",
+      "informations": [
+        "Il a vu Morgane emprunter l'escalier privé du salon VIP vers 21h20."
+      ],
+      "objectif": "Éviter d'être sanctionné pour avoir modifié sa ronde sans autorisation."
+    }
+  },
+  {
+    "id": "severine17",
+    "name": "Séverine",
+    "role": "Journaliste arts",
+    "age": 37,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Journaliste couvrant le marché de l'art"
+    },
+    "private": {
+      "motif": "Constance menaçait de démentir publiquement un article de Séverine sur les pratiques opaques du marché des enchères.",
+      "secret": "Séverine enregistrait discrètement certaines conversations pour son enquête.",
+      "alibi": "Elle affirme être restée en salle d'exposition, micro caché, jusqu'à 21h35.",
+      "opportunite": "Elle circulait librement mais aurait été remarquée près du coffre-fort.",
+      "informations": [
+        "Son enregistrement contient une dispute entre Constance et Hadrien.",
+        "Elle sait que Morgane effectuait des achats suspects depuis des mois."
+      ],
+      "objectif": "Protéger ses sources et publier son enquête."
+    }
+  },
+  {
+    "id": "romain17",
+    "name": "Romain",
+    "role": "Transporteur d'œuvres",
+    "age": 29,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Transporteur indépendant"
+    },
+    "private": {
+      "motif": "Constance l'avait accusé d'avoir égaré une pièce lors d'une précédente livraison, menaçant de ne plus le recommander.",
+      "secret": "Romain avait effectivement égaré temporairement cette pièce, retrouvée depuis.",
+      "alibi": "Il affirme être resté au quai de réception à décharger du matériel jusqu'à 21h30.",
+      "opportunite": "Le quai de réception communique avec le coffre-fort par un couloir de service.",
+      "informations": [
+        "Il a vu une silhouette sortir rapidement du couloir de service vers 21h25."
+      ],
+      "objectif": "Éviter de perdre la confiance de ses clients de la maison de vente."
+    }
+  },
+  {
+    "id": "odette17",
+    "name": "Odette",
+    "role": "Ancienne employée licenciée",
+    "age": 60,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Ancienne employée de la maison de vente"
+    },
+    "private": {
+      "motif": "Constance l'avait licenciée un an plus tôt pour une erreur d'inventaire, une décision qu'Odette jugeait injuste.",
+      "secret": "Odette s'était introduite à la soirée sans invitation officielle, en se faisant discrète.",
+      "alibi": "Elle affirme être restée en salle d'exposition, évitant de se faire remarquer.",
+      "opportunite": "Elle connaît bien la maison de vente pour y avoir travaillé quinze ans.",
+      "informations": [
+        "Elle a vu Cédric consulter nerveusement des documents comptables plus tôt."
+      ],
+      "objectif": "Éviter d'être repérée et expulsée de la soirée avant la fin."
+    }
+  }
+]

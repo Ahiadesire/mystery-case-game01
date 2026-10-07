@@ -1,0 +1,15 @@
+{
+  "guiltyExplanations": {
+    "sacha16": "Sacha a tué Maxime. Ce dernier s'apprêtait à révéler publiquement une fausse accusation de harcèlement contre lui ce soir-là, ruinant définitivement sa réputation dans l'écosystème tech. L'enregistrement d'Amira, révélant la menace directe de Maxime, le confond.",
+    "diane16": "Diane a tué Maxime. Il la faisait chanter avec des preuves d'un délit d'initié pour la contraindre à céder ses parts à un prix imposé. Le support de stockage disparu, retrouvé dans son sac, et le registre de l'ascenseur de service la relient directement au rooftop pendant la fenêtre du crime."
+  },
+  "falseLeadsSummary": [
+    "Tom redoutait la vente de l'entreprise, mais son alibi en salle de conférence est confirmé.",
+    "Ryad contestait un brevet controversé, sans lien avec le meurtre.",
+    "Benoît avait rédigé une clause abusive, sans rapport avec le crime.",
+    "Victor négociait en parallèle avec un autre repreneur, sans lien avec le meurtre.",
+    "Nina réclamait sa juste part, mais son passage par l'ascenseur précède celui du meurtre.",
+    "Gaspard sécurisait un sponsoring alternatif, sans rapport avec le crime."
+  ],
+  "closingLine": "Sur ce rooftop, la prochaine grande annonce de Maxime aura été la dernière."
+}

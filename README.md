@@ -29,7 +29,7 @@ Pour un test local : `http://localhost:3000`.
 
 Tous les scénarios sont regroupés dans `data/scenarios/`. Le moteur détecte automatiquement les dossiers et peut charger **jusqu'à 20 scénarios**.
 
-Le projet contient actuellement **11 affaires** :
+Le projet contient désormais le catalogue complet de **20 affaires** :
 
 - `jeu01` — LE DERNIER DÎNER
 - `jeu02` — RIDEAU FINAL
@@ -42,6 +42,15 @@ Le projet contient actuellement **11 affaires** :
 - `jeu09` — LE TRAIN DE NUIT
 - `jeu10` — LE CHALET ISOLÉ
 - `jeu11` — RIDEAU ROUGE
+- `jeu12` — LE VIGNOBLE MAUDIT
+- `jeu13` — L'AQUARIUM APRÈS MINUIT
+- `jeu14` — LE SPA DU SILENCE
+- `jeu15` — LA FOIRE AUX ANTIQUITÉS
+- `jeu16` — LE SOMMET DES STARTUPS
+- `jeu17` — LA MAISON DE VENTE AUX ENCHÈRES
+- `jeu18` — LE BAL MASQUÉ
+- `jeu19` — LE FESTIVAL DU FILM
+- `jeu20` — LA BIBLIOTHÈQUE SECRÈTE
 
 À la création de la salle, le serveur tire une affaire aléatoire. L'hôte/Game Master ne voit plus une longue liste : il dispose simplement de **Changer d'affaire**.
 
@@ -177,3 +186,27 @@ mystery-case-game01/
     ├── app.js
     └── style.css
 ```
+
+## V8 — expérience complète
+
+Cette version ajoute une couche produit autour du moteur temps réel :
+- modes Classique (30 min), Rapide (15 min) et Hardcore ;
+- statistiques et badges locaux sans compte ;
+- historique local des parties ;
+- notes personnelles persistantes ;
+- partage de salle par lien, Web Share et QR ;
+- route directe `/rejoindre/ABCDE` ;
+- carte de résultat partageable/générée en PNG ;
+- lecture audio TTS des dossiers et indices ;
+- réglages de contraste, taille de texte, animations et daltonisme ;
+- PWA, manifest, service worker et icône ;
+- nettoyage/robustesse du serveur et CORS configurable via `FRONTEND_ORIGIN`.
+
+### Démarrage
+
+```bash
+npm install
+npm start
+```
+
+En production, définir `FRONTEND_ORIGIN` avec le domaine du front au lieu de laisser `*`.

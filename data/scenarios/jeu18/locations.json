@@ -1,0 +1,42 @@
+[
+  {
+    "id": "bibliotheque",
+    "name": "Bibliothèque",
+    "description": "Lieu du crime, à l'écart du bal."
+  },
+  {
+    "id": "salle_de_bal",
+    "name": "Salle de bal",
+    "description": "Où se tenait la majorité des invités masqués."
+  },
+  {
+    "id": "jardin_illumine",
+    "name": "Jardin illuminé",
+    "description": "Relié à la bibliothèque par une porte-fenêtre rarement verrouillée."
+  },
+  {
+    "id": "cuisine",
+    "name": "Cuisine",
+    "description": "Où Gustave et Françoise supervisaient le service."
+  },
+  {
+    "id": "cave",
+    "name": "Cave à vin",
+    "description": "Communique avec la bibliothèque par un escalier peu emprunté."
+  },
+  {
+    "id": "chambre_hote",
+    "name": "Chambre d'amis",
+    "description": "Inoccupée pendant la soirée."
+  },
+  {
+    "id": "vestiaire_masques",
+    "name": "Vestiaire des masques",
+    "description": "Communique directement avec la bibliothèque par un couloir peu éclairé."
+  },
+  {
+    "id": "terrasse",
+    "name": "Terrasse",
+    "description": "Où Béatrice et son compagnon masqué s'étaient isolés."
+  }
+]

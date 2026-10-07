@@ -1,0 +1,246 @@
+[
+  {
+    "id": "antoine13",
+    "name": "Antoine",
+    "role": "Directeur adjoint",
+    "age": 44,
+    "guiltyEligible": true,
+    "public": {
+      "relation": "Directeur adjoint de l'aquarium"
+    },
+    "private": {
+      "motif": "Sylvie avait découvert qu'Antoine truquait les rapports sanitaires pour toucher des subventions et s'apprêtait à le dénoncer aux autorités.",
+      "secret": "Antoine a falsifié trois rapports sanitaires en deux ans.",
+      "alibi": "Il affirme être resté au bureau de direction à préparer un discours entre 00h15 et 00h40.",
+      "opportunite": "Il possède un accès direct entre le bureau de direction et le bassin des requins par un couloir technique.",
+      "informations": [
+        "Il sait que Leila avait aussi un différend avec Sylvie récemment.",
+        "Il a vu une silhouette près du local technique vers 00h30."
+      ],
+      "objectif": "Empêcher la dénonciation avant l'annonce officielle des subventions."
+    }
+  },
+  {
+    "id": "leila13",
+    "name": "Leila",
+    "role": "Biologiste marine",
+    "age": 36,
+    "guiltyEligible": true,
+    "public": {
+      "relation": "Biologiste marine responsable des bassins"
+    },
+    "private": {
+      "motif": "Sylvie avait découvert que Leila dissimulait la mort suspecte de plusieurs spécimens rares pour éviter un scandale, et voulait la licencier et porter plainte.",
+      "secret": "Leila a maquillé les registres vétérinaires des bassins pendant six mois.",
+      "alibi": "Elle affirme être restée au bassin des méduses avec des invités jusqu'à 00h35.",
+      "opportunite": "Elle a les codes d'accès à toutes les zones techniques et connaît les horaires des caméras en maintenance.",
+      "informations": [
+        "Elle sait que le vétérinaire Hugo a examiné un poisson mort la semaine passée.",
+        "Elle a vu Patrick désactiver une caméra pour l'entretien plus tôt."
+      ],
+      "objectif": "Éviter le licenciement et la plainte avant la clôture de l'enquête vétérinaire."
+    }
+  },
+  {
+    "id": "marc13",
+    "name": "Marc",
+    "role": "Mécène principal",
+    "age": 63,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Principal mécène de l'aquarium"
+    },
+    "private": {
+      "motif": "Sylvie refusait de renommer l'aile principale à son nom malgré ses dons, une humiliation publique pour lui.",
+      "secret": "Il a menacé en privé de retirer tout financement si elle ne cédait pas.",
+      "alibi": "Il affirme être resté avec d'autres mécènes dans le hall des méduses.",
+      "opportunite": "Il connaît mal les zones techniques, rendant tout déplacement discret improbable.",
+      "informations": [
+        "Il a entendu Claudine se disputer avec Sylvie plus tôt dans la soirée."
+      ],
+      "objectif": "Éviter que sa menace de retrait de fonds ne paraisse suspecte."
+    }
+  },
+  {
+    "id": "claudine13",
+    "name": "Claudine",
+    "role": "Présidente du conseil d'administration",
+    "age": 58,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Présidente du conseil d'administration"
+    },
+    "private": {
+      "motif": "Sylvie s'opposait à un projet de Claudine de transformer une partie de l'aquarium en espace événementiel privé, jugé incompatible avec la mission scientifique.",
+      "secret": "Claudine avait déjà signé un accord préliminaire avec un investisseur, à l'insu du conseil.",
+      "alibi": "Elle affirme être restée à la cafétéria en réunion informelle jusqu'à 00h30.",
+      "opportunite": "Elle pouvait quitter la cafétéria sans être remarquée par un couloir peu fréquenté.",
+      "informations": [
+        "Elle sait que Marc soutenait en fait son projet en coulisses."
+      ],
+      "objectif": "Faire adopter son projet sans que l'accord secret ne soit découvert."
+    }
+  },
+  {
+    "id": "hugo13",
+    "name": "Hugo",
+    "role": "Vétérinaire de l'aquarium",
+    "age": 39,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Vétérinaire salarié"
+    },
+    "private": {
+      "motif": "Sylvie l'avait réprimandé publiquement pour un diagnostic tardif ayant coûté la vie à un spécimen rare.",
+      "secret": "Hugo soupçonnait Leila de lui cacher des informations sur l'état réel des bassins.",
+      "alibi": "Il affirme être resté à la réserve à examiner des échantillons jusqu'à 00h40.",
+      "opportunite": "La réserve jouxte le bassin des requins par une porte rarement verrouillée.",
+      "informations": [
+        "Il a examiné un poisson mort suspect la semaine passée, sans en informer la direction.",
+        "Il a vu Leila sortir précipitamment de la réserve avant lui."
+      ],
+      "objectif": "Prouver sa compétence professionnelle et écarter les soupçons de négligence."
+    }
+  },
+  {
+    "id": "nora13",
+    "name": "Nora",
+    "role": "Guide et médiatrice scientifique",
+    "age": 27,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Guide de l'aquarium"
+    },
+    "private": {
+      "motif": "Sylvie venait de refuser sa titularisation malgré des années de bons services.",
+      "secret": "Nora cherchait discrètement un poste dans un autre établissement.",
+      "alibi": "Elle affirme être restée avec des invités au hall des méduses toute la soirée.",
+      "opportunite": "Faible : plusieurs témoins confirment sa présence constante.",
+      "informations": [
+        "Elle a vu Antoine se diriger vers le local technique vers 00h28."
+      ],
+      "objectif": "Décrocher son nouveau poste sans faire de vagues."
+    }
+  },
+  {
+    "id": "patrick13",
+    "name": "Patrick",
+    "role": "Technicien de maintenance",
+    "age": 41,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Technicien de maintenance"
+    },
+    "private": {
+      "motif": "Sylvie l'avait menacé de licenciement après une panne de filtration ayant coûté cher à l'établissement.",
+      "secret": "Patrick a désactivé une caméra du couloir technique pour une réparation, sans en informer la direction.",
+      "alibi": "Il affirme être resté au local technique jusqu'à 00h45.",
+      "opportunite": "Il connaît tous les accès techniques et peut couper les caméras à volonté.",
+      "informations": [
+        "Il sait que la caméra du couloir technique a été coupée entre 00h20 et 00h35."
+      ],
+      "objectif": "Éviter le licenciement en minimisant la portée de la coupure de caméra."
+    }
+  },
+  {
+    "id": "sophie13",
+    "name": "Sophie",
+    "role": "Journaliste environnementale",
+    "age": 33,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Journaliste invitée"
+    },
+    "private": {
+      "motif": "Sylvie menaçait de démentir publiquement un article de Sophie sur le bien-être animal dans l'établissement.",
+      "secret": "Sophie enregistrait discrètement certaines discussions pour son enquête.",
+      "alibi": "Elle affirme être restée près du bassin des méduses, micro caché, jusqu'à 00h35.",
+      "opportunite": "Elle circulait librement mais aurait été remarquée près des bassins techniques.",
+      "informations": [
+        "Son enregistrement contient une dispute entre Sylvie et Antoine.",
+        "Elle sait que Claudine négociait en secret avec un investisseur."
+      ],
+      "objectif": "Protéger ses sources et publier son enquête."
+    }
+  },
+  {
+    "id": "bastien13",
+    "name": "Bastien",
+    "role": "Fils de Sylvie",
+    "age": 22,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Fils de la victime, étudiant"
+    },
+    "private": {
+      "motif": "Aucun motif financier direct, mais une dispute récente sur son avenir professionnel l'opposait à sa mère.",
+      "secret": "Il a menti sur l'abandon de ses études pour ne pas la décevoir.",
+      "alibi": "Il affirme être resté au jardin extérieur à passer un appel jusqu'à 00h40.",
+      "opportunite": "Faible : le jardin est éloigné du bassin des requins.",
+      "informations": [
+        "Il a vu Marc et Claudine se disputer discrètement plus tôt."
+      ],
+      "objectif": "Réparer sa relation avec sa mère, désormais impossible."
+    }
+  },
+  {
+    "id": "lucie13",
+    "name": "Lucie",
+    "role": "Comptable de l'aquarium",
+    "age": 45,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Comptable salariée"
+    },
+    "private": {
+      "motif": "Sylvie avait détecté un écart dans les comptes des dons et s'apprêtait à demander un audit.",
+      "secret": "Lucie a couvert une erreur de gestion pour protéger un collègue proche.",
+      "alibi": "Elle affirme être restée au bureau de direction avec Antoine une partie de la soirée.",
+      "opportunite": "Elle partage partiellement l'alibi d'Antoine, ce qui complique la vérification.",
+      "informations": [
+        "Elle a vu Antoine consulter nerveusement des dossiers avant de quitter le bureau vers 00h25."
+      ],
+      "objectif": "Éviter que l'audit ne révèle sa négligence."
+    }
+  },
+  {
+    "id": "farid13",
+    "name": "Farid",
+    "role": "Agent de sécurité",
+    "age": 37,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Agent de sécurité de l'établissement"
+    },
+    "private": {
+      "motif": "Aucun motif personnel connu, mais il a été vu en dehors de son poste pendant la fenêtre du crime.",
+      "secret": "Farid s'est absenté de son poste pour un appel personnel urgent.",
+      "alibi": "Il affirme être resté au quai de livraison, hors de vue des caméras.",
+      "opportunite": "Il connaît toutes les issues et rondes de sécurité de l'établissement.",
+      "informations": [
+        "Il a vu Patrick manipuler le boîtier des caméras du couloir technique."
+      ],
+      "objectif": "Éviter d'être sanctionné pour avoir quitté son poste."
+    }
+  },
+  {
+    "id": "valerie13",
+    "name": "Valérie",
+    "role": "Ancienne associée de Sylvie",
+    "age": 55,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Ancienne associée, aujourd'hui concurrente"
+    },
+    "private": {
+      "motif": "Une rupture professionnelle houleuse les opposait depuis cinq ans, Sylvie ayant racheté ses parts à bas prix.",
+      "secret": "Valérie prépare secrètement un aquarium concurrent avec d'anciens contacts de Sylvie.",
+      "alibi": "Elle affirme être restée au hall des méduses, invitée par Marc.",
+      "opportunite": "Elle connaît l'établissement mais n'a plus d'accès aux zones techniques depuis son départ.",
+      "informations": [
+        "Elle a vu Leila et Sylvie se disputer vivement en fin de soirée."
+      ],
+      "objectif": "Garder son projet concurrent secret jusqu'à son lancement."
+    }
+  }
+]

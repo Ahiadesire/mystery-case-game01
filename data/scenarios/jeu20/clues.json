@@ -1,0 +1,74 @@
+[
+  {
+    "order": 1,
+    "title": "Manuscrit contrefait vendu",
+    "linkedCharacterId": "quentin20",
+    "description": "Un rapport d'expertise prouve que Quentin a vendu une copie contrefaite d'un manuscrit ancien deux ans auparavant."
+  },
+  {
+    "order": 2,
+    "title": "Correspondance avec des mécènes",
+    "linkedCharacterId": "adele20",
+    "description": "Ces échanges révèlent qu'Adèle cherchait secrètement une alternative à la vente de la collection, à l'insu d'Édouard."
+  },
+  {
+    "order": 3,
+    "title": "Enregistrement de Stéphane",
+    "linkedCharacterId": "quentin20",
+    "description": "On y entend Édouard annoncer qu'il dénoncera Quentin devant tout le cercle ce soir-là."
+  },
+  {
+    "order": 4,
+    "title": "Registre de l'escalier dérobé",
+    "linkedCharacterId": "quentin20",
+    "description": "Il indique un passage du salon cheminée vers la réserve des manuscrits durant la fenêtre du crime."
+  },
+  {
+    "order": 5,
+    "title": "Note sur la vente au musée",
+    "linkedCharacterId": "adele20",
+    "description": "Elle confirme que la vente devait être annoncée le lendemain matin, supprimant le poste d'Adèle."
+  },
+  {
+    "order": 6,
+    "title": "Négociation secrète de Raphaël",
+    "linkedCharacterId": "raphael20",
+    "description": "Elle confirme le motif de Raphaël, sans le relier au meurtre : son alibi partagé avec Quentin reste flou mais son mobile est jugé secondaire."
+  },
+  {
+    "order": 7,
+    "title": "Menace de retrait de financement",
+    "linkedCharacterId": "martine20",
+    "description": "Elle confirme le motif de Martine, sans la relier au meurtre : son alibi à la cour intérieure est confirmé."
+  },
+  {
+    "order": 8,
+    "title": "Testament modifié d'Édouard",
+    "linkedCharacterId": "louis20",
+    "description": "Il confirme le motif de Louis, sans le relier au meurtre : son passage dans la réserve est bref et confirmé par David."
+  },
+  {
+    "order": 9,
+    "title": "Expertise erronée dissimulée",
+    "linkedCharacterId": "beatrice20",
+    "description": "Elle confirme le motif de Béatrice, sans la relier au meurtre : son alibi au bureau du conservateur est partiellement confirmé par David."
+  },
+  {
+    "order": 10,
+    "title": "Ouvrage à la provenance douteuse",
+    "linkedCharacterId": "fabrice20",
+    "description": "Il confirme le motif de Fabrice, sans le relier au meurtre."
+  },
+  {
+    "order": 11,
+    "title": "Poussière de la réserve sur une manche",
+    "linkedCharacterId": "quentin20",
+    "description": "Une poussière caractéristique de la réserve des manuscrits est retrouvée sur la manche de Quentin, incompatible avec son alibi déclaré."
+  },
+  {
+    "order": 12,
+    "title": "Rapport du médecin légiste",
+    "linkedCharacterId": null,
+    "description": "L'heure du décès est confirmée entre 21h10 et 21h25, période où l'accès à la réserve se faisait principalement par l'escalier dérobé ou la bibliothèque générale."
+  }
+]

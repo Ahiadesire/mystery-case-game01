@@ -1,0 +1,23 @@
+{
+  "id": "jeu17",
+  "title": "LA MAISON DE VENTE AUX ENCHÈRES",
+  "type": [
+    "meurtre mystérieux",
+    "enquête",
+    "déduction",
+    "bluff",
+    "jeu social",
+    "difficile"
+  ],
+  "minPlayers": 4,
+  "maxPlayers": 12,
+  "durationMinutes": 30,
+  "victim": {
+    "name": "Constance Aubry",
+    "age": 59,
+    "profession": "Directrice de la maison de vente aux enchères Aubry & Fils",
+    "deathFoundTime": "21h40",
+    "murderWindow": "21h15 - 21h30"
+  },
+  "publicIntroTemplate": "Une vente exceptionnelle réunit {{playerCount}} experts, acheteurs et employés de la prestigieuse maison Aubry & Fils. Peu après la vente du lot le plus prisé de la soirée, à 21h40, Constance Aubry est retrouvée sans vie près du coffre-fort. Le marteau n'est plus tombé que pour elle."
+}

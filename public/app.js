@@ -13,8 +13,18 @@ let state = {
   phaseEndsAt: null,
   bonusClueUsed: false,
   myVote: null,
-  connected: socket.connected
+  connected: socket.connected,
+  mode: localStorage.getItem('mystery_mode') || 'classic',
+  markedClues: JSON.parse(localStorage.getItem('mystery_marked_clues') || '[]')
 };
+
+const STATS_KEY='mystery_stats_v9';
+const BADGE_CATALOG=[['first','Première enquête','Terminer une première partie'],['three','3 victoires','Gagner 3 enquêtes'],['streak5','Série de 5','Gagner 5 enquêtes de suite'],['clean','Déduction pure','Trouver le coupable sans indice bonus'],['speed','Éclair','Gagner en mode rapide'],['hardcore','Sans peur','Gagner en mode hardcore'],['detective','Détective','Obtenir 500 points cumulés'],['social','Enquêteur social','Envoyer 25 messages en enquête'],['notes','Carnet noir','Prendre des notes pendant une partie'],['survivor','Dernier debout','Gagner après une reconnexion']];
+function getStats(){ try{return JSON.parse(localStorage.getItem(STATS_KEY)||'{\"games\":0,\"wins\":0,\"asGuilty\":0,\"guiltyWins\":0,\"bestScore\":0,\"streak\":0,\"bestStreak\":0,\"badges\":[],\"history\":[]}')}catch{return {games:0,wins:0,asGuilty:0,guiltyWins:0,bestScore:0,streak:0,bestStreak:0,badges:[],history:[]}}}
+function saveStats(v){localStorage.setItem(STATS_KEY,JSON.stringify(v))}
+function awardBadge(stats,id,label){if(!stats.badges.includes(id))stats.badges.push(id);return label}
+function recordResult(reveal){if(state.lastRecordedGameId===reveal.gameId){return getStats()}state.lastRecordedGameId=reveal.gameId;const stats=getStats();stats.games++;const me=(reveal.scores||[]).find(x=>x.playerId===state.playerId);const myAssignment=(reveal.assignments||[]).find(x=>x.playerId===state.playerId);const guilty=!!myAssignment?.wasGuilty;const myVote=(reveal.votes||[]).find(x=>x.playerId===state.playerId);const guessedGuilty=(reveal.guilty||[]).some(g=>g.character===myVote?.characterName);if(guilty){stats.asGuilty++;if(!reveal.votes?.some(v=>v.playerName===myAssignment?.playerName&&v.count>0)){stats.guiltyWins++;}}if(!guilty&&guessedGuilty){stats.wins++;stats.streak++;stats.bestStreak=Math.max(stats.bestStreak,stats.streak)}else if(!guilty){stats.streak=0}stats.bestScore=Math.max(stats.bestScore,me?.score||0);stats.totalPoints=(stats.totalPoints||0)+(me?.score||0);stats.messagesSent=stats.messagesSent||0;if(stats.games===1)awardBadge(stats,'first','Première enquête');if(stats.wins>=3)awardBadge(stats,'three','3 victoires');if(stats.bestStreak>=5)awardBadge(stats,'streak5','Série de 5');if(!guilty&&guessedGuilty&&!state.bonusClueUsed)awardBadge(stats,'clean','Coupable trouvé sans bonus');if(!guilty&&guessedGuilty&&reveal.mode==='quick')awardBadge(stats,'speed','Victoire éclair');if(!guilty&&guessedGuilty&&reveal.mode==='hardcore')awardBadge(stats,'hardcore','Sans peur');if((stats.totalPoints||0)>=500)awardBadge(stats,'detective','Détective');if((state.notesUsed||0)>0)awardBadge(stats,'notes','Carnet noir');if((state.messagesSent||0)>=25)awardBadge(stats,'social','Enquêteur social');if(state.rejoined)awardBadge(stats,'survivor','Dernier debout');stats.history.unshift({title:reveal.scenarioTitle,score:me?.score||0,won:!guilty&&guessedGuilty,mode:reveal.mode||'classic',ts:Date.now()});stats.history=stats.history.slice(0,20);saveStats(stats);return stats}
+
 
 let storyData = null;
 let myDossier = null;
@@ -145,6 +155,22 @@ $('btn-sound').onclick = () => {
   if (state.soundOn) { ensureAudioCtx(); playTone(700, 0.1); }
 };
 
+function applySettings(){const root=document.documentElement;const c=localStorage.getItem('mystery_contrast')||'normal',f=localStorage.getItem('mystery_font')||'normal',m=localStorage.getItem('mystery_motion')||'on',cb=localStorage.getItem('mystery_color')||'normal';root.dataset.contrast=c;root.dataset.font=f;root.dataset.motion=m;root.dataset.colorblind=cb}
+applySettings();
+if('serviceWorker' in navigator) window.addEventListener('load',()=>navigator.serviceWorker.register('/sw.js').catch(()=>{}));
+function speak(text){if(!('speechSynthesis'in window)||!text)return;window.speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.lang='fr-FR';u.rate=.95;window.speechSynthesis.speak(u)}
+function roomLink(){return `${location.origin}/rejoindre/${state.code}`}
+async function shareRoom(){const data={title:'Le Dernier Dîner',text:`Rejoins mon enquête ${state.code} 🕵️`,url:roomLink()};try{if(navigator.share)await navigator.share(data);else{await navigator.clipboard.writeText(roomLink());toast('🔗 Lien de salle copié.')}}catch{}}
+$('btn-qr-room').onclick=()=>{const u=encodeURIComponent(roomLink());$('room-qr').src=`https://api.qrserver.com/v1/create-qr-code/?size=260x260&data=${u}`;$('qr-code-label').textContent=state.code;openModal('qr-modal')};
+function openModal(id){$(id)?.classList.remove('hidden')}function closeModal(id){$(id)?.classList.add('hidden')}
+function closeOnboarding(){localStorage.setItem('mystery_onboarding_v9','1');$('onboarding-modal')?.classList.add('hidden')}
+$('btn-onboarding-close')?.addEventListener('click',closeOnboarding);$('btn-onboarding-skip')?.addEventListener('click',closeOnboarding);setTimeout(()=>{if(!localStorage.getItem('mystery_onboarding_v9'))$('onboarding-modal')?.classList.remove('hidden')},450);window.addEventListener('keydown',e=>{if(['INPUT','TEXTAREA','SELECT'].includes(document.activeElement?.tagName))return;if(e.key==='Escape')document.querySelectorAll('.modal:not(.hidden)').forEach(m=>m.classList.add('hidden'));if(e.key.toLowerCase()==='n'&&state.phase==='enquete')$('btn-notes')?.click();if(e.key.toLowerCase()==='r'&&state.phase==='enquete')$('btn-read-clues')?.click();if(e.key==='Enter'&&state.phase==='vote'&&state.myVote)$('btn-submit-vote')?.click()});
+function renderStats(){const s=getStats();const names=Object.fromEntries(BADGE_CATALOG.map(x=>[x[0],x[1]]));$('profile-content').innerHTML=`<div class="stats-cards"><div><b>${s.games}</b><span>Parties</span></div><div><b>${s.wins}</b><span>Victoires</span></div><div><b>${s.bestScore}</b><span>Meilleur score</span></div><div><b>${s.bestStreak}</b><span>Meilleure série</span></div></div><h3>Badges</h3><div class="badges">${BADGE_CATALOG.map(x=>s.badges.includes(x[0])?`<span title="${esc(x[2])}">🏅 ${esc(names[x[0]])}</span>`:`<span class="locked-badge" title="${esc(x[2])}">🔒 ${esc(names[x[0]])}</span>`).join('')}</div><h3>Dernières parties</h3><div class="history">${s.history.slice(0,8).map(h=>`<div><span>${esc(h.title)} · ${esc(h.mode||'classic')}</span><b>${h.score} pts</b></div>`).join('')||'<span class=muted>Aucune partie.</span>'}</div>`}
+$('btn-profile').onclick=()=>{renderStats();openModal('profile-modal')};$('btn-settings').onclick=()=>openModal('settings-modal');$('btn-share-room').onclick=shareRoom;document.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>closeModal(b.dataset.close));
+$('btn-notes').onclick=()=>{ state.notesUsed=(state.notesUsed||0)+1; $('notes-area').value=localStorage.getItem(`mystery_notes_${state.code}`)||'';openModal('notes-modal')};$('btn-save-notes').onclick=()=>{localStorage.setItem(`mystery_notes_${state.code}`,$('notes-area').value);closeModal('notes-modal');toast('📝 Notes enregistrées.')};$('btn-clear-notes').onclick=()=>{$('notes-area').value='';localStorage.removeItem(`mystery_notes_${state.code}`)};
+$('btn-read-dossier').onclick=()=>speak($('my-dossier-panel').innerText||$('story-text').innerText);$('btn-read-clues').onclick=()=>speak([...document.querySelectorAll('#clues-list .clue-card')].map(x=>x.innerText).join('. '));$('btn-mark-clue').onclick=()=>{const cards=[...document.querySelectorAll('#clues-list .clue-card')];const last=cards.at(-1);if(!last)return toast('Aucun indice à marquer.');const title=last.querySelector('h3')?.innerText||'Indice';state.markedClues.push(title);localStorage.setItem('mystery_marked_clues',JSON.stringify([...new Set(state.markedClues)]));toast('⭐ Indice marqué.');};
+for(const id of ['setting-contrast','setting-font','setting-motion','setting-color'])$(id).onchange=e=>{localStorage.setItem('mystery_'+id.replace('setting-',''),e.target.value);applySettings()};
+let deferredInstall=null;window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredInstall=e});$('btn-install').onclick=async()=>{if(deferredInstall){deferredInstall.prompt();deferredInstall=null}else toast('Sur iPhone/iPad : Partager → Ajouter à l’écran d’accueil.')}
 /* ---------------- Règles du jeu ---------------- */
 
 $('btn-rules').onclick = () => $('rules-modal').classList.remove('hidden');
@@ -203,7 +229,7 @@ function applyJoinResult(res) {
   saveSession();
   renderRoom(res.room);
   route(res.room.phase);
-  if (res.rejoined) toast('Connexion rétablie. Tu reprends ta place.');
+  if (res.rejoined) { state.rejoined=true; toast('Connexion rétablie. Tu reprends ta place.'); }
 }
 
 function tryReconnect() {
@@ -261,7 +287,7 @@ function renderRoom(room) {
   state.phase = room.phase;
   state.scenarioId = room.scenarioId;
   document.querySelectorAll('.phase-steps span').forEach((el, i) => el.classList.toggle('active', (room.phase === 'enquete' || room.phase === 'vote') ? i < 2 : room.phase === 'reveal' ? true : i === 0));
-  state.bonusClueUsed = !!room.bonusClueUsed;
+  state.bonusClueUsed = !!room.bonusClueUsed; state.mode=room.mode||state.mode; document.querySelectorAll('.mode-btn').forEach(x=>x.classList.toggle('active',x.dataset.mode===state.mode));
   state.isHost = !!room.players?.find(p => p.id === state.playerId)?.isHost;
 
   $('lobby-code').textContent = room.code || '—';
@@ -313,6 +339,8 @@ function renderRoom(room) {
 }
 
 
+document.querySelectorAll('.mode-btn').forEach(btn=>btn.onclick=()=>{state.mode=btn.dataset.mode;localStorage.setItem('mystery_mode',state.mode);document.querySelectorAll('.mode-btn').forEach(x=>x.classList.toggle('active',x===btn));socket.emit('room:set_mode',{mode:state.mode},res=>{if(!res.ok)toast(res.error)});});
+
 $('btn-reroll-scenario').onclick = () => {
   const btn = $('btn-reroll-scenario');
   btn.disabled = true;
@@ -323,7 +351,7 @@ $('btn-reroll-scenario').onclick = () => {
   });
 };
 
-$('btn-start').onclick = () => socket.emit('room:start', {}, res => {
+$('btn-start').onclick = () => socket.emit('room:start', { mode: state.mode }, res => {
   if (!res.ok) toast(res.error);
   else toast('🔎 L’enquête commence…');
 });
@@ -342,6 +370,8 @@ function route(phase) {
   else if (phase === 'enquete' || phase === 'vote') show('screen-investigation');
   else if (phase === 'reveal') show('screen-reveal');
 }
+
+(function prefillRoomFromUrl(){const m=location.pathname.match(/^\/rejoindre\/([A-Za-z0-9]{5})$/);if(m){$('join-code').value=m[1].toUpperCase();$('join-name').focus();toast('🔗 Salle '+m[1].toUpperCase()+' prête à rejoindre.')}})();
 
 function phaseLabel(phase) {
   return ({distribution:'Distribution', dossier:'Dossier secret', enquete:'Enquête', vote:'Vote final', reveal:'Révélation'}[phase] || phase);
@@ -641,6 +671,7 @@ function renderChatHistory(messages) {
 function sendChat() {
   const text = $('chat-input').value.trim();
   if (!text) return;
+  state.messagesSent=(state.messagesSent||0)+1;
   socket.emit('chat:send', { text, replyTo });
   $('chat-input').value = '';
   cancelReply();
@@ -712,9 +743,29 @@ socket.on('bonus:used', ({costSeconds, phaseEndsAt}) => {
 socket.on('phase:paused', () => toast('⏸ Enquête en pause.'));
 socket.on('phase:resumed', ({phaseEndsAt}) => startCountdown(phaseEndsAt));
 
+async function shareResultCard(reveal){
+  const me=(reveal.scores||[]).find(x=>x.playerId===state.playerId);
+  const rank=Math.max(1,(reveal.scores||[]).findIndex(x=>x.playerId===state.playerId)+1);
+  const text=`🕵️ ${reveal.scenarioTitle}\n${me?.score||0} points · ${rank}e place\nLe Dernier Dîner`;
+  try{
+    const c=document.createElement('canvas');c.width=1200;c.height=675;const x=c.getContext('2d');
+    const g=x.createLinearGradient(0,0,1200,675);g.addColorStop(0,'#173847');g.addColorStop(1,'#061017');x.fillStyle=g;x.fillRect(0,0,1200,675);
+    x.fillStyle='#55d9e8';x.font='700 26px Arial';x.fillText('LE DERNIER DÎNER · AFFAIRE RÉSOLUE',70,90);
+    x.fillStyle='#edf5f7';x.font='700 56px Georgia';x.fillText(String(reveal.scenarioTitle||'Enquête').slice(0,34),70,180);
+    x.fillStyle='#e5b85c';x.font='700 42px Arial';x.fillText(`${me?.score||0} POINTS`,70,285);
+    x.fillStyle='#d6e0e2';x.font='600 30px Arial';x.fillText(`${rank}e place · ${state.mode==='quick'?'Mode rapide':state.mode==='hardcore'?'Mode hardcore':'Mode classique'}`,70,345);
+    x.fillStyle='#91a8b2';x.font='24px Arial';x.fillText('🕵️ Trouver la vérité. Tromper les autres. Rejouer.',70,520);
+    const blob=await new Promise(r=>c.toBlob(r,'image/png'));
+    if(blob&&navigator.share&&navigator.canShare){const file=new File([blob],'dernier-diner-resultat.png',{type:'image/png'});if(navigator.canShare({files:[file]})){await navigator.share({title:'Le Dernier Dîner',text,url:location.origin,files:[file]});return}}
+    if(navigator.share){await navigator.share({title:'Le Dernier Dîner',text,url:location.origin});return}
+    const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='dernier-diner-resultat.png';a.click();URL.revokeObjectURL(a.href);toast('📸 Carte de résultat générée.');
+  }catch{try{await navigator.clipboard.writeText(text+'\n'+location.origin);toast('📋 Résultat copié.')}catch{}}
+}
+
 /* ---------------- Révélation ---------------- */
 
 socket.on('game:reveal', reveal => {
+  const stats=recordResult(reveal);
   const me = (reveal.assignments || []).find(x => x.playerId === state.playerId);
   const role = me?.wasGuilty ? 'Coupable' : 'Enquêteur';
   $('reveal-intro').textContent = `Tu incarnas ${me?.characterName || 'un participant'} · ${role}.`;
@@ -737,7 +788,11 @@ socket.on('game:reveal', reveal => {
     </div>
     <p class="closing">“${esc(reveal.closingLine || '')}”</p>
   `;
+  const mine=(reveal.scores||[]).find(x=>x.playerId===state.playerId);
+  const rank=Math.max(1,(reveal.scores||[]).findIndex(x=>x.playerId===state.playerId)+1);
+  $('reveal-share-card').innerHTML=`<div class="share-preview"><span>LE DERNIER DÎNER</span><strong>${esc(reveal.scenarioTitle)}</strong><b>${mine?.score||0} POINTS · ${rank}E PLACE</b><small>${stats.badges.length} badge(s) débloqué(s)</small></div>`;
   $('btn-new-case').style.display = (state.isHost || state.isGameMaster) ? 'inline-flex' : 'none';
+  $('btn-share-result').onclick=()=>shareResultCard(reveal);
   show('screen-reveal');
   chimeReveal();
 });

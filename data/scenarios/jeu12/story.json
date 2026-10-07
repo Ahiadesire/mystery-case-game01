@@ -1,0 +1,22 @@
+{
+  "id": "jeu12",
+  "title": "LE VIGNOBLE MAUDIT",
+  "type": [
+    "meurtre mystérieux",
+    "enquête",
+    "déduction",
+    "bluff",
+    "jeu social"
+  ],
+  "minPlayers": 4,
+  "maxPlayers": 12,
+  "durationMinutes": 30,
+  "victim": {
+    "name": "Bernard Costes",
+    "age": 61,
+    "profession": "Propriétaire du domaine viticole",
+    "deathFoundTime": "22h50",
+    "murderWindow": "22h20 - 22h35"
+  },
+  "publicIntroTemplate": "Le Clos des Trois Chênes célèbre la fin des vendanges. {{playerCount}} proches, employés et invités du domaine trinquent au premier vin de l'année. À 22h50, Bernard Costes, le propriétaire, est retrouvé sans vie parmi les fûts de la cave. Tous avaient une bonne raison de lui en vouloir, mais un seul geste a suffi."
+}

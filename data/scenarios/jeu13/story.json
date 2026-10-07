@@ -1,0 +1,23 @@
+{
+  "id": "jeu13",
+  "title": "L'AQUARIUM APRÈS MINUIT",
+  "type": [
+    "meurtre mystérieux",
+    "enquête",
+    "déduction",
+    "bluff",
+    "jeu social",
+    "difficile"
+  ],
+  "minPlayers": 4,
+  "maxPlayers": 12,
+  "durationMinutes": 30,
+  "victim": {
+    "name": "Sylvie Renard",
+    "age": 50,
+    "profession": "Directrice de l'aquarium municipal",
+    "deathFoundTime": "00h47",
+    "murderWindow": "00h25 - 00h38"
+  },
+  "publicIntroTemplate": "Un gala privé réunit {{playerCount}} mécènes, employés et proches de Sylvie Renard pour célébrer les dix ans de l'aquarium, fermé au public pour l'occasion. À 00h47, Sylvie est retrouvée sans vie près du bassin des requins. Les néons bleutés n'ont rien laissé filtrer de la vérité — à vous de la faire remonter à la surface."
+}

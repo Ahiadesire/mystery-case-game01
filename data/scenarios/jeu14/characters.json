@@ -1,0 +1,245 @@
+[
+  {
+    "id": "valentine14",
+    "name": "Valentine",
+    "role": "Associée fondatrice",
+    "age": 50,
+    "guiltyEligible": true,
+    "public": {
+      "relation": "Associée fondatrice du spa"
+    },
+    "private": {
+      "motif": "Isabelle voulait vendre ses parts à un fonds étranger qui aurait imposé une restructuration totale, menaçant l'emploi de Valentine.",
+      "secret": "Valentine négociait en secret un rachat concurrent des parts d'Isabelle.",
+      "alibi": "Elle affirme être restée au salon de thé à préparer les infusions du matin entre 06h30 et 07h00.",
+      "opportunite": "Le salon de thé communique par un couloir direct avec le hammam, peu fréquenté à cette heure.",
+      "informations": [
+        "Elle sait que Karim traversait une crise de couple avec Isabelle.",
+        "Elle a vu Rémy sortir du jardin zen très tôt."
+      ],
+      "objectif": "Finaliser son rachat avant que la vente au fonds étranger ne soit annoncée."
+    }
+  },
+  {
+    "id": "karim14",
+    "name": "Karim",
+    "role": "Compagnon d'Isabelle",
+    "age": 52,
+    "guiltyEligible": true,
+    "public": {
+      "relation": "Compagnon d'Isabelle"
+    },
+    "private": {
+      "motif": "Isabelle venait de découvrir son infidélité et voulait rompre et le retirer de son testament dès le lendemain.",
+      "secret": "Karim entretient une liaison depuis plusieurs mois avec une cliente du spa.",
+      "alibi": "Il affirme être resté dans leur chambre à dormir jusqu'à 07h10.",
+      "opportunite": "La chambre communique par un escalier privé directement avec les vestiaires, à deux pas du hammam.",
+      "informations": [
+        "Il sait qu'Isabelle avait pris rendez-vous avec un notaire pour la semaine suivante.",
+        "Il a vu Agathe se lever très tôt, avant les autres."
+      ],
+      "objectif": "Empêcher la rupture et le changement de testament."
+    }
+  },
+  {
+    "id": "agathe14",
+    "name": "Agathe",
+    "role": "Cliente fidèle, avocate",
+    "age": 46,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Cliente fidèle et amie"
+    },
+    "private": {
+      "motif": "Isabelle avait refusé de l'aider dans un litige professionnel délicat, la sentant compromettante.",
+      "secret": "Agathe a menacé Isabelle de rendre publique une vieille dette entre elles.",
+      "alibi": "Elle affirme être restée à la piscine à nager seule dès 06h20.",
+      "opportunite": "La piscine est éloignée du hammam et surveillée par le maître nageur.",
+      "informations": [
+        "Elle a vu Noémie entrer dans le hammam très tôt pour le préparer."
+      ],
+      "objectif": "Éviter que sa menace envers Isabelle ne paraisse suspecte."
+    }
+  },
+  {
+    "id": "noemie14",
+    "name": "Noémie",
+    "role": "Esthéticienne",
+    "age": 29,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Esthéticienne salariée"
+    },
+    "private": {
+      "motif": "Isabelle l'avait accusée à tort d'avoir volé des produits de la boutique du spa.",
+      "secret": "Noémie a effectivement pris quelques produits sans les déclarer, ce qui a motivé l'accusation.",
+      "alibi": "Elle affirme être entrée préparer le hammam vers 06h35 puis en être ressortie aussitôt.",
+      "opportunite": "Elle a été l'une des dernières personnes présentes dans le hammam avant la découverte du corps.",
+      "informations": [
+        "Elle a vu Valentine sortir du salon de thé vers 06h45."
+      ],
+      "objectif": "Prouver son innocence sur l'accusation de vol."
+    }
+  },
+  {
+    "id": "laurence14",
+    "name": "Laurence",
+    "role": "Comptable du spa",
+    "age": 48,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Comptable salariée"
+    },
+    "private": {
+      "motif": "Isabelle avait détecté un écart dans les comptes de la boutique et voulait faire auditer l'exercice.",
+      "secret": "Laurence a couvert une erreur de gestion pour protéger sa propre négligence.",
+      "alibi": "Elle affirme être restée à la réception à préparer les factures des clientes.",
+      "opportunite": "La réception est éloignée du hammam, rendant un déplacement rapide peu probable sans être vue.",
+      "informations": [
+        "Elle a vu Félix faire sa ronde matinale près de la piscine."
+      ],
+      "objectif": "Éviter que l'audit ne révèle sa négligence comptable."
+    }
+  },
+  {
+    "id": "felix14",
+    "name": "Félix",
+    "role": "Maître nageur et coach",
+    "age": 31,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Maître nageur et coach sportif"
+    },
+    "private": {
+      "motif": "Isabelle envisageait de ne pas renouveler son contrat saisonnier après une remarque déplacée d'un client.",
+      "secret": "Félix cherchait discrètement un poste dans un autre établissement.",
+      "alibi": "Il affirme être resté à la piscine en surveillance dès 06h15.",
+      "opportunite": "Il a un accès rapide au hammam par un couloir de service peu emprunté.",
+      "informations": [
+        "Il a vu Agathe nager seule toute la matinée, confirmant son alibi."
+      ],
+      "objectif": "Décrocher son nouveau poste sans faire de vagues."
+    }
+  },
+  {
+    "id": "brigitte14",
+    "name": "Brigitte",
+    "role": "Mère d'Isabelle",
+    "age": 74,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Mère de la victime"
+    },
+    "private": {
+      "motif": "Isabelle voulait placer sa mère en résidence médicalisée contre son gré, une décision vécue comme une trahison.",
+      "secret": "Brigitte cachait une détérioration de sa santé pour éviter le placement.",
+      "alibi": "Elle affirme être restée dans sa chambre, réveillée tôt par habitude, jusqu'à 07h10.",
+      "opportunite": "Sa mobilité réduite rend un déplacement rapide jusqu'au hammam peu crédible.",
+      "informations": [
+        "Elle a entendu une porte claquer du côté des vestiaires vers 06h45."
+      ],
+      "objectif": "Éviter le placement en résidence, désormais sans objet."
+    }
+  },
+  {
+    "id": "manon14",
+    "name": "Manon",
+    "role": "Réceptionniste",
+    "age": 24,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Réceptionniste salariée"
+    },
+    "private": {
+      "motif": "Isabelle l'avait surprise à utiliser le spa après les heures de fermeture sans autorisation.",
+      "secret": "Manon organisait de petites soirées non déclarées dans les locaux fermés.",
+      "alibi": "Elle affirme être restée à la réception toute la matinée.",
+      "opportunite": "Faible : plusieurs clientes confirment l'avoir vue en continu.",
+      "informations": [
+        "Elle a vu Laurence consulter nerveusement des dossiers tôt le matin."
+      ],
+      "objectif": "Éviter d'être renvoyée pour l'utilisation non autorisée des locaux."
+    }
+  },
+  {
+    "id": "olivier14",
+    "name": "Olivier",
+    "role": "Fournisseur de produits bio",
+    "age": 40,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Fournisseur partenaire du spa"
+    },
+    "private": {
+      "motif": "Isabelle menaçait de rompre leur contrat après la découverte de produits non conformes au label bio.",
+      "secret": "Olivier a substitué certains produits par des équivalents moins chers et non certifiés.",
+      "alibi": "Il affirme être resté dans la cuisine bio à livrer des commandes dès 06h30.",
+      "opportunite": "La cuisine bio est éloignée du hammam.",
+      "informations": [
+        "Il a vu Karim traverser les vestiaires très tôt, l'air agité."
+      ],
+      "objectif": "Sauver son contrat avec le spa avant la rupture annoncée."
+    }
+  },
+  {
+    "id": "sandrine14",
+    "name": "Sandrine",
+    "role": "Naturopathe invitée",
+    "age": 43,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Naturopathe intervenante"
+    },
+    "private": {
+      "motif": "Isabelle refusait de renouveler leur partenariat après des retours clients mitigés.",
+      "secret": "Sandrine avait exagéré certains résultats de ses consultations pour préserver le partenariat.",
+      "alibi": "Elle affirme être restée dans sa chambre à préparer ses ateliers du matin.",
+      "opportunite": "Faible : elle ne connaît pas bien la disposition du spa.",
+      "informations": [
+        "Elle a vu Brigitte se déplacer difficilement dans le couloir tôt le matin."
+      ],
+      "objectif": "Sauver son partenariat avec l'établissement."
+    }
+  },
+  {
+    "id": "juliette14",
+    "name": "Juliette",
+    "role": "Meilleure amie d'Isabelle, journaliste",
+    "age": 47,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Meilleure amie et confidente"
+    },
+    "private": {
+      "motif": "Isabelle lui avait confié vouloir rompre avec Karim, ce qui plaçait Juliette au cœur d'un secret explosif.",
+      "secret": "Juliette enregistrait discrètement certaines confidences pour un futur article sur le milieu du bien-être.",
+      "alibi": "Elle affirme être restée au jardin zen en méditation silencieuse jusqu'à 07h00.",
+      "opportunite": "Le jardin zen est à l'écart du hammam, limitant son opportunité réelle.",
+      "informations": [
+        "Son enregistrement contient la confidence d'Isabelle sur sa rupture prévue avec Karim.",
+        "Elle a vu Valentine et Isabelle avoir une discussion tendue la veille."
+      ],
+      "objectif": "Décider si elle doit révéler ce qu'elle sait de la rupture prévue."
+    }
+  },
+  {
+    "id": "remy14",
+    "name": "Rémy",
+    "role": "Jardinier et homme à tout faire",
+    "age": 38,
+    "guiltyEligible": false,
+    "public": {
+      "relation": "Employé polyvalent du spa"
+    },
+    "private": {
+      "motif": "Isabelle l'avait menacé de licenciement après une négligence dans l'entretien du jardin zen.",
+      "secret": "Rémy avait revendu discrètement du matériel de jardinage appartenant au spa.",
+      "alibi": "Il affirme être resté au jardin zen dès 06h00 pour l'arrosage matinal.",
+      "opportunite": "Le jardin zen communique par une allée directe avec les vestiaires proches du hammam.",
+      "informations": [
+        "Il a vu Noémie entrer et ressortir rapidement du hammam vers 06h35."
+      ],
+      "objectif": "Éviter le licenciement pour la revente de matériel."
+    }
+  }
+]

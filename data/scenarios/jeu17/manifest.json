@@ -1,0 +1,29 @@
+{
+  "id": "jeu17",
+  "title": "LA MAISON DE VENTE AUX ENCHÈRES",
+  "difficulty": "difficile",
+  "guiltyPool": [
+    "hadrien17",
+    "morgane17"
+  ],
+  "guiltyRules": [
+    {
+      "minPlayers": 4,
+      "maxPlayers": 5,
+      "guiltyCount": 1,
+      "mode": "random-one"
+    },
+    {
+      "minPlayers": 6,
+      "maxPlayers": 8,
+      "guiltyCount": 1,
+      "mode": "random-one"
+    },
+    {
+      "minPlayers": 9,
+      "maxPlayers": 12,
+      "guiltyCount": 2,
+      "mode": "both"
+    }
+  ]
+}
